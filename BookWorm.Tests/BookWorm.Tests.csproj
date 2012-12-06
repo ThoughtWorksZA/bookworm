@@ -114,12 +114,12 @@
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Specs\Pages\LoginPage.cs" />
     <Compile Include="Specs\Pages\HomePage.cs" />
-    <Compile Include="Specs\spike.feature.cs">
+    <Compile Include="Specs\Login.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>spike.feature</DependentUpon>
+      <DependentUpon>Login.feature</DependentUpon>
     </Compile>
-    <Compile Include="Specs\SpikeSteps.cs" />
+    <Compile Include="Specs\LoginSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config">
@@ -128,9 +128,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Specs\spike.feature">
+    <None Include="Specs\Login.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>spike.feature.cs</LastGenOutput>
+      <LastGenOutput>Login.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
