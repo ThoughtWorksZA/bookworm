@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Raven.Client.Document;
 using WebMatrix.WebData;
 
 namespace BookWorm
@@ -15,8 +16,11 @@ namespace BookWorm
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        public static DocumentStore Store { get; private set; }
         protected void Application_Start()
         {
+            Store = new DocumentStore();
+            Store.Initialize();
             //WebSecurity.Initialized = true;
             AreaRegistration.RegisterAllAreas();
 
@@ -25,6 +29,12 @@ namespace BookWorm
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+        }
+
+        public override void Dispose()
+        {
+            Store.Dispose();
+            base.Dispose();
         }
     }
 }
