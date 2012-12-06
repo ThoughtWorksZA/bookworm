@@ -1,14 +1,28 @@
 ﻿using System;
 using System.Web.Mvc;
 using BookWorm.Models;
+using BookWorm.Repository;
 
 namespace BookWorm.Controllers
 {
     public class BooksController : Controller
     {
+        private Repository<Book> _repository;
+
+        public BooksController(Repository<Book> repository)
+        {
+            _repository = repository;
+        }
+
+        public BooksController()
+        {
+
+        }
+
         [HttpPost]
         public ViewResult New(Book book)
         {
+            _repository.Create(book);
             ViewBag.Title = "Success";
             ViewBag.SuccessMessage = String.Format("Created book '{0}'", book.Title);
             return View();
