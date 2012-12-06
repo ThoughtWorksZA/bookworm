@@ -1,4 +1,14 @@
-﻿@model dynamic
+﻿@model BookWorm.Models.Book
 
 <h2>@ViewBag.Title</h2>
 @ViewBag.SuccessMessage
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(book => book.Title)
+    @Html.EditorFor(book => book.Title)
+
+    <div>
+        <input type="submit" value="Add Book"/>
+    </div>
+}

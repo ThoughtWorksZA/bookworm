@@ -21,5 +21,17 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual("Created book 'The Book'", booksController.ViewBag.SuccessMessage);
             Assert.AreEqual("Success", booksController.ViewBag.Title);
         }
+
+        [TestMethod]
+        public void CanReturnAPageToCreateABook()
+        {
+            var booksController = new BooksController();
+
+            var createABookPage = booksController.New();
+            var model = createABookPage.Model;
+
+            Assert.AreEqual("Add a Book", booksController.ViewBag.Title);
+            Assert.IsInstanceOfType(model, typeof(Book));
+        }
     }
 }
