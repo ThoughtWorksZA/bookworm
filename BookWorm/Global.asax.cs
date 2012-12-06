@@ -19,7 +19,10 @@ namespace BookWorm
         public static DocumentStore Store { get; private set; }
         protected void Application_Start()
         {
-            Store = new DocumentStore();
+            Store = new DocumentStore
+                {
+                    ConnectionStringName = "RavenDB"
+                };
             Store.Initialize();
             //WebSecurity.Initialized = true;
             AreaRegistration.RegisterAllAreas();

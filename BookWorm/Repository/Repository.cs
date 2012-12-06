@@ -8,6 +8,10 @@ namespace BookWorm.Repository
     {
         private readonly IDocumentSession _documentSession;
 
+        public Repository()
+        {
+        }
+
         public Repository(IDocumentSession documentSession)
         {
             _documentSession = documentSession;
