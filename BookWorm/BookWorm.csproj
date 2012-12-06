@@ -333,9 +333,6 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Shared\Home\About.cshtml" />
-    <Content Include="Views\Shared\Home\Contact.cshtml" />
-    <Content Include="Views\Shared\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -351,6 +348,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Views\Shared\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
