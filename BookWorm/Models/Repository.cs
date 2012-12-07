@@ -17,12 +17,18 @@ namespace BookWorm.Models
 
         public virtual Model<T> Create<T>(T model) where T : Model<T>
         {
-            throw new System.NotImplementedException();
+            _documentSession.Store(model);
+            return model;
         }
 
         public void Dispose()
         {
             _documentSession.Dispose();
+        }
+
+        public Model<T> Get<T>(int id) where T: Model<T>
+        {
+            return _documentSession.Load<T>(id);
         }
     }
 
