@@ -8,9 +8,14 @@ namespace BookWorm.Controllers
         private IDocumentSession _session;
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _session = MvcApplication.Store.OpenSession();
+            _session = GetDocumentStore().OpenSession();
             base.OnActionExecuting(filterContext);
 
+        }
+
+        protected virtual IDocumentStore GetDocumentStore()
+        {
+            return MvcApplication.Store;
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)

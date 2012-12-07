@@ -1,6 +1,4 @@
-﻿using BookWorm.Repository;
-
-namespace BookWorm.Models
+﻿namespace BookWorm.Models
 {
     public class Book : Model<Book>
     {

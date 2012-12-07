@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Web.Mvc;
 using BookWorm.Models;
-using BookWorm.Repository;
 
 namespace BookWorm.Controllers
 {
     public class BooksController : Controller
     {
-        private Repository<Book> _repository;
+        private Repository _repository;
 
-        public BooksController(Repository<Book> repository)
+        public BooksController(Repository repository)
         {
             _repository = repository;
         }

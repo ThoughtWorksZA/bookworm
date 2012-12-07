@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
-using BookWorm.Repository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -27,7 +26,7 @@ namespace BookWorm.Tests.Controllers
         {
             var book = new Book { Title = "The Book" };
 
-            var mockedRepo = new Mock<Repository<Book>>();
+            var mockedRepo = new Mock<Repository>();
             mockedRepo.Setup(repo => repo.Create(book));
             var booksController = new BooksController(mockedRepo.Object);
 
@@ -42,7 +41,7 @@ namespace BookWorm.Tests.Controllers
         public void ShouldUseRepositoryToCreatABook()
         {
             var book = new Book();
-            var mockedRepo = new Mock<Repository<Book>>();
+            var mockedRepo = new Mock<Repository>();
             mockedRepo.Setup(repo => repo.Create(book));
 
             var booksController = new BooksController(mockedRepo.Object);
