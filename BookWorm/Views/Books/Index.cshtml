@@ -1,3 +1,102 @@
 ﻿@model BookWorm.Models.Book
 
-<h2>title</h2>
+<h2>ViewBag.Title</h2>
+
+<fieldset>
+    <legend>Book</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Title)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Subtitle)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Subtitle)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Author)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Author)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Illustrator)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Illustrator)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Editor)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Editor)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Isbn)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Isbn)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Publisher)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Publisher)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Language)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Language)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Genre)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Genre)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RecommendedAgeGroup)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RecommendedAgeGroup)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Country)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Country)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CoverImageUrl)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CoverImageUrl)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
