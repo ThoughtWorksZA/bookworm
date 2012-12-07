@@ -52,7 +52,6 @@ namespace BookWorm.Tests.Controllers
         public void ShouldKnowToSaveChangesOnActionExecuted()
         {
             var documentSession = new Mock<IDocumentSession>();
-            documentSession.Setup(session => session.SaveChanges());
             var documentStore = new Mock<IDocumentStore>();
             documentStore.Setup(store => store.OpenSession()).Returns(documentSession.Object);
 
