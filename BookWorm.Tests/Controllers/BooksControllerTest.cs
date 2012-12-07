@@ -49,5 +49,21 @@ namespace BookWorm.Tests.Controllers
             booksController.New(book);
             mockedRepo.Verify(repo => repo.Create(book));
         }
+
+        [TestMethod]
+        public void ShouldDisplayBookOnIndex()
+        {
+            var book = new Book {Id = 1, Title = "A book"};
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var view = booksController.Index(1);
+
+            var bookInView = (Book) view.Model;
+            Assert.IsInstanceOfType(view, typeof(ViewResult));
+            mockedRepo.Verify(repo => repo.Get<Book>(book.Id), Times.Once());
+            Assert.AreEqual(book, bookInView);
+        }
     }
 }

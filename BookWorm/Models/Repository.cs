@@ -26,7 +26,7 @@ namespace BookWorm.Models
             _documentSession.Dispose();
         }
 
-        public Model<T> Get<T>(int id) where T: Model<T>
+        public virtual Model<T> Get<T>(int id) where T: Model<T>
         {
             return _documentSession.Load<T>(id);
         }

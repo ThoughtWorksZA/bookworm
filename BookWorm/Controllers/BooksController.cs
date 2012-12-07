@@ -18,9 +18,10 @@ namespace BookWorm.Controllers
             _repository = new Repository();
         }
 
-        public ActionResult Index(int id)
+        public ViewResult Index(int id)
         {
-            throw new NotImplementedException();
+            var book = (Book) _repository.Get<Book>(id);
+            return View(book);
         }
 
         public ViewResult New()
