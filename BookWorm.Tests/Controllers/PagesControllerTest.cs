@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
-using BookWorm.Repository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -28,7 +26,7 @@ namespace BookWorm.Tests.Controllers
         [TestMethod]
         public void ShouldStorePageWhenCreated()
         {
-            var repository = new Mock<Repository<StaticPage>>();
+            var repository = new Mock<Repository>();
             var submittedPage = new StaticPage { Title = "test title", Content = "some content" };
             repository.Setup(repo => repo.Create(submittedPage)).Returns(new StaticPage { Id = 1, Title = submittedPage.Title, Content = submittedPage.Content });
             var controller = new PagesController(repository.Object);
@@ -41,7 +39,7 @@ namespace BookWorm.Tests.Controllers
         [TestMethod]
         public void ShouldNotStorePageWhenTitleIsInvalid()
         {
-            var repository = new Mock<Repository<StaticPage>>();
+            var repository = new Mock<Repository>();
             var submittedPage = new StaticPage { Title = "", Content = "some content" };
             repository.Setup(repo => repo.Create(submittedPage)).Returns(submittedPage);
             
@@ -53,7 +51,7 @@ namespace BookWorm.Tests.Controllers
         [TestMethod]
         public void ShouldNotStorePageWhenContentIsInvalid()
         {
-            var repository = new Mock<Repository<StaticPage>>();
+            var repository = new Mock<Repository>();
             var submittedPage = new StaticPage { Title = "test title", Content = "" };
             repository.Setup(repo => repo.Create(submittedPage)).Returns(submittedPage);
 

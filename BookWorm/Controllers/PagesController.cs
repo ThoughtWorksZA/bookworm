@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Web.Mvc;
 using BookWorm.Models;
-using BookWorm.Repository;
 
 namespace BookWorm.Controllers
 {
     public class PagesController : Controller
     {
-        private readonly Repository<StaticPage> _repository;
+        private readonly Repository _repository;
 
-        public PagesController(Repository<StaticPage> repository)
+        public PagesController(Repository repository)
         {
             _repository = repository;
         }

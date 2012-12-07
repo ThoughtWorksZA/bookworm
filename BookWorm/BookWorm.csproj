@@ -227,7 +227,7 @@
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\StaticPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Models\Repository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -348,6 +348,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Repository\" />
     <Folder Include="Views\Shared\Home\" />
   </ItemGroup>
   <ItemGroup>

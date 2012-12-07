@@ -1,10 +1,8 @@
-﻿using BookWorm.Models;
-using Raven.Client;
-using Raven.Client.Document;
+﻿using Raven.Client;
 
-namespace BookWorm.Repository
+namespace BookWorm.Models
 {
-    public class Repository<Model>
+    public class Repository
     {
         private readonly IDocumentSession _documentSession;
 
@@ -17,7 +15,7 @@ namespace BookWorm.Repository
             _documentSession = documentSession;
         }
 
-        public virtual Model<Model> Create(Model model)
+        public virtual Model<T> Create<T>(T model) where T : Model<T>
         {
             throw new System.NotImplementedException();
         }
