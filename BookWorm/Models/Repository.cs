@@ -1,4 +1,5 @@
-﻿using Raven.Client;
+﻿using System.Collections.Generic;
+using Raven.Client;
 
 namespace BookWorm.Models
 {
@@ -29,6 +30,11 @@ namespace BookWorm.Models
         public virtual Model<T> Get<T>(int id) where T: Model<T>
         {
             return _documentSession.Load<T>(id);
+        }
+
+        public virtual ICollection<T>  List<T>() where T: Model<T>
+        {
+            throw new System.NotImplementedException();
         }
     }
 

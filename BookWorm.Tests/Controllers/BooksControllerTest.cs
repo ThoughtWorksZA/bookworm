@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -64,6 +66,22 @@ namespace BookWorm.Tests.Controllers
             Assert.IsInstanceOfType(view, typeof(ViewResult));
             mockedRepo.Verify(repo => repo.Get<Book>(book.Id), Times.Once());
             Assert.AreEqual(book, bookInView);
+        }
+
+        [TestMethod]
+        public void ShouldListAllBooks()
+        {
+            var books = new List<Book>();
+            Enumerable.Range(1, 10).ToList().ForEach(i=>books.Add(new Book{Id = i}));
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(repo => repo.List<Book>()).Returns(books);
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var view = booksController.List();
+
+            var booksInView = (List<Book>) view.Model;
+            mockedRepo.Verify(repo => repo.List<Book>(), Times.Once());
+            Assert.AreEqual(books, booksInView);
         }
     }
 }

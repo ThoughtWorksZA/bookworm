@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using BookWorm.Models;
 
 namespace BookWorm.Controllers
@@ -36,6 +35,12 @@ namespace BookWorm.Controllers
             var createdBook = (Book) _repository.Create(book);
             TempData["flash"] = string.Format("Added {0} successfully", createdBook.Title);
             return RedirectToAction("Index", new { id = createdBook.Id });
+        }
+
+        public ViewResult List()
+        {
+            var books = _repository.List<Book>();
+            return View(books);
         }
     }
 }
