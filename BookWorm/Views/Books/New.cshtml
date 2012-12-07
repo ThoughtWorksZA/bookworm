@@ -1,14 +1,59 @@
 ﻿@model BookWorm.Models.Book
 
-<h2>@ViewBag.Title</h2>
-@ViewBag.SuccessMessage
+@{
+    ViewBag.Title = "New";
+}
 
-@using (Html.BeginForm())
-{
-    @Html.LabelFor(book => book.Title)
-    @Html.EditorFor(book => book.Title)
+<h2>New</h2>
 
-    <div>
-        <input type="submit" value="Add Book"/>
-    </div>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Book</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SubTitle)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SubTitle)
+            @Html.ValidationMessageFor(model => model.SubTitle)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Author)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Author)
+            @Html.ValidationMessageFor(model => model.Author)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Illustrator)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Illustrator)
+            @Html.ValidationMessageFor(model => model.Illustrator)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

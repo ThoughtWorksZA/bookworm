@@ -15,22 +15,26 @@ namespace BookWorm.Controllers
 
         public BooksController()
         {
-
+            _repository = new Repository();
         }
 
-        [HttpPost]
-        public ViewResult New(Book book)
+        public ActionResult Index(int id)
         {
-            _repository.Create(book);
-            ViewBag.Title = "Success";
-            ViewBag.SuccessMessage = String.Format("Created book '{0}'", book.Title);
-            return View();
+            throw new NotImplementedException();
         }
 
         public ViewResult New()
         {
             ViewBag.Title = "Add a Book";
             return View(new Book());
+        }
+
+        [HttpPost]
+        public RedirectToRouteResult New(Book book)
+        {
+            var createdBook = (Book) _repository.Create(book);
+            TempData["flash"] = string.Format("Added {0} successfully", createdBook.Title);
+            return RedirectToAction("Index", new { id = createdBook.Id });
         }
     }
 }
