@@ -4,7 +4,7 @@ using BookWorm.Models;
 
 namespace BookWorm.Controllers
 {
-    public class BooksController : Controller
+    public class BooksController : BaseController
     {
         private Repository _repository;
 
