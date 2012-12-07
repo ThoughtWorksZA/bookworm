@@ -1,5 +1,4 @@
-﻿using System.Web.Mvc;
-using BookWorm.Controllers;
+﻿using BookWorm.Controllers;
 using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -30,7 +29,7 @@ namespace BookWorm.Tests.Controllers
             mockedRepo.Setup(repo => repo.Create(book));
             var booksController = new BooksController(mockedRepo.Object);
 
-            ViewResult viewResult = booksController.New(book);
+            var viewResult = booksController.New(book);
 
             Assert.IsNotNull(viewResult);
             Assert.AreEqual("Created book 'The Book'", booksController.ViewBag.SuccessMessage);
