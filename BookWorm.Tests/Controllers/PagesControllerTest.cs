@@ -59,5 +59,20 @@ namespace BookWorm.Tests.Controllers
             ValidateViewModel(submittedPage, controller);
             Assert.IsFalse(controller.ModelState.IsValid);
         }
+
+        [TestMethod]
+        public void ShouldHandleDuplicateBookProblem()
+        {
+            var repository = new Mock<Repository>();
+            var duplicatePage = new StaticPage { Title = "test title", Content = "test content" };
+            repository.Setup(repo => repo.Create(duplicatePage))
+                      .Throws(new Raven.Client.Exceptions.NonUniqueObjectException());
+
+            var controller = new PagesController(repository.Object);
+            controller.New(duplicatePage);
+
+            Assert.AreEqual(string.Format("Sorry, page {0} already exists.", duplicatePage.Title), controller.TempData["flash"]);
+            
+        }
     }
 }
