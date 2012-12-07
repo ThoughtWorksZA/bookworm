@@ -10,7 +10,7 @@ namespace BookWorm.Tests.Controllers
     public class BooksControllerTest
     {
         [TestMethod]
-        public void CanReturnAPageToCreateABook()
+        public void ShouldReturnCreatePageOnGetCreate()
         {
             var booksController = new BooksController();
 
@@ -22,7 +22,7 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
-        public void CreatingABookReturnsAPage()
+        public void ShouldReturnPageWhenBookIsCreated()
         {
             var book = new Book { Title = "The Book" };
 
@@ -38,7 +38,7 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
-        public void ShouldUseRepositoryToCreatABook()
+        public void ShouldUseRepositoryWhenCreatingABook()
         {
             var book = new Book();
             var mockedRepo = new Mock<Repository>();
