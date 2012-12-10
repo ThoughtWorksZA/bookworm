@@ -13,24 +13,24 @@ namespace BookWorm.Controllers
         {
         }
 
-        public ViewResult Index(int id)
+        public ViewResult Details(int id)
         {
             var book = (Book) _repository.Get<Book>(id);
             return View(book);
         }
 
-        public ViewResult New()
+        public ViewResult Create()
         {
             ViewBag.Title = "Add a Book";
             return View(new Book());
         }
 
         [HttpPost]
-        public RedirectToRouteResult New(Book book)
+        public RedirectToRouteResult Create(Book book)
         {
             var createdBook = (Book) _repository.Create(book);
             TempData["flash"] = string.Format("Added {0} successfully", createdBook.Title);
-            return RedirectToAction("Index", new { id = createdBook.Id });
+            return RedirectToAction("Details", new { id = createdBook.Id });
         }
 
         public ViewResult List()

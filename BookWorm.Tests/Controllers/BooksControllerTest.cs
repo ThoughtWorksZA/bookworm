@@ -16,7 +16,7 @@ namespace BookWorm.Tests.Controllers
         {
             var booksController = new BooksController();
 
-            var createABookView = booksController.New();
+            var createABookView = booksController.Create();
             var model = createABookView.Model;
 
             Assert.AreEqual("Add a Book", booksController.ViewBag.Title);
@@ -32,7 +32,7 @@ namespace BookWorm.Tests.Controllers
             mockedRepo.Setup(repo => repo.Create(book)).Returns(new Book { Id = 1, Title = "The Book" });
             var booksController = new BooksController(mockedRepo.Object);
 
-            var viewResult = booksController.New(book);
+            var viewResult = booksController.Create(book);
 
             Assert.IsNotNull(viewResult);
             Assert.AreEqual("Added The Book successfully", booksController.TempData["flash"]);
@@ -48,7 +48,7 @@ namespace BookWorm.Tests.Controllers
 
             var booksController = new BooksController(mockedRepo.Object);
 
-            booksController.New(book);
+            booksController.Create(book);
             mockedRepo.Verify(repo => repo.Create(book));
         }
 
@@ -60,7 +60,7 @@ namespace BookWorm.Tests.Controllers
             mockedRepo.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
             var booksController = new BooksController(mockedRepo.Object);
 
-            var view = booksController.Index(1);
+            var view = booksController.Details(1);
 
             var bookInView = (Book) view.Model;
             Assert.IsInstanceOfType(view, typeof(ViewResult));

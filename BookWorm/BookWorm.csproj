@@ -337,11 +337,11 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Pages\New.cshtml" />
-    <Content Include="Views\Books\New.cshtml" />
+    <Content Include="Views\Books\Create.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Books\Index.cshtml" />
+    <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
