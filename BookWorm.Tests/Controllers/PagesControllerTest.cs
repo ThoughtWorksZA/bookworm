@@ -61,7 +61,7 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
-        public void ShouldHandleDuplicateBookProblem()
+        public void ShouldHandleDuplicatePageProblem()
         {
             var repository = new Mock<Repository>();
             var duplicatePage = new StaticPage { Title = "test title", Content = "test content" };
@@ -72,7 +72,6 @@ namespace BookWorm.Tests.Controllers
             controller.New(duplicatePage);
 
             Assert.AreEqual(string.Format("Sorry, page {0} already exists.", duplicatePage.Title), controller.TempData["flash"]);
-            
         }
     }
 }
