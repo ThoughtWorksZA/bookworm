@@ -1,5 +1,4 @@
-﻿using System;
-using BookWorm.Models;
+﻿using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Raven.Client;
@@ -36,8 +35,6 @@ namespace BookWorm.Tests.Models
 
             documentSession.Verify(session=>session.Load<StaticPage>(persistedModel.Id), Times.Once());
             Assert.AreEqual(persistedModel.Id , retrievedModel.Id);
-
-
         }
 
         [TestMethod]
