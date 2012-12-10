@@ -51,5 +51,12 @@ namespace BookWorm.Controllers
         {
             return View(_repository.List<StaticPage>());
         }
+
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Delete)]
+        public RedirectToRouteResult Delete(int id)
+        {
+            _repository.Delete<StaticPage>(id);
+            return RedirectToAction("List", "Pages");
+        }
     }
 }

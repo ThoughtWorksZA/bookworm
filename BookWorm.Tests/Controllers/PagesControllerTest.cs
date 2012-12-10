@@ -92,7 +92,7 @@ namespace BookWorm.Tests.Controllers
             var savedPage = new StaticPage { Id = id, Title = "test title", Content = "some content" };
             repository.Setup(repo => repo.Get<StaticPage>(id)).Returns(savedPage);
             var controller = new PagesController(repository.Object);
-            var result = (ViewResult) controller.Details(id);
+            var result = controller.Details(id);
             repository.Verify(it => it.Get<StaticPage>(id), Times.Once());
             Assert.AreEqual(id, ((StaticPage)result.Model).Id);
         }
@@ -107,7 +107,7 @@ namespace BookWorm.Tests.Controllers
             repository.Setup(repo => repo.Get<StaticPage>(id)).Returns(savedPage);
             var transformedContent = markdown.Transform(savedPage.Content);
             var controller = new PagesController(repository.Object);
-            var result = (ViewResult)controller.Details(id);
+            var result = controller.Details(id);
             Assert.AreEqual(transformedContent, result.ViewBag.transformedContent);
         }
 
@@ -125,6 +125,18 @@ namespace BookWorm.Tests.Controllers
             var result = controller.List();
             repository.Verify(it => it.List<StaticPage>(), Times.Once());
             Assert.AreEqual(savedPages, result.Model);
+        }
+
+        [TestMethod]
+        public void ShouldKnowHowToDeletePage()
+        {
+            var id = 1;
+            var repository = new Mock<Repository>();
+            var controller = new PagesController(repository.Object);
+            var result = (RedirectToRouteResult)controller.Delete(id);
+            repository.Verify(it => it.Delete<StaticPage>(id), Times.Once());
+            Assert.AreEqual("List", result.RouteValues["action"]);
+            Assert.AreEqual("Pages", result.RouteValues["controller"]);
         }
     }
 }
