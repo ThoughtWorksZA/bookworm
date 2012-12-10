@@ -66,7 +66,7 @@ namespace BookWorm.Tests.Models
 
         [TestMethod]
         [ExpectedException(typeof(System.InvalidOperationException))]
-        public void ShouldRethrowInvalidOperationException()
+        public void DeletingNonExistentDocumentShouldRethrowInvalidOperationException()
         {
             var persistedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes chicken. You're going to love it." };
             var documentSession = new Mock<IDocumentSession>();
@@ -89,6 +89,21 @@ namespace BookWorm.Tests.Models
             repository.Edit<StaticPage>(persistedModel);
 
             documentSession.Verify(session => session.Store(persistedModel), Times.Once());
-        } 
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.InvalidOperationException))]
+        public void EditingNonExistentDocumentShouldRethrowInvalidOperationException()
+        {
+            var persistedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes veggie burger. You're going to love it." };
+            var documentSession = new Mock<IDocumentSession>();
+            documentSession.Setup(session => session.Load<StaticPage>(persistedModel.Id)).Returns(persistedModel);
+            documentSession.Setup(session => session.Store(persistedModel))
+                           .Throws(new System.InvalidOperationException());
+
+            var repository = new Repository(documentSession.Object);
+            repository.Edit<StaticPage>(persistedModel);
+        }
+
     }
 }
