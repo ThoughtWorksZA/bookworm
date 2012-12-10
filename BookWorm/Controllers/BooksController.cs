@@ -38,5 +38,20 @@ namespace BookWorm.Controllers
             TempData["flash"] = string.Format("Added {0} successfully", createdBook.Title);
             return RedirectToAction("Details", new { id = createdBook.Id });
         }
+
+        public ViewResult Edit(int id)
+        {
+            ViewBag.Title = "Edit a Book";
+            return View(_repository.Get<Book>(id));
+        }
+
+        [HttpPost]
+        public RedirectToRouteResult Edit(Book editedBook)
+        {
+            _repository.Edit(editedBook);
+            TempData["flash"] = string.Format("Updated {0} successfully", editedBook.Title);
+            return RedirectToAction("Details", new { id = editedBook.Id });
+
+        }
     }
 }

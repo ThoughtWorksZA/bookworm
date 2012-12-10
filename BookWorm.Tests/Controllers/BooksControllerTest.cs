@@ -24,7 +24,7 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
-        public void ShouldReturnPageWhenBookIsCreated()
+        public void ShouldRedirectToDetailsPageWhenBookIsCreated()
         {
             var book = new Book { Title = "The Book" };
 
@@ -53,7 +53,7 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
-        public void ShouldDisplayBookOnIndex()
+        public void ShouldDisplayBookDetails()
         {
             var book = new Book {Id = 1, Title = "A book"};
             var mockedRepo = new Mock<Repository>();
@@ -83,5 +83,37 @@ namespace BookWorm.Tests.Controllers
             mockedRepo.Verify(repo => repo.List<Book>(), Times.Once());
             Assert.AreEqual(books, booksInView);
         }
+
+        [TestMethod]
+        public void ShouldReturnEditPageOnGetEdit()
+        {
+            var book = new Book { Id = 1, Title = "A book" };
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var editABookView = booksController.Edit(1);
+            var model = (Book)editABookView.Model;
+           
+            Assert.AreEqual("Edit a Book", booksController.ViewBag.Title);
+            Assert.AreEqual(book.Title, model.Title);
+        }
+
+        [TestMethod]
+        public void ShouldUpdateBookOnEditPost()
+        {
+            var editedBook = new Book { Id = 1, Title = "A book" };
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(repo => repo.Edit(editedBook));
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var viewResult = booksController.Edit(editedBook);
+
+            mockedRepo.Verify(repo => repo.Edit<Book>(editedBook), Times.Once());
+            Assert.AreEqual("Updated A book successfully", booksController.TempData["flash"]);
+            Assert.AreEqual(1, viewResult.RouteValues["id"]);
+            
+        }
+
     }
 }

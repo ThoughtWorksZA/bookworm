@@ -349,6 +349,7 @@
     <Content Include="Views\Pages\Details.cshtml" />
     <Content Include="Views\Pages\List.cshtml" />
     <Content Include="Views\Pages\_Page.cshtml" />
+    <Content Include="Views\Books\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

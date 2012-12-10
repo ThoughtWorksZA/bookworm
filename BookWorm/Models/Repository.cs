@@ -43,6 +43,11 @@ namespace BookWorm.Models
             var model = Get<T>(id);
             _documentSession.Delete(model);
         }
+
+        public virtual void Edit<T>(T editedModel)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     public class Model<T>
