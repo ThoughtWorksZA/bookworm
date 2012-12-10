@@ -13,6 +13,12 @@ namespace BookWorm.Controllers
         {
         }
 
+        public ViewResult List()
+        {
+            var books = _repository.List<Book>();
+            return View(books);
+        }
+
         public ViewResult Details(int id)
         {
             var book = (Book) _repository.Get<Book>(id);
@@ -31,12 +37,6 @@ namespace BookWorm.Controllers
             var createdBook = (Book) _repository.Create(book);
             TempData["flash"] = string.Format("Added {0} successfully", createdBook.Title);
             return RedirectToAction("Details", new { id = createdBook.Id });
-        }
-
-        public ViewResult List()
-        {
-            var books = _repository.List<Book>();
-            return View(books);
         }
     }
 }
