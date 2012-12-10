@@ -46,7 +46,7 @@ namespace BookWorm.Models
 
         public virtual void Edit<T>(T editedModel)
         {
-            throw new System.NotImplementedException();
+            _documentSession.Store(editedModel);
         }
     }
 

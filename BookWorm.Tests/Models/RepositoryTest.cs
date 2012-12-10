@@ -52,7 +52,7 @@ namespace BookWorm.Tests.Models
         }
 
         [TestMethod]
-        public void ShouldKnowHowToDeleteAModelByItsIdWhenItExsits()
+        public void ShouldKnowHowToDeleteAModelByItsIdWhenItExists()
         {
 
             var persistedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes chicken. You're going to love it." };
@@ -77,5 +77,18 @@ namespace BookWorm.Tests.Models
             var repository = new Repository(documentSession.Object);
             repository.Delete<StaticPage>(persistedModel.Id);
         }
+
+        [TestMethod]
+        public void ShouldKnowHowToEditAModelByItsIdWhenItExists()
+        {
+            var persistedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes chicken. You're going to love it." };
+            var documentSession = new Mock<IDocumentSession>();
+            documentSession.Setup(session => session.Load<StaticPage>(persistedModel.Id)).Returns(persistedModel);
+            var repository = new Repository(documentSession.Object);
+
+            repository.Edit<StaticPage>(persistedModel);
+
+            documentSession.Verify(session => session.Store(persistedModel), Times.Once());
+        } 
     }
 }
