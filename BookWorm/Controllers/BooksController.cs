@@ -53,5 +53,12 @@ namespace BookWorm.Controllers
             return RedirectToAction("Details", new { id = editedBook.Id });
 
         }
+
+        public RedirectToRouteResult Delete(int id)
+        {
+            _repository.Delete<Book>(id);
+            TempData["flash"] = string.Format("Book successfully deleted");            
+            return RedirectToAction("List");
+        }
     }
 }

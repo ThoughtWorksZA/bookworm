@@ -115,5 +115,17 @@ namespace BookWorm.Tests.Controllers
             
         }
 
+        [TestMethod]
+        public void ShouldDeleteBookAndShowListOfBooks()
+        {
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(repo => repo.Delete<Book>(1));
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var viewResult = booksController.Delete(1);
+            mockedRepo.Verify(repo => repo.Delete<Book>(1));
+            Assert.AreEqual("Book successfully deleted", booksController.TempData["flash"]);
+            Assert.AreEqual("List", viewResult.RouteValues["action"]);
+        }
     }
 }
