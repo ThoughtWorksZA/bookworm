@@ -28,14 +28,20 @@ namespace BookWorm.Models
             _documentSession.Dispose();
         }
 
-        public virtual T Get<T>(int id) where T: Model<T>
+        public virtual T Get<T>(int id) where T : Model<T>
         {
             return _documentSession.Load<T>(id);
         }
 
-        public virtual ICollection<T>  List<T>() where T: Model<T>
+        public virtual ICollection<T> List<T>() where T : Model<T>
         {
             return _documentSession.Query<T>().ToList();
+        }
+
+        public virtual void Delete<T>(int id) where T : Model<T>
+        {
+            var model = Get<T>(id);
+            _documentSession.Delete(model);
         }
     }
 

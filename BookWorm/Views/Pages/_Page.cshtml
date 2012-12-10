@@ -1,0 +1,5 @@
+﻿@model BookWorm.Models.StaticPage
+
+<li>
+    <h3>@Html.ActionLink(@Html.DisplayFor(x => x.Title).ToHtmlString(), "Details", new { id = @Model.Id })</h3>
+</li>

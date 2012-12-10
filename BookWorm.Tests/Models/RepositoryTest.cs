@@ -50,5 +50,32 @@ namespace BookWorm.Tests.Models
             var repository = new Repository(documentSession.Object);
             repository.Create(testModel);
         }
+
+        [TestMethod]
+        public void ShouldKnowHowToDeleteAModelByItsIdWhenItExsits()
+        {
+
+            var persistedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes chicken. You're going to love it." };
+            var documentSession = new Mock<IDocumentSession>();
+            documentSession.Setup(session => session.Load<StaticPage>(persistedModel.Id)).Returns(persistedModel);
+            var repository = new Repository(documentSession.Object);
+
+            repository.Delete<StaticPage>(persistedModel.Id);
+            documentSession.Verify(session => session.Delete(persistedModel), Times.Once()); 
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.InvalidOperationException))]
+        public void ShouldRethrowInvalidOperationException()
+        {
+            var persistedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes chicken. You're going to love it." };
+            var documentSession = new Mock<IDocumentSession>();
+            documentSession.Setup(session => session.Load<StaticPage>(persistedModel.Id)).Returns(persistedModel);
+            documentSession.Setup(session => session.Delete(persistedModel))
+                           .Throws(new System.InvalidOperationException());
+
+            var repository = new Repository(documentSession.Object);
+            repository.Delete<StaticPage>(persistedModel.Id);
+        }
     }
 }

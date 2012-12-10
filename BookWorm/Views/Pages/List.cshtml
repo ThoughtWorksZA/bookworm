@@ -1,0 +1,10 @@
+﻿@model IEnumerable<BookWorm.Models.StaticPage>
+
+<section>
+    <ul>
+        @foreach (var page in @Model)
+        {
+            Html.RenderPartial("_Page", page);
+        }
+    </ul>
+</section>

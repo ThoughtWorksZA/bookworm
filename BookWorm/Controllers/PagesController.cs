@@ -47,15 +47,9 @@ namespace BookWorm.Controllers
 
 
         [HttpGet]
-        public PartialViewResult List()
+        public ViewResult List()
         {
-            return PartialView(_repository.List<StaticPage>());
-        }
-
-        [ChildActionOnly]
-        protected PartialViewResult AllPages()
-        {
-            return PartialView(_repository.List<StaticPage>());
+            return View(_repository.List<StaticPage>());
         }
     }
 }

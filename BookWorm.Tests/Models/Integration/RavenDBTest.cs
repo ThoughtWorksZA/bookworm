@@ -50,5 +50,37 @@ namespace BookWorm.Tests.Models.Integration
             model.Title = "Spelled";
             session.Store(model);
         }
+
+        [TestMethod]
+        public void ShouldKnowThatWeCanDeleteADocument()
+        {
+            var session = _documentStore.OpenSession();
+            var model = new StaticPage { Id = 1, Title = "Misspelled" };
+            session.Store(model);
+            session.SaveChanges();
+            session.Delete(model);
+            session.SaveChanges();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.InvalidOperationException))]
+        public void ShouldKnowThatWeCannotDeleteADocumentTwice()
+        {
+            var session = _documentStore.OpenSession();
+            var model = new StaticPage { Id = 1, Title = "Misspelled" };
+            session.Store(model);
+            session.Delete(model);
+            session.SaveChanges();
+            session.Delete(model);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.InvalidOperationException))]
+        public void ShouldKnowThatWeCannotDeleteAnInvalidDocument()
+        {
+            var session = _documentStore.OpenSession();
+            var model = new StaticPage { Id = 1, Title = "Misspelled" };
+            session.Delete(model);
+        }
     }
 }

@@ -114,9 +114,7 @@ namespace BookWorm.Tests.Controllers
         [TestMethod]
         public void ShouldKnowHowToListAllPages()
         {
-            var id = 12;
             var repository = new Mock<Repository>();
-            var markdown = new Markdown();
             var savedPages = new List<StaticPage> 
                 {
                     new StaticPage { Id = 1, Title = "test title", Content = "Hello\n=====\nWorld" }, 
@@ -124,7 +122,9 @@ namespace BookWorm.Tests.Controllers
                 };
             repository.Setup(repo => repo.List<StaticPage>()).Returns(savedPages);
             var controller = new PagesController(repository.Object);
-            var result = (ViewResult)controller.Details(id);
+            var result = controller.List();
+            repository.Verify(it => it.List<StaticPage>(), Times.Once());
+            Assert.AreEqual(savedPages, result.Model);
         }
     }
 }
