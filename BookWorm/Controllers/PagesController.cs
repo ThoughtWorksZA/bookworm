@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using BookWorm.Models;
+using MarkdownSharp;
 
 namespace BookWorm.Controllers
 {
@@ -14,13 +15,20 @@ namespace BookWorm.Controllers
         {
         }
 
-        public ActionResult New(StaticPage submittedStaticPage)
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View("Create", new StaticPage());
+        }
+
+        [HttpPost]
+        public ActionResult Create(StaticPage submittedStaticPage)
         {
             try
             {
                 var savedPage = _repository.Create(submittedStaticPage);
                 TempData["flash"] = string.Format("Added {0}", submittedStaticPage.Title);
-                return RedirectToAction("index", "pages", new { id = savedPage.Id }); 
+                return RedirectToAction("Details", "Pages", new { id = savedPage.Id }); 
             }
             catch (Raven.Client.Exceptions.NonUniqueObjectException ex)
             {
@@ -29,9 +37,25 @@ namespace BookWorm.Controllers
             }
         }
 
-        public ActionResult Index(int id)
+        [HttpGet]
+        public ViewResult Details(int id)
         {
-            throw new NotImplementedException();
+            var page = _repository.Get<StaticPage>(id);
+            ViewBag.transformedContent = new Markdown().Transform(page.Content);
+            return View(page);
+        }
+
+
+        [HttpGet]
+        public PartialViewResult List()
+        {
+            return PartialView(_repository.List<StaticPage>());
+        }
+
+        [ChildActionOnly]
+        protected PartialViewResult AllPages()
+        {
+            return PartialView(_repository.List<StaticPage>());
         }
     }
 }

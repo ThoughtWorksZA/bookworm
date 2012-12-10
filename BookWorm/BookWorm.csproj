@@ -68,6 +68,9 @@
     <Reference Include="Lucene.Net.Contrib.Spatial.NTS">
       <HintPath>..\packages\RavenDB.Database.2.0.2170-Unstable\lib\net40\Lucene.Net.Contrib.Spatial.NTS.dll</HintPath>
     </Reference>
+    <Reference Include="MarkdownSharp">
+      <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Cecil">
       <HintPath>..\packages\RavenDB.Database.2.0.2170-Unstable\lib\net40\Mono.Cecil.dll</HintPath>
@@ -336,13 +339,16 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Pages\New.cshtml" />
+    <Content Include="Views\Pages\Create.cshtml" />
     <Content Include="Views\Books\Create.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\List.cshtml" />
+    <Content Include="Views\Pages\Details.cshtml" />
+    <Content Include="Views\Pages\List.cshtml" />
+    <Content Include="Views\Pages\_Page.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
