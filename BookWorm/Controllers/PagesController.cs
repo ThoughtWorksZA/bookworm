@@ -4,13 +4,14 @@ using BookWorm.Models;
 
 namespace BookWorm.Controllers
 {
-    public class PagesController : Controller
+    public class PagesController : BaseController
     {
-        private readonly Repository _repository;
-
-        public PagesController(Repository repository)
+        public PagesController()
         {
-            _repository = repository;
+        }
+
+        public PagesController(Repository repository) : base(repository)
+        {
         }
 
         public ActionResult New(StaticPage submittedStaticPage)

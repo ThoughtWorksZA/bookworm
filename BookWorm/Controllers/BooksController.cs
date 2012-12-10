@@ -5,16 +5,12 @@ namespace BookWorm.Controllers
 {
     public class BooksController : BaseController
     {
-        private Repository _repository;
-
-        public BooksController(Repository repository)
-        {
-            _repository = repository;
-        }
-
         public BooksController()
         {
-            _repository = new Repository();
+        }
+
+        public BooksController(Repository repository) : base (repository)
+        {
         }
 
         public ViewResult Index(int id)

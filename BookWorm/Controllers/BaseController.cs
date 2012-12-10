@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using BookWorm.Models;
 using Raven.Client;
 
 namespace BookWorm.Controllers
@@ -6,9 +7,21 @@ namespace BookWorm.Controllers
     public abstract class BaseController : Controller
     {
         private IDocumentSession _session;
+        protected Repository _repository;
+
+        public BaseController()
+        {
+        }
+
+        public BaseController(Repository repository)
+        {
+            _repository = repository;
+        }
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             _session = GetDocumentStore().OpenSession();
+            _repository = new Repository(_session);
             base.OnActionExecuting(filterContext);
 
         }
