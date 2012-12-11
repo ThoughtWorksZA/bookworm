@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using BookWorm.Models.Validations;
 
 namespace BookWorm.Models
 {
@@ -25,6 +26,7 @@ namespace BookWorm.Models
         public string Publisher { get; set; }
 
         [Required]
+        [ValidLanguage]
         public string Language { get; set; }
 
         [Required]

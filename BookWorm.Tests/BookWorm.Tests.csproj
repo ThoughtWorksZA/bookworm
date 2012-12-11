@@ -167,6 +167,7 @@
     <Compile Include="Controllers\BooksControllerTest.cs" />
     <Compile Include="Controllers\PagesControllerTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
+    <Compile Include="Models\BookTest.cs" />
     <Compile Include="Models\Integration\RavenDBTest.cs" />
     <Compile Include="Models\Integration\RepositoryTest.cs" />
     <Compile Include="Models\RepositoryTest.cs" />
