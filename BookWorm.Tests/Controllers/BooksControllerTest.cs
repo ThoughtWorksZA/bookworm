@@ -157,5 +157,31 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual("Book successfully deleted", booksController.TempData["flash"]);
             Assert.AreEqual("List", viewResult.RouteValues["action"]);
         }
+
+        [TestMethod]
+        public void BooksControllerShouldRequireAuthorization()
+        {
+            var booksControllerClass = typeof(BooksController);
+            Assert.AreEqual(1, booksControllerClass.GetCustomAttributes(typeof(AuthorizeAttribute), false).Count());
+        }
+        [TestMethod]
+        public void BooksControllerListShouldAllowAnonymous()
+        {
+            var booksControllerClass = typeof(BooksController);
+            Assert.AreEqual(1, booksControllerClass.GetMethods()
+                                                   .First(method => method.Name == "List")
+                                                   .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
+                                                   .Count());
+        }
+
+        [TestMethod]
+        public void BooksControllerDetailsShouldAllowAnonymous()
+        {
+            var booksControllerClass = typeof(BooksController);
+            Assert.AreEqual(1, booksControllerClass.GetMethods()
+                                                   .First(method => method.Name == "Details")
+                                                   .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
+                                                   .Count());
+        }
     }
 }

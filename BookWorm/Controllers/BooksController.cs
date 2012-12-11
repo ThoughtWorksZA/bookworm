@@ -3,6 +3,7 @@ using BookWorm.Models;
 
 namespace BookWorm.Controllers
 {
+    [Authorize]
     public class BooksController : BaseController
     {
         public BooksController()
@@ -13,12 +14,14 @@ namespace BookWorm.Controllers
         {
         }
 
+        [AllowAnonymous]
         public ViewResult List()
         {
             var books = _repository.List<Book>();
             return View(books);
         }
 
+        [AllowAnonymous]
         public ViewResult Details(int id)
         {
             var book = (Book) _repository.Get<Book>(id);
