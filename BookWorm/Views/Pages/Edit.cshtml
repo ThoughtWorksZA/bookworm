@@ -1,12 +1,13 @@
 ﻿@model BookWorm.Models.StaticPage
 
 @{
-    ViewBag.Title = "Edit Page";
+    ViewBag.Title = "Edit";
 }
 
 <h2>Edit</h2>
 
 @using (Html.BeginForm()) {
+    @Html.HttpMethodOverride(HttpVerbs.Put)
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -24,7 +25,7 @@
             @Html.LabelFor(model => model.Content)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Content)
+            @Html.TextAreaFor(model => model.Content)
             @Html.ValidationMessageFor(model => model.Content)
         </div>
 

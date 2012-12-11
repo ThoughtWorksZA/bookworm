@@ -5,6 +5,7 @@ using Raven.Client.Exceptions;
 
 namespace BookWorm.Controllers
 {
+    [Authorize]
     public class PagesController : BaseController
     {
         public PagesController()
@@ -38,6 +39,7 @@ namespace BookWorm.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ViewResult Details(int id)
         {
             var page = _repository.Get<StaticPage>(id);
@@ -47,12 +49,13 @@ namespace BookWorm.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         public ViewResult List()
         {
             return View(_repository.List<StaticPage>());
         }
 
-        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Delete)]
+        [HttpDelete]
         public RedirectToRouteResult Delete(int id)
         {
             _repository.Delete<StaticPage>(id);
@@ -65,7 +68,7 @@ namespace BookWorm.Controllers
             return View(_repository.Get<StaticPage>(id));
         }
 
-        [HttpPost]
+        [HttpPut]
         public RedirectToRouteResult Edit(StaticPage updatedPage)
         {
             _repository.Edit(updatedPage);

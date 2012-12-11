@@ -1,10 +1,45 @@
-﻿@model IEnumerable<BookWorm.Models.StaticPage>
+﻿@using BookWorm.Models
+@model IEnumerable<BookWorm.Models.StaticPage>
 
-<section>
-    <ul>
-        @foreach (var page in @Model)
-        {
-            Html.RenderPartial("_Page", page);
-        }
-    </ul>
-</section>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (StaticPage item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+                @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                @using (Html.BeginForm("Delete", "Pages", new {@id = item.Id}))
+                {
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <input type="submit" value="Delete" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>

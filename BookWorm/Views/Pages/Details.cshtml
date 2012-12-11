@@ -1,4 +1,29 @@
 ﻿@model BookWorm.Models.StaticPage
 
-<h2>@Model.Title</h2>
-<div class="staticpage-content">@Html.Raw(@ViewBag.transformedContent)</div>
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>StaticPage</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Title)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Content)
+    </div>
+    <div class="display-field">
+        @Html.Raw(ViewBag.transformedContent)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "List")
+</p>

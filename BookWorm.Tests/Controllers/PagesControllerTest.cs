@@ -165,5 +165,32 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual(existingPage.Id, result.RouteValues["id"]);
             repository.Verify(repo => repo.Edit(existingPage), Times.Once());
         }
+
+        [TestMethod]
+        public void ShouldKnowPageControllerRequiresAuthorization()
+        {
+            var pagesControllerClass = typeof (PagesController);
+            Assert.AreEqual(1, pagesControllerClass.GetCustomAttributes(typeof (AuthorizeAttribute), false).Count());
+        }
+
+        [TestMethod]
+        public void ShouldKnowPageControllerListAllowsAnonymous()
+        {
+            var pagesControllerClass = typeof(PagesController);
+            Assert.AreEqual(1, pagesControllerClass.GetMethods()
+                                                   .First(method => method.Name == "List")
+                                                   .GetCustomAttributes(typeof (AllowAnonymousAttribute), false)
+                                                   .Count());
+        }
+
+        [TestMethod]
+        public void ShouldKnowPageControllerDetailsAllowsAnonymous()
+        {
+            var pagesControllerClass = typeof(PagesController);
+            Assert.AreEqual(1, pagesControllerClass.GetMethods()
+                                                   .First(method => method.Name == "Details")
+                                                   .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
+                                                   .Count());
+        }
     }
 }

@@ -1,12 +1,16 @@
 ﻿@model BookWorm.Models.StaticPage
 
-<h2>@ViewBag.Title</h2>
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Book</legend>
+        <legend>StaticPage</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Title)
@@ -23,14 +27,15 @@
             @Html.TextAreaFor(model => model.Content)
             @Html.ValidationMessageFor(model => model.Content)
         </div>
+
         <p>
-            <input type="submit" value="Add Page" />
+            <input type="submit" value="Create" />
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Details")
+    @Html.ActionLink("Back to List", "List")
 </div>
 
 @section Scripts {
