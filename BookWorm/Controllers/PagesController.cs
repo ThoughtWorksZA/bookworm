@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using BookWorm.Models;
 using MarkdownSharp;
+using Raven.Client.Exceptions;
 
 namespace BookWorm.Controllers
 {
@@ -25,11 +26,11 @@ namespace BookWorm.Controllers
         {
             try
             {
-                var savedPage = _repository.Create(submittedStaticPage);
+                Model<StaticPage> savedPage = _repository.Create(submittedStaticPage);
                 TempData["flash"] = string.Format("Added {0}", submittedStaticPage.Title);
-                return RedirectToAction("Details", "Pages", new { id = savedPage.Id }); 
+                return RedirectToAction("Details", "Pages", new {id = savedPage.Id});
             }
-            catch (Raven.Client.Exceptions.NonUniqueObjectException ex)
+            catch (NonUniqueObjectException ex)
             {
                 TempData["flash"] = string.Format("Sorry, page {0} already exists.", submittedStaticPage.Title);
                 return View();
@@ -56,6 +57,19 @@ namespace BookWorm.Controllers
         {
             _repository.Delete<StaticPage>(id);
             return RedirectToAction("List", "Pages");
+        }
+
+        [HttpGet]
+        public ViewResult Edit(int id)
+        {
+            return View(_repository.Get<StaticPage>(id));
+        }
+
+        [HttpPost]
+        public RedirectToRouteResult Edit(StaticPage updatedPage)
+        {
+            _repository.Edit(updatedPage);
+            return RedirectToAction("Details", new {id = updatedPage.Id});
         }
     }
 }

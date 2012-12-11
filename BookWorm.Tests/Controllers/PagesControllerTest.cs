@@ -138,5 +138,32 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual("List", result.RouteValues["action"]);
             Assert.AreEqual("Pages", result.RouteValues["controller"]);
         }
+
+        [TestMethod]
+        public void ShouldKnowHowToRenderAnEditPage()
+        {
+            var repositoryMock = new Mock<Repository>();
+            var page = new StaticPage {Id = 1, Title = "The Page"};
+            repositoryMock.Setup(repo => repo.Get<StaticPage>(page.Id)).Returns(page);
+            var pagesController = new PagesController(repositoryMock.Object);
+
+            var result = pagesController.Edit(page.Id);
+            var actualModel = (StaticPage) result.Model;
+
+            Assert.AreEqual(page.Title, actualModel.Title);
+            repositoryMock.Verify(repo => repo.Get<StaticPage>(1), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldKnowHowToUpdateAPage()
+        {
+            var repository = new Mock<Repository>();
+            var existingPage = new StaticPage {Id = 1, Title = "Derping for dummies."};
+            repository.Setup(repo => repo.Edit(existingPage));
+            var pagesController = new PagesController(repository.Object);
+            var result = pagesController.Edit(existingPage);
+            Assert.AreEqual(existingPage.Id, result.RouteValues["id"]);
+            repository.Verify(repo => repo.Edit(existingPage), Times.Once());
+        }
     }
 }
