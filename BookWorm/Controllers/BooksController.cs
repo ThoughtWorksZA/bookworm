@@ -45,7 +45,7 @@ namespace BookWorm.Controllers
             return View(_repository.Get<Book>(id));
         }
 
-        [HttpPost]
+        [HttpPut]
         public RedirectToRouteResult Edit(Book editedBook)
         {
             _repository.Edit(editedBook);
@@ -54,6 +54,7 @@ namespace BookWorm.Controllers
 
         }
 
+        [HttpDelete]
         public RedirectToRouteResult Delete(int id)
         {
             _repository.Delete<Book>(id);

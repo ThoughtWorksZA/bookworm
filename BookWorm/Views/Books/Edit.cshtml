@@ -2,8 +2,10 @@
 
 <h2>>@ViewBag.Title</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
+    @Html.HttpMethodOverride(HttpVerbs.Put)
 
     <fieldset>
         <legend>Book</legend>
