@@ -32,8 +32,15 @@ namespace BookWorm.Controllers
         }
 
         [HttpPost]
-        public RedirectToRouteResult Create(Book book)
+        public ActionResult Create(Book book)
         {
+
+            if (! ModelState.IsValid )
+            {
+                TempData["flash"] = "There were problems saving this book";
+                return View(book);
+            }
+
             var createdBook = (Book) _repository.Create(book);
             TempData["flash"] = string.Format("Added {0} successfully", createdBook.Title);
             return RedirectToAction("Details", new { id = createdBook.Id });

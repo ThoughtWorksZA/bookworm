@@ -29,10 +29,10 @@ namespace BookWorm.Tests.Controllers
             var book = new Book { Title = "The Book" };
 
             var mockedRepo = new Mock<Repository>();
-            mockedRepo.Setup(repo => repo.Create(book)).Returns(new Book { Id = 1, Title = "The Book" });
+            mockedRepo.Setup(repo => repo.Create(book)).Returns(new Book { Id = 1, Title = "The Book"});
             var booksController = new BooksController(mockedRepo.Object);
 
-            var viewResult = booksController.Create(book);
+            var viewResult = (RedirectToRouteResult)booksController.Create(book);
 
             Assert.IsNotNull(viewResult);
             Assert.AreEqual("Added The Book successfully", booksController.TempData["flash"]);
@@ -50,6 +50,21 @@ namespace BookWorm.Tests.Controllers
 
             booksController.Create(book);
             mockedRepo.Verify(repo => repo.Create(book));
+        }
+
+        [TestMethod]
+        public void CreateBookShouldNotSaveWhenBookIsInvalid()
+        {
+            var book = new Book();
+            var mockedRepo = new Mock<Repository>();
+            var booksController = new BooksController(mockedRepo.Object);
+            mockedRepo.Setup(repo => repo.Create(book)).Returns(book);
+            booksController.ModelState.AddModelError("test error","test exception");
+
+            var result = (ViewResult)booksController.Create(book);
+
+            mockedRepo.Verify(repo => repo.Create(book), Times.Never(), "failing model validation should prevent creating book");
+            Assert.AreEqual("There were problems saving this book", booksController.TempData["flash"]);
         }
 
         [TestMethod]
