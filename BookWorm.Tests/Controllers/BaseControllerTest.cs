@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
@@ -10,15 +11,25 @@ namespace BookWorm.Tests.Controllers
 {
     internal class TestBaseController : BaseController
     {
-        private readonly IDocumentStore _documentStore;
+        private IDocumentStore _documentStore;
 
         public TestBaseController(IDocumentStore documentStore)
         {
             _documentStore = documentStore;
         }
+        public TestBaseController(Repository repository) : base(repository)
+        {
+        }
 
         protected override IDocumentStore GetDocumentStore()
         {
+            if (_documentStore == null)
+            {
+                var documentSession = new Mock<IDocumentSession>();
+                var documentStore = new Mock<IDocumentStore>();
+                documentStore.Setup(store => store.OpenSession()).Returns(documentSession.Object);
+                _documentStore = documentStore.Object;
+            }
             return _documentStore;
         }
 
@@ -105,6 +116,23 @@ namespace BookWorm.Tests.Controllers
             testBaseController.OnActionExecuted(actionExecutedContext.Object);
 
             documentSession.Verify(session => session.SaveChanges(), Times.Never());
+        }
+
+        [TestMethod]
+        public void ShouldKnowHowToAddStaticPagesToTheViewBag()
+        {
+            var repository = new Mock<Repository>();
+            var savedPages = new List<StaticPage> 
+                {
+                    new StaticPage { Id = 1, Title = "test title", Content = "Hello\n=====\nWorld" }, 
+                    new StaticPage { Id = 2, Title = "test title2", Content = "Hello\n=====\nAnother World" }
+                };
+            repository.Setup(repo => repo.List<StaticPage>()).Returns(savedPages);
+            var controller = new TestBaseController(repository.Object);
+            repository.Verify(repo => repo.List<StaticPage>(), Times.Never());
+            controller.OnActionExecuting(null);
+            Assert.AreEqual(savedPages, controller.ViewBag.StaticPages);
+            repository.Verify(repo => repo.List<StaticPage>(), Times.Once());
         }
     }
 }

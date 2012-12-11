@@ -20,6 +20,9 @@ namespace BookWorm.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+
+            var allPages = _repository.List<StaticPage>();
+            ViewBag.StaticPages = allPages;
             _session = GetDocumentStore().OpenSession();
             _repository = new Repository(_session);
             base.OnActionExecuting(filterContext);
