@@ -122,12 +122,27 @@ namespace BookWorm.Tests.Controllers
             mockedRepo.Setup(repo => repo.Edit(editedBook));
             var booksController = new BooksController(mockedRepo.Object);
 
-            var viewResult = booksController.Edit(editedBook);
+            var viewResult = (RedirectToRouteResult)booksController.Edit(editedBook);
 
             mockedRepo.Verify(repo => repo.Edit<Book>(editedBook), Times.Once());
             Assert.AreEqual("Updated A book successfully", booksController.TempData["flash"]);
             Assert.AreEqual(1, viewResult.RouteValues["id"]);
             
+        }
+
+        [TestMethod]
+        public void EditBookShouldNotSaveWhenBookIsInvalid()
+        {
+            var book = new Book();
+            var mockedRepo = new Mock<Repository>();
+            var booksController = new BooksController(mockedRepo.Object);
+            mockedRepo.Setup(repo => repo.Edit(book));
+            booksController.ModelState.AddModelError("test error", "test exception");
+
+            var result = (ViewResult)booksController.Edit(book);
+
+            mockedRepo.Verify(repo => repo.Edit(book), Times.Never(), "failing model validation should prevent updating book");
+            Assert.AreEqual("There were problems saving this book", booksController.TempData["flash"]);
         }
 
         [TestMethod]

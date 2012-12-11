@@ -53,8 +53,14 @@ namespace BookWorm.Controllers
         }
 
         [HttpPut]
-        public RedirectToRouteResult Edit(Book editedBook)
+        public ActionResult Edit(Book editedBook)
         {
+            if (!ModelState.IsValid)
+            {
+                TempData["flash"] = "There were problems saving this book";
+                return View(editedBook);
+            }
+
             _repository.Edit(editedBook);
             TempData["flash"] = string.Format("Updated {0} successfully", editedBook.Title);
             return RedirectToAction("Details", new { id = editedBook.Id });
