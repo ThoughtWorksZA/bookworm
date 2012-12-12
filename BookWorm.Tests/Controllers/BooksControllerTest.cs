@@ -117,21 +117,22 @@ namespace BookWorm.Tests.Controllers
             var booksController = new BooksController(mockedRepo.Object);
 
             var editABookView = booksController.Edit(1);
-            var model = (Book)editABookView.Model;
+            var model = (BookInformation)editABookView.Model;
            
             Assert.AreEqual("Edit a Book", booksController.ViewBag.Title);
-            Assert.AreEqual(book.Title, model.Title);
+            Assert.AreEqual(book.Title, model.Book.Title);
         }
 
         [TestMethod]
         public void ShouldUpdateBookOnEditPost()
         {
             var editedBook = new Book { Id = 1, Title = "A book" };
+            var editedBookInformation = new BookInformation(editedBook);
             var mockedRepo = new Mock<Repository>();
             mockedRepo.Setup(repo => repo.Edit(editedBook));
             var booksController = new BooksController(mockedRepo.Object);
 
-            var viewResult = (RedirectToRouteResult)booksController.Edit(editedBook);
+            var viewResult = (RedirectToRouteResult)booksController.Edit(editedBookInformation);
 
             mockedRepo.Verify(repo => repo.Edit<Book>(editedBook), Times.Once());
             Assert.AreEqual("Updated A book successfully", booksController.TempData["flash"]);
@@ -143,12 +144,13 @@ namespace BookWorm.Tests.Controllers
         public void EditBookShouldNotSaveWhenBookIsInvalid()
         {
             var book = new Book();
+            var bookInformation = new BookInformation(book);
             var mockedRepo = new Mock<Repository>();
             var booksController = new BooksController(mockedRepo.Object);
             mockedRepo.Setup(repo => repo.Edit(book));
             booksController.ModelState.AddModelError("test error", "test exception");
 
-            var result = (ViewResult)booksController.Edit(book);
+            var result = (ViewResult)booksController.Edit(bookInformation);
 
             mockedRepo.Verify(repo => repo.Edit(book), Times.Never(), "failing model validation should prevent updating book");
             Assert.AreEqual("There were problems saving this book", booksController.TempData["flash"]);

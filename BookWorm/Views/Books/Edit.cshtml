@@ -1,5 +1,5 @@
 ﻿@using BookWorm.Models.Validations
-@model BookWorm.Models.Book
+@model BookWorm.ViewModels.BookInformation
 
 <h2>>@ViewBag.Title</h2>
 
@@ -12,110 +12,110 @@
         <legend>Book</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Title)
+            @Html.LabelFor(model => model.Book.Title)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Title)
-            @Html.ValidationMessageFor(model => model.Title)
+            @Html.EditorFor(model => model.Book.Title)
+            @Html.ValidationMessageFor(model => model.Book.Title)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Subtitle)
+            @Html.LabelFor(model => model.Book.Subtitle)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Subtitle)
-            @Html.ValidationMessageFor(model => model.Subtitle)
+            @Html.EditorFor(model => model.Book.Subtitle)
+            @Html.ValidationMessageFor(model => model.Book.Subtitle)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Author)
+            @Html.LabelFor(model => model.Book.Author)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Author)
-            @Html.ValidationMessageFor(model => model.Author)
+            @Html.EditorFor(model => model.Book.Author)
+            @Html.ValidationMessageFor(model => model.Book.Author)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Illustrator)
+            @Html.LabelFor(model => model.Book.Illustrator)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Illustrator)
-            @Html.ValidationMessageFor(model => model.Illustrator)
+            @Html.EditorFor(model => model.Book.Illustrator)
+            @Html.ValidationMessageFor(model => model.Book.Illustrator)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Editor)
+            @Html.LabelFor(model => model.Book.Editor)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Editor)
-            @Html.ValidationMessageFor(model => model.Editor)
+            @Html.EditorFor(model => model.Book.Editor)
+            @Html.ValidationMessageFor(model => model.Book.Editor)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Isbn)
+            @Html.LabelFor(model => model.Book.Isbn)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Isbn)
-            @Html.ValidationMessageFor(model => model.Isbn)
+            @Html.EditorFor(model => model.Book.Isbn)
+            @Html.ValidationMessageFor(model => model.Book.Isbn)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Publisher)
+            @Html.LabelFor(model => model.Book.Publisher)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Publisher)
-            @Html.ValidationMessageFor(model => model.Publisher)
+            @Html.EditorFor(model => model.Book.Publisher)
+            @Html.ValidationMessageFor(model => model.Book.Publisher)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Language)
+            @Html.LabelFor(model => model.Book.Language)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Language, new SelectList(new ValidLanguage().ValidLanguages))
-            @Html.ValidationMessageFor(model => model.Language)
+            @Html.DropDownListFor(model => model.Book.Language, new SelectList(new ValidLanguage().ValidLanguages))
+            @Html.ValidationMessageFor(model => model.Book.Language)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Genre)
+            @Html.LabelFor(model => model.Book.Genre)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Genre)
-            @Html.ValidationMessageFor(model => model.Genre)
+            @Html.EditorFor(model => model.Book.Genre)
+            @Html.ValidationMessageFor(model => model.Book.Genre)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.RecommendedAgeGroup)
+            @Html.LabelFor(model => model.Book.RecommendedAgeGroup)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.RecommendedAgeGroup)
-            @Html.ValidationMessageFor(model => model.RecommendedAgeGroup)
+            @Html.EditorFor(model => model.Book.RecommendedAgeGroup)
+            @Html.ValidationMessageFor(model => model.Book.RecommendedAgeGroup)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Country)
+            @Html.LabelFor(model => model.Book.Country)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Country)
-            @Html.ValidationMessageFor(model => model.Country)
+            @Html.EditorFor(model => model.Book.Country)
+            @Html.ValidationMessageFor(model => model.Book.Country)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.CoverImageUrl)
+            @Html.LabelFor(model => model.Book.CoverImageUrl)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.CoverImageUrl)
-            @Html.ValidationMessageFor(model => model.CoverImageUrl)
+            @Html.EditorFor(model => model.Book.CoverImageUrl)
+            @Html.ValidationMessageFor(model => model.Book.CoverImageUrl)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
+            @Html.LabelFor(model => model.Book.Description)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
+            @Html.EditorFor(model => model.Book.Description)
+            @Html.ValidationMessageFor(model => model.Book.Description)
         </div>
 
-        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Book.Id)
 
         <p>
             <input type="submit" value="Save" />

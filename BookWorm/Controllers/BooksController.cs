@@ -58,21 +58,21 @@ namespace BookWorm.Controllers
         public ViewResult Edit(int id)
         {
             ViewBag.Title = "Edit a Book";
-            return View(_repository.Get<Book>(id));
+            return View(new BookInformation(_repository.Get<Book>(id)));
         }
 
         [HttpPut]
-        public ActionResult Edit(Book editedBook)
+        public ActionResult Edit(BookInformation editedBookInformation)
         {
             if (!ModelState.IsValid)
             {
                 TempData["flash"] = "There were problems saving this book";
-                return View(editedBook);
+                return View(editedBookInformation);
             }
 
-            _repository.Edit(editedBook);
-            TempData["flash"] = string.Format("Updated {0} successfully", editedBook.Title);
-            return RedirectToAction("Details", new { id = editedBook.Id });
+            _repository.Edit(editedBookInformation.Book);
+            TempData["flash"] = string.Format("Updated {0} successfully", editedBookInformation.Book.Title);
+            return RedirectToAction("Details", new { id = editedBookInformation.Book.Id });
 
         }
 
