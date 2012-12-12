@@ -26,10 +26,10 @@ namespace BookWorm.Models.Validations
 
         public override bool IsValid(object specifiedLanguage)
         {
-            return checkSpecifiedLanguageIsValid(specifiedLanguage);
+            return CheckSpecifiedLanguageIsValid(specifiedLanguage);
         }
 
-        private bool checkSpecifiedLanguageIsValid(object specifiedLanguage)
+        private bool CheckSpecifiedLanguageIsValid(object specifiedLanguage)
         {
             return ValidLanguages.Contains(specifiedLanguage);
         }

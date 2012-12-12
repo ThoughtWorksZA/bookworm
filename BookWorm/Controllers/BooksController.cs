@@ -58,6 +58,7 @@ namespace BookWorm.Controllers
         public ViewResult Edit(int id)
         {
             ViewBag.Title = "Edit a Book";
+            ViewBag.Method = "PUT";
             return View(new BookInformation(_repository.Get<Book>(id)));
         }
 

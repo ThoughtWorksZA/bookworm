@@ -119,6 +119,7 @@ namespace BookWorm.Tests.Controllers
             var editABookView = booksController.Edit(1);
             var model = (BookInformation)editABookView.Model;
            
+            Assert.AreEqual("PUT", booksController.ViewBag.Method);
             Assert.AreEqual("Edit a Book", booksController.ViewBag.Title);
             Assert.AreEqual(book.Title, model.Book.Title);
         }
