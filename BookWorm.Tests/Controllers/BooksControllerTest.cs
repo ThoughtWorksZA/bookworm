@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
+using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -17,22 +18,24 @@ namespace BookWorm.Tests.Controllers
             var booksController = new BooksController();
 
             var createABookView = booksController.Create();
-            var model = createABookView.Model;
+            var model = (BookInformation)createABookView.Model;
 
             Assert.AreEqual("Add a Book", booksController.ViewBag.Title);
-            Assert.IsInstanceOfType(model, typeof(Book));
+            Assert.IsInstanceOfType(model, typeof(BookInformation));
+            Assert.IsInstanceOfType(model.Book, typeof(Book));
         }
 
         [TestMethod]
         public void ShouldRedirectToDetailsPageWhenBookIsCreated()
         {
             var book = new Book { Title = "The Book" };
+            var bookInformation = new BookInformation(book);
 
             var mockedRepo = new Mock<Repository>();
             mockedRepo.Setup(repo => repo.Create(book)).Returns(new Book { Id = 1, Title = "The Book"});
             var booksController = new BooksController(mockedRepo.Object);
 
-            var viewResult = (RedirectToRouteResult)booksController.Create(book);
+            var viewResult = (RedirectToRouteResult)booksController.Create(bookInformation);
 
             Assert.IsNotNull(viewResult);
             Assert.AreEqual("Added The Book successfully", booksController.TempData["flash"]);
@@ -43,12 +46,14 @@ namespace BookWorm.Tests.Controllers
         public void ShouldUseRepositoryWhenCreatingABook()
         {
             var book = new Book();
+            var bookInformation = new BookInformation(book);
+
             var mockedRepo = new Mock<Repository>();
             mockedRepo.Setup(repo => repo.Create(book)).Returns(new Book());
 
             var booksController = new BooksController(mockedRepo.Object);
 
-            booksController.Create(book);
+            booksController.Create(bookInformation);
             mockedRepo.Verify(repo => repo.Create(book));
         }
 
@@ -56,12 +61,13 @@ namespace BookWorm.Tests.Controllers
         public void CreateBookShouldNotSaveWhenBookIsInvalid()
         {
             var book = new Book();
+            var bookInformation = new BookInformation(book);
             var mockedRepo = new Mock<Repository>();
             var booksController = new BooksController(mockedRepo.Object);
             mockedRepo.Setup(repo => repo.Create(book)).Returns(book);
             booksController.ModelState.AddModelError("test error","test exception");
 
-            var result = (ViewResult)booksController.Create(book);
+            var result = (ViewResult)booksController.Create(bookInformation);
 
             mockedRepo.Verify(repo => repo.Create(book), Times.Never(), "failing model validation should prevent creating book");
             Assert.AreEqual("There were problems saving this book", booksController.TempData["flash"]);
@@ -199,4 +205,5 @@ namespace BookWorm.Tests.Controllers
                                                    .Count());
         }
     }
+
 }

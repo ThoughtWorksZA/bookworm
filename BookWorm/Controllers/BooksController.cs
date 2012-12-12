@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using BookWorm.Models;
+using BookWorm.ViewModels;
 
 namespace BookWorm.Controllers
 {
@@ -33,20 +34,20 @@ namespace BookWorm.Controllers
         public ViewResult Create()
         {
             ViewBag.Title = "Add a Book";
-            return View(new Book());
+            return View(new BookInformation(new Book()));
         }
 
         [HttpPost]
-        public ActionResult Create(Book book)
+        public ActionResult Create(BookInformation bookInformation)
         {
 
             if (! ModelState.IsValid )
             {
                 TempData["flash"] = "There were problems saving this book";
-                return View(book);
+                return View(bookInformation);
             }
 
-            var createdBook = (Book) _repository.Create(book);
+            var createdBook = (Book) _repository.Create(bookInformation.Book);
             TempData["flash"] = string.Format("Added {0} successfully", createdBook.Title);
             return RedirectToAction("Details", new { id = createdBook.Id });
         }
