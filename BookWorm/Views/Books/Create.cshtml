@@ -69,7 +69,7 @@
             @Html.LabelFor(model => model.Book.Language)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Book.Language, new SelectList(new ValidLanguage().ValidLanguages))
+            @Html.DropDownListFor(model => model.Book.Language, Model.ValidLanguages())
             @Html.ValidationMessageFor(model => model.Book.Language)
         </div>
 
