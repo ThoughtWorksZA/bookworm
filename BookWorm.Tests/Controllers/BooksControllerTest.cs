@@ -83,10 +83,11 @@ namespace BookWorm.Tests.Controllers
 
             var view = booksController.Details(1);
 
-            var bookInView = (Book) view.Model;
+            var bookInView = (BookInformation) view.Model;
             Assert.IsInstanceOfType(view, typeof(ViewResult));
             mockedRepo.Verify(repo => repo.Get<Book>(book.Id), Times.Once());
-            Assert.AreEqual(book, bookInView);
+            Assert.AreEqual(book, bookInView.Book);
+            Assert.AreEqual("A book", booksController.ViewBag.Title);
         }
 
         [TestMethod]
@@ -117,21 +118,6 @@ namespace BookWorm.Tests.Controllers
             var model = (Book)editABookView.Model;
            
             Assert.AreEqual("Edit a Book", booksController.ViewBag.Title);
-            Assert.AreEqual(book.Title, model.Title);
-        }
-
-        [TestMethod]
-        public void ShouldReturnDetailsPageOnGetDetails()
-        {
-            var book = new Book { Id = 1, Title = "A book" };
-            var mockedRepo = new Mock<Repository>();
-            mockedRepo.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
-            var booksController = new BooksController(mockedRepo.Object);
-
-            var detailsOfABookView = booksController.Details(1);
-            var model = (Book) detailsOfABookView.Model;
-
-            Assert.AreEqual("A book", booksController.ViewBag.Title);
             Assert.AreEqual(book.Title, model.Title);
         }
 

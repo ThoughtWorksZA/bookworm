@@ -27,8 +27,9 @@ namespace BookWorm.Controllers
         public ViewResult Details(int id)
         {
             var book = (Book) _repository.Get<Book>(id);
-            ViewBag.Title = book.Title;
-            return View(book);
+            var bookInformation = new BookInformation(book);
+            ViewBag.Title = bookInformation.Book.Title;
+            return View(bookInformation);
         }
 
         public ViewResult Create()

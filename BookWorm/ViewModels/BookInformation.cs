@@ -16,7 +16,6 @@ namespace BookWorm.ViewModels
         }
         public BookInformation()
         {
-            
         }
     }
 }

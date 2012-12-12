@@ -1,4 +1,4 @@
-﻿@model BookWorm.Models.Book
+﻿@model BookWorm.ViewModels.BookInformation
 
 <h2>@ViewBag.Title</h2>
 
@@ -6,97 +6,97 @@
     <legend>Book</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Title)
+         @Html.DisplayNameFor(model => model.Book.Title)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Title)
+        @Html.DisplayFor(model => model.Book.Title)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Subtitle)
+         @Html.DisplayNameFor(model => model.Book.Subtitle)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Subtitle)
+        @Html.DisplayFor(model => model.Book.Subtitle)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Author)
+         @Html.DisplayNameFor(model => model.Book.Author)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Author)
+        @Html.DisplayFor(model => model.Book.Author)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Illustrator)
+         @Html.DisplayNameFor(model => model.Book.Illustrator)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Illustrator)
+        @Html.DisplayFor(model => model.Book.Illustrator)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Editor)
+         @Html.DisplayNameFor(model => model.Book.Editor)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Editor)
+        @Html.DisplayFor(model => model.Book.Editor)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Isbn)
+         @Html.DisplayNameFor(model => model.Book.Isbn)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Isbn)
+        @Html.DisplayFor(model => model.Book.Isbn)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Publisher)
+         @Html.DisplayNameFor(model => model.Book.Publisher)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Publisher)
+        @Html.DisplayFor(model => model.Book.Publisher)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Language)
+         @Html.DisplayNameFor(model => model.Book.Language)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Language)
+        @Html.DisplayFor(model => model.Book.Language)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Genre)
+         @Html.DisplayNameFor(model => model.Book.Genre)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Genre)
+        @Html.DisplayFor(model => model.Book.Genre)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.RecommendedAgeGroup)
+         @Html.DisplayNameFor(model => model.Book.RecommendedAgeGroup)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.RecommendedAgeGroup)
+        @Html.DisplayFor(model => model.Book.RecommendedAgeGroup)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Country)
+         @Html.DisplayNameFor(model => model.Book.Country)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Country)
+        @Html.DisplayFor(model => model.Book.Country)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.CoverImageUrl)
+         @Html.DisplayNameFor(model => model.Book.CoverImageUrl)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.CoverImageUrl)
+        @Html.DisplayFor(model => model.Book.CoverImageUrl)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Description)
+         @Html.DisplayNameFor(model => model.Book.Description)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
+        @Html.DisplayFor(model => model.Book.Description)
     </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Book.Id }) |
     @Html.ActionLink("Back to List", "List")
 </p>
