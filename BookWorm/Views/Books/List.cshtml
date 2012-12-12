@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BookWorm.Models.Book>
+﻿@model IEnumerable<BookWorm.ViewModels.BookInformation>
 
 <h2>@ViewBag.Title</h2>
 
@@ -8,43 +8,43 @@
 <table>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Book.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Subtitle)
+            @Html.DisplayNameFor(model => model.Book.Subtitle)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Author)
+            @Html.DisplayNameFor(model => model.Book.Author)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Illustrator)
+            @Html.DisplayNameFor(model => model.Book.Illustrator)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Editor)
+            @Html.DisplayNameFor(model => model.Book.Editor)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Isbn)
+            @Html.DisplayNameFor(model => model.Book.Isbn)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Publisher)
+            @Html.DisplayNameFor(model => model.Book.Publisher)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Language)
+            @Html.DisplayNameFor(model => model.Book.Language)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Genre)
+            @Html.DisplayNameFor(model => model.Book.Genre)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RecommendedAgeGroup)
+            @Html.DisplayNameFor(model => model.Book.RecommendedAgeGroup)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Country)
+            @Html.DisplayNameFor(model => model.Book.Country)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CoverImageUrl)
+            @Html.DisplayNameFor(model => model.Book.CoverImageUrl)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Book.Description)
         </th>
         <th></th>
     </tr>
@@ -53,49 +53,49 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => item.Book.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Subtitle)
+                @Html.DisplayFor(modelItem => item.Book.Subtitle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Author)
+                @Html.DisplayFor(modelItem => item.Book.Author)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Illustrator)
+                @Html.DisplayFor(modelItem => item.Book.Illustrator)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Editor)
+                @Html.DisplayFor(modelItem => item.Book.Editor)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Isbn)
+                @Html.DisplayFor(modelItem => item.Book.Isbn)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Publisher)
+                @Html.DisplayFor(modelItem => item.Book.Publisher)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Language)
+                @Html.DisplayFor(modelItem => item.Book.Language)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Genre)
+                @Html.DisplayFor(modelItem => item.Book.Genre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RecommendedAgeGroup)
+                @Html.DisplayFor(modelItem => item.Book.RecommendedAgeGroup)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Country)
+                @Html.DisplayFor(modelItem => item.Book.Country)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CoverImageUrl)
+                @Html.DisplayFor(modelItem => item.Book.CoverImageUrl)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.Book.Description)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-                @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                @Html.ActionLink("Edit", "Edit", new {id = item.Book.Id}) |
+                @Html.ActionLink("Details", "Details", new {id = item.Book.Id}) |
             
-                @using (Html.BeginForm("Delete", "Books", new {@id = item.Id}))
+                @using (Html.BeginForm("Delete", "Books", new {@id = item.Book.Id}))
                 {
                     @Html.HttpMethodOverride(HttpVerbs.Delete)
                     <input type="submit" value="Delete" />

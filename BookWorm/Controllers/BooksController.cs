@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using BookWorm.Models;
 using BookWorm.ViewModels;
@@ -20,7 +21,8 @@ namespace BookWorm.Controllers
         public ViewResult List()
         {
             var books = _repository.List<Book>();
-            return View(books);
+            var bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            return View(bookInformations);
         }
 
         [AllowAnonymous]

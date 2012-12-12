@@ -101,9 +101,11 @@ namespace BookWorm.Tests.Controllers
 
             var view = booksController.List();
 
-            var booksInView = (List<Book>) view.Model;
+            var booksInView = (List<BookInformation>) view.Model;
+            var actualBooks = booksInView.Select(bookInformation => bookInformation.Book).ToList();
+            Assert.IsTrue(books.SequenceEqual(actualBooks));
+
             mockedRepo.Verify(repo => repo.List<Book>(), Times.Once());
-            Assert.AreEqual(books, booksInView);
         }
 
         [TestMethod]
