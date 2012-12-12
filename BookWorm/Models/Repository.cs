@@ -35,7 +35,8 @@ namespace BookWorm.Models
 
         public virtual ICollection<T> List<T>() where T : Model<T>
         {
-            return _documentSession.Query<T>().ToList();
+            var _ravenQueryable = _documentSession.Query<T>();
+            return _ravenQueryable.ToList();
         }
 
         public virtual void Delete<T>(int id) where T : Model<T>

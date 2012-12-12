@@ -6,17 +6,32 @@ using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Raven.Client;
+using Raven.Client.Linq;
 
 namespace BookWorm.Tests.Controllers
 {
+    internal class TestRepository : Repository
+    {
+        public TestRepository(IDocumentSession documentSession) : base(documentSession)
+        {
+        }
+
+        public override ICollection<T> List<T>()
+        {
+            return new List<T>();
+        }
+    }
+
     internal class TestBaseController : BaseController
     {
         private IDocumentStore _documentStore;
+        private Repository _repository;
 
         public TestBaseController(IDocumentStore documentStore)
         {
             _documentStore = documentStore;
         }
+
         public TestBaseController(Repository repository) : base(repository)
         {
         }
@@ -31,6 +46,16 @@ namespace BookWorm.Tests.Controllers
                 _documentStore = documentStore.Object;
             }
             return _documentStore;
+        }
+
+        protected override Repository GetRepository()
+        {
+            if (_repository == null)
+            {
+                _session = GetDocumentStore().OpenSession();
+                _repository = new TestRepository(_session);
+            }
+            return _repository;
         }
 
         public new void OnActionExecuting(ActionExecutingContext filterContext)
@@ -131,7 +156,7 @@ namespace BookWorm.Tests.Controllers
             var controller = new TestBaseController(repository.Object);
             repository.Verify(repo => repo.List<StaticPage>(), Times.Never());
             controller.OnActionExecuting(null);
-            Assert.AreEqual(savedPages, controller.ViewBag.StaticPages);
+            Assert.AreEqual(savedPages.ToArray(), controller.ViewBag.StaticPages.ToArray());
             repository.Verify(repo => repo.List<StaticPage>(), Times.Once());
         }
     }

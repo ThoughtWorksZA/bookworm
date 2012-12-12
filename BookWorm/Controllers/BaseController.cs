@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using BookWorm.Models;
 using Raven.Client;
 
@@ -6,7 +7,7 @@ namespace BookWorm.Controllers
 {
     public abstract class BaseController : Controller
     {
-        private IDocumentSession _session;
+        protected IDocumentSession _session;
         protected Repository _repository;
 
         public BaseController()
@@ -20,13 +21,15 @@ namespace BookWorm.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-
-            var allPages = _repository.List<StaticPage>();
-            ViewBag.StaticPages = allPages;
-            _session = GetDocumentStore().OpenSession();
-            _repository = new Repository(_session);
+            _repository = GetRepository();
+            ViewBag.StaticPages = _repository.List<StaticPage>();
             base.OnActionExecuting(filterContext);
+        }
 
+        protected virtual Repository GetRepository()
+        {
+            _session = GetDocumentStore().OpenSession();
+            return new Repository(_session);
         }
 
         protected virtual IDocumentStore GetDocumentStore()
