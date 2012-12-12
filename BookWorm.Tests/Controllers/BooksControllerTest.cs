@@ -115,6 +115,21 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
+        public void ShouldReturnDetailsPageOnGetDetails()
+        {
+            var book = new Book { Id = 1, Title = "A book" };
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var detailsOfABookView = booksController.Details(1);
+            var model = (Book) detailsOfABookView.Model;
+
+            Assert.AreEqual("A book", booksController.ViewBag.Title);
+            Assert.AreEqual(book.Title, model.Title);
+        }
+
+        [TestMethod]
         public void ShouldUpdateBookOnEditPost()
         {
             var editedBook = new Book { Id = 1, Title = "A book" };

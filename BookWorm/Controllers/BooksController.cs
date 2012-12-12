@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using BookWorm.Models;
 
 namespace BookWorm.Controllers
@@ -25,6 +26,7 @@ namespace BookWorm.Controllers
         public ViewResult Details(int id)
         {
             var book = (Book) _repository.Get<Book>(id);
+            ViewBag.Title = book.Title;
             return View(book);
         }
 

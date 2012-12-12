@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using BookWorm.Models.Validations;
 
 namespace BookWorm.Models
@@ -20,7 +22,7 @@ namespace BookWorm.Models
         public string Editor { get; set; }
 
         [Required]
-        public string Isbn { get; set;}
+        public string Isbn { get; set; }
 
         [Required]
         public string Publisher { get; set; }
@@ -28,6 +30,7 @@ namespace BookWorm.Models
         [Required]
         [ValidLanguage]
         public string Language { get; set; }
+
 
         [Required]
         public string Genre { get; set; }

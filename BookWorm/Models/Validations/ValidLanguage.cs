@@ -9,7 +9,7 @@ namespace BookWorm.Models.Validations
 {
     public class ValidLanguage : ValidationAttribute //, IClientValidatable
     {
-        public List<string> _validLanguages = new List<string>
+        public List<string> ValidLanguages = new List<string>
             {
                 "Afrikaans",
                 "English",
@@ -31,7 +31,7 @@ namespace BookWorm.Models.Validations
 
         private bool checkSpecifiedLanguageIsValid(object specifiedLanguage)
         {
-            return _validLanguages.Contains(specifiedLanguage);
+            return ValidLanguages.Contains(specifiedLanguage);
         }
    
     }

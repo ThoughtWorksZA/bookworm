@@ -1,4 +1,5 @@
-﻿@model BookWorm.Models.Book
+﻿@using BookWorm.Models.Validations
+@model BookWorm.Models.Book
 
 <h2>@ViewBag.Title</h2>
 
@@ -68,7 +69,7 @@
             @Html.LabelFor(model => model.Language)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Language)
+            @Html.DropDownListFor(model => model.Language, new SelectList(new ValidLanguage().ValidLanguages))
             @Html.ValidationMessageFor(model => model.Language)
         </div>
 
