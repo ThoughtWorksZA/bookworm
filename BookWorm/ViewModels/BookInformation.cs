@@ -34,27 +34,7 @@ namespace BookWorm.ViewModels
 
         public SelectList ValidCountries()
         {
-            return new SelectList(new List<string>()
-                {
-                    "Angola",
-                    "Botswana",
-                    "Egypt",
-                    "Ethiopia",
-                    "Ghana",
-                    "Kenya",
-                    "Lesotho",
-                    "Liberia",
-                    "Namibia",
-                    "Nigeria",
-                    "Rwanda",
-                    "Swaziland",
-                    "South Africa",
-                    "Tanzania",
-                    "Uganda",
-                    "Zambia",
-                    "Zimbabwe",
-                    "International"
-                });
+            return new SelectList(new ValidCountry().ValidCountries);
         }
     }
 }

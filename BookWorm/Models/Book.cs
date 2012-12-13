@@ -40,6 +40,7 @@ namespace BookWorm.Models
         public string RecommendedAgeGroup { get; set; }
 
         [Required]
+        [ValidCountry]
         public string Country { get; set; }
 
         [DisplayName("Cover Image")]

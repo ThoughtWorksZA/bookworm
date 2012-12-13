@@ -12,17 +12,7 @@ namespace BookWorm.Tests.Models
     [TestClass]
     public class BookTest
     {
-        [TestMethod]
-        public void LanguageShouldBeInValidLanguages()
-        {
-            var bookClass = typeof (Book);
-            var propertyName = "Language";
-            var namedProperty = bookClass.GetProperty(propertyName);
-            Assert.IsNotNull(namedProperty);
-            Assert.AreEqual(1, namedProperty.GetCustomAttributes(typeof (ValidLanguage), false).Count(),
-                            "The Language property of the Book Object should have a ValidLanguage annotation.");
-        }
-
+        
         [TestMethod]
         public void MandatoryPropertiesShouldBePresent()
         {
@@ -53,5 +43,28 @@ namespace BookWorm.Tests.Models
                                     propertyName));
             }
         }
+
+        [TestMethod]
+        public void LanguageShouldBeInValidLanguages()
+        {
+            var bookClass = typeof(Book);
+            var propertyName = "Language";
+            var namedProperty = bookClass.GetProperty(propertyName);
+            Assert.IsNotNull(namedProperty);
+            Assert.AreEqual(1, namedProperty.GetCustomAttributes(typeof(ValidLanguage), false).Count(),
+                            "The Language property of the Book Object should have a ValidLanguage annotation.");
+        }
+
+        [TestMethod]
+        public void CountryShouldBeInValidCountries()
+        {
+            var bookClass = typeof(Book);
+            var propertyName = "Country";
+            var namedProperty = bookClass.GetProperty(propertyName);
+            Assert.IsNotNull(namedProperty);
+            Assert.AreEqual(1, namedProperty.GetCustomAttributes(typeof(ValidCountry), false).Count(),
+                            "The Country property of the Book Object should have a ValidCountry annotation.");
+        }
+
     }
 }
