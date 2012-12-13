@@ -171,6 +171,7 @@
     <Compile Include="Models\Integration\RavenDBTest.cs" />
     <Compile Include="Models\Integration\RepositoryTest.cs" />
     <Compile Include="Models\RepositoryTest.cs" />
+    <Compile Include="Models\Validations\ValidAgeGroupTest.cs" />
     <Compile Include="Models\Validations\ValidCountryTest.cs" />
     <Compile Include="Models\Validations\ValidLanguageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

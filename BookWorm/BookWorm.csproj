@@ -228,6 +228,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\StaticPage.cs" />
+    <Compile Include="Models\Validations\ValidAgeGroup.cs" />
     <Compile Include="Models\Validations\ValidCountry.cs" />
     <Compile Include="Models\Validations\ValidLanguage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

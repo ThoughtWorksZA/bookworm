@@ -37,6 +37,7 @@ namespace BookWorm.Models
 
         [DisplayName("Recommended Age Group")]
         [Required]
+        [ValidAgeGroup]
         public string RecommendedAgeGroup { get; set; }
 
         [Required]

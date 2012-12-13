@@ -66,5 +66,16 @@ namespace BookWorm.Tests.Models
                             "The Country property of the Book Object should have a ValidCountry annotation.");
         }
 
+        [TestMethod]
+        public void AgeGroupShouldBeInValidAgeGroups()
+        {
+            var bookClass = typeof(Book);
+            var propertyName = "RecommendedAgeGroup";
+            var namedProperty = bookClass.GetProperty(propertyName);
+            Assert.IsNotNull(namedProperty);
+            Assert.AreEqual(1, namedProperty.GetCustomAttributes(typeof(ValidAgeGroup), false).Count(),
+                            "The RecommendedAgeGroup property of the Book Object should have a ValidAgeGroup annotation.");
+        }
+
     }
 }
