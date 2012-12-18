@@ -18,7 +18,7 @@ namespace BookWorm.Tests.Specs.Pages
 
         public CreateBookPage ClickOnCreateNewLink()
         {
-            driver.FindElement(By.Id("createNewBookLink"));
+            driver.FindElement(By.Id("createNewBookLink")).Click();
             return new CreateBookPage(driver);
         }
     }

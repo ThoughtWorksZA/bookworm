@@ -12,6 +12,7 @@ namespace BookWorm.Tests.Specs
         private IWebDriver driver;
         private HomePage homePage;
         private CreateBookPage createBookPage;
+        private BookDetailsPage bookDetailsPage;
 
         [BeforeScenario]
         public void Setup()
@@ -25,8 +26,8 @@ namespace BookWorm.Tests.Specs
             homePage = HomePage.NavigateTo(driver);
             homePage = homePage.ClickOnLogin().LoginAdmin();
         }
-
-        [When(@"I go to Create New Book Page")]
+        
+        [When(@"I go to Create New Book page")]
         public void IGoToCreateNewBookPage()
         {
             createBookPage = homePage.NavigateToCreateBookPage();
@@ -35,7 +36,28 @@ namespace BookWorm.Tests.Specs
         [Then(@"I see Create New Book page")]
         public void ISeeCreateNewBookPage()
         {
-            createBookPage.IsCurrentPage();
+            Assert.IsTrue(createBookPage.IsCurrentPage());
+            homePage.LogOut();
+        }
+
+        [When(@"I click create after filling the form")]
+        public void IClickSaveAfterFillingTheForm()
+        {
+            bookDetailsPage = createBookPage.FillForm("My new title").ClickSaveButton();
+        }
+
+        [Then(@"I see the details of the newly created book")]
+        public void ISeeTheDetailsOfTheNewlyCreatedBook()
+        {
+            Assert.IsTrue(bookDetailsPage.IsCurrentPage("My new title"));
+            homePage.LogOut();
+        }
+
+        [Given(@"I am on Create New Book page")]
+        public void IAmOnCreateNewBookPage()
+        {
+            IAmLoggedInAsAnAdmin();
+            IGoToCreateNewBookPage();
         }
 
     [AfterScenario]

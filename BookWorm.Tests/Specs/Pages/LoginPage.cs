@@ -16,8 +16,8 @@ namespace BookWorm.Tests.Specs.Pages
         public HomePage LoginAdmin()
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            var myDynamicElement = wait.Until(d => d.FindElement(By.Id("UserName")));
-            myDynamicElement.SendKeys("puku");
+            var userNameElement = wait.Until(d => d.FindElement(By.Id("UserName")));
+            userNameElement.SendKeys("puku");
             driver.FindElement(By.Id("Password")).SendKeys("password");
             driver.FindElement(By.Id("LoginButton")).Click();
              

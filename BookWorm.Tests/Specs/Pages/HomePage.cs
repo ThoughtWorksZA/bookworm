@@ -36,9 +36,15 @@ namespace BookWorm.Tests.Specs.Pages
         public CreateBookPage NavigateToCreateBookPage()
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            var myDynamicElement = wait.Until(d => d.FindElement(By.Id("BooksMenuLink")));
-            myDynamicElement.Click();
+            var booksMenuLinkElement = wait.Until(d => d.FindElement(By.Id("BooksMenuLink")));
+            booksMenuLinkElement.Click();
             return new BooksListPage(driver).ClickOnCreateNewLink();
+        }
+
+        public HomePage LogOut()
+        {
+            driver.FindElement(By.Id("LogOutLink")).Click();
+            return new HomePage(driver);
         }
     }
 }
