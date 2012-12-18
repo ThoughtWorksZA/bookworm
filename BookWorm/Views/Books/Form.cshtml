@@ -8,6 +8,7 @@
     if (ViewBag.Method != null && ViewBag.Method == "PUT")
      {
          @Html.HttpMethodOverride(HttpVerbs.Put)
+         @Html.HiddenFor(model => model.Book.Id)
      }
 
     <fieldset>
