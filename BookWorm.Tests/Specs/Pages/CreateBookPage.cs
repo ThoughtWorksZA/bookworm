@@ -11,9 +11,9 @@ namespace BookWorm.Tests.Specs.Pages
             driver = webDriver;
         }
 
-        public string CurrentPage()
+        public bool IsCurrentPage()
         {
-            return driver.Title;
+            return driver.Title == "Add a Book - My ASP.NET MVC Application";
         }
     }
 }

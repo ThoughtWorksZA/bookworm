@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace BookWorm.Tests.Specs.Pages
 {
@@ -33,8 +35,10 @@ namespace BookWorm.Tests.Specs.Pages
 
         public CreateBookPage NavigateToCreateBookPage()
         {
-            driver.Navigate().GoToUrl("http://localhost:10827/books/create");
-            return new CreateBookPage(driver);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            var myDynamicElement = wait.Until(d => d.FindElement(By.Id("BooksMenuLink")));
+            myDynamicElement.Click();
+            return new BooksListPage(driver).ClickOnCreateNewLink();
         }
     }
 }

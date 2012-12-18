@@ -21,6 +21,7 @@ namespace BookWorm.Controllers
         public ViewResult List()
         {
             var books = _repository.List<Book>();
+            ViewBag.Title = "List of Books";
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
             return View(bookInformations);
         }

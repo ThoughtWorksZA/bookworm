@@ -35,7 +35,7 @@ namespace BookWorm.Tests.Specs
         [Then(@"I see Create New Book page")]
         public void ISeeCreateNewBookPage()
         {
-            Assert.AreEqual("Add a Book - My ASP.NET MVC Application", createBookPage.CurrentPage());            
+            createBookPage.IsCurrentPage();
         }
 
     [AfterScenario]
