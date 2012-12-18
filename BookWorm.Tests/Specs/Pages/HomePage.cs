@@ -1,11 +1,13 @@
-﻿using OpenQA.Selenium;
+﻿using System.Threading;
+using OpenQA.Selenium;
 
 namespace BookWorm.Tests.Specs.Pages
 {
-    public class HomePage {
-    private static IWebDriver driver;
+    public class HomePage
+    {
+        private static IWebDriver driver;
 
-        private HomePage(IWebDriver webDriver)
+        public HomePage(IWebDriver webDriver)
         {
             driver = webDriver;
         }
@@ -13,18 +15,26 @@ namespace BookWorm.Tests.Specs.Pages
         public static HomePage NavigateTo(IWebDriver webDriver)
         {
             webDriver.Navigate().GoToUrl("http://localhost:10827/");
-            var homePage = new HomePage(webDriver);
-            return homePage;
+            return new HomePage(webDriver);
         }
 
         public LoginPage ClickOnLogin()
         {
             driver.FindElement(By.Id("loginLink")).Click();
-            var loginPage = new LoginPage(driver);
-            return loginPage;
+            return new LoginPage(driver);
         }
 
 
-    }
+        public RegisterPage ClickOnRegister()
+        {
+            driver.FindElement(By.Id("registerLink")).Click();
+            return new RegisterPage(driver);
+        }
 
+        public CreateBookPage NavigateToCreateBookPage()
+        {
+            driver.Navigate().GoToUrl("http://localhost:10827/books/create");
+            return new CreateBookPage(driver);
+        }
+    }
 }

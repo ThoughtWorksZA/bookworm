@@ -176,6 +176,8 @@
     <Compile Include="Models\Validations\ValidLanguageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Specs\CreateBookSteps.cs" />
+    <Compile Include="Specs\Pages\CreateBookPage.cs" />
     <Compile Include="Specs\Pages\LoginPage.cs" />
     <Compile Include="Specs\Pages\HomePage.cs" />
     <Compile Include="Specs\Login.feature.cs">
@@ -184,6 +186,12 @@
       <DependentUpon>Login.feature</DependentUpon>
     </Compile>
     <Compile Include="Specs\LoginSteps.cs" />
+    <Compile Include="Specs\Pages\RegisterPage.cs" />
+    <Compile Include="Specs\CreateBook.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateBook.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config">
@@ -195,6 +203,10 @@
     <None Include="Specs\Login.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Login.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Specs\CreateBook.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CreateBook.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
