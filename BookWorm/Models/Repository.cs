@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Raven.Client;
 
@@ -49,6 +50,12 @@ namespace BookWorm.Models
         {
             _documentSession.Store(editedModel);
         }
+
+        public  virtual ICollection<T> Search<T>(Func<T, bool> predicate) where T : Model<T>
+        {
+            var ravenQueryable = _documentSession.Query<T>();
+            return ravenQueryable.Where(predicate).ToList();
+        } 
     }
 
     public class Model<T>

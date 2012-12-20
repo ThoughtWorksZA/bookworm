@@ -53,5 +53,18 @@ namespace BookWorm.Tests.Models.Integration
                 Assert.AreEqual(books.Count, retrievedBooks.Count);
             }
         }
+
+        [TestMethod]
+        public void SearchShouldReturnDocumentsMatchingThePredicate()
+        {
+            CreateTenBooks();
+            using (var session = _documentStore.OpenSession())
+            {
+                var repo = new Repository(session);
+                var retrievedBooks = repo.Search<Book>(book => book.Title == "Book 1");
+                Assert.AreEqual(1, retrievedBooks.Count());
+                Assert.AreEqual("Book 1", retrievedBooks.First().Title);
+            }
+        }
     }
 }
