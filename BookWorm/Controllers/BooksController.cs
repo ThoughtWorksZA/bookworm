@@ -85,5 +85,14 @@ namespace BookWorm.Controllers
             TempData["flash"] = string.Format("Book successfully deleted");            
             return RedirectToAction("List");
         }
+
+        [HttpPost]
+        public ViewResult List(string searchQuery)
+        {
+            var books = _repository.Search<Book>(book => book.Title == searchQuery);
+            ViewBag.Title = "List of Books";
+            var bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            return View(bookInformations);
+        }
     }
 }

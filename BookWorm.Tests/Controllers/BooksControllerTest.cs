@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using BookWorm.Controllers;
@@ -194,6 +195,26 @@ namespace BookWorm.Tests.Controllers
                                                    .First(method => method.Name == "Details")
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
+        }
+
+        [TestMethod]
+        public void BooksControllerListShouldSearchByGivenCondition()
+        {
+            var books = new List<Book>();
+            Enumerable.Range(1, 10).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i}));
+            var mockedRepo = new Mock<Repository>();
+            var expectedBooks = new List<Book> {books.First()};
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>())).Returns(expectedBooks);
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var view = booksController.List("Book 1");
+
+            var booksInView = (List<BookInformation>)view.Model;
+            var actualBooks = booksInView.Select(bookInformation => bookInformation.Book).ToList();
+            Assert.AreEqual(1, actualBooks.Count());
+            Assert.AreEqual("Book 1", actualBooks.First().Title);
+
+            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>()), Times.Once());
         }
     }
 

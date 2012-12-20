@@ -27,7 +27,15 @@
                             <li>@Html.ActionLink("Books", "List", "Books", null, new {id = "BooksMenuLink"})</li>
                         </ul>
                     </nav>
+                    <div>
+                        @using (Html.BeginForm("List", "Books", FormMethod.Post))
+                        {
+                            @Html.TextBox("searchQuery");
+                            <input type="submit" value="Search" id="SearchButton" />
+                        }
+                    </div>
                 </div>
+               
             </div>
         </header>
         <div id="body">
