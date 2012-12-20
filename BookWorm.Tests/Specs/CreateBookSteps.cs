@@ -7,40 +7,46 @@ namespace BookWorm.Tests.Specs
     [Binding]
     internal class CreateBookSteps : BaseSteps
     {
-        private CreateBookPage createBookPage;
-        private BookDetailsPage bookDetailsPage;
-
         [Given(@"I am logged in as an admin")]
         public void IAmLoggedInAsAnAdmin()
         {
-            HomePage = HomePage.NavigateTo(Driver);
-            HomePage = HomePage.ClickOnLogin().LoginAdmin();
+            var homePage = HomePage.NavigateTo(Driver);
+            homePage = homePage.ClickOnLogin().LoginAdmin();
+            ScenarioContext.Current.Set(homePage);
         }
 
         [When(@"I go to Create New Book page")]
         public void IGoToCreateNewBookPage()
         {
-            createBookPage = HomePage.NavigateToCreateBookPage();
+            var homePage = ScenarioContext.Current.Get<HomePage>();
+            var createBookPage = homePage.NavigateToCreateBookPage();
+            ScenarioContext.Current.Set(createBookPage);
         }
 
         [Then(@"I see Create New Book page")]
         public void ISeeCreateNewBookPage()
         {
+            var createBookPage = ScenarioContext.Current.Get<CreateBookPage>();
+            var homePage = ScenarioContext.Current.Get<HomePage>();
             Assert.IsTrue(createBookPage.IsCurrentPage());
-            HomePage.LogOut();
+            homePage.LogOut();
         }
 
         [When(@"I click create after filling the form")]
         public void IClickSaveAfterFillingTheForm()
         {
-            bookDetailsPage = createBookPage.FillForm("My new title").ClickSaveButton();
+            var createBookPage = ScenarioContext.Current.Get<CreateBookPage>();
+            var bookDetailsPage = createBookPage.FillForm("My new title").ClickSaveButton();
+            ScenarioContext.Current.Set(bookDetailsPage);
         }
 
         [Then(@"I see the details of the newly created book")]
         public void ISeeTheDetailsOfTheNewlyCreatedBook()
         {
+            var bookDetailsPage = ScenarioContext.Current.Get<BookDetailsPage>();
+            var homePage = ScenarioContext.Current.Get<HomePage>();
             Assert.IsTrue(bookDetailsPage.IsCurrentPage("My new title"));
-            HomePage.LogOut();
+            homePage.LogOut();
         }
 
         [Given(@"I am on Create New Book page")]

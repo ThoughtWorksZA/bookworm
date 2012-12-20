@@ -7,27 +7,21 @@ namespace BookWorm.Tests.Specs
     [Binding]
     public class CreateAStaticPageSteps : BaseSteps
     {
-        private CreateStaticPageView createStaticPageView;
-
-        // TODO Extract same method from CreateBookSteps and delete this
-        [Given(@"Page:I am logged in as an admin")]
-        public void IAmLoggedInAsAnAdmin()
-        {
-            HomePage = HomePage.NavigateTo(Driver);
-            HomePage = HomePage.ClickOnLogin().LoginAdmin();
-        }
-
         [When(@"I go to Create New Static Page view")]
         public void WhenIGoToCreateNewStaticPageView()
         {
-            createStaticPageView = HomePage.NavigateToCreateStaticPageView();
+            var homePage = ScenarioContext.Current.Get<HomePage>();
+            var createStaticPageView = homePage.NavigateToCreateStaticPageView();
+            ScenarioContext.Current.Set(createStaticPageView);
         }
         
         [Then(@"I see Create New Static Page view")]
         public void ThenISeeCreateNewStaticPageView()
         {
+            var homePage = ScenarioContext.Current.Get<HomePage>();
+            var createStaticPageView = ScenarioContext.Current.Get<CreateStaticPageView>();
             Assert.IsTrue(createStaticPageView.IsCurrentPage());
-            HomePage.LogOut();
+            homePage.LogOut();
         }
     }
 }

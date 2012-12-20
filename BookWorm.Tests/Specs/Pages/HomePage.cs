@@ -35,6 +35,7 @@ namespace BookWorm.Tests.Specs.Pages
             var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
             var booksMenuLinkElement = wait.Until(d => d.FindElement(By.Id("BooksMenuLink")));
             booksMenuLinkElement.Click();
+            wait.Until(d => d.FindElement(By.Id("createNewBookLink")));
             return new BooksListPage(Driver).ClickOnCreateNewLink();
         }
 
