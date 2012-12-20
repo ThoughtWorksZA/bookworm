@@ -198,7 +198,7 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
-        public void BooksControllerListShouldSearchByGivenCondition()
+        public void BooksControllerListWithSearchQueryShouldSearchByGivenCondition()
         {
             var books = new List<Book>();
             Enumerable.Range(1, 10).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i}));
@@ -215,6 +215,17 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual("Book 1", actualBooks.First().Title);
 
             mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>()), Times.Once());
+        }
+
+
+        [TestMethod]
+        public void BooksControllerListWithSearchQueryShouldAllowAnonymous()
+        {
+            var booksControllerClass = typeof(BooksController);
+            Assert.AreEqual(1, booksControllerClass.GetMethods()
+                                                   .First(method => method.Name == "List" && method.GetParameters().Count() == 1)
+                                                   .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
+                                                   .Count());
         }
     }
 

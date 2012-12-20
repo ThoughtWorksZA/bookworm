@@ -86,6 +86,7 @@ namespace BookWorm.Controllers
             return RedirectToAction("List");
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public ViewResult List(string searchQuery)
         {
