@@ -5,13 +5,10 @@ using OpenQA.Selenium.Support.UI;
 
 namespace BookWorm.Tests.Specs.Pages
 {
-    public class HomePage
+    public class HomePage : BasePage
     {
-        private static IWebDriver driver;
-
-        public HomePage(IWebDriver webDriver)
+        public HomePage(IWebDriver driver) : base(driver)
         {
-            driver = webDriver;
         }
 
         public static HomePage NavigateTo(IWebDriver webDriver)
@@ -22,29 +19,47 @@ namespace BookWorm.Tests.Specs.Pages
 
         public LoginPage ClickOnLogin()
         {
-            driver.FindElement(By.Id("loginLink")).Click();
-            return new LoginPage(driver);
+            Driver.FindElement(By.Id("loginLink")).Click();
+            return new LoginPage(Driver);
         }
 
 
         public RegisterPage ClickOnRegister()
         {
-            driver.FindElement(By.Id("registerLink")).Click();
-            return new RegisterPage(driver);
+            Driver.FindElement(By.Id("registerLink")).Click();
+            return new RegisterPage(Driver);
         }
 
         public CreateBookPage NavigateToCreateBookPage()
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
             var booksMenuLinkElement = wait.Until(d => d.FindElement(By.Id("BooksMenuLink")));
             booksMenuLinkElement.Click();
-            return new BooksListPage(driver).ClickOnCreateNewLink();
+            return new BooksListPage(Driver).ClickOnCreateNewLink();
+        }
+
+        public CreateStaticPageView NavigateToCreateStaticPageView()
+        {
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            var pagesMenuLinkElement = wait.Until(d => d.FindElement(By.Id("PagesMenuLink")));
+            pagesMenuLinkElement.Click();
+            return new StaticPagesListPage(Driver).ClickOnCreateNewLink();
         }
 
         public HomePage LogOut()
         {
-            driver.FindElement(By.Id("LogOutLink")).Click();
-            return new HomePage(driver);
+            Driver.FindElement(By.Id("LogOutLink")).Click();
+            return new HomePage(Driver);
+        }
+    }
+
+    public class BasePage
+    {
+        protected static IWebDriver Driver;
+
+        public BasePage(IWebDriver driver)
+        {
+            Driver = driver;
         }
     }
 }

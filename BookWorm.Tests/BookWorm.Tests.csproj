@@ -167,6 +167,11 @@
     <Compile Include="Controllers\BooksControllerTest.cs" />
     <Compile Include="Controllers\PagesControllerTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
+    <Compile Include="Specs\CreateAStaticPage.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateAStaticPage.feature</DependentUpon>
+    </Compile>
     <Compile Include="Models\BookTest.cs" />
     <Compile Include="Models\Integration\RavenDBTest.cs" />
     <Compile Include="Models\Integration\RepositoryTest.cs" />
@@ -176,10 +181,12 @@
     <Compile Include="Models\Validations\ValidLanguageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Specs\CreateAStaticPageSteps.cs" />
     <Compile Include="Specs\CreateBookSteps.cs" />
     <Compile Include="Specs\Pages\BooksListPage.cs" />
     <Compile Include="Specs\Pages\BookDetailsPage.cs" />
     <Compile Include="Specs\Pages\CreateBookPage.cs" />
+    <Compile Include="Specs\Pages\CreateStaticPageView.cs" />
     <Compile Include="Specs\Pages\LoginPage.cs" />
     <Compile Include="Specs\Pages\HomePage.cs" />
     <Compile Include="Specs\Login.feature.cs">
@@ -194,6 +201,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateBook.feature</DependentUpon>
     </Compile>
+    <Compile Include="Specs\BaseSteps.cs" />
+    <Compile Include="Specs\Pages\StaticPagesListPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config">
@@ -201,6 +210,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Specs\CreateAStaticPage.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CreateAStaticPage.feature.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
     <None Include="Specs\Login.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

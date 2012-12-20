@@ -2,24 +2,21 @@
 
 namespace BookWorm.Tests.Specs.Pages
 {
-    public class BooksListPage
+    public class BooksListPage : BasePage
     {
-        private static IWebDriver driver;
-
-        public BooksListPage(IWebDriver webDriver)
+        public BooksListPage(IWebDriver driver) : base(driver)
         {
-            driver = webDriver;
         }
 
         public bool IsCurrentPage()
         {
-            return driver.Title == "List of Books - My ASP.NET MVC Application";
+            return Driver.Title == "List of Books - My ASP.NET MVC Application";
         }
 
         public CreateBookPage ClickOnCreateNewLink()
         {
-            driver.FindElement(By.Id("createNewBookLink")).Click();
-            return new CreateBookPage(driver);
+            Driver.FindElement(By.Id("createNewBookLink")).Click();
+            return new CreateBookPage(Driver);
         }
     }
 }

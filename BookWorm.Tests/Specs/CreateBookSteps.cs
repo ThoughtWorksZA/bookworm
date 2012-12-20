@@ -1,43 +1,33 @@
 ﻿using BookWorm.Tests.Specs.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
 using TechTalk.SpecFlow;
 
 namespace BookWorm.Tests.Specs
 {
     [Binding]
-    internal class CreateBookSteps
+    internal class CreateBookSteps : BaseSteps
     {
-        private IWebDriver driver;
-        private HomePage homePage;
         private CreateBookPage createBookPage;
         private BookDetailsPage bookDetailsPage;
-
-        [BeforeScenario]
-        public void Setup()
-        {
-            driver = new FirefoxDriver();
-        }
 
         [Given(@"I am logged in as an admin")]
         public void IAmLoggedInAsAnAdmin()
         {
-            homePage = HomePage.NavigateTo(driver);
-            homePage = homePage.ClickOnLogin().LoginAdmin();
+            HomePage = HomePage.NavigateTo(Driver);
+            HomePage = HomePage.ClickOnLogin().LoginAdmin();
         }
-        
+
         [When(@"I go to Create New Book page")]
         public void IGoToCreateNewBookPage()
         {
-            createBookPage = homePage.NavigateToCreateBookPage();
+            createBookPage = HomePage.NavigateToCreateBookPage();
         }
 
         [Then(@"I see Create New Book page")]
         public void ISeeCreateNewBookPage()
         {
             Assert.IsTrue(createBookPage.IsCurrentPage());
-            homePage.LogOut();
+            HomePage.LogOut();
         }
 
         [When(@"I click create after filling the form")]
@@ -50,7 +40,7 @@ namespace BookWorm.Tests.Specs
         public void ISeeTheDetailsOfTheNewlyCreatedBook()
         {
             Assert.IsTrue(bookDetailsPage.IsCurrentPage("My new title"));
-            homePage.LogOut();
+            HomePage.LogOut();
         }
 
         [Given(@"I am on Create New Book page")]
@@ -58,12 +48,6 @@ namespace BookWorm.Tests.Specs
         {
             IAmLoggedInAsAnAdmin();
             IGoToCreateNewBookPage();
-        }
-
-    [AfterScenario]
-        public void TearDown()
-        {
-            driver.Quit();
         }
     }
 }
