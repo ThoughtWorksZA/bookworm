@@ -202,6 +202,7 @@
       <DependentUpon>CreateBook.feature</DependentUpon>
     </Compile>
     <Compile Include="Specs\BaseSteps.cs" />
+    <Compile Include="Specs\Pages\StaticPageDetailsPage.cs" />
     <Compile Include="Specs\Pages\StaticPagesListPage.cs" />
   </ItemGroup>
   <ItemGroup>
