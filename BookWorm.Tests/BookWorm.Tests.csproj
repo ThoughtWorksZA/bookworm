@@ -183,10 +183,11 @@
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Specs\CreateAStaticPageSteps.cs" />
     <Compile Include="Specs\CreateBookSteps.cs" />
+    <Compile Include="Specs\Pages\BasePage.cs" />
     <Compile Include="Specs\Pages\BooksListPage.cs" />
     <Compile Include="Specs\Pages\BookDetailsPage.cs" />
     <Compile Include="Specs\Pages\CreateBookPage.cs" />
-    <Compile Include="Specs\Pages\CreateStaticPageView.cs" />
+    <Compile Include="Specs\Pages\CreateStaticPage.cs" />
     <Compile Include="Specs\Pages\LoginPage.cs" />
     <Compile Include="Specs\Pages\HomePage.cs" />
     <Compile Include="Specs\Login.feature.cs">

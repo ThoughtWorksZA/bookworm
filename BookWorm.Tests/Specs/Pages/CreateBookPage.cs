@@ -4,13 +4,11 @@ using OpenQA.Selenium.Support.UI;
 
 namespace BookWorm.Tests.Specs.Pages
 {
-    public class CreateBookPage
+    public class CreateBookPage : BasePage
     {
-        private static IWebDriver driver;
 
-        public CreateBookPage(IWebDriver webDriver)
+        public CreateBookPage(IWebDriver driver) : base(driver)
         {
-            driver = webDriver;
         }
 
         public bool IsCurrentPage()
@@ -20,9 +18,8 @@ namespace BookWorm.Tests.Specs.Pages
 
         public CreateBookPage FillForm(string title)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            var titleElement = wait.Until(d => d.FindElement(By.Id("Book_Title")));
-            titleElement.SendKeys(title);
+            WaitForPageToLoad();
+            driver.FindElement(By.Id("Book_Title")).SendKeys(title);
             driver.FindElement(By.Id("Book_Subtitle")).SendKeys("ss");
             driver.FindElement(By.Id("Book_Author")).SendKeys("ss");
             driver.FindElement(By.Id("Book_Illustrator")).SendKeys("ss");
@@ -38,6 +35,7 @@ namespace BookWorm.Tests.Specs.Pages
         public BookDetailsPage ClickSaveButton()
         {
             driver.FindElement(By.Id("SaveButton")).Click();
+            WaitForPageToLoad();
             return new BookDetailsPage(driver);
         }
     }

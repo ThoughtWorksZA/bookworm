@@ -9,10 +9,12 @@ namespace BookWorm.Tests.Specs.Pages
         {
         }
 
-        public CreateStaticPageView ClickOnCreateNewLink()
+        public CreateStaticPage ClickOnCreateNewLink()
         {
-            Driver.FindElement(By.Id("createNewStaticPageLink")).Click();
-            return new CreateStaticPageView(Driver);
+            WaitForPageToLoad();
+            driver.FindElement(By.Id("createNewStaticPageLink")).Click();
+            WaitForPageToLoad();
+            return new CreateStaticPage(driver);
         }
     }
 }

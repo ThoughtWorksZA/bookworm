@@ -19,48 +19,40 @@ namespace BookWorm.Tests.Specs.Pages
 
         public LoginPage ClickOnLogin()
         {
-            Driver.FindElement(By.Id("loginLink")).Click();
-            return new LoginPage(Driver);
+            driver.FindElement(By.Id("loginLink")).Click();
+            WaitForPageToLoad();
+            return new LoginPage(driver);
         }
 
 
         public RegisterPage ClickOnRegister()
         {
-            Driver.FindElement(By.Id("registerLink")).Click();
-            return new RegisterPage(Driver);
+            driver.FindElement(By.Id("registerLink")).Click();
+            return new RegisterPage(driver);
         }
 
         public CreateBookPage NavigateToCreateBookPage()
         {
-            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-            var booksMenuLinkElement = wait.Until(d => d.FindElement(By.Id("BooksMenuLink")));
-            booksMenuLinkElement.Click();
-            wait.Until(d => d.FindElement(By.Id("createNewBookLink")));
-            return new BooksListPage(Driver).ClickOnCreateNewLink();
+            WaitForPageToLoad();
+            driver.FindElement(By.Id("BooksMenuLink")).Click();
+            WaitForPageToLoad();
+            return new BooksListPage(driver).ClickOnCreateNewLink();
         }
 
-        public CreateStaticPageView NavigateToCreateStaticPageView()
+        public CreateStaticPage NavigateToCreateStaticPageView()
         {
-            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             var pagesMenuLinkElement = wait.Until(d => d.FindElement(By.Id("PagesMenuLink")));
             pagesMenuLinkElement.Click();
-            return new StaticPagesListPage(Driver).ClickOnCreateNewLink();
+            return new StaticPagesListPage(driver).ClickOnCreateNewLink();
         }
 
         public HomePage LogOut()
         {
-            Driver.FindElement(By.Id("LogOutLink")).Click();
-            return new HomePage(Driver);
+            driver.FindElement(By.Id("LogOutLink")).Click();
+            return new HomePage(driver);
         }
     }
 
-    public class BasePage
-    {
-        protected static IWebDriver Driver;
-
-        public BasePage(IWebDriver driver)
-        {
-            Driver = driver;
-        }
-    }
+   
 }

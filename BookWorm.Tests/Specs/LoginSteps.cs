@@ -36,6 +36,7 @@ namespace BookWorm.Tests.Specs
         public void WhenIClickLogin()
         {
             loginPage = homePage.ClickOnLogin();
+
         }
 
         [Then(@"I see Login page")]

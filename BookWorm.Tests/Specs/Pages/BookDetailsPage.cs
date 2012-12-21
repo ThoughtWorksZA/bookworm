@@ -2,13 +2,11 @@
 
 namespace BookWorm.Tests.Specs.Pages
 {
-    public class BookDetailsPage
+    public class BookDetailsPage :BasePage
     {
-        private static IWebDriver driver;
 
-        public BookDetailsPage(IWebDriver webDriver)
+        public BookDetailsPage(IWebDriver driver) : base(driver)
         {
-            driver = webDriver;
         }
 
         public bool IsCurrentPage(string title)

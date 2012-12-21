@@ -11,7 +11,7 @@ namespace BookWorm.Tests.Specs.Pages
 
         public bool IsCurrentPage(string myPageTitle)
         {
-            return Driver.Title == string.Format("{0} - My ASP.NET MVC Application", myPageTitle);
+            return driver.Title == string.Format("{0} - My ASP.NET MVC Application", myPageTitle);
         }
     }
 }

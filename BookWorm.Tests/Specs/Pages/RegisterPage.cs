@@ -2,22 +2,21 @@
 
 namespace BookWorm.Tests.Specs.Pages
 {
-    public class RegisterPage
+    public class RegisterPage : BasePage
     {
         private static IWebDriver driver;
 
-        public RegisterPage(IWebDriver webDriver)
+        public RegisterPage(IWebDriver driver) : base(driver)
         {
-            driver = webDriver;
         }
 
-        public HomePage RegisterAdmin(IWebDriver webDriver)
+        public HomePage RegisterAdmin()
         {
-            webDriver.FindElement(By.Id("UserName")).SendKeys("puku");
-            webDriver.FindElement(By.Id("Password")).SendKeys("password");
-            webDriver.FindElement(By.Id("ConfirmPassword")).SendKeys("password");
-            webDriver.FindElement(By.Id("RegisterButton")).Click();
-            return new HomePage(webDriver);
+            driver.FindElement(By.Id("UserName")).SendKeys("puku");
+            driver.FindElement(By.Id("Password")).SendKeys("password");
+            driver.FindElement(By.Id("ConfirmPassword")).SendKeys("password");
+            driver.FindElement(By.Id("RegisterButton")).Click();
+            return new HomePage(driver);
         } 
     }
 }

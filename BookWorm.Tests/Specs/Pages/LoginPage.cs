@@ -5,19 +5,17 @@ using OpenQA.Selenium.Support.UI;
 
 namespace BookWorm.Tests.Specs.Pages
 {
-    public class LoginPage {
-    private static IWebDriver driver;
-
-        public LoginPage(IWebDriver webDriver)
+    public class LoginPage : BasePage
+    {
+        public LoginPage(IWebDriver driver) : base(driver)
         {
-            driver = webDriver;
         }
+    
         
         public HomePage LoginAdmin()
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            var userNameElement = wait.Until(d => d.FindElement(By.Id("UserName")));
-            userNameElement.SendKeys("puku");
+            WaitForPageToLoad();
+            driver.FindElement(By.Id("UserName")).SendKeys("puku");
             driver.FindElement(By.Id("Password")).SendKeys("password");
             driver.FindElement(By.Id("LoginButton")).Click();
              

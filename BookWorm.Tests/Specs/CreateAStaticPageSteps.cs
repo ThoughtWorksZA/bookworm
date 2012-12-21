@@ -14,16 +14,16 @@ namespace BookWorm.Tests.Specs
         public void WhenIGoToCreateNewStaticPageView()
         {
             var homePage = ScenarioContext.Current.Get<HomePage>();
-            var createStaticPageView = homePage.NavigateToCreateStaticPageView();
-            ScenarioContext.Current.Set(createStaticPageView);
+            var createStaticPage = homePage.NavigateToCreateStaticPageView();
+            ScenarioContext.Current.Set(createStaticPage);
         }
         
         [Then(@"I see Create New Static Page view")]
         public void ThenISeeCreateNewStaticPageView()
         {
             var homePage = ScenarioContext.Current.Get<HomePage>();
-            var createStaticPageView = ScenarioContext.Current.Get<CreateStaticPageView>();
-            Assert.IsTrue(createStaticPageView.IsCurrentPage());
+            var createStaticPage = ScenarioContext.Current.Get<CreateStaticPage>();
+            Assert.IsTrue(createStaticPage.IsCurrentPage());
             homePage.LogOut();
         }
 
@@ -37,8 +37,8 @@ namespace BookWorm.Tests.Specs
         [When(@"I click create after filling the new page form")]
         public void WhenIClickCreateAfterFillingTheNewPageForm()
         {
-            var createStaticPageView = ScenarioContext.Current.Get<CreateStaticPageView>();
-            var createStaticPageDetailsPage = createStaticPageView.FillForm("My page title").ClickSaveButton();
+            var createStaticPage = ScenarioContext.Current.Get<CreateStaticPage>();
+            var createStaticPageDetailsPage = createStaticPage.FillForm("My page title").ClickSaveButton();
             ScenarioContext.Current.Set(createStaticPageDetailsPage);
         }
 
