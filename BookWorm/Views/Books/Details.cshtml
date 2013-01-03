@@ -4,99 +4,31 @@
 
 <fieldset>
     <legend>Book</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.Title)
+    <div class="row">
+        <div class="span8">
+            <div class="lead">
+                @Html.DisplayFor(model => model.Book.Subtitle) 
+            </div>
+            by <strong>@Html.DisplayFor(model => model.Book.Author)</strong>
+            <hr />
+            <p>ISBN: <em>@Html.DisplayFor(model => model.Book.Isbn)</em></p>
+            <p>Publisher: <em>@Html.DisplayFor(model => model.Book.Publisher)</em></p>
+            <p>Illustrator: <em>@Html.DisplayFor(model => model.Book.Illustrator)</em></p>
+            <p>Editor: <em>@Html.DisplayFor(model => model.Book.Editor)</em></p>
+            <p>Language: <em>@Html.DisplayFor(model => model.Book.Language)</em></p>
+            <p>Genre: <em>@Html.DisplayFor(model => model.Book.Genre)</em></p>
+            <p>Age Group: <em>@Html.DisplayFor(model => model.Book.RecommendedAgeGroup)</em></p>
+            <p>Country: <em>@Html.DisplayFor(model => model.Book.Country)</em></p>
+            <p>Description: <em>@Html.DisplayFor(model => model.Book.Description)</em></p>
+        </div>
+        <div class="span4">
+            <img src="@Model.Book.CoverImageUrl" />
+        </div>
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Book.Title)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.Subtitle)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Book.Subtitle)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.Author)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Book.Author)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.Illustrator)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Book.Illustrator)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.Editor)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Book.Editor)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.Isbn)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Book.Isbn)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.Publisher)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Book.Publisher)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.Language)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Book.Language)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.Genre)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Book.Genre)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.RecommendedAgeGroup)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Book.RecommendedAgeGroup)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.Country)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Book.Country)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.CoverImageUrl)
-    </div>
-    <div class="display-field">
-        <img src="@Model.Book.CoverImageUrl"/>
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Book.Description)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Book.Description)
-    </div>
-</fieldset>
-<p>
+   <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.Book.Id }) |
     @Html.ActionLink("Back to List", "List")
 </p>
+  
+</fieldset>
+

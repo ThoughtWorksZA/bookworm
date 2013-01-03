@@ -5,102 +5,31 @@
 <p>
     @Html.ActionLink("Create New", "Create", null, new{id="createNewBookLink"})
 </p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.Subtitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.Author)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.Illustrator)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.Editor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.Isbn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.Publisher)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.Language)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.Genre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.RecommendedAgeGroup)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.Country)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.CoverImageUrl)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.Description)
-        </th>
-        <th></th>
-    </tr>
-
+<table class="striped-table">
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Book.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Book.Subtitle)
-            </td>
-            <td>
+                <span class="lead">@Html.DisplayFor(modelItem => item.Book.Title)</span>
+                by
                 @Html.DisplayFor(modelItem => item.Book.Author)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Book.Illustrator)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Book.Editor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Book.Isbn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Book.Publisher)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Book.Language)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Book.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Book.RecommendedAgeGroup)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Book.Country)
-            </td>
-            <td>
-                <img src="@item.Book.CoverImageUrl"/>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Book.Description)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.Book.Id}) |
-                @Html.ActionLink("Details", "Details", new {id = item.Book.Id}) |
-            
-                @using (Html.BeginForm("Delete", "Books", new {@id = item.Book.Id}))
-                {
-                    @Html.HttpMethodOverride(HttpVerbs.Delete)
-                    <input type="submit" value="Delete" />
-                }
-
+                <div class="row-fluid">
+                    <div class="span3">
+                        @Html.ActionLink("Edit", "Edit", new {id = item.Book.Id}) |
+                    </div>
+                    <div class="span4">
+                        @Html.ActionLink("Details", "Details", new {id = item.Book.Id}) 
+                    </div>
+                    <div class="span4">
+                         @using (Html.BeginForm("Delete", "Books", new {@id = item.Book.Id}))
+                        {
+                            @Html.HttpMethodOverride(HttpVerbs.Delete)
+                            <input type="submit" class="btn" value="Delete" />
+                        }
+                    </div>
+                </div>
             </td>
         </tr>
     }

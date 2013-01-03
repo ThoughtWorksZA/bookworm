@@ -1,125 +1,154 @@
 ﻿@using BookWorm.Models.Validations
 @model BookWorm.ViewModels.BookInformation
 
-<h2>@ViewBag.Title</h2>
+<div class="row-fluid">
 
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
+        <h2>@ViewBag.Title</h2>
+
+        <p>Fill in the required fields and click save.</p>
+<hr />  
+@using (Html.BeginForm())
+{
+ @Html.ValidationSummary(true)
     if (ViewBag.Method != null && ViewBag.Method == "PUT")
-     {
-         @Html.HttpMethodOverride(HttpVerbs.Put)
-         @Html.HiddenFor(model => model.Book.Id)
-     }
-
+    {
+ @Html.HttpMethodOverride(HttpVerbs.Put)
+ @Html.HiddenFor(model => model.Book.Id)
+    }
+    
     <fieldset>
         <legend>Book</legend>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.Title)
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.Title)
+            </div>
+            <div class="span5">
+                @Html.EditorFor(model => model.Book.Title)
+                @Html.ValidationMessageFor(model => model.Book.Title)
+            </div>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Book.Title)
-            @Html.ValidationMessageFor(model => model.Book.Title)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.Subtitle)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Book.Subtitle)
-            @Html.ValidationMessageFor(model => model.Book.Subtitle)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.Author)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Book.Author)
-            @Html.ValidationMessageFor(model => model.Book.Author)
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.Subtitle)
+            </div>
+            <div class="span5">
+                @Html.EditorFor(model => model.Book.Subtitle)
+                @Html.ValidationMessageFor(model => model.Book.Subtitle)
+            </div>
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.Illustrator)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Book.Illustrator)
-            @Html.ValidationMessageFor(model => model.Book.Illustrator)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.Editor)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Book.Editor)
-            @Html.ValidationMessageFor(model => model.Book.Editor)
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.Author)
+            </div>
+            <div class="span5">
+                @Html.EditorFor(model => model.Book.Author)
+                @Html.ValidationMessageFor(model => model.Book.Author)
+            </div>
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.Isbn)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Book.Isbn)
-            @Html.ValidationMessageFor(model => model.Book.Isbn)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.Publisher)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Book.Publisher)
-            @Html.ValidationMessageFor(model => model.Book.Publisher)
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.Illustrator)
+            </div>
+            <div class="span5">
+                @Html.EditorFor(model => model.Book.Illustrator)
+                @Html.ValidationMessageFor(model => model.Book.Illustrator)
+            </div>
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.Language)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.Book.Language, Model.ValidLanguages())
-            @Html.ValidationMessageFor(model => model.Book.Language)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.Genre)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Book.Genre)
-            @Html.ValidationMessageFor(model => model.Book.Genre)
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.Editor)
+            </div>
+            <div class="span5">
+                @Html.EditorFor(model => model.Book.Editor)
+                @Html.ValidationMessageFor(model => model.Book.Editor)
+            </div>
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.RecommendedAgeGroup)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.Book.RecommendedAgeGroup, Model.ValidAgeGroups())
-            @Html.ValidationMessageFor(model => model.Book.RecommendedAgeGroup)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.Country)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.Book.Country, Model.ValidCountries())            
-            @Html.ValidationMessageFor(model => model.Book.Country)
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.Isbn)
+            </div>
+            <div class="span5">
+                @Html.EditorFor(model => model.Book.Isbn)
+                @Html.ValidationMessageFor(model => model.Book.Isbn)
+            </div>
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.CoverImageUrl)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Book.CoverImageUrl)
-            @Html.ValidationMessageFor(model => model.Book.CoverImageUrl)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Book.Description)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Book.Description)
-            @Html.ValidationMessageFor(model => model.Book.Description)
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.Publisher)
+            </div>
+            <div class="span5">
+                @Html.EditorFor(model => model.Book.Publisher)
+                @Html.ValidationMessageFor(model => model.Book.Publisher)
+            </div>
         </div>
 
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.Language)
+            </div>
+            <div class="span5">
+                @Html.DropDownListFor(model => model.Book.Language, Model.ValidLanguages())
+                @Html.ValidationMessageFor(model => model.Book.Language)
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.Genre)
+            </div>
+            <div class="span5">
+                @Html.EditorFor(model => model.Book.Genre)
+                @Html.ValidationMessageFor(model => model.Book.Genre)
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.RecommendedAgeGroup)
+            </div>
+            <div class="span5">
+                @Html.DropDownListFor(model => model.Book.RecommendedAgeGroup, Model.ValidAgeGroups())
+                @Html.ValidationMessageFor(model => model.Book.RecommendedAgeGroup)
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.Country)
+            </div>
+            <div class="span5">
+                @Html.DropDownListFor(model => model.Book.Country, Model.ValidCountries())
+                @Html.ValidationMessageFor(model => model.Book.Country)
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.CoverImageUrl)
+            </div>
+            <div class="span5">
+                @Html.EditorFor(model => model.Book.CoverImageUrl)
+                @Html.ValidationMessageFor(model => model.Book.CoverImageUrl)
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span2">
+                @Html.LabelFor(model => model.Book.Description)
+            </div>
+            <div class="span5">
+                @Html.TextAreaFor(model => model.Book.Description)
+                @Html.ValidationMessageFor(model => model.Book.Description)
+            </div>
+        </div>
         <p>
-            <input type="submit" value="Save" id="SaveButton" />
+            <input type="submit" value="Save" class="btn" id="SaveButton" />
         </p>
     </fieldset>
 }
