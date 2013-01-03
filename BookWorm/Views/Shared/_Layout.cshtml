@@ -13,7 +13,7 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                    <p class="site-title">@Html.ActionLink("Puku", "Index", "Home")</p>
                 </div>
                 <div class="float-right">
                     <section id="login">
@@ -23,16 +23,16 @@
                         <ul id="menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                             <li>@Html.ActionLink("Books", "List", "Books", null, new {id = "BooksMenuLink"})</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                             <li>@Html.ActionLink("Pages", "List", "Pages", null, new {id = "PagesMenuLink"})</li>
                         </ul>
                     </nav>
                     <div>
                         @using (Html.BeginForm("List", "Books", FormMethod.Post))
                         {
-                            @Html.TextBox("searchQuery");
-                            <input type="submit" value="Search" id="SearchButton" />
+                            @Html.TextBox("searchQuery","", new {placeholder = "Search by Title"});
+                            <input type="submit" value="Search" class="btn" id="SearchButton" />
                         }
                     </div>
                 </div>
