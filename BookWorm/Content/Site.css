@@ -65,7 +65,13 @@ h4, h5, h6 {
 }
 
 h1 {
-    font-size: 2em;
+    font-size: 38.5px;
+    margin: 10px 0;
+      font-family: inherit;
+      font-weight: bold;
+      line-height: 20px;
+      color: inherit;
+      text-rendering: optimizelegibility;
 }
 
 h2 {
@@ -218,7 +224,7 @@ ul#menu {
         background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         color: #3e5667;
-        padding: 20px 40px 30px 40px;
+        padding: 20px 20px 30px 20px;
     }
 
         .featured hgroup.title h1, .featured hgroup.title h2 {
