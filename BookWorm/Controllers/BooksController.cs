@@ -90,7 +90,7 @@ namespace BookWorm.Controllers
         [HttpPost]
         public ViewResult List(string searchQuery)
         {
-            var books = _repository.Search<Book>(book => book.Title == searchQuery);
+            var books = _repository.Search<Book>(book => book.Title == searchQuery || book.Isbn == searchQuery);
             ViewBag.Title = "List of Books";
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
             return View(bookInformations);
