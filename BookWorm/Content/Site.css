@@ -757,6 +757,10 @@ tr.pager td {
   line-height: 30px;
 }
 
+.form-title {
+    font-size: 1.2em;
+}
+
 /* buttons and forms */
 
 /* from Bootstrap*/
@@ -1200,3 +1204,4 @@ hr {
   border-top: 1px solid #eeeeee;
   border-bottom: 1px solid #e3e3e3;
 }
+

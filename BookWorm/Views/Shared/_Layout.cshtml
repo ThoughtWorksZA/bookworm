@@ -1,29 +1,30 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-        @Scripts.Render("~/bundles/markdown")
-    </head>
-    <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-left">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/markdown")
+</head>
+<body>
+    <header>
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="span5">
                     <div class="row-fluid">
-                          <div class="span3">
-                            <img src="http://booksa.s3.amazonaws.com/wp-content/themes/puku/images/logo.jpg" alt="PUKU Logo"/>
-                          </div>
-                          <div class="span9">
-                              <h1>PUKU</h1>
-                    Childrens Literature in Southern Africa
-                          </div>
+                        <div class="span3">
+                            <img src="http://booksa.s3.amazonaws.com/wp-content/themes/puku/images/logo.jpg" alt="PUKU Logo" />
+                        </div>
+                        <div class="span9">
+                            <h1>PUKU</h1>
+                            Childrens Literature in Southern Africa
+                        </div>
                     </div>
-                    
                 </div>
+            <div class="span7">
                 <div class="float-right">
                     <section id="login">
                         @Html.Partial("_LoginPartial")
@@ -32,38 +33,54 @@
                         <ul id="menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Books", "List", "Books", null, new {id = "BooksMenuLink"})</li>
+                            <li>@Html.ActionLink("Books", "List", "Books", null, new { id = "BooksMenuLink" })</li>
+                            <li><a href="#" onclick="toggleDiscoveryMenu()">Search</a></li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                            <li>@Html.ActionLink("Pages", "List", "Pages", null, new {id = "PagesMenuLink"})</li>
+                            <li>@Html.ActionLink("Pages", "List", "Pages", null, new { id = "PagesMenuLink" })</li>
                         </ul>
                     </nav>
-                    <div>
+
+                </div>
+            </div>
+                </div>
+        <div class="content-wrapper">
+            <div id="discovery_menu" style="display: none;">
+                <div class="row">
+                    <div class="span5">
+                        <span class="lead">I am looking for a specific book</span>
+                    </div>
+                   
                         @using (Html.BeginForm("List", "Books", FormMethod.Post))
                         {
-                            @Html.TextBox("searchQuery","", new {placeholder = "Search by Title"});
-                            <input type="submit" value="Search" class="btn" id="SearchButton" />
+                         
+                            <div class="span3">@Html.TextBox("searchQuery", "", new { placeholder = "Search by Title" })</div>
+                             <div class="span3"><input type="submit" value="Search" class="btn" id="SearchButton" /></div>
                         }
-                    </div>
+                    <div class="span1"><a href="#" onclick="toggleDiscoveryMenu()">Hide</a></div>
                 </div>
-               
             </div>
-        </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                <div>@TempData["flash"]</div> 
-                @RenderBody()
-            </section>
         </div>
-        <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
-                </div>
-            </div>
-        </footer>
 
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
-    </body>
+    </header>
+    <div id="body">
+
+
+
+        @RenderSection("featured", required: false)
+        <section class="content-wrapper main-content clear-fix">
+            <div>@TempData["flash"]</div>
+            @RenderBody()
+        </section>
+    </div>
+    <footer>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
 </html>
