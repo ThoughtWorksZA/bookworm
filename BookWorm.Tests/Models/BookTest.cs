@@ -25,7 +25,7 @@ namespace BookWorm.Tests.Models
                     "Publisher",
                     "Language",
                     "Genre",
-                    "RecommendedAgeGroup",
+                    "AgeRange",
                     "Country"
                 };
 
@@ -70,11 +70,11 @@ namespace BookWorm.Tests.Models
         public void AgeGroupShouldBeInValidAgeGroups()
         {
             var bookClass = typeof(Book);
-            var propertyName = "RecommendedAgeGroup";
+            var propertyName = "AgeRange";
             var namedProperty = bookClass.GetProperty(propertyName);
             Assert.IsNotNull(namedProperty);
-            Assert.AreEqual(1, namedProperty.GetCustomAttributes(typeof(ValidAgeGroup), false).Count(),
-                            "The RecommendedAgeGroup property of the Book Object should have a ValidAgeGroup annotation.");
+            Assert.AreEqual(1, namedProperty.GetCustomAttributes(typeof(ValidAgeRange), false).Count(),
+                            "The AgeRange property of the Book Object should have a ValidAgeRange annotation.");
         }
 
         [TestMethod]

@@ -11,7 +11,7 @@ namespace BookWorm.Tests.Models.Validations
         public void ShouldBeValidWhenSpecifiedAgeGroupIs0To2()
         {
 
-            var validator = new ValidAgeGroup();
+            var validator = new ValidAgeRange();
 
             Assert.IsTrue(validator.IsValid("0-2"));
         }
@@ -20,7 +20,7 @@ namespace BookWorm.Tests.Models.Validations
         public void ShouldBeInvalidWhenSpecifiedCountryIs1To3()
         {
 
-            var validator = new ValidAgeGroup();
+            var validator = new ValidAgeRange();
 
             Assert.IsFalse(validator.IsValid("1-3"));
         }

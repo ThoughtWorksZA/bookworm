@@ -37,10 +37,10 @@ namespace BookWorm.Models
         [Required]
         public string Genre { get; set; }
 
-        [DisplayName("Recommended Age Group")]
+        [DisplayName("Age Range")]
         [Required]
-        [ValidAgeGroup]
-        public string RecommendedAgeGroup { get; set; }
+        [ValidAgeRange]
+        public string AgeRange { get; set; }
 
         [Required]
         [ValidCountry]

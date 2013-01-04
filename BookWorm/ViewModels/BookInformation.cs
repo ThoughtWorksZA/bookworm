@@ -29,7 +29,7 @@ namespace BookWorm.ViewModels
 
         public SelectList ValidAgeGroups()
         {
-            return new SelectList(new ValidAgeGroup().ValidAgeGroups);
+            return new SelectList(new ValidAgeRange().ValidAgeRanges);
         }
 
         public SelectList ValidCountries()

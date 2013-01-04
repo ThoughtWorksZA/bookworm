@@ -110,11 +110,11 @@
 
         <div class="row-fluid">
             <div class="span2">
-                @Html.LabelFor(model => model.Book.RecommendedAgeGroup)
+                @Html.LabelFor(model => model.Book.AgeRange)
             </div>
             <div class="span5">
-                @Html.DropDownListFor(model => model.Book.RecommendedAgeGroup, Model.ValidAgeGroups())
-                @Html.ValidationMessageFor(model => model.Book.RecommendedAgeGroup)
+                @Html.DropDownListFor(model => model.Book.AgeRange, Model.ValidAgeGroups())
+                @Html.ValidationMessageFor(model => model.Book.AgeRange)
             </div>
         </div>
 
