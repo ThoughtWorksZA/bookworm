@@ -88,11 +88,15 @@ namespace BookWorm.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ViewResult List(string searchQuery)
+        public ActionResult List(string searchQuery)
         {
             var books = _repository.Search<Book>(book => book.Title == searchQuery || book.Isbn == searchQuery);
             ViewBag.Title = "List of Books";
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            if (bookInformations.Count() == 1)
+            {
+                return RedirectToAction("Details", new { id = bookInformations.First().Book.Id });                
+            }
             return View(bookInformations);
         }
     }

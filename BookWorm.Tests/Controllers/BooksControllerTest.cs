@@ -201,18 +201,20 @@ namespace BookWorm.Tests.Controllers
         public void BooksControllerListWithSearchQueryShouldSearchByGivenCondition()
         {
             var books = new List<Book>();
-            Enumerable.Range(1, 10).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i}));
+            Enumerable.Range(1, 9).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i}));
+            books.Add(new Book { Title = "Book 1" });
             var mockedRepo = new Mock<Repository>();
-            var expectedBooks = new List<Book> {books.First()};
+            var expectedBooks = new List<Book> {books.First(), books.Last()};
             mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>())).Returns(expectedBooks);
             var booksController = new BooksController(mockedRepo.Object);
 
-            var view = booksController.List("Book 1");
+            var view = (ViewResult)booksController.List("Book 1");
 
             var booksInView = (List<BookInformation>)view.Model;
             var actualBooks = booksInView.Select(bookInformation => bookInformation.Book).ToList();
-            Assert.AreEqual(1, actualBooks.Count());
+            Assert.AreEqual(2, actualBooks.Count());
             Assert.AreEqual("Book 1", actualBooks.First().Title);
+            Assert.AreEqual("Book 1", actualBooks.Last().Title);
 
             mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>()), Times.Once());
         }
@@ -226,6 +228,20 @@ namespace BookWorm.Tests.Controllers
                                                    .First(method => method.Name == "List" && method.GetParameters().Count() == 1)
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
+        }
+
+        [TestMethod]
+        public void BooksControllerListWithSearchQueryShouldRedirectToDetailsWhenThereIsOnlyOneResult()
+        {
+            var mockedRepo = new Mock<Repository>();
+            var expectedBooks = new List<Book> { new Book {Id=1, Title = "Book 1" } };
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>())).Returns(expectedBooks);
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var viewResult = (RedirectToRouteResult)booksController.List("Book 1");
+            Assert.AreEqual(1, viewResult.RouteValues["id"]);
+
+
         }
     }
 
