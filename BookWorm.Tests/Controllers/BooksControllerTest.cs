@@ -243,6 +243,46 @@ namespace BookWorm.Tests.Controllers
 
 
         }
+
+        [TestMethod]
+        public void BooksControllerFilterByLanguageShouldReturnBooksInGivenLanguage()
+        {
+            var books = new List<Book>();
+            Enumerable.Range(1, 8).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i, Language = "Venda"}));
+            var book1 = new Book {Title = "Book 9", Language = "Zulu"};
+            books.Add(book1);
+            var book2 = new Book {Title = "Book 10", Language = "Zulu"};
+            books.Add(book2);
+            var mockedRepo = new Mock<Repository>();
+            var expectedBooks = new List<Book> { book1, book2 };
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>())).Returns(expectedBooks);
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var view = (ViewResult)booksController.FilterByLanguage("Zulu");
+
+            var booksInView = (List<BookInformation>)view.Model;
+            var actualBooks = booksInView.Select(bookInformation => bookInformation.Book).ToList();
+            Assert.AreEqual(2, actualBooks.Count());
+            Assert.AreEqual("Zulu", actualBooks.First().Language);
+            Assert.AreEqual("Zulu", actualBooks.Last().Language);
+
+            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>()), Times.Once());
+        }
+
+        [TestMethod]
+        public void BooksControllerFilterByLanguageShouldRedirectToDetailsWhenThereIsOnlyOneResult()
+        {
+            var mockedRepo = new Mock<Repository>();
+            var expectedBooks = new List<Book> { new Book { Id = 1, Title = "Book 1", Language = "Zulu"} };
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>())).Returns(expectedBooks);
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var viewResult = (RedirectToRouteResult)booksController.FilterByLanguage("Zulu");
+            Assert.AreEqual(1, viewResult.RouteValues["id"]);
+
+
+        }
+
     }
 
 }
