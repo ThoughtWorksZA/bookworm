@@ -283,6 +283,16 @@ namespace BookWorm.Tests.Controllers
 
         }
 
+        [TestMethod]
+        public void BooksControllerFilterByLanguageShouldAllowAnonymous()
+        {
+            var booksControllerClass = typeof(BooksController);
+            Assert.AreEqual(1, booksControllerClass.GetMethods()
+                                                   .First(method => method.Name == "FilterByLanguage" && method.GetParameters().Count() == 1)
+                                                   .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
+                                                   .Count());
+        }
+
     }
 
 }

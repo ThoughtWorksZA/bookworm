@@ -100,6 +100,8 @@ namespace BookWorm.Controllers
             return View(bookInformations);
         }
 
+        [AllowAnonymous]
+        [HttpPost]
         public ActionResult FilterByLanguage(string language)
         {
             var books = _repository.Search<Book>(book => book.Language == language);
