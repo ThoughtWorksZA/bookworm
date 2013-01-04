@@ -5,33 +5,27 @@
 <p>
     @Html.ActionLink("Create New", "Create", null, new{id="createNewBookLink"})
 </p>
-<table class="striped-table">
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
+        <div class="row">
+            <div class="span8">
                 <span class="lead">@Html.DisplayFor(modelItem => item.Book.Title)</span>
                 by
                 @Html.DisplayFor(modelItem => item.Book.Author)
-            </td>
-            <td>
-                <div class="row-fluid">
-                    <div class="span3">
-                        @Html.ActionLink("Edit", "Edit", new {id = item.Book.Id}) |
-                    </div>
-                    <div class="span4">
-                        @Html.ActionLink("Details", "Details", new {id = item.Book.Id}) 
-                    </div>
-                    <div class="span4">
-                         @using (Html.BeginForm("Delete", "Books", new {@id = item.Book.Id}))
-                        {
-                            @Html.HttpMethodOverride(HttpVerbs.Delete)
-                            <input type="submit" class="btn" value="Delete" />
-                        }
-                    </div>
-                </div>
-            </td>
-        </tr>
+            </div>
+            <div class="span1">
+                @Html.ActionLink("Edit", "Edit", new {id = item.Book.Id}) |
+            </div>
+            <div class="span1">
+                @Html.ActionLink("Details", "Details", new {id = item.Book.Id}) 
+            </div>
+            <div class="span1">
+                @using (Html.BeginForm("Delete", "Books", new {@id = item.Book.Id}))
+                {
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <input type="submit" class="btn" value="Delete" />
+                }
+            </div>
+        </div>
+        <hr />
     }
-
-</table>
