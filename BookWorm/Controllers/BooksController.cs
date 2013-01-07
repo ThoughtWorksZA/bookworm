@@ -47,12 +47,12 @@ namespace BookWorm.Controllers
 
             if (! ModelState.IsValid )
             {
-                TempData["flash"] = "There were problems saving this book";
+                TempData["flashError"] = "There were problems saving this book";
                 return View(bookInformation);
             }
 
             var createdBook = (Book) _repository.Create(bookInformation.Book);
-            TempData["flash"] = string.Format("Added {0} successfully", createdBook.Title);
+            TempData["flashSuccess"] = string.Format("Added {0} successfully", createdBook.Title);
             return RedirectToAction("Details", new { id = createdBook.Id });
         }
 
@@ -68,12 +68,12 @@ namespace BookWorm.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["flash"] = "There were problems saving this book";
+                TempData["flashError"] = "There were problems saving this book";
                 return View(editedBookInformation);
             }
 
             _repository.Edit(editedBookInformation.Book);
-            TempData["flash"] = string.Format("Updated {0} successfully", editedBookInformation.Book.Title);
+            TempData["flashSuccess"] = string.Format("Updated {0} successfully", editedBookInformation.Book.Title);
             return RedirectToAction("Details", new { id = editedBookInformation.Book.Id });
 
         }
@@ -82,7 +82,7 @@ namespace BookWorm.Controllers
         public RedirectToRouteResult Delete(int id)
         {
             _repository.Delete<Book>(id);
-            TempData["flash"] = string.Format("Book successfully deleted");            
+            TempData["flashSuccess"] = string.Format("Book successfully deleted");            
             return RedirectToAction("List");
         }
 

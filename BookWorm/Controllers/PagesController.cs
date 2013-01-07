@@ -28,12 +28,12 @@ namespace BookWorm.Controllers
             try
             {
                 Model<StaticPage> savedPage = _repository.Create(submittedStaticPage);
-                TempData["flash"] = string.Format("Added {0}", submittedStaticPage.Title);
+                TempData["flashSuccess"] = string.Format("Added {0}", submittedStaticPage.Title);
                 return RedirectToAction("Details", "Pages", new {id = savedPage.Id});
             }
             catch (NonUniqueObjectException ex)
             {
-                TempData["flash"] = string.Format("Sorry, page {0} already exists.", submittedStaticPage.Title);
+                TempData["flashError"] = string.Format("Sorry, page {0} already exists.", submittedStaticPage.Title);
                 return View();
             }
         }

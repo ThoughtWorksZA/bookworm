@@ -39,7 +39,7 @@ namespace BookWorm.Tests.Controllers
             var viewResult = (RedirectToRouteResult)booksController.Create(bookInformation);
 
             Assert.IsNotNull(viewResult);
-            Assert.AreEqual("Added The Book successfully", booksController.TempData["flash"]);
+            Assert.AreEqual("Added The Book successfully", booksController.TempData["flashSuccess"]);
             Assert.AreEqual(1, viewResult.RouteValues["id"]);
         }
 
@@ -71,7 +71,7 @@ namespace BookWorm.Tests.Controllers
             var result = (ViewResult)booksController.Create(bookInformation);
 
             mockedRepo.Verify(repo => repo.Create(book), Times.Never(), "failing model validation should prevent creating book");
-            Assert.AreEqual("There were problems saving this book", booksController.TempData["flash"]);
+            Assert.AreEqual("There were problems saving this book", booksController.TempData["flashError"]);
         }
 
         [TestMethod]
@@ -137,7 +137,7 @@ namespace BookWorm.Tests.Controllers
             var viewResult = (RedirectToRouteResult)booksController.Edit(editedBookInformation);
 
             mockedRepo.Verify(repo => repo.Edit<Book>(editedBook), Times.Once());
-            Assert.AreEqual("Updated A book successfully", booksController.TempData["flash"]);
+            Assert.AreEqual("Updated A book successfully", booksController.TempData["flashSuccess"]);
             Assert.AreEqual(1, viewResult.RouteValues["id"]);
             
         }
@@ -155,7 +155,7 @@ namespace BookWorm.Tests.Controllers
             var result = (ViewResult)booksController.Edit(bookInformation);
 
             mockedRepo.Verify(repo => repo.Edit(book), Times.Never(), "failing model validation should prevent updating book");
-            Assert.AreEqual("There were problems saving this book", booksController.TempData["flash"]);
+            Assert.AreEqual("There were problems saving this book", booksController.TempData["flashError"]);
         }
 
         [TestMethod]
@@ -167,7 +167,7 @@ namespace BookWorm.Tests.Controllers
 
             var viewResult = booksController.Delete(1);
             mockedRepo.Verify(repo => repo.Delete<Book>(1));
-            Assert.AreEqual("Book successfully deleted", booksController.TempData["flash"]);
+            Assert.AreEqual("Book successfully deleted", booksController.TempData["flashSuccess"]);
             Assert.AreEqual("List", viewResult.RouteValues["action"]);
         }
 

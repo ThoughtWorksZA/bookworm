@@ -70,7 +70,8 @@
 
         @RenderSection("featured", required: false)
         <section class="content-wrapper main-content clear-fix">
-            <div>@TempData["flash"]</div>
+            <div>@TempData["flashError"]</div>
+            <div>@TempData["flashSuccess"]</div>
             @RenderBody()
         </section>
     </div>

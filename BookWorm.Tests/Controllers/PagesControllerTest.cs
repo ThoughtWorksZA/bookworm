@@ -33,7 +33,7 @@ namespace BookWorm.Tests.Controllers
             var controller = new PagesController(repository.Object);
             var result = (RedirectToRouteResult)controller.Create(submittedPage);
             repository.Verify(it => it.Create(submittedPage), Times.Once());
-            Assert.AreEqual(string.Format("Added {0}", submittedPage.Title), controller.TempData["flash"]);
+            Assert.AreEqual(string.Format("Added {0}", submittedPage.Title), controller.TempData["flashSuccess"]);
             Assert.AreEqual(1, result.RouteValues["id"]);
         }
 
@@ -72,7 +72,7 @@ namespace BookWorm.Tests.Controllers
             var controller = new PagesController(repository.Object);
             controller.Create(duplicatePage);
 
-            Assert.AreEqual(string.Format("Sorry, page {0} already exists.", duplicatePage.Title), controller.TempData["flash"]);
+            Assert.AreEqual(string.Format("Sorry, page {0} already exists.", duplicatePage.Title), controller.TempData["flashError"]);
         }
 
         [TestMethod]
