@@ -21,7 +21,7 @@ namespace BookWorm.Controllers
         public ViewResult List()
         {
             var books = _repository.List<Book>();
-            ViewBag.Title = "List of Books";
+            ViewBag.Title = "Books";
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
             return View(bookInformations);
         }
@@ -91,7 +91,7 @@ namespace BookWorm.Controllers
         public ActionResult List(string searchQuery)
         {
             var books = _repository.Search<Book>(book => book.Title == searchQuery || book.Isbn == searchQuery);
-            ViewBag.Title = "List of Books";
+            ViewBag.Title = string.Format("Search Results for \"{0}\"", searchQuery);
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
             if (bookInformations.Count() == 1)
             {
@@ -105,7 +105,7 @@ namespace BookWorm.Controllers
         public ActionResult FilterByLanguage(string language)
         {
             var books = _repository.Search<Book>(book => book.Language == language);
-            ViewBag.Title = "List of Books";
+            ViewBag.Title = string.Format("{0} Books", language);
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
             if (bookInformations.Count() == 1)
             {
