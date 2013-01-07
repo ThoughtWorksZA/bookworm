@@ -16,7 +16,7 @@
                 <div class="span5">
                     <div class="row-fluid">
                         <div class="span3">
-                            <img src="http://booksa.s3.amazonaws.com/wp-content/themes/puku/images/logo.jpg" alt="PUKU Logo" />
+                            <img src="/Images/logo.jpg" alt="PUKU Logo" />
                         </div>
                         <div class="span9">
                             <h1>PUKU</h1>
@@ -30,6 +30,7 @@
                         @Html.Partial("_LoginPartial")
                     </section>
                     <nav>
+                     
                         <ul id="menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("About", "About", "Home")</li>
@@ -70,8 +71,14 @@
 
         @RenderSection("featured", required: false)
         <section class="content-wrapper main-content clear-fix">
-            <div>@TempData["flashError"]</div>
-            <div>@TempData["flashSuccess"]</div>
+            @if (TempData["flashError"] != null && !TempData["flashError"].ToString().IsEmpty())
+            {
+                <div class="alert alert-error">@TempData["flashError"]</div>
+            }
+            @if (TempData["flashSuccess"] != null && !TempData["flashSuccess"].ToString().IsEmpty())
+            {
+                <div>@TempData["flashSuccess"]</div>
+            }
             @RenderBody()
         </section>
     </div>

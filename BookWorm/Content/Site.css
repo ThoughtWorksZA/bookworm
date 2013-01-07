@@ -768,3 +768,24 @@ hr {
   border-bottom: 1px solid #e3e3e3;
 }
 
+
+
+.btn-group a {
+    text-decoration: none;
+}
+
+.link-row {
+    line-height: 35px;
+    cursor: pointer;
+}
+.link-row:hover {
+    background-color: #e3e3e3;
+}
+
+.list-seperator {
+    width: 100%;
+    margin: 5px 0px 0px 0px;
+    border: 0;
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #e3e3e3;
+}
