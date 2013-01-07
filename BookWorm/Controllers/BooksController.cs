@@ -97,6 +97,10 @@ namespace BookWorm.Controllers
             {
                 return RedirectToAction("Details", new { id = bookInformations.First().Book.Id });                
             }
+            if (!bookInformations.Any())
+            {
+                TempData["flashNotice"] = "No books found that match your search.";
+            }
             return View(bookInformations);
         }
 

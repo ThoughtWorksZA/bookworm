@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<BookWorm.ViewModels.BookInformation>
 
 <h2>@ViewBag.Title</h2>
+<div>@TempData["flashNotice"]</div>
 
 <p>
     @Html.ActionLink("Create New", "Create", null, new{id="createNewBookLink"})
