@@ -23,7 +23,7 @@
                 @using (Html.BeginForm("Delete", "Books", new {@id = item.Book.Id}))
                 {
                     @Html.HttpMethodOverride(HttpVerbs.Delete)
-                    <input type="submit" class="btn" value="Delete" />
+                    <input type="submit" class="btn btn-danger" value="Delete" />
                 }
             </div>
         </div>

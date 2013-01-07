@@ -4,21 +4,11 @@
     ViewBag.Title = @Model.Title;
 }
 
-<h2>Details</h2>
+<h2>@Html.DisplayFor(model => model.Title)</h2>
 
 <fieldset>
     <legend>StaticPage</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Title)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Title)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Content)
-    </div>
+    <hr />
     <div class="display-field">
         @Html.Raw(ViewBag.transformedContent)
     </div>
