@@ -8,8 +8,8 @@
 </p>
     @foreach (StaticPage item in Model)
     {
-        <a href="/Pages/Details/@item.Id">
-            <div class="row">
+
+            <div class="row link-row" onclick="window.location.href = '/Pages/Details/@item.Id'">
                       <div class="span8">
                           <span class="lead">@Html.DisplayFor(modelItem => item.Title)</span>
                       </div>
@@ -27,7 +27,7 @@
                           }
                       </div>
                   </div>
-        </a>
-        <hr />
+               <div class="list-seperator"></div>
+
     
     }

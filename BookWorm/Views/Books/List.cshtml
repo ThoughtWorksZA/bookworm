@@ -8,8 +8,8 @@
 </p>
     @foreach (var item in Model)
     {
-        <a href="/Books/Details/@item.Book.Id">
-        <div class="row link-row">
+        
+        <div class="row link-row" onclick="window.location.href = '/Books/Details/@item.Book.Id'">
             <div class="span6">
                 <span class="lead">@Html.DisplayFor(modelItem => item.Book.Title)</span>
                 by
@@ -46,7 +46,6 @@
                 </div>
             </div>
         </div>
-            </a>
              
        <div class="list-seperator"></div>
        

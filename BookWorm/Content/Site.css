@@ -777,6 +777,9 @@ hr {
 .link-row {
     line-height: 35px;
     cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 40px;
 }
 .link-row:hover {
     background-color: #e3e3e3;
@@ -784,7 +787,7 @@ hr {
 
 .list-seperator {
     width: 100%;
-    margin: 5px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
     border: 0;
     border-top: 1px solid #eeeeee;
     border-bottom: 1px solid #e3e3e3;
