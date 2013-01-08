@@ -14,22 +14,24 @@
     @foreach (var item in Model)
     {
         
-        <div class="row link-row" onclick="window.location.href = '/Books/Details/@item.Book.Id'">
-            <div class="span6">
+        <div class="row link-row">
+            <div id="clickable-row"  onclick="window.location.href = '/Books/Details/@item.Book.Id'">
+                <div class="span6">
                 <span class="lead">@Html.DisplayFor(modelItem => item.Book.Title)</span>
                 by
                 @Html.DisplayFor(modelItem => item.Book.Author)
             </div>
-            <div class="span4">
-                <span class="label label-info">
-                    <i class="icon-globe"></i> @item.Book.Language
+                <div class="span4">
+                    <span class="label label-info">
+                        <i class="icon-globe"></i> @item.Book.Language
                     </span>
-                <span class="label">
-                    <i class="icon-tag"></i> @item.Book.Genre
-                </span>
-                <span class="label label-success">
-                    <i class="icon-user"></i> @item.Book.AgeRange years
-                </span>
+                    <span class="label">
+                        <i class="icon-tag"></i> @item.Book.Genre
+                    </span>
+                    <span class="label label-success">
+                        <i class="icon-user"></i> @item.Book.AgeRange years
+                    </span>
+                </div>
             </div>
             <div class="span2">
                 <div class="row-fluid">
@@ -45,7 +47,7 @@
                         @using (Html.BeginForm("Delete", "Books", new {@id = item.Book.Id}))
                         {
                             @Html.HttpMethodOverride(HttpVerbs.Delete)
-                            <input type="submit" class="btn btn-danger" value="X" onclick="return confirm('This action can not be undone. Are you sure you want to delete this book?')"/>
+                            <input type="submit" class="btn btn-danger" value="X" onclick="return confirm('This action can not be undone. Are you sure you want to delete this book?');"/>
                         }
                     </div>
                 </div>
