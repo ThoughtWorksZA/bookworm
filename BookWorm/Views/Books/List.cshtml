@@ -1,4 +1,7 @@
-﻿@model IEnumerable<BookWorm.ViewModels.BookInformation>
+﻿ @Scripts.Render("~/Scripts/puku/confirmModal.js")
+ @Scripts.Render("~/Scripts/puku/clickableDiv.js")
+
+@model IEnumerable<BookWorm.ViewModels.BookInformation>
 
 <h2>@ViewBag.Title</h2>
 
@@ -15,7 +18,7 @@
     {
         
         <div class="row link-row">
-            <div id="clickable-row"  onclick="window.location.href = '/Books/Details/@item.Book.Id'">
+            <div id="clickable-div" data-clickable-url="/Books/Details/@item.Book.Id">
                 <div class="span6">
                 <span class="lead">@Html.DisplayFor(modelItem => item.Book.Title)</span>
                 by
@@ -45,7 +48,7 @@
                         @using (Html.BeginForm("Delete", "Books", new {@id = item.Book.Id}))
                         {
                             @Html.HttpMethodOverride(HttpVerbs.Delete)
-                            <input type="submit" class="btn btn-danger" value="x" onclick="return confirm('This action can not be undone. Are you sure you want to delete this book?');"/>
+                            <input type="button" class="btn btn-danger" value="X" data-confirm="This action can not be undone. Are you sure you want to delete this book?" />
                         }
                     </div>
                 </div>

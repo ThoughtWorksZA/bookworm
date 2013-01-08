@@ -327,6 +327,8 @@
     <Content Include="Scripts\Markdown.Editor.js" />
     <Content Include="Scripts\Markdown.Sanitizer.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\puku\confirmModal.js" />
+    <Content Include="Scripts\puku\clickableDiv.js" />
     <Content Include="Scripts\ui-functions.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
