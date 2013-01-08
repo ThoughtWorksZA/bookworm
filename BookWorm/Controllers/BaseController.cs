@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using BookWorm.Models;
 using Raven.Client;
@@ -22,7 +23,7 @@ namespace BookWorm.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             _repository = GetRepository();
-            ViewBag.StaticPages = _repository.List<StaticPage>();
+            ViewBag.StaticPages = new ArrayList();
             base.OnActionExecuting(filterContext);
         }
 
