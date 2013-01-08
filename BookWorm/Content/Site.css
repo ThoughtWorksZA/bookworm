@@ -798,3 +798,7 @@ form {
     margin-top: 50px;
     margin-bottom: 50px;
 }
+
+.hand-cursor {
+    cursor: pointer;
+}
