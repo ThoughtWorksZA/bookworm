@@ -37,17 +37,15 @@
                 <div class="row-fluid">
                     <div class="span3">
                         @Html.ActionLink("Edit", "Edit", new {id = item.Book.Id}) 
-                        
                     </div>
                     <div class="span4">
-                        @Html.ActionLink("Details", "Details", new {id = item.Book.Id}) 
-                        
+                        @Html.ActionLink("Details", "Details", new {id = item.Book.Id})  
                     </div>
                     <div class="span4">
                         @using (Html.BeginForm("Delete", "Books", new {@id = item.Book.Id}))
                         {
                             @Html.HttpMethodOverride(HttpVerbs.Delete)
-                            <input type="submit" class="btn btn-danger" value="X" onclick="return confirm('This action can not be undone. Are you sure you want to delete this book?');"/>
+                            <input type="submit" class="btn btn-danger" value="x" onclick="return confirm('This action can not be undone. Are you sure you want to delete this book?');"/>
                         }
                     </div>
                 </div>

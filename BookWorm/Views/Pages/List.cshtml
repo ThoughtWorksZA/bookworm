@@ -8,13 +8,12 @@
 </p>
     @foreach (StaticPage item in Model)
     {
-
             <div class="row link-row" onclick="window.location.href = '/Pages/Details/@item.Id'">
                       <div class="span8">
                           <span class="lead">@Html.DisplayFor(modelItem => item.Title)</span>
                       </div>
                       <div class="span1">
-                          @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+                          @Html.ActionLink("Edit", "Edit", new {id = item.Id})
                       </div>
                       <div class="span1">
                           @Html.ActionLink("Details", "Details", new {id = item.Id}) 
@@ -23,11 +22,9 @@
                           @using (Html.BeginForm("Delete", "Books", new {@id = item.Id}))
                           {
                               @Html.HttpMethodOverride(HttpVerbs.Delete)
-                              <input type="submit" class="btn btn-danger" value="Delete" />
+                              <input type="submit" class="btn btn-danger" value="x" />
                           }
                       </div>
                   </div>
                <div class="list-seperator"></div>
-
-    
     }
