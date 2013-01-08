@@ -1,8 +1,13 @@
 ﻿@model IEnumerable<BookWorm.ViewModels.BookInformation>
 
 <h2>@ViewBag.Title</h2>
-<div>@TempData["flashNotice"]</div>
 
+ @if (TempData["flashNotice"] != null && !TempData["flashNotice"].ToString().IsEmpty())
+{
+    <div><i class="icon-inbox"></i> @TempData["flashNotice"]</div>
+    <div class="some-space"><center><quote class="lead">“A room without books is like a body without a soul.” 
+    <span style="font-size: small">― Marcus Tullius Cicero</span></quote></center></div>
+}
 <p>
     @Html.ActionLink("Create New", "Create", null, new{id="createNewBookLink"})
 </p>
@@ -40,7 +45,7 @@
                         @using (Html.BeginForm("Delete", "Books", new {@id = item.Book.Id}))
                         {
                             @Html.HttpMethodOverride(HttpVerbs.Delete)
-                            <input type="submit" class="btn btn-danger pull-right" value="X" onclick="return confirm('This action can not be undone. Are you sure you want to delete this book?')"/>
+                            <input type="submit" class="btn btn-danger" value="X" onclick="return confirm('This action can not be undone. Are you sure you want to delete this book?')"/>
                         }
                     </div>
                 </div>

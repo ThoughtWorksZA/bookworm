@@ -67,8 +67,6 @@
     </header>
     <div id="body">
 
-
-
         @RenderSection("featured", required: false)
         <section class="content-wrapper main-content clear-fix">
             @if (TempData["flashError"] != null && !TempData["flashError"].ToString().IsEmpty())
@@ -77,7 +75,7 @@
             }
             @if (TempData["flashSuccess"] != null && !TempData["flashSuccess"].ToString().IsEmpty())
             {
-                <div>@TempData["flashSuccess"]</div>
+                <div class="alert alert-success">@TempData["flashSuccess"]</div>
             }
             @RenderBody()
         </section>
