@@ -802,3 +802,40 @@ form {
 .hand-cursor {
     cursor: pointer;
 }
+
+/* Markdown */
+.mdhelp {
+    background-color: #FEFAE2;
+    position: absolute;
+    right: 0;
+    width: 630px;
+    color: black;
+}
+
+.mdhelp-tabs {
+background-color: #F3EED5;
+list-style-type: none;
+margin: 0;
+padding: 3px 0 0 3px;
+}
+.mdhelp-tab {
+padding: 10px;
+display: none;
+line-height: 1.2;
+}
+
+.cbt {
+clear: both;
+}
+
+.link-no-underline {
+    text-decoration: none;
+}
+
+.anti-active {
+    color: #000;
+    cursor: default;
+    background-color: transparent;
+    border: 0px solid #DDD;
+    border-bottom-color: transparent;
+}
