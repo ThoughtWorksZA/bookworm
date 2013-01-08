@@ -1,7 +1,11 @@
-﻿using BookWorm.Models;
+﻿using System.Linq;
+using System.Threading;
+using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raven.Client;
+using Raven.Client.Document;
 using Raven.Client.Embedded;
+using Raven.Client.Indexes;
 
 namespace BookWorm.Tests.Models.Integration
 {
@@ -81,6 +85,14 @@ namespace BookWorm.Tests.Models.Integration
             var session = _documentStore.OpenSession();
             var model = new StaticPage { Id = 1, Title = "Misspelled" };
             session.Delete(model);
+        }
+
+        [TestMethod]
+        public void ShouldKnowWeCanEvict()
+        {
+            var session = _documentStore.OpenSession();
+            var model = new StaticPage { Id = 1, Title = "Misspelled" };
+            session.Advanced.Evict(model);
         }
     }
 }

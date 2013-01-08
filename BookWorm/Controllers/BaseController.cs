@@ -23,7 +23,11 @@ namespace BookWorm.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             _repository = GetRepository();
-            ViewBag.StaticPages = new ArrayList();
+            ViewBag.StaticPages = _repository.List<StaticPage>();
+            foreach (StaticPage page in ViewBag.StaticPages)
+            {
+                _repository.Detach(page);
+            }
             base.OnActionExecuting(filterContext);
         }
 

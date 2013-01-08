@@ -105,5 +105,16 @@ namespace BookWorm.Tests.Models
             repository.Edit<StaticPage>(persistedModel);
         }
 
+        [TestMethod]
+        public void ShouldKnowHowToDetatchDocumentFromSession()
+        {
+            var persistedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes chicken. You're going to love it." };
+            var documentSession = new Mock<IDocumentSession>();
+            var _syncAdvancedSessionOperation = new Mock<ISyncAdvancedSessionOperation>();
+            documentSession.SetupGet(session => session.Advanced).Returns(_syncAdvancedSessionOperation.Object);
+            var repository = new Repository(documentSession.Object);
+            repository.Detach(persistedModel);
+            _syncAdvancedSessionOperation.Verify(session => session.Evict(persistedModel), Times.Once());
+        }
     }
 }
