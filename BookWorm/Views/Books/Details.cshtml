@@ -11,15 +11,21 @@
             </div>
             by <strong>@Html.DisplayFor(model => model.Book.Author)</strong>
             <hr />
-            <p>ISBN: <em>@Html.DisplayFor(model => model.Book.Isbn)</em></p>
+            <p>ISBN: <em>@Html.DisplayFor(model => model.Book.Isbn)</em></p>    
             <p>Publisher: <em>@Html.DisplayFor(model => model.Book.Publisher)</em></p>
-            <p>Illustrator: <em>@Html.DisplayFor(model => model.Book.Illustrator)</em></p>
+            @if (@Html.DisplayFor(model => model.Book.Illustrator) != null && !@Html.DisplayFor(model => model.Book.Illustrator).ToString().IsEmpty())
+            {
+                <p>Illustrator: <em>@Html.DisplayFor(model => model.Book.Illustrator)</em></p>
+            }
             <p>Editor: <em>@Html.DisplayFor(model => model.Book.Editor)</em></p>
             <p>Language: <em>@Html.DisplayFor(model => model.Book.Language)</em></p>
             <p>Genre: <em>@Html.DisplayFor(model => model.Book.Genre)</em></p>
             <p>Age Range: <em>@Html.DisplayFor(model => model.Book.AgeRange)</em></p>
             <p>Country: <em>@Html.DisplayFor(model => model.Book.Country)</em></p>
-            <p>Description: <em>@Html.DisplayFor(model => model.Book.Description)</em></p>
+            @if (@Html.DisplayFor(model => model.Book.Description) != null && !@Html.DisplayFor(model => model.Book.Description).ToString().IsEmpty())
+            {
+                <p>Description: <em>@Html.DisplayFor(model => model.Book.Description)</em></p>
+            }
         </div>
         <div class="span4">
             <img src="@Model.Book.CoverImageUrl" />

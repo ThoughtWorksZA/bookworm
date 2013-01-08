@@ -19,6 +19,7 @@ namespace BookWorm.Tests.Specs.Pages
         public CreateBookPage FillForm(string title)
         {
             WaitForPageToLoad();
+            SelectElement select;
             driver.FindElement(By.Id("Book_Title")).SendKeys(title);
             driver.FindElement(By.Id("Book_Subtitle")).SendKeys("ss");
             driver.FindElement(By.Id("Book_Author")).SendKeys("ss");
@@ -26,7 +27,13 @@ namespace BookWorm.Tests.Specs.Pages
             driver.FindElement(By.Id("Book_Editor")).SendKeys("ss");
             driver.FindElement(By.Id("Book_Isbn")).SendKeys("123456789");
             driver.FindElement(By.Id("Book_Publisher")).SendKeys("ss");
+            select = new SelectElement(driver.FindElement(By.Id("Book_Language")));
+            select.SelectByText("Afrikaans");
             driver.FindElement(By.Id("Book_Genre")).SendKeys("ss");
+            select = new SelectElement(driver.FindElement(By.Id("Book_AgeRange")));
+            select.SelectByText("0-2");
+            select = new SelectElement(driver.FindElement(By.Id("Book_Country")));
+            select.SelectByText("Tanzania");
             driver.FindElement(By.Id("Book_CoverImageUrl")).SendKeys("http://images.google.co.za/intl/en_ALL/images/logos/images_logo_lg.gif");
             driver.FindElement(By.Id("Book_Description")).SendKeys("ss");
             return  new CreateBookPage(driver);

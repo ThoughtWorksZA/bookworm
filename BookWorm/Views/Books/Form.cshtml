@@ -62,8 +62,8 @@
         </div>
 
         <div class="row-fluid">
-            <div class="span2">
-                @Html.LabelFor(model => model.Book.Editor)
+            <div class="span2 form-title">
+                Editor*
             </div>
             <div class="span10">
                 @Html.EditorFor(model => model.Book.Editor)
@@ -96,7 +96,11 @@
                 Language*
             </div>
             <div class="span10">
-                @Html.DropDownListFor(model => model.Book.Language, Model.ValidLanguages())
+                @Html.DropDownListFor(
+                    model => model.Book.Language, 
+                    Model.ValidLanguages(),
+                    "Select Language"
+                )
                 @Html.ValidationMessageFor(model => model.Book.Language)
             </div>
         </div>
@@ -115,8 +119,12 @@
             <div class="span2 form-title">
                 Age Range*
             </div>
-            <div class="span5">
-                @Html.DropDownListFor(model => model.Book.AgeRange, Model.ValidAgeGroups())
+            <div class="span10">
+                @Html.DropDownListFor(
+                    model => model.Book.AgeRange, 
+                    Model.ValidAgeGroups(),
+                    "Select Age Range"
+                )
                 @Html.ValidationMessageFor(model => model.Book.AgeRange)
             </div>
         </div>
@@ -126,7 +134,11 @@
                 Country*
             </div>
             <div class="span10">
-                @Html.DropDownListFor(model => model.Book.Country, Model.ValidCountries())
+                @Html.DropDownListFor(
+                    model => model.Book.Country,
+                    Model.ValidCountries(), 
+                    "Select Country"
+                )
                 @Html.ValidationMessageFor(model => model.Book.Country)
             </div>
         </div>
