@@ -19,7 +19,7 @@
                           @Html.ActionLink("Details", "Details", new {id = item.Id}) 
                       </div>
                       <div class="span1">
-                          @using (Html.BeginForm("Delete", "Books", new {@id = item.Id}))
+                          @using (Html.BeginForm("Delete", "Pages", new {@id = item.Id}))
                           {
                               @Html.HttpMethodOverride(HttpVerbs.Delete)
                               <input type="submit" class="btn btn-danger" value="x" />
