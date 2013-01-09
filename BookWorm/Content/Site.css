@@ -184,13 +184,12 @@ ul#menu {
     font-size: 1.3em;
     margin: 0 0 5px;
     padding: 0;
-    text-align: right;
 }
 
     ul#menu li {
         display: inline;
         list-style: none;
-        padding-left: 15px;
+        padding-left: 0px;
     }
 
         ul#menu li a {
@@ -630,21 +629,7 @@ tr.pager td {
             color: #333;
         }
 
-    /* menu */
-    nav {
-        margin-bottom: 5px;
-    }
 
-    ul#menu {
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
-
-        ul#menu li {
-            margin: 0;
-            padding: 0;
-        }
 
 
     /* main layout
@@ -838,4 +823,23 @@ clear: both;
     background-color: transparent;
     border: 0px solid #DDD;
     border-bottom-color: transparent;
+}
+
+.navbar-inner {
+    min-height: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    background-color: transparent;
+    background-image: none;
+    border: 0px solid #D4D4D4;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.065);
+    -moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.065);
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.065);
+}
+
+.dropdown-menu {
+    font-size: 14px;
 }
