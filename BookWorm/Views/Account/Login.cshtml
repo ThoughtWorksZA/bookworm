@@ -3,46 +3,61 @@
 @{
     ViewBag.Title = "Log in";
 }
-
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
-
+<h2>Login to manage PUKU</h2>
+<hr/>
 <section id="loginForm">
-<h2>Use a local account to log in.</h2>
+
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
+    <fieldset class="">
         <legend>Log in Form</legend>
-        <ol>
-            <li>
+        
                 @Html.LabelFor(m => m.UserName)
                 @Html.TextBoxFor(m => m.UserName)
                 @Html.ValidationMessageFor(m => m.UserName)
-            </li>
-            <li>
+            
                 @Html.LabelFor(m => m.Password)
                 @Html.PasswordFor(m => m.Password)
                 @Html.ValidationMessageFor(m => m.Password)
-            </li>
-            <li>
+                 <br />
                 @Html.CheckBoxFor(m => m.RememberMe)
                 @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-            </li>
-        </ol>
-        <input type="submit" value="Log in" id="LoginButton" />
+        <div class="some-small-space"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span9">
+                    Logging in gives you access to the
+                    admin dashboard and admin 
+                    functionality on Puku.co.za pages.                    
+                </div>
+                <div class="span3">
+                     <input type="submit" value="Log in" class="btn btn-success" id="LoginButton" />
+                </div>
+            </div>
+        </div>
+       
+                <div class="some-small-space"></div>
+    
     </fieldset>
-    <p>
-        @Html.ActionLink("Register", "Register") if you don't have an account.
-    </p>
+
 }
 </section>
 
 <section class="social" id="socialLoginForm">
-    <h2>Use another service to log in.</h2>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+    <p class="lead">Are you an Admin?</p>
+    <p><i class="icon-edit"></i> Login to manage pages, posts and books.</p>
+
+    <p class="lead">Are you here by mistake?</p>
+    <p>This login is only for
+        PUKU users and partners. </p>
+
+    <p>PUKU is a organisation dedicated to bridging 
+        the digital divide African <br />children experience
+        when looking for books in their own languages.</p>
+
+    <a href="#">Find out more about PUKU.</a>
 </section>
 
 @section Scripts {

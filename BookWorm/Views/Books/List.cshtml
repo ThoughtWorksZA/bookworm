@@ -22,7 +22,7 @@
         
         <div class="row link-row">
             <div id="clickable-div" data-clickable-url="/Books/Details/@item.Book.Id">
-                <div class="span6">
+                <div class="span7">
                 <span class="lead">@Html.DisplayFor(modelItem => item.Book.Title)</span>
                 by
                 @Html.DisplayFor(modelItem => item.Book.Author)
@@ -39,7 +39,7 @@
                     </span>
                 </div>
             </div>
-            <div class="span2">
+            <div class="span1">
                 <div class="row-fluid">
                 @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
                 {

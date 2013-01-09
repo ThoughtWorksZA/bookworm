@@ -1,35 +1,34 @@
 ﻿@using BookWorm.Models
 
 <div class="navbar">
-     <div class="navbar-inner">
-         <div class="container">
-             <ul id="menu" class="nav">
-                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                 <li>@Html.ActionLink("About", "About", "Home")</li>
-                 <li>@Html.ActionLink("Books", "List", "Books", null, new { id = "BooksMenuLink" })</li>
-                 <li><a href="#" onclick="toggleDiscoveryMenu()">Search</a></li>
-                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
-                 <li class="dropdown">
-                     <a class="dropdown-toggle" data-toggle="dropdown" href="/Pages/List" id="moreMenuLink">
-                         More
-                         <b class="caret"></b>
-                     </a>
-                     
-                     
-                     <ul class="dropdown-menu">
-                         <li><a href="/Pages/List" id="PagesMenuLink"><i class="icon-th-list"></i> View List</a></li>
-                         <li class="divider"><hr /></li>
-                         <li class="nav-header">Pages</li>
-                         @foreach (StaticPage page in ViewBag.StaticPages)
-                         {
-                             <li>
-                                 @Html.ActionLink(page.Title, "Details", "Pages", new { id = page.Id,  }, null)
-                             </li>
-                         }
-                     </ul>
-                 </li>
-             </ul>
-         </div>
-         </div>
+    <div class="navbar-inner">
+        <div class="container">
+            <ul id="menu" class="nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Books", "List", "Books", null, new { id = "BooksMenuLink" })</li>
+                <li><a href="#" onclick="toggleDiscoveryMenu()">Search</a></li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="/Pages/List" id="moreMenuLink">
+                        More
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                         @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                        {
+                            @Html.Raw("<li><a href='/Pages/List' id='PagesMenuLink'><i class='icon-th-list'></i> View List</a></li><li class='divider'><hr /></li><li class='nav-header'>Pages</li>")
+                        }
+                       
+                        @foreach (StaticPage page in ViewBag.StaticPages)
+                        {
+                            <li>
+                                @Html.ActionLink(page.Title, "Details", "Pages", new { id = page.Id, }, null)
+                            </li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>

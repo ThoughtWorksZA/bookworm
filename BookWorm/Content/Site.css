@@ -328,9 +328,8 @@ aside {
 
 /* login page */
 #loginForm {
-    border-right: solid 2px #c8c8c8;
     float: left;
-    width: 55%;
+    width: 300px;
 }
 
     #loginForm .validation-error {
@@ -350,7 +349,7 @@ aside {
     }
 
     #loginForm input {
-        width: 250px;
+        width: 300px;
     }
 
     #loginForm input[type="checkbox"],
@@ -361,9 +360,9 @@ aside {
     }
 
 #socialLoginForm {
-    margin-left: 40px;
-    float: left;
-    width: 40%;
+    margin-left: 0px;
+    float: right;
+    width: 60%;
 }
 
     #socialLoginForm h2 {
@@ -783,6 +782,10 @@ form {
     margin-bottom: 50px;
 }
 
+.some-small-space {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 .hand-cursor {
     cursor: pointer;
 }
