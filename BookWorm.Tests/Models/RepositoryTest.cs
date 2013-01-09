@@ -1,7 +1,10 @@
-﻿using BookWorm.Models;
+﻿using System.Linq;
+using BirdBrain;
+using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Raven.Client;
+using Raven.Client.Linq;
 
 namespace BookWorm.Tests.Models
 {

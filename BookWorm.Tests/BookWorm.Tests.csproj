@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BirdBrain">
+      <HintPath>..\packages\BirdBrain.0.2.3-Unstable\lib\net45\BirdBrain.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto">
       <HintPath>..\packages\RavenDB.Database.2.0.2170-Unstable\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -167,6 +170,7 @@
     <Compile Include="Controllers\BooksControllerTest.cs" />
     <Compile Include="Controllers\PagesControllerTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
+    <Compile Include="Controllers\AccountControllerTest.cs" />
     <Compile Include="Specs\CreateAStaticPage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

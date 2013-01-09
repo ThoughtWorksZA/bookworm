@@ -27,7 +27,7 @@ namespace BookWorm.Controllers
         {
             try
             {
-                Model<StaticPage> savedPage = _repository.Create(submittedStaticPage);
+                StaticPage savedPage = _repository.Create(submittedStaticPage);
                 TempData["flashSuccess"] = string.Format("Added {0}", submittedStaticPage.Title);
                 return RedirectToAction("Details", "Pages", new {id = savedPage.Id});
             }

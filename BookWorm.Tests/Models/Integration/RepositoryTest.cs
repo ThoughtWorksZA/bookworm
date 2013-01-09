@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BirdBrain;
 using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raven.Client;
@@ -77,6 +78,30 @@ namespace BookWorm.Tests.Models.Integration
                 var retrievedBooks = repo.Search<Book>(book => book.Title == "123456781" || book.Isbn == "123456781");
                 Assert.AreEqual(1, retrievedBooks.Count());
                 Assert.AreEqual("123456781", retrievedBooks.First().Isbn);
+            }
+        }
+
+
+        [TestMethod]
+        public void ShouldReturnTrueWhenDocumentCollectionHasAnyDocuments()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                var user = new User {Username = "test"};
+                session.Store(user);
+                session.SaveChanges();
+                var repository = new Repository(session);
+                Assert.IsTrue(repository.Any<User>());
+            }
+        }
+
+        [TestMethod]
+        public void ShouldReturnFalseWhenDocumentCollectionIsEmpty()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                var repository = new Repository(session);
+                Assert.IsFalse(repository.Any<User>());
             }
         }
     }

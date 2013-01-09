@@ -6,7 +6,7 @@ using BookWorm.Models.Validations;
 
 namespace BookWorm.Models
 {
-    public class Book : Model<Book>
+    public class Book : Model
     {
         [Required]
         public string Title { get; set; }

@@ -29,7 +29,7 @@ namespace BookWorm.Tests.Models.Integration
         public void ShouldKnowThatModelsGetAnIdOnStore()
         {
             var session = _documentStore.OpenSession();
-            var model = new Model<object>();
+            var model = new Model();
             session.Store(model);
             Assert.AreNotEqual(0, model.Id);
         }
@@ -39,8 +39,8 @@ namespace BookWorm.Tests.Models.Integration
         public void ShouldKnowThatWeCannotOverwriteADocumentWithAnotherDocument()
         {
             var session = _documentStore.OpenSession();
-            var model = new Model<object>{ Id = 1 };
-            var anotherModel = new Model<object>{ Id = 1 };
+            var model = new Model { Id = 1 };
+            var anotherModel = new Model { Id = 1 };
             session.Store(model);
             session.Store(anotherModel);
         }

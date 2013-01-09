@@ -11,8 +11,11 @@
     <div class="some-space"><center><quote class="lead">“A room without books is like a body without a soul.” 
     <span style="font-size: small">― Marcus Tullius Cicero</span></quote></center></div>
 }
-<p>
-    @Html.ActionLink("Create New", "Create", null, new{id="createNewBookLink"})
+<p> 
+    @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Create New", "Create", null, new {id = "createNewBookLink"})
+    }
 </p>
     @foreach (var item in Model)
     {
@@ -38,11 +41,10 @@
             </div>
             <div class="span2">
                 <div class="row-fluid">
+                @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                {
                     <div class="span3">
                         @Html.ActionLink("Edit", "Edit", new {id = item.Book.Id}) 
-                    </div>
-                    <div class="span4">
-                        @Html.ActionLink("Details", "Details", new {id = item.Book.Id})  
                     </div>
                     <div class="span4">
                         @using (Html.BeginForm("Delete", "Books", new {@id = item.Book.Id}))
@@ -51,6 +53,7 @@
                             <input type="button" class="btn btn-danger" value="X" data-confirm="This action can not be undone. Are you sure you want to delete this book?" />
                         }
                     </div>
+                }
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using BirdBrain;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
@@ -15,6 +16,14 @@ namespace BookWorm.Controllers
     [Authorize]
     public class AccountController : BaseController
     {
+        public AccountController()
+        {
+        }
+
+        public AccountController(Repository repository) : base(repository)
+        {
+        }
+
         //
         // GET: /Account/Login
 
@@ -51,7 +60,6 @@ namespace BookWorm.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -61,7 +69,9 @@ namespace BookWorm.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            if (_repository.Any<User>())
+                return new HttpStatusCodeResult(403);
+            return View("Register");
         }
 
         //
