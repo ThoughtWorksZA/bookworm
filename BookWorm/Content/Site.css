@@ -189,7 +189,6 @@ ul#menu {
     ul#menu li {
         display: inline;
         list-style: none;
-        padding-left: 0px;
     }
 
         ul#menu li a {
@@ -842,4 +841,8 @@ clear: both;
 
 .dropdown-menu {
     font-size: 14px;
+}
+
+.nav-header {
+    padding-left: 15px;
 }

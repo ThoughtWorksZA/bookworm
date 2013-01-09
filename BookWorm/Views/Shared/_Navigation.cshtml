@@ -11,13 +11,16 @@
                  <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 
                  <li class="dropdown">
-                     <a class="dropdown-toggle" data-toggle="dropdown" href="/Pages/List" id="PagesMenuLink">
-                         Pages
+                     <a class="dropdown-toggle" data-toggle="dropdown" href="/Pages/List" id="moreMenuLink">
+                         More
                          <b class="caret"></b>
                      </a>
                      
                      
                      <ul class="dropdown-menu">
+                         <li><a href="/Pages/List" id="PagesMenuLink"><i class="icon-th-list"></i> View List</a></li>
+                         <li class="divider"><hr /></li>
+                         <li class="nav-header">Pages</li>
                          @foreach (StaticPage page in ViewBag.StaticPages)
                          {
                              <li>

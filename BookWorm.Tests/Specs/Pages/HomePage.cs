@@ -42,6 +42,8 @@ namespace BookWorm.Tests.Specs.Pages
         public CreateStaticPage NavigateToCreateStaticPageView()
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            var moreMenuLinkElement = wait.Until(d => d.FindElement(By.Id("moreMenuLink")));
+            moreMenuLinkElement.Click();
             var pagesMenuLinkElement = wait.Until(d => d.FindElement(By.Id("PagesMenuLink")));
             pagesMenuLinkElement.Click();
             return new StaticPagesListPage(driver).ClickOnCreateNewLink();
