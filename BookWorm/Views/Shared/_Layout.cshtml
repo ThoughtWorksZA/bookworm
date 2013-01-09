@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using BookWorm.Models
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,16 +33,7 @@
                         <section id="login">
                             @Html.Partial("_LoginPartial")
                         </section>
-                        <nav>
-                            <ul id="menu">
-                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                                <li>@Html.ActionLink("About", "About", "Home")</li>
-                                <li>@Html.ActionLink("Books", "List", "Books", null, new { id = "BooksMenuLink" })</li>
-                                <li><a href="#" onclick="toggleDiscoveryMenu()">Search</a></li>
-                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                                <li>@Html.ActionLink("Pages", "List", "Pages", null, new { id = "PagesMenuLink" })</li>
-                                </ul>
-                        </nav>
+                        @Html.Partial("_Navigation")
                     </div>
                 </div>
             </div>

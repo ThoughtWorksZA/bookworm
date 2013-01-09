@@ -13,7 +13,7 @@ using BookWorm.Models;
 namespace BookWorm.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         //
         // GET: /Account/Login

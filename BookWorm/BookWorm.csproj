@@ -378,6 +378,7 @@
     <Content Include="Views\Pages\List.cshtml" />
     <Content Include="Views\Pages\Edit.cshtml" />
     <Content Include="Views\Books\Form.cshtml" />
+    <Content Include="Views\Shared\_Navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
