@@ -27,7 +27,7 @@
                 @using (Html.BeginForm("Delete", "Pages", new {@id = item.Id}))
                 {
                     @Html.HttpMethodOverride(HttpVerbs.Delete)
-                    <input type="submit" class="btn btn-danger" value="x" data-confirm="This action can not be undone. Are you sure you want to delete this book?" />
+                    <input type="submit" class="btn btn-danger" value="x" data-confirm="This action can not be undone. Are you sure you want to delete this page?" />
                 }
             </div>
         </div>

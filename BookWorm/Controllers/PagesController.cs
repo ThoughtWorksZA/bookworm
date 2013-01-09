@@ -59,6 +59,7 @@ namespace BookWorm.Controllers
         public RedirectToRouteResult Delete(int id)
         {
             _repository.Delete<StaticPage>(id);
+            TempData["flashSuccess"] = string.Format("Page successfully deleted"); 
             return RedirectToAction("List", "Pages");
         }
 
@@ -72,7 +73,8 @@ namespace BookWorm.Controllers
         public RedirectToRouteResult Edit(StaticPage updatedPage)
         {
             _repository.Edit(updatedPage);
-            return RedirectToAction("Details", new {id = updatedPage.Id});
+            TempData["flashSuccess"] = string.Format("Updated {0} successfully", updatedPage.Title);
+            return RedirectToAction("Details", new { id = updatedPage.Id });
         }
     }
 }

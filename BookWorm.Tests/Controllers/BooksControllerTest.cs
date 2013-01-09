@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
@@ -205,7 +206,7 @@ namespace BookWorm.Tests.Controllers
             books.Add(new Book { Title = "Book 1" });
             var mockedRepo = new Mock<Repository>();
             var expectedBooks = new List<Book> {books.First(), books.Last()};
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>())).Returns(expectedBooks);
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
             var booksController = new BooksController(mockedRepo.Object);
 
             var view = (ViewResult)booksController.List("Book 1");
@@ -216,7 +217,7 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual("Book 1", actualBooks.First().Title);
             Assert.AreEqual("Book 1", actualBooks.Last().Title);
 
-            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>()), Times.Once());
+            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()), Times.Once());
         }
 
 
@@ -235,7 +236,7 @@ namespace BookWorm.Tests.Controllers
         {
             var mockedRepo = new Mock<Repository>();
             var expectedBooks = new List<Book> { new Book {Id=1, Title = "Book 1" } };
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>())).Returns(expectedBooks);
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
             var booksController = new BooksController(mockedRepo.Object);
 
             var viewResult = (RedirectToRouteResult)booksController.List("Book 1");
@@ -255,7 +256,7 @@ namespace BookWorm.Tests.Controllers
             books.Add(book2);
             var mockedRepo = new Mock<Repository>();
             var expectedBooks = new List<Book> { book1, book2 };
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>())).Returns(expectedBooks);
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
             var booksController = new BooksController(mockedRepo.Object);
 
             var view = (ViewResult)booksController.FilterByLanguage("Zulu");
@@ -266,7 +267,7 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual("Zulu", actualBooks.First().Language);
             Assert.AreEqual("Zulu", actualBooks.Last().Language);
 
-            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>()), Times.Once());
+            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()), Times.Once());
         }
 
         [TestMethod]
@@ -274,7 +275,7 @@ namespace BookWorm.Tests.Controllers
         {
             var mockedRepo = new Mock<Repository>();
             var expectedBooks = new List<Book> { new Book { Id = 1, Title = "Book 1", Language = "Zulu"} };
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Func<Book, bool>>())).Returns(expectedBooks);
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
             var booksController = new BooksController(mockedRepo.Object);
 
             var viewResult = (RedirectToRouteResult)booksController.FilterByLanguage("Zulu");
