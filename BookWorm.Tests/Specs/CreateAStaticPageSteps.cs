@@ -1,8 +1,6 @@
-﻿using System;
+﻿using System.Configuration;
 using BookWorm.Tests.Specs.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 
 namespace BookWorm.Tests.Specs
@@ -10,6 +8,13 @@ namespace BookWorm.Tests.Specs
     [Binding]
     public class CreateAStaticPageSteps : BaseSteps
     {
+        [BeforeFeature]
+        public static void BeforeFeature()
+        {
+            if (ConfigurationManager.AppSettings["Environment"] == "Test")
+                Assert.Inconclusive("Skipping test on AppHarbor");
+        }
+
         [When(@"I go to Create New Static Page view")]
         public void WhenIGoToCreateNewStaticPageView()
         {

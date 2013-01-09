@@ -1,4 +1,5 @@
-﻿using BookWorm.Tests.Specs.Pages;
+﻿using System.Configuration;
+using BookWorm.Tests.Specs.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
@@ -7,12 +8,19 @@ using TechTalk.SpecFlow;
 namespace BookWorm.Tests.Specs
 {
     [Binding]
-    public class LoginSteps
+    public class LoginSteps : BaseSteps
     {
         private HomePage homePage;
         private LoginPage loginPage;
         private IWebDriver driver;
         // For additional details on SpecFlow step definitions see http://go.specflow.org/doc-stepdef
+        
+        [BeforeFeature]
+        public static void BeforeFeature()
+        {
+            if (ConfigurationManager.AppSettings["Environment"] == "Test")
+                Assert.Inconclusive("Skipping test on AppHarbor");
+        }
 
         [BeforeScenario()]
         public void Setup()

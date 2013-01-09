@@ -1,11 +1,10 @@
-﻿using BookWorm.Tests.Specs.Pages;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using TechTalk.SpecFlow;
 
 namespace BookWorm.Tests.Specs
 {
-    public class BaseSteps :Steps
+    public class BaseSteps : Steps
     {
         protected IWebDriver Driver;
 

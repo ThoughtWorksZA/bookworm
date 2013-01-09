@@ -1,4 +1,5 @@
-﻿using BookWorm.Tests.Specs.Pages;
+﻿using System.Configuration;
+using BookWorm.Tests.Specs.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
@@ -7,6 +8,13 @@ namespace BookWorm.Tests.Specs
     [Binding]
     internal class CreateBookSteps : BaseSteps
     {
+        [BeforeFeature]
+        public static void BeforeFeature()
+        {
+            if (ConfigurationManager.AppSettings["Environment"] == "Test")
+                Assert.Inconclusive("Skipping test on AppHarbor");
+        }
+
         [Given(@"I am logged in as an admin")]
         public void IAmLoggedInAsAnAdmin()
         {
