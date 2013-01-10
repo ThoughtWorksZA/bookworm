@@ -1,4 +1,5 @@
-﻿Feature: Login
+﻿@Specs
+Feature: Login
 	In order to do Admin functionality
 	As a Puku Admin
 	I want to login

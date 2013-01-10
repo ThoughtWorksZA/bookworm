@@ -216,6 +216,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App.Staging.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Specs\CreateAStaticPage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>CreateAStaticPage.feature.cs</LastGenOutput>

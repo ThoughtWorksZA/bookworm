@@ -1,4 +1,5 @@
-﻿Feature: Create Book
+﻿@Specs
+Feature: Create Book
 	As a Puku admin
 	I want to add a book
 

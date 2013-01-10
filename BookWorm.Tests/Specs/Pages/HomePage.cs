@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -13,7 +14,7 @@ namespace BookWorm.Tests.Specs.Pages
 
         public static HomePage NavigateTo(IWebDriver webDriver)
         {
-            webDriver.Navigate().GoToUrl("http://localhost:10827/");
+            webDriver.Navigate().GoToUrl(ConfigurationManager.AppSettings["FunctionalTestURL"]);
             return new HomePage(webDriver);
         }
 

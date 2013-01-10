@@ -1,4 +1,5 @@
-﻿Feature: Create A Static Page
+﻿@Specs
+Feature: Create A Static Page
 	As a PUKU administrator
 	I want to create a static page
 	So that I can publish information relevant to users of the website
