@@ -24,7 +24,7 @@ namespace BookWorm.Tests.Specs.Pages
 
         public bool IsCurrentPage()
         {
-            return driver.Title == "Log in - My ASP.NET MVC Application";
+            return driver.Title == "Log in";
         }
 
     }

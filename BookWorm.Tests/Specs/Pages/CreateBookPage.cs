@@ -13,7 +13,7 @@ namespace BookWorm.Tests.Specs.Pages
 
         public bool IsCurrentPage()
         {
-            return driver.Title == "Add a Book - My ASP.NET MVC Application";
+            return driver.Title == "Add a Book";
         }
 
         public CreateBookPage FillForm(string title)

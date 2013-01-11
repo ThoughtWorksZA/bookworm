@@ -12,7 +12,7 @@ namespace BookWorm.Tests.Specs.Pages
 
         public bool IsCurrentPage()
         {
-            return driver.Title == "PUKU | Add a Page - My ASP.NET MVC Application";
+            return driver.Title == "PUKU | Add a Page";
         }
 
         public CreateStaticPage FillForm(string myPageTitle)

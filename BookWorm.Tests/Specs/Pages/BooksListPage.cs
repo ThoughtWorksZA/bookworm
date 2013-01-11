@@ -10,7 +10,7 @@ namespace BookWorm.Tests.Specs.Pages
 
         public bool IsCurrentPage()
         {
-            return driver.Title == "List of Books - My ASP.NET MVC Application";
+            return driver.Title == "List of Books";
         }
 
         public CreateBookPage ClickOnCreateNewLink()
