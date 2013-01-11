@@ -55,8 +55,7 @@ namespace BookWorm.Models
 
         public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate) where T : Model
         {
-            var ravenQueryable = _documentSession.Query<T>();
-            return ravenQueryable.Where(predicate).ToList();
+            return Search(predicate, 1, int.MaxValue);
         }
 
         public virtual void Detach<T>(T model) where T : Model
@@ -73,6 +72,27 @@ namespace BookWorm.Models
         {
             var _ravenQueryable = _documentSession.Query<T>().OrderBy(d => d.CreatedAt).Skip((page - 1) * perPage).Take(perPage);
             return _ravenQueryable.ToList();
+        }
+
+        public int Count<T>() where T : Model
+        {
+            return _documentSession.Query<T>().Count();
+        }
+
+        public int Count<T>(Expression<Func<T, bool>> predicate) where T : Model
+        {
+            return _documentSession.Query<T>().Where(predicate).Count();
+        }
+
+        public ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, int page, int perPage) where T : Model
+        {
+            var ravenQueryable = _documentSession.Query<T>();
+            return ravenQueryable.Where(predicate).OrderBy(x => x.CreatedAt).Skip((page - 1) * perPage).Take(perPage).ToList();
+        }
+
+        public ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, int perPage) where T : Model
+        {
+            return Search<T>(predicate, 1, perPage);
         }
     }
 

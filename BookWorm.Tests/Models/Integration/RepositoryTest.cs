@@ -151,5 +151,62 @@ namespace BookWorm.Tests.Models.Integration
                 Assert.AreEqual("test2", repository.List<StaticPage>(2, 1).First().Title);
             }
         }
+
+        [TestMethod]
+        public void ShouldCountDocuments()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                session.Store(new StaticPage { Title = "test2", CreatedAt = DateTime.Now.AddMinutes(1) });
+                session.Store(new StaticPage { Title = "test", CreatedAt = DateTime.Now });
+                session.SaveChanges();
+                var repository = new Repository(session);
+                Assert.AreEqual(2, repository.Count<StaticPage>());
+            }
+        }
+
+        [TestMethod]
+        public void ShouldCountDocumentsWithSearch()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                session.Store(new StaticPage { Title = "test2", CreatedAt = DateTime.Now.AddMinutes(1) });
+                session.Store(new StaticPage { Title = "test", CreatedAt = DateTime.Now });
+                session.SaveChanges();
+                var repository = new Repository(session);
+                Assert.AreEqual(1, repository.Count<StaticPage>((x => x.Title == "test")));
+            }
+        }
+
+        [TestMethod]
+        public void ShouldListSecondPageWhenSearching()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                session.Store(new StaticPage { Id = 1, Title = "test", CreatedAt = DateTime.Now });
+                session.Store(new StaticPage { Id = 2, Title = "test2", CreatedAt = DateTime.Now.AddMinutes(1) });
+                session.Store(new StaticPage { Id = 3, Title = "test2", CreatedAt = DateTime.Now.AddMinutes(2) });
+                session.SaveChanges();
+                var repository = new Repository(session);
+                var results = repository.Search<StaticPage>((x => x.Title == "test2"), 2, 1);
+                Assert.AreEqual(3, results.First().Id);
+            }
+        }
+
+        [TestMethod]
+        public void ShouldKnowSearchOrdersByCreatedAt()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                session.Store(new StaticPage { Id = 1, Title = "test", CreatedAt = DateTime.Now });
+                session.Store(new StaticPage { Id= 2, Title = "test2", CreatedAt = DateTime.Now.AddMinutes(1) });
+                session.Store(new StaticPage { Id = 3, Title = "test2", CreatedAt = DateTime.Now.AddMinutes(2) });
+                session.SaveChanges();
+                var repository = new Repository(session);
+                var results = repository.Search<StaticPage>((x => x.Title == "test2"), 1);
+                Assert.AreEqual(2, results.First().Id);                
+            }
+        }
+
     }
 }
