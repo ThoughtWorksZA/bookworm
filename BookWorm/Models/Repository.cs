@@ -19,6 +19,16 @@ namespace BookWorm.Models
             _documentSession = documentSession;
         }
 
+        public void Dispose()
+        {
+            _documentSession.Dispose();
+        }
+
+        public virtual void Detach<T>(T model) where T : Model
+        {
+            _documentSession.Advanced.Evict(model);
+        }
+
         public virtual T Create<T>(T model) where T : Model
         {
             model.CreatedAt = model.UpdatedAt = DateTime.Now;
@@ -26,9 +36,16 @@ namespace BookWorm.Models
             return model;
         }
 
-        public void Dispose()
+        public virtual void Edit<T>(T editedModel) where T : Model
         {
-            _documentSession.Dispose();
+            editedModel.UpdatedAt = DateTime.Now;
+            _documentSession.Store(editedModel);
+        }
+
+        public virtual void Delete<T>(int id) where T : Model
+        {
+            var model = Get<T>(id);
+            _documentSession.Delete(model);
         }
 
         public virtual T Get<T>(int id) where T : Model
@@ -39,28 +56,6 @@ namespace BookWorm.Models
         public virtual ICollection<T> List<T>() where T : Model
         {
             return List<T>(int.MaxValue);
-        }
-
-        public virtual void Delete<T>(int id) where T : Model
-        {
-            var model = Get<T>(id);
-            _documentSession.Delete(model);
-        }
-
-        public virtual void Edit<T>(T editedModel) where T : Model
-        {
-            editedModel.UpdatedAt = DateTime.Now;
-            _documentSession.Store(editedModel);
-        }
-
-        public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate) where T : Model
-        {
-            return Search(predicate, 1, int.MaxValue);
-        }
-
-        public virtual void Detach<T>(T model) where T : Model
-        {
-            _documentSession.Advanced.Evict(model);
         }
 
         public ICollection<T> List<T>(int perPage) where T : Model
@@ -74,14 +69,9 @@ namespace BookWorm.Models
             return _ravenQueryable.ToList();
         }
 
-        public int Count<T>() where T : Model
+        public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate) where T : Model
         {
-            return _documentSession.Query<T>().Count();
-        }
-
-        public int Count<T>(Expression<Func<T, bool>> predicate) where T : Model
-        {
-            return _documentSession.Query<T>().Where(predicate).Count();
+            return Search(predicate, 1, int.MaxValue);
         }
 
         public ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, int page, int perPage) where T : Model
@@ -93,6 +83,16 @@ namespace BookWorm.Models
         public ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, int perPage) where T : Model
         {
             return Search<T>(predicate, 1, perPage);
+        }
+        
+        public int Count<T>() where T : Model
+        {
+            return _documentSession.Query<T>().Count();
+        }
+
+        public int Count<T>(Expression<Func<T, bool>> predicate) where T : Model
+        {
+            return _documentSession.Query<T>().Where(predicate).Count();
         }
     }
 
