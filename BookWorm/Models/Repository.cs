@@ -38,8 +38,7 @@ namespace BookWorm.Models
 
         public virtual ICollection<T> List<T>() where T : Model
         {
-            var _ravenQueryable = _documentSession.Query<T>();
-            return _ravenQueryable.ToList();
+            return List<T>(int.MaxValue);
         }
 
         public virtual void Delete<T>(int id) where T : Model
@@ -65,9 +64,14 @@ namespace BookWorm.Models
             _documentSession.Advanced.Evict(model);
         }
 
-        public ICollection<T> List<T>(int take) where T : Model
+        public ICollection<T> List<T>(int perPage) where T : Model
         {
-            var _ravenQueryable = _documentSession.Query<T>().Take(take);
+            return List<T>(1, perPage);
+        }
+
+        public ICollection<T> List<T>(int page, int perPage) where T : Model
+        {
+            var _ravenQueryable = _documentSession.Query<T>().OrderBy(d => d.CreatedAt).Skip((page - 1) * perPage).Take(perPage);
             return _ravenQueryable.ToList();
         }
     }

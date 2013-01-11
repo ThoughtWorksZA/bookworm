@@ -90,7 +90,7 @@ namespace BookWorm.Tests.Models.Integration
                 session.Store(new StaticPage { Title = "test2" });
                 session.SaveChanges();
                 var repository = new Repository(session);
-                Assert.AreEqual(1, repository.List<StaticPage>(1).Count());
+                Assert.AreEqual(1, repository.List<StaticPage>(1, 1).Count());
             }
         }
 
@@ -126,6 +126,30 @@ namespace BookWorm.Tests.Models.Integration
             }
         }
 
+        [TestMethod]
+        public void ShouldKnowListOrdersByCreatedAt()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                session.Store(new StaticPage { Title = "test2", CreatedAt = DateTime.Now.AddMinutes(1) });
+                session.Store(new StaticPage { Title = "test", CreatedAt = DateTime.Now });
+                session.SaveChanges();
+                var repository = new Repository(session);
+                Assert.AreEqual("test", repository.List<StaticPage>(1).First().Title);
+            }
+        }
 
+        [TestMethod]
+        public void ShouldListSecondPage()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                session.Store(new StaticPage { Title = "test2", CreatedAt = DateTime.Now.AddMinutes(1) });
+                session.Store(new StaticPage { Title = "test", CreatedAt = DateTime.Now });
+                session.SaveChanges();
+                var repository = new Repository(session);
+                Assert.AreEqual("test2", repository.List<StaticPage>(2, 1).First().Title);
+            }
+        }
     }
 }
