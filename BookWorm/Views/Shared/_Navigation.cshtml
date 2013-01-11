@@ -5,7 +5,14 @@
         <div class="container">
             <ul id="menu" class="nav">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
+                
+                @{
+                    var staticPages = ((List<StaticPage>) ViewBag.StaticPages);
+                }
+                @if (staticPages.Any())
+                {
+                    <li>@Html.ActionLink(staticPages.First().Title, "Details", "Pages", new { id = staticPages.First().Id, }, null)</li>
+                }
                 <li><a href="#" onclick="toggleDiscoveryMenu()" style="color: #83C6D0">Find a Book</a></li>
                 <li>@Html.ActionLink("Books", "List", "Books", null, new { id = "BooksMenuLink" })</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
