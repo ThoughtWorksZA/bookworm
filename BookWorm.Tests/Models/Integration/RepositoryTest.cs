@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BirdBrain;
+using System.Threading;
 using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raven.Client;
@@ -81,28 +81,51 @@ namespace BookWorm.Tests.Models.Integration
             }
         }
 
-
         [TestMethod]
-        public void ShouldReturnTrueWhenDocumentCollectionHasAnyDocuments()
+        public void ShouldKnowHowToTakeNDocuments()
         {
             using (var session = _documentStore.OpenSession())
             {
-                var user = new User {Username = "test"};
-                session.Store(user);
+                session.Store(new StaticPage { Title = "test" });
+                session.Store(new StaticPage { Title = "test2" });
                 session.SaveChanges();
                 var repository = new Repository(session);
-                Assert.IsTrue(repository.Any<User>());
+                Assert.AreEqual(1, repository.List<StaticPage>(1).Count());
             }
         }
 
         [TestMethod]
-        public void ShouldReturnFalseWhenDocumentCollectionIsEmpty()
+        public void ShouldSetCreatedAtAndUpdatedAtOnCreate()
+        {
+            var before = DateTime.Now;
+            using (var session = _documentStore.OpenSession())
+            {
+                var page = new StaticPage {Title = "test"};
+                var repository = new Repository(session);
+                var createdPage = repository.Create(page);
+                Assert.IsTrue(before <= createdPage.CreatedAt);
+                Assert.AreEqual(createdPage.CreatedAt, createdPage.UpdatedAt);
+            }
+        }
+
+        [TestMethod]
+        public void ShouldOnlySetUpdatedAtOnUpdate()
         {
             using (var session = _documentStore.OpenSession())
             {
+                var page = new StaticPage { Title = "test" };
                 var repository = new Repository(session);
-                Assert.IsFalse(repository.Any<User>());
+                var createdPage = repository.Create(page);
+                var created_at = createdPage.CreatedAt;
+                createdPage.Title = "new title";
+                var before = DateTime.Now;
+                Thread.Sleep(100);
+                repository.Edit(createdPage);
+                Assert.IsTrue(before <= createdPage.UpdatedAt);
+                Assert.AreEqual(created_at, createdPage.CreatedAt);
             }
         }
+
+
     }
 }

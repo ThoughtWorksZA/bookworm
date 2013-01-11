@@ -19,8 +19,9 @@ namespace BookWorm.Models
             _documentSession = documentSession;
         }
 
-        public virtual T Create<T>(T model)
+        public virtual T Create<T>(T model) where T : Model
         {
+            model.CreatedAt = model.UpdatedAt = DateTime.Now;
             _documentSession.Store(model);
             return model;
         }
@@ -30,47 +31,51 @@ namespace BookWorm.Models
             _documentSession.Dispose();
         }
 
-        public virtual T Get<T>(int id)
+        public virtual T Get<T>(int id) where T : Model
         {
             return _documentSession.Load<T>(id);
         }
 
-        public virtual ICollection<T> List<T>()
+        public virtual ICollection<T> List<T>() where T : Model
         {
             var _ravenQueryable = _documentSession.Query<T>();
             return _ravenQueryable.ToList();
         }
 
-        public virtual void Delete<T>(int id)
+        public virtual void Delete<T>(int id) where T : Model
         {
             var model = Get<T>(id);
             _documentSession.Delete(model);
         }
 
-        public virtual void Edit<T>(T editedModel)
+        public virtual void Edit<T>(T editedModel) where T : Model
         {
+            editedModel.UpdatedAt = DateTime.Now;
             _documentSession.Store(editedModel);
         }
 
-        public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate)
+        public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate) where T : Model
         {
             var ravenQueryable = _documentSession.Query<T>();
             return ravenQueryable.Where(predicate).ToList();
         }
 
-        public virtual void Detach<T>(T model)
+        public virtual void Detach<T>(T model) where T : Model
         {
             _documentSession.Advanced.Evict(model);
         }
 
-        public virtual bool Any<T>()
+        public ICollection<T> List<T>(int take) where T : Model
         {
-            return _documentSession.Query<T>().Any();
+            var _ravenQueryable = _documentSession.Query<T>().Take(take);
+            return _ravenQueryable.ToList();
         }
     }
 
     public class Model
     {
         public int Id { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

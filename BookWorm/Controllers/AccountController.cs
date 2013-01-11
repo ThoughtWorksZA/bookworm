@@ -69,9 +69,14 @@ namespace BookWorm.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            if (_repository.Any<User>())
+            if (GetUsersCount() > 0)
                 return new HttpStatusCodeResult(403);
             return View("Register");
+        }
+
+        protected virtual int GetUsersCount()
+        {
+            return Membership.GetAllUsers().Count;
         }
 
         //
