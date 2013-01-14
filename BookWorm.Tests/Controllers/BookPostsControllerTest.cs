@@ -130,6 +130,121 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual("There were problems saving this book post", bookPostsController.TempData["flashError"]);
         }
 
+        [TestMethod]
+        public void ShouldKnowBookPostsControllerRequiresAuthorization()
+        {
+            var pagesControllerClass = typeof(BookPostsController);
+            Assert.AreEqual(1, pagesControllerClass.GetCustomAttributes(typeof(AuthorizeAttribute), false).Count());
+        }
+
+        [TestMethod]
+        public void ShouldKnowBookPostsControllerListAllowsAnonymous()
+        {
+            var pagesControllerClass = typeof(BookPostsController);
+            Assert.AreEqual(1, pagesControllerClass.GetMethods()
+                                                   .First(method => method.Name == "List")
+                                                   .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
+                                                   .Count());
+        }
+
+        [TestMethod]
+        public void ShouldKnowBookPostsControllerDetailsAllowsAnonymous()
+        {
+            var pagesControllerClass = typeof(BookPostsController);
+            Assert.AreEqual(1, pagesControllerClass.GetMethods()
+                                                   .First(method => method.Name == "Details")
+                                                   .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
+                                                   .Count());
+        }
+
+        [TestMethod]
+        public void ShouldKnowHowToDisplayABookPost()
+        {
+            var id = 12;
+            var repository = new Mock<Repository>();
+            var savedBookPost = new BookPost { Id = id, Title = "test title", Content = "some content", Type = BookPost.BookPostType.BookReview};
+            repository.Setup(repo => repo.Get<BookPost>(id)).Returns(savedBookPost);
+            var controller = new BookPostsController(repository.Object);
+            var result = controller.Details(id);
+            repository.Verify(it => it.Get<BookPost>(id), Times.Once());
+            Assert.AreEqual(id, ((BookPost)result.Model).Id);
+        }
+
+        [TestMethod]
+        public void ShouldKnowHowToRenderAnEditPage()
+        {
+            var repositoryMock = new Mock<Repository>();
+            var bookPost = new BookPost { Id = 1, Title = "The Page", Type = BookPost.BookPostType.BookReview};
+            repositoryMock.Setup(repo => repo.Get<BookPost>(bookPost.Id)).Returns(bookPost);
+            var bookPostsController = new BookPostsController(repositoryMock.Object);
+
+            var result = bookPostsController.Edit(bookPost.Id);
+            var actualModel = (BookPost)result.Model;
+
+            Assert.AreEqual(bookPost.Title, actualModel.Title);
+            repositoryMock.Verify(repo => repo.Get<BookPost>(1), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldKnowHowToUpdateAPage()
+        {
+            var repository = new Mock<Repository>();
+            var existingBookPost = new BookPost { Id = 1, Title = "Derping for dummies", Type = BookPost.BookPostType.BookReview };
+            repository.Setup(repo => repo.Edit(existingBookPost));
+            var bookPostsController = new BookPostsController(repository.Object);
+            var result = (RedirectToRouteResult)bookPostsController.Edit(existingBookPost);
+            Assert.AreEqual(existingBookPost.Id, result.RouteValues["id"]);
+            Assert.AreEqual("Updated Derping for dummies successfully", bookPostsController.TempData["flashSuccess"]);
+            repository.Verify(repo => repo.Edit(existingBookPost), Times.Once());
+        }
+
+        [TestMethod]
+        public void EditBookShouldNotSaveWhenBookIsInvalid()
+        {
+            var bookPost = new BookPost();
+            var mockedRepo = new Mock<Repository>();
+            var bookPostsController = new BookPostsController(mockedRepo.Object);
+            mockedRepo.Setup(repo => repo.Edit(bookPost));
+            bookPostsController.ModelState.AddModelError("test error", "test exception");
+
+            var result = (ViewResult)bookPostsController.Edit(bookPost);
+
+            mockedRepo.Verify(repo => repo.Edit(bookPost), Times.Never(), "failing model validation should prevent updating book post");
+            Assert.AreEqual("There were problems saving this book post", bookPostsController.TempData["flashError"]);
+        }
+
+        [TestMethod]
+        public void BookPostsControllerEditShouldOnlyAllowHttpPut()
+        {
+            var bookPostsControllerClass = typeof(BookPostsController);
+            Assert.AreEqual(1, bookPostsControllerClass.GetMethods()
+                                                   .First(method => method.Name == "Edit" && method.GetParameters().First().ParameterType == typeof(BookPost))
+                                                   .GetCustomAttributes(typeof(HttpPutAttribute), false)
+                                                   .Count());
+        }
+
+        [TestMethod]
+        public void ShouldDeleteBookPostAndShowListOfBooksPosts()
+        {
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(repo => repo.Delete<BookPost>(1));
+            var bookPostsController = new BookPostsController(mockedRepo.Object);
+
+            var viewResult = bookPostsController.Delete(1);
+            mockedRepo.Verify(repo => repo.Delete<BookPost>(1));
+            Assert.AreEqual("Book Post successfully deleted", bookPostsController.TempData["flashSuccess"]);
+            Assert.AreEqual("List", viewResult.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void BookPostsControllerDeleteShouldOnlyAllowHttpDelete()
+        {
+            var bookPostsControllerClass = typeof(BookPostsController);
+            Assert.AreEqual(1, bookPostsControllerClass.GetMethods()
+                                                   .First(method => method.Name == "Delete")
+                                                   .GetCustomAttributes(typeof(HttpDeleteAttribute), false)
+                                                   .Count());
+        }
 
     }
 }

@@ -2,10 +2,11 @@
 @using BookWorm.Models
 @model BookWorm.Models.BookPost
 
-<h2>Create</h2>
+<h2>Edit</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
+    @Html.HttpMethodOverride(HttpVerbs.Put)
 
     <fieldset>
         <legend>BookPost</legend>
@@ -30,8 +31,10 @@
             @Html.ValidationMessageFor(model => model.Type)
         </div>
 
+        @Html.HiddenFor(model => model.Id)
+
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Save" />
         </p>
     </fieldset>
 }
