@@ -54,6 +54,7 @@ namespace BookWorm.Controllers
 
         public ViewResult Edit(int id)
         {
+            ViewBag.Method = "PUT";
             return View(_repository.Get<BookPost>(id));
         }
 

@@ -182,6 +182,7 @@ namespace BookWorm.Tests.Controllers
             var actualModel = (BookPost)result.Model;
 
             Assert.AreEqual(bookPost.Title, actualModel.Title);
+            Assert.AreEqual("PUT", bookPostsController.ViewBag.Method);
             repositoryMock.Verify(repo => repo.Get<BookPost>(1), Times.Once());
         }
 
