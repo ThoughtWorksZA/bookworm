@@ -24,9 +24,14 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Content)
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Content)
-            @Html.ValidationMessageFor(model => model.Content)
+        <div class="wmd-panel">
+            <div id="wmd-button-bar"></div>
+            <div class="editor-field">
+                @Html.TextAreaFor(model => model.Content, new Dictionary<string, object>() {{"id", "wmd-input"}, {"class", "wmd-input"}})
+                @Html.ValidationMessageFor(model => model.Content)
+            </div>
+        
+            <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
         </div>
         <div class="editor-field">
             @Html.DropDownListFor(model => model.Type, EnumHelper.ValidEnumOptions<BookPost.BookPostType>(), "Select type")
@@ -37,6 +42,14 @@
             <input type="submit" value="Save" />
         </p>
     </fieldset>
+
+    <script type="text/javascript">
+        (function() {
+            var converter = Markdown.getSanitizingConverter();
+            var editor = new Markdown.Editor(converter);
+            editor.run();
+        })();
+    </script>
 }
 
 <div>

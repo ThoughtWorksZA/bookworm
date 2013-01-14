@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
+using MarkdownSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -247,5 +248,18 @@ namespace BookWorm.Tests.Controllers
                                                    .Count());
         }
 
+        [TestMethod]
+        public void ShouldKnowToRenderTheBookPostContentAsMarkdown()
+        {
+            var id = 12;
+            var repository = new Mock<Repository>();
+            var markdown = new Markdown();
+            var savedBookPost = new BookPost { Id = id, Title = "test title", Content = "Hello\n=====\nWorld", Type = BookPost.BookPostType.BookReview};
+            repository.Setup(repo => repo.Get<BookPost>(id)).Returns(savedBookPost);
+            var transformedContent = markdown.Transform(savedBookPost.Content);
+            var controller = new BookPostsController(repository.Object);
+            var result = controller.Details(id);
+            Assert.AreEqual(transformedContent, result.ViewBag.transformedContent);
+        }
     }
 }

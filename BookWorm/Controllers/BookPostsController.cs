@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BookWorm.Models;
+using MarkdownSharp;
 
 namespace BookWorm.Controllers
 {
@@ -28,7 +29,7 @@ namespace BookWorm.Controllers
         public ViewResult Details(int id)
         {
             var bookPost = _repository.Get<BookPost>(id);
-            //            ViewBag.transformedContent = new Markdown().Transform(page.Content);
+            ViewBag.transformedContent = new Markdown().Transform(bookPost.Content);
             return View(bookPost);
         }
 
