@@ -14,3 +14,7 @@ function toggleDiscoveryMenu() {
     }
 
 }
+
+function showLoginItems() {
+ $('#login-items').popover('show');
+}

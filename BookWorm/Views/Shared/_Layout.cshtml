@@ -29,10 +29,8 @@
                     </div>
                 </div>
                 <div class="span7">
-                    <div class="float-right">
-                        <section id="login">
-                            @Html.Partial("_LoginPartial")
-                        </section>
+                    <div>
+                        <div class="some-small-space"></div>
                         @Html.Partial("_Navigation")
                     </div>
                 </div>
@@ -80,6 +78,9 @@
             <div class="float-left">
                 <p>&copy; @DateTime.Now.Year</p>
             </div>
+            <section id="login">
+                            @Html.Partial("_LoginPartial")
+                        </section>
         </div>
     </footer>
 

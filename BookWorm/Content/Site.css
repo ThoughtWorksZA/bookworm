@@ -8,7 +8,7 @@ body {
     background-color: #fff;
     color: #333;
     font-size: .85em;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    font-family: 'Segoe UI Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -30,7 +30,7 @@ a {
         background-color: #c7d1d6;
     }
 
-header, footer, hgroup,
+footer, hgroup,
 nav, section {
     display: block;
 }
@@ -75,6 +75,13 @@ h2 {
     -webkit-margin-end: 0px;
 }
 
+h2 .lead {
+  margin-bottom: 20px;
+  font-size: 20pt;
+  font-weight: 200;
+  line-height: 30px;
+}
+
 h3 {
     font-size: 1.2em;
 }
@@ -104,6 +111,7 @@ h5, h6 {
     background-color: #efeeef;
     clear: both;
     padding-bottom: 35px;
+    padding-top: 10px;
 }
 
     .main-content {
@@ -154,11 +162,7 @@ footer {
 }
 
     #login a {
-        background-color: #d3dce0;
-        margin-left: 10px;
-        margin-right: 3px;
-        padding: 2px 3px;
-        text-decoration: none;
+  
     }
 
     #login a.username {
@@ -590,6 +594,7 @@ tr.pager td {
         float: none;
     }
 
+   
     /* logo */
     header .site-title {
         margin: 10px;
@@ -783,8 +788,8 @@ form {
 }
 
 .some-small-space {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .hand-cursor {
     cursor: pointer;
@@ -848,4 +853,8 @@ clear: both;
 
 .nav-header {
     padding-left: 15px;
+}
+
+strong {
+    font-family: 'Segoe UI Semibold';
 }
