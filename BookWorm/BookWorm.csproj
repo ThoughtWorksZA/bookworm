@@ -226,14 +226,17 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BookPostsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\BookPost.cs" />
     <Compile Include="Models\StaticPage.cs" />
     <Compile Include="Models\Validations\ValidAgeRange.cs" />
     <Compile Include="Models\Validations\ValidCountry.cs" />
@@ -382,12 +385,13 @@
     <Content Include="Views\Pages\Edit.cshtml" />
     <Content Include="Views\Books\Form.cshtml" />
     <Content Include="Views\Shared\_Navigation.cshtml" />
+    <Content Include="Views\BookPosts\List.cshtml" />
+    <Content Include="Views\BookPosts\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Repository\" />
     <Folder Include="Views\Shared\Home\" />
   </ItemGroup>

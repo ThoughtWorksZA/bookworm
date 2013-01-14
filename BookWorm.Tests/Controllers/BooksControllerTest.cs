@@ -178,6 +178,7 @@ namespace BookWorm.Tests.Controllers
             var booksControllerClass = typeof(BooksController);
             Assert.AreEqual(1, booksControllerClass.GetCustomAttributes(typeof(AuthorizeAttribute), false).Count());
         }
+
         [TestMethod]
         public void BooksControllerListShouldAllowAnonymous()
         {

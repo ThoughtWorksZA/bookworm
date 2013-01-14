@@ -20,6 +20,7 @@ namespace BookWorm.Tests.Specs.Pages
 
         public LoginPage ClickOnLogin()
         {
+            WaitForPageToLoad();
             driver.FindElement(By.Id("loginLink")).Click();
             WaitForPageToLoad();
             return new LoginPage(driver);

@@ -22,7 +22,7 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                         @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                        @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
                         {
                             @Html.Raw("<li><a href='/Pages/List' id='PagesMenuLink'><i class='icon-th-list'></i> View List</a></li><li class='divider'><hr /></li><li class='nav-header'>Pages</li>")
                         }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
@@ -159,6 +161,17 @@ namespace BookWorm.Tests.Controllers
             controller.OnActionExecuting(null);
             Assert.AreEqual(savedPages.ToArray(), controller.ViewBag.StaticPages.ToArray());
             repository.Verify(repo => repo.List<StaticPage>(), Times.Once());
+        }
+
+        protected static void ValidateViewModel<VM, C>(VM viewModelToValidate, C controller) where C : Controller
+        {
+            var validationContext = new ValidationContext(viewModelToValidate, null, null);
+            var validationResults = new List<ValidationResult>();
+            Validator.TryValidateObject(viewModelToValidate, validationContext, validationResults, true);
+            foreach (var validationResult in validationResults)
+            {
+                controller.ModelState.AddModelError(validationResult.MemberNames.First(), validationResult.ErrorMessage);
+            }
         }
     }
 }
