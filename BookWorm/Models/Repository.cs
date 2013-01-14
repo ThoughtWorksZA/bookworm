@@ -8,7 +8,7 @@ namespace BookWorm.Models
 {
     public class Repository
     {
-        private readonly IDocumentSession _documentSession;
+        private IDocumentSession _documentSession;
 
         public Repository()
         {
@@ -22,6 +22,11 @@ namespace BookWorm.Models
         public void Dispose()
         {
             _documentSession.Dispose();
+        }
+
+        public virtual void UseOptimisticConcurrency()
+        {
+            _documentSession.Advanced.UseOptimisticConcurrency = true;
         }
 
         public virtual void Detach<T>(T model) where T : Model

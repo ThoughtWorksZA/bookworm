@@ -50,5 +50,12 @@ namespace BookWorm.Models
         public string CoverImageUrl { get; set; }
 
         public string Description { get; set; }
+
+        public List<BookPost> Posts { get; set; }
+
+        public Book()
+        {
+            Posts = new List<BookPost>();
+        }
     }
 }

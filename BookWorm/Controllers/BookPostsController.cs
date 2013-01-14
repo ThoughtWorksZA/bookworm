@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BookWorm.Models;
+using BookWorm.ViewModels;
 using MarkdownSharp;
 
 namespace BookWorm.Controllers
@@ -33,24 +34,35 @@ namespace BookWorm.Controllers
             return View(bookPost);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int bookId)
         {
             ViewBag.Title = "Add a Book Post";
-            return View(new BookPost());
+            return View(new BookPostInformation(bookId, new BookPost()));
         }
 
         [HttpPost]
-        public ActionResult Create(BookPost submittedBookPost)
+        public ActionResult Create(BookPostInformation submittedBookPostInformation)
         {
             if (!ModelState.IsValid)
             {
                 TempData["flashError"] = "There were problems saving this book post";
-                return View(submittedBookPost);
+                return View(submittedBookPostInformation);
             }
-
-            BookPost savedBookPost = _repository.Create(submittedBookPost);
-            TempData["flashSuccess"] = string.Format("Added {0} successfully", submittedBookPost.Title);
-            return RedirectToAction("Details", "BookPosts", new { id = savedBookPost.Id });
+            _repository.UseOptimisticConcurrency();
+            var book = _repository.Get<Book>(submittedBookPostInformation.BookId);
+            var bookPost = submittedBookPostInformation.BookPost;
+            if (book.Posts.Any())
+            {
+                bookPost.Id = book.Posts.Max(post => post.Id) + 1;
+            }
+            else
+            {
+                bookPost.Id = 1;
+            }
+            book.Posts.Add(bookPost);
+            _repository.Edit(book);
+            TempData["flashSuccess"] = string.Format("Added {0} successfully", bookPost.Title);
+            return RedirectToAction("Details", "Books", new { id = book.Id });
         }
 
         public ViewResult Edit(int id)

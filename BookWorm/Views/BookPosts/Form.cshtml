@@ -1,41 +1,42 @@
 ﻿@using BookWorm.Helpers
 @using BookWorm.Models
-@model BookWorm.Models.BookPost
+@model BookWorm.ViewModels.BookPostInformation
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.BookId)
     if (ViewBag.Method != null && ViewBag.Method == "PUT")
     {
             @Html.HttpMethodOverride(HttpVerbs.Put)
-            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.BookPost.Id)
     }
 
     <fieldset>
         <legend>BookPost</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Title)
+            @Html.LabelFor(model => model.BookPost.Title)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Title)
-            @Html.ValidationMessageFor(model => model.Title)
+            @Html.EditorFor(model => model.BookPost.Title)
+            @Html.ValidationMessageFor(model => model.BookPost.Title)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Content)
+            @Html.LabelFor(model => model.BookPost.Content)
         </div>
         <div class="wmd-panel">
             <div id="wmd-button-bar"></div>
             <div class="editor-field">
-                @Html.TextAreaFor(model => model.Content, new Dictionary<string, object>() {{"id", "wmd-input"}, {"class", "wmd-input"}})
-                @Html.ValidationMessageFor(model => model.Content)
+                @Html.TextAreaFor(model => model.BookPost.Content, new Dictionary<string, object>() {{"id", "wmd-input"}, {"class", "wmd-input"}})
+                @Html.ValidationMessageFor(model => model.BookPost.Content)
             </div>
         
             <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Type, EnumHelper.ValidEnumOptions<BookPost.BookPostType>(), "Select type")
-            @Html.ValidationMessageFor(model => model.Type)
+            @Html.DropDownListFor(model => model.BookPost.Type, EnumHelper.ValidEnumOptions<BookPost.BookPostType>(), "Select type")
+            @Html.ValidationMessageFor(model => model.BookPost.Type)
         </div>
 
         <p>
