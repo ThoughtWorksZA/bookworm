@@ -20,7 +20,7 @@ namespace BookWorm.Tests.Specs.Pages
 
         public void WaitForPageToLoad()
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(d => d.FindElement(By.Id("body")));
 
         }
