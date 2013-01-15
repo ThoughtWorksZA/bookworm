@@ -194,7 +194,9 @@ namespace BookWorm.Tests.Controllers
             var controller = new BookPostsController(repository.Object);
             var result = controller.Details(id, book.Id);
             repository.Verify(it => it.Get<Book>(book.Id), Times.Once());
+            Assert.AreEqual(book.Id, ((BookPostInformation)result.Model).BookId);
             Assert.AreEqual(id, ((BookPostInformation)result.Model).BookPost.Id);
+            Assert.AreEqual(book, ((BookPostInformation)result.Model).Book);
         }
 
         [TestMethod]

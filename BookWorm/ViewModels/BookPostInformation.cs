@@ -10,6 +10,7 @@ namespace BookWorm.ViewModels
     {
         public int BookId { get; set; }
         public BookPost BookPost { get; set; }
+        public Book Book { get; set; }
 
         public BookPostInformation()
         {
@@ -19,6 +20,13 @@ namespace BookWorm.ViewModels
         {
             BookId = bookId;
             BookPost = bookPost;
+        }
+
+        public BookPostInformation(int bookId, BookPost bookPost, Book book)
+        {
+            BookId = bookId;
+            BookPost = bookPost;
+            Book = book;
         }
     }
 }

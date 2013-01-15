@@ -29,9 +29,10 @@ namespace BookWorm.Controllers
         [AllowAnonymous]
         public ViewResult Details(int id, int bookId)
         {
-            var bookPost = _repository.Get<Book>(bookId).Posts.First(post => post.Id == id);
+            var book = _repository.Get<Book>(bookId);
+            var bookPost = book.Posts.First(post => post.Id == id);
             ViewBag.transformedContent = new Markdown().Transform(bookPost.Content);
-            return View(new BookPostInformation(bookId, bookPost));
+            return View(new BookPostInformation(bookId, bookPost, book));
         }
 
         public ActionResult Create(int bookId)
