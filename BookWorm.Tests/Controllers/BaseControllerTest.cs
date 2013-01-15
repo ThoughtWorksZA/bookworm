@@ -27,9 +27,8 @@ namespace BookWorm.Tests.Controllers
     internal class TestBaseController : BaseController
     {
         private IDocumentStore _documentStore;
-        private Repository _repository;
 
-        public TestBaseController(IDocumentStore documentStore)
+        public TestBaseController(Repository repository, IDocumentStore documentStore) : base(repository)
         {
             _documentStore = documentStore;
         }
@@ -81,7 +80,7 @@ namespace BookWorm.Tests.Controllers
             documentSession.Setup(session => session.SaveChanges());
             var documentStore = new Mock<IDocumentStore>();
             documentStore.Setup(store => store.OpenSession()).Returns(documentSession.Object);
-            var testBaseController = new TestBaseController(documentStore.Object);
+            var testBaseController = new TestBaseController(null, documentStore.Object);
             testBaseController.OnActionExecuting(null);
             documentStore.Verify(store => store.OpenSession(), Times.Once());
         }
@@ -93,7 +92,7 @@ namespace BookWorm.Tests.Controllers
             var documentStore = new Mock<IDocumentStore>();
             documentStore.Setup(store => store.OpenSession()).Returns(documentSession.Object);
 
-            var testBaseController = new TestBaseController(documentStore.Object);
+            var testBaseController = new TestBaseController(null, documentStore.Object);
             testBaseController.OnActionExecuting(null);
             
             var actionExecutedContext = new Mock<ActionExecutedContext>();
@@ -113,7 +112,7 @@ namespace BookWorm.Tests.Controllers
             var documentStore = new Mock<IDocumentStore>();
             documentStore.Setup(store => store.OpenSession()).Returns(documentSession.Object);
 
-            var testBaseController = new TestBaseController(documentStore.Object);
+            var testBaseController = new TestBaseController(null, documentStore.Object);
             testBaseController.OnActionExecuting(null);
 
             var actionExecutedContext = new Mock<ActionExecutedContext>();
@@ -133,7 +132,7 @@ namespace BookWorm.Tests.Controllers
             var documentStore = new Mock<IDocumentStore>();
             documentStore.Setup(store => store.OpenSession()).Returns(documentSession.Object);
 
-            var testBaseController = new TestBaseController(documentStore.Object);
+            var testBaseController = new TestBaseController(null, documentStore.Object);
             testBaseController.OnActionExecuting(null);
 
             var actionExecutedContext = new Mock<ActionExecutedContext>();
@@ -146,9 +145,12 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
-        [Ignore]
         public void ShouldKnowHowToAddStaticPagesToTheViewBag()
         {
+            var documentSession = new Mock<IDocumentSession>();
+            documentSession.Setup(session => session.SaveChanges());
+            var documentStore = new Mock<IDocumentStore>();
+            documentStore.Setup(store => store.OpenSession()).Returns(documentSession.Object);
             var repository = new Mock<Repository>();
             var savedPages = new List<StaticPage> 
                 {
@@ -156,10 +158,13 @@ namespace BookWorm.Tests.Controllers
                     new StaticPage { Id = 2, Title = "test title2", Content = "Hello\n=====\nAnother World" }
                 };
             repository.Setup(repo => repo.List<StaticPage>()).Returns(savedPages);
-            var controller = new TestBaseController(repository.Object);
+            var controller = new TestBaseController(repository.Object, documentStore.Object);
             repository.Verify(repo => repo.List<StaticPage>(), Times.Never());
             controller.OnActionExecuting(null);
-            Assert.AreEqual(savedPages.ToArray(), controller.ViewBag.StaticPages.ToArray());
+            var _actual = (List<StaticPage>)controller.ViewBag.StaticPages;
+            Assert.AreEqual(savedPages.Count(), _actual.Count());
+            Assert.AreEqual(savedPages.First(), _actual.First());
+            Assert.AreEqual(savedPages.Last(), _actual.Last());
             repository.Verify(repo => repo.List<StaticPage>(), Times.Once());
         }
 
