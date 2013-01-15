@@ -231,6 +231,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\BookPost.cs" />
     <Compile Include="Models\StaticPage.cs" />
     <Compile Include="Models\Validations\ValidAgeRange.cs" />
     <Compile Include="Models\Validations\ValidCountry.cs" />
