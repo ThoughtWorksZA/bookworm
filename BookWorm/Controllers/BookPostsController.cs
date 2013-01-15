@@ -27,11 +27,11 @@ namespace BookWorm.Controllers
         }
 
         [AllowAnonymous]
-        public ViewResult Details(int id)
+        public ViewResult Details(int id, int bookId)
         {
-            var bookPost = _repository.Get<BookPost>(id);
+            var bookPost = _repository.Get<Book>(bookId).Posts.First(post => post.Id == id);
             ViewBag.transformedContent = new Markdown().Transform(bookPost.Content);
-            return View(bookPost);
+            return View(new BookPostInformation(bookId, bookPost));
         }
 
         public ActionResult Create(int bookId)
@@ -65,33 +65,40 @@ namespace BookWorm.Controllers
             return RedirectToAction("Details", "Books", new { id = book.Id });
         }
 
-        public ViewResult Edit(int id)
+        public ViewResult Edit(int id, int bookId)
         {
             ViewBag.Method = "PUT";
-            return View(_repository.Get<BookPost>(id));
+            var bookPost = _repository.Get<Book>(bookId).Posts.First(post => post.Id == id);
+            return View(new BookPostInformation(bookId, bookPost));
         }
 
         [HttpPut]
-        public ActionResult Edit(BookPost editedBookPost)
+        public ActionResult Edit(BookPostInformation editedBookPostInformation)
         {
             if (!ModelState.IsValid)
             {
                 TempData["flashError"] = "There were problems saving this book post";
-                return View(editedBookPost);
+                return View(editedBookPostInformation);
             }
-
-            _repository.Edit(editedBookPost);
+            var book = _repository.Get<Book>(editedBookPostInformation.BookId);
+            var editedBookPost = editedBookPostInformation.BookPost;
+            var oldBookPost = book.Posts.First(post => post.Id == editedBookPost.Id);
+            book.Posts.Remove(oldBookPost);
+            book.Posts.Add(editedBookPost);
+            _repository.Edit(book);
             TempData["flashSuccess"] = string.Format("Updated {0} successfully", editedBookPost.Title);
-            return RedirectToAction("Details", new { id = editedBookPost.Id });
-
+            return RedirectToAction("Details", new { id = editedBookPost.Id, bookId = book.Id });
         }
 
         [HttpDelete]
-        public RedirectToRouteResult Delete(int id)
+        public RedirectToRouteResult Delete(int id, int bookId)
         {
-            _repository.Delete<BookPost>(id);
+            var book = _repository.Get<Book>(bookId);
+            var bookPost = book.Posts.First(post => post.Id == id);
+            book.Posts.Remove(bookPost);
+            _repository.Edit(book);
             TempData["flashSuccess"] = string.Format("Book Post successfully deleted");
-            return RedirectToAction("List");
+            return RedirectToAction("Details", "Books", new {id = book.Id});
         }
 
     }

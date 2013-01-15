@@ -69,7 +69,7 @@ namespace BookWorm.Tests.Controllers
         public void ShouldNotStoreBookPostWhenTitleIsInvalid()
         {
             var repository = new Mock<Repository>();
-            var submittedBookPost = new BookPost { Title = "", Content = "some content", Type = BookPost.BookPostType.BookReview };
+            var submittedBookPost = new BookPost { Title = "", Content = "some content", Type = BookPost.BookPostType.Reviews };
             repository.Setup(repo => repo.Create(submittedBookPost)).Returns(submittedBookPost);
 
             var controller = new BookPostsController(repository.Object);
@@ -81,7 +81,7 @@ namespace BookWorm.Tests.Controllers
         public void ShouldNotStoreBookPostWhenContentIsInvalid()
         {
             var repository = new Mock<Repository>();
-            var submittedBookPost = new BookPost { Title = "test title", Content = "", Type = BookPost.BookPostType.BookReview};
+            var submittedBookPost = new BookPost { Title = "test title", Content = "", Type = BookPost.BookPostType.Reviews};
             repository.Setup(repo => repo.Create(submittedBookPost)).Returns(submittedBookPost);
 
             var controller = new BookPostsController(repository.Object);
@@ -116,7 +116,7 @@ namespace BookWorm.Tests.Controllers
         {
             var repository = new Mock<Repository>();
             var book = new Book { Id = 1 };
-            var bookPost = new BookPost { Title = "The Book Post", Content = "some content", Type = BookPost.BookPostType.BookReview };
+            var bookPost = new BookPost { Title = "The Book Post", Content = "some content", Type = BookPost.BookPostType.Reviews };
             var submittedBookPostInformation = new BookPostInformation
                 {
                     BookId = book.Id,
@@ -139,7 +139,7 @@ namespace BookWorm.Tests.Controllers
         {
             var repository = new Mock<Repository>();
             var book = new Book { Id = 1 };
-            var bookPost = new BookPost { Title = "The Book Post", Content = "some content", Type = BookPost.BookPostType.BookReview };
+            var bookPost = new BookPost { Title = "The Book Post", Content = "some content", Type = BookPost.BookPostType.Reviews };
             var submittedBookPostInformation = new BookPostInformation
             {
                 BookId = book.Id,
@@ -187,55 +187,63 @@ namespace BookWorm.Tests.Controllers
         {
             var id = 12;
             var repository = new Mock<Repository>();
-            var savedBookPost = new BookPost { Id = id, Title = "test title", Content = "some content", Type = BookPost.BookPostType.BookReview};
-            repository.Setup(repo => repo.Get<BookPost>(id)).Returns(savedBookPost);
+            var book = new Book { Id = 1 };
+            var savedBookPost = new BookPost { Id = id, Title = "test title", Content = "some content", Type = BookPost.BookPostType.Reviews};
+            book.Posts.Add(savedBookPost);
+            repository.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
             var controller = new BookPostsController(repository.Object);
-            var result = controller.Details(id);
-            repository.Verify(it => it.Get<BookPost>(id), Times.Once());
-            Assert.AreEqual(id, ((BookPost)result.Model).Id);
+            var result = controller.Details(id, book.Id);
+            repository.Verify(it => it.Get<Book>(book.Id), Times.Once());
+            Assert.AreEqual(id, ((BookPostInformation)result.Model).BookPost.Id);
         }
 
         [TestMethod]
         public void ShouldKnowHowToRenderAnEditPage()
         {
             var repositoryMock = new Mock<Repository>();
-            var bookPost = new BookPost { Id = 1, Title = "The Page", Type = BookPost.BookPostType.BookReview};
-            repositoryMock.Setup(repo => repo.Get<BookPost>(bookPost.Id)).Returns(bookPost);
+            var bookPost = new BookPost { Id = 1, Title = "The Page", Type = BookPost.BookPostType.Reviews };
+            var book = new Book {Id = 1};
+            book.Posts.Add(bookPost);
+            repositoryMock.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
             var bookPostsController = new BookPostsController(repositoryMock.Object);
 
-            var result = bookPostsController.Edit(bookPost.Id);
-            var actualModel = (BookPost)result.Model;
+            var result = bookPostsController.Edit(bookPost.Id, book.Id);
+            var actualModel = (BookPostInformation)result.Model;
 
-            Assert.AreEqual(bookPost.Title, actualModel.Title);
+            Assert.AreEqual(bookPost.Title, actualModel.BookPost.Title);
             Assert.AreEqual("PUT", bookPostsController.ViewBag.Method);
-            repositoryMock.Verify(repo => repo.Get<BookPost>(1), Times.Once());
+            repositoryMock.Verify(repo => repo.Get<Book>(book.Id), Times.Once());
         }
 
         [TestMethod]
         public void ShouldKnowHowToUpdateAPage()
         {
             var repository = new Mock<Repository>();
-            var existingBookPost = new BookPost { Id = 1, Title = "Derping for dummies", Type = BookPost.BookPostType.BookReview };
-            repository.Setup(repo => repo.Edit(existingBookPost));
+            var book = new Book {Id = 1};
+            var existingBookPost = new BookPost { Id = 1, Title = "Derping for dummies", Type = BookPost.BookPostType.Reviews };
+            book.Posts.Add(existingBookPost);
+            repository.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
             var bookPostsController = new BookPostsController(repository.Object);
-            var result = (RedirectToRouteResult)bookPostsController.Edit(existingBookPost);
+            var result = (RedirectToRouteResult)bookPostsController.Edit(new BookPostInformation(book.Id, existingBookPost));
             Assert.AreEqual(existingBookPost.Id, result.RouteValues["id"]);
             Assert.AreEqual("Updated Derping for dummies successfully", bookPostsController.TempData["flashSuccess"]);
-            repository.Verify(repo => repo.Edit(existingBookPost), Times.Once());
+            repository.Verify(repo => repo.Edit(book), Times.Once());
         }
 
         [TestMethod]
         public void EditBookShouldNotSaveWhenBookIsInvalid()
         {
             var bookPost = new BookPost();
+            var book = new Book { Id = 1 };
+            book.Posts.Add(bookPost);
             var mockedRepo = new Mock<Repository>();
             var bookPostsController = new BookPostsController(mockedRepo.Object);
-            mockedRepo.Setup(repo => repo.Edit(bookPost));
+            mockedRepo.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
             bookPostsController.ModelState.AddModelError("test error", "test exception");
 
-            var result = (ViewResult)bookPostsController.Edit(bookPost);
+            var result = (ViewResult)bookPostsController.Edit(new BookPostInformation(book.Id, bookPost));
 
-            mockedRepo.Verify(repo => repo.Edit(bookPost), Times.Never(), "failing model validation should prevent updating book post");
+            mockedRepo.Verify(repo => repo.Edit(book), Times.Never(), "failing model validation should prevent updating book post");
             Assert.AreEqual("There were problems saving this book post", bookPostsController.TempData["flashError"]);
         }
 
@@ -244,7 +252,7 @@ namespace BookWorm.Tests.Controllers
         {
             var bookPostsControllerClass = typeof(BookPostsController);
             Assert.AreEqual(1, bookPostsControllerClass.GetMethods()
-                                                   .First(method => method.Name == "Edit" && method.GetParameters().First().ParameterType == typeof(BookPost))
+                                                   .First(method => method.Name == "Edit" && method.GetParameters().First().ParameterType == typeof(BookPostInformation))
                                                    .GetCustomAttributes(typeof(HttpPutAttribute), false)
                                                    .Count());
         }
@@ -253,13 +261,17 @@ namespace BookWorm.Tests.Controllers
         public void ShouldDeleteBookPostAndShowListOfBooksPosts()
         {
             var mockedRepo = new Mock<Repository>();
-            mockedRepo.Setup(repo => repo.Delete<BookPost>(1));
+            var book = new Book {Id = 1};
+            var bookPost = new BookPost {Id = 2, Title = "something"};
+            book.Posts.Add(bookPost);
+            mockedRepo.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
             var bookPostsController = new BookPostsController(mockedRepo.Object);
 
-            var viewResult = bookPostsController.Delete(1);
-            mockedRepo.Verify(repo => repo.Delete<BookPost>(1));
+            var viewResult = bookPostsController.Delete(bookPost.Id, book.Id);
+            mockedRepo.Verify(repo => repo.Edit(book));
             Assert.AreEqual("Book Post successfully deleted", bookPostsController.TempData["flashSuccess"]);
-            Assert.AreEqual("List", viewResult.RouteValues["action"]);
+            Assert.AreEqual("Details", viewResult.RouteValues["action"]);
+            Assert.AreEqual(book.Id, viewResult.RouteValues["id"]);
         }
 
         [TestMethod]
@@ -277,13 +289,17 @@ namespace BookWorm.Tests.Controllers
         {
             var id = 12;
             var repository = new Mock<Repository>();
+            var book = new Book { Id = 1 };
             var markdown = new Markdown();
-            var savedBookPost = new BookPost { Id = id, Title = "test title", Content = "Hello\n=====\nWorld", Type = BookPost.BookPostType.BookReview};
-            repository.Setup(repo => repo.Get<BookPost>(id)).Returns(savedBookPost);
-            var transformedContent = markdown.Transform(savedBookPost.Content);
+            var savedBookPost = new BookPost { Id = id, Title = "test title", Content = "Hello\n=====\nWorld", Type = BookPost.BookPostType.Reviews };
+            book.Posts.Add(savedBookPost);
+            repository.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
             var controller = new BookPostsController(repository.Object);
-            var result = controller.Details(id);
+            var result = controller.Details(id, book.Id);
+            repository.Verify(it => it.Get<Book>(book.Id), Times.Once());
+            var transformedContent = markdown.Transform(savedBookPost.Content);
             Assert.AreEqual(transformedContent, result.ViewBag.transformedContent);
+            Assert.AreEqual(id, ((BookPostInformation)result.Model).BookPost.Id);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿@Scripts.Render("~/Scripts/puku/confirmModal.js")
+
+@using BookWorm.Models
 @model BookWorm.ViewModels.BookInformation
 
 <h2>@ViewBag.Title</h2>
@@ -54,3 +56,34 @@
 <p>
     @Html.ActionLink("Create New Book Post", "Create", "BookPosts", new { bookId = Model.Book.Id }, null)
 </p>
+
+
+@if (Model.Reviews.Any())
+{   
+    <h3>Reviews</h3>
+    @Html.Partial("BookPostList", Model.Reviews)
+}
+
+@if (Model.Events.Any())
+{   
+    <h3>Events</h3>
+    @Html.Partial("BookPostList", Model.Events)
+}
+
+@if (Model.News.Any())
+{   
+    <h3>News</h3>
+    @Html.Partial("BookPostList", Model.News)
+}
+
+@if (Model.TeachingGuides.Any())
+{   
+    <h3>Teaching Guides</h3>
+    @Html.Partial("BookPostList", Model.TeachingGuides)
+}
+
+@if (Model.Other.Any())
+{   
+    <h3>Other</h3>
+    @Html.Partial("BookPostList", Model.Other)
+}

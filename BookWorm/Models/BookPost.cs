@@ -15,8 +15,8 @@ namespace BookWorm.Models
 
         public enum BookPostType
         {
-            BookReview,
-            TeachingGuide,
+            Reviews,
+            TeachingGuides,
             News,
             Events,
             Other

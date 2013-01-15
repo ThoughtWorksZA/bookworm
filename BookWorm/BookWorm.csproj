@@ -78,6 +78,9 @@
     <Reference Include="NetTopologySuite">
       <HintPath>..\packages\RavenDB.Database.2.0.2170-Unstable\lib\net40\NetTopologySuite.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.15.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="PowerCollections">
       <HintPath>..\packages\RavenDB.Database.2.0.2170-Unstable\lib\net40\PowerCollections.dll</HintPath>
     </Reference>
@@ -223,12 +226,14 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BookPostsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookPost.cs" />
@@ -306,6 +311,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Content\images\CoverImage.png" />
     <Content Include="Images\logo.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -381,6 +387,11 @@
     <Content Include="Views\Pages\Edit.cshtml" />
     <Content Include="Views\Books\Form.cshtml" />
     <Content Include="Views\Shared\_Navigation.cshtml" />
+    <Content Include="Views\Books\BookPostList.cshtml" />
+    <Content Include="Views\BookPosts\Create.cshtml" />
+    <Content Include="Views\BookPosts\Details.cshtml" />
+    <Content Include="Views\BookPosts\Edit.cshtml" />
+    <Content Include="Views\BookPosts\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

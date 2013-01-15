@@ -1,5 +1,5 @@
 ﻿@Scripts.Render("~/Scripts/puku/confirmModal.js")
-@model BookWorm.Models.BookPost
+@model BookWorm.ViewModels.BookPostInformation
 
 <h2>Details</h2>
 
@@ -7,41 +7,41 @@
     <legend>BookPost</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Title)
+         @Html.DisplayNameFor(model => model.BookPost.Title)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Title)
+        @Html.DisplayFor(model => model.BookPost.Title)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Content)
+         @Html.DisplayNameFor(model => model.BookPost.Content)
     </div>
     <div class="display-field">
         @Html.Raw(ViewBag.transformedContent)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.CreatedAt)
+         @Html.DisplayNameFor(model => model.BookPost.CreatedAt)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.CreatedAt)
+        @Html.DisplayFor(model => model.BookPost.CreatedAt)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.UpdatedAt)
+         @Html.DisplayNameFor(model => model.BookPost.UpdatedAt)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.UpdatedAt)
+        @Html.DisplayFor(model => model.BookPost.UpdatedAt)
     </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { bookId=Model.BookId, id=Model.BookPost.Id }) |
     <div class="span1">
-        @using (Html.BeginForm("Delete", "BookPosts", new {@id = Model.Id}))
+        @using (Html.BeginForm("Delete", "BookPosts", new { @bookId = Model.BookId, @id = Model.BookPost.Id }))
         {
             @Html.HttpMethodOverride(HttpVerbs.Delete)
             <input type="submit" class="btn btn-danger" value="x" data-confirm="This action can not be undone. Are you sure you want to delete this book post?" />
         }
     </div>
-    @Html.ActionLink("Back to List", "List")
+    @Html.ActionLink("Back to List", "Details", "Books", new { id = Model.BookId }, null)
 </p>
