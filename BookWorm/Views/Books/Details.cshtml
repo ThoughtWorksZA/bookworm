@@ -34,35 +34,55 @@
             <img src="@Model.Book.CoverImageUrl" />
         </div>
     </div>
-   <p>
-    @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
-    {
-        @Html.ActionLink("Edit", "Edit", new {id = Model.Book.Id})
-
-        @Html.Raw(" |")
-        @Html.ActionLink("Back to List", "List")
-        using (Html.BeginForm("Delete", "Books", new { id = Model.Book.Id }))
+         @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
         {
-            @Html.HttpMethodOverride(HttpVerbs.Delete)
-            <input type="submit" class="btn btn-danger" value="Delete" data-confirm="This action can not be undone. Are you sure you want to delete this book?" />
-        }
-    }
+    <div class="well">
+        <div class="row-fluid">
+            <div class="span7">
+        <span class="lead">Admin Tools</span>
+             
+            @Html.ActionLink("Edit", "Edit", new {id = Model.Book.Id})
+
+            @Html.Raw(" |")
+            @Html.ActionLink("Back to List", "List")
+            @Html.Raw(" |")
+            @Html.ActionLink("Create New Book Post", "Create", "BookPosts", new { bookId = Model.Book.Id }, null)
+
+           
+            </div>
+            <div class="span5">
+                 @using (Html.BeginForm("Delete", "Books", new { id = Model.Book.Id }))
+            {
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <input type="submit" class="btn btn-danger pull-right" value="Delete" data-confirm="This action can not be undone. Are you sure you want to delete this book?" />
+            }   
+            </div>
+        </div>
+      
     
-</p>
+    </div>
+        }
   
 </fieldset>
 
+<div class="content-wrapper">
+    <div class="accordion" id="accordion2">
+  <div class="accordion-group">
+      <div class="accordion-heading">
+          <a href="#" class="pull-right accordion-toggle"><i class="icon-edit"></i> Add Review</a>
 
-<p>
-    @Html.ActionLink("Create New Book Post", "Create", "BookPosts", new { bookId = Model.Book.Id }, null)
-</p>
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+              Reviews
+          </a>
+      </div>
+      @if (Model.Reviews.Any())
+        {   
+            @Html.Partial("BookPostList", Model.Reviews)
+        }
+      </div>
+  </div>
+</div>
 
-
-@if (Model.Reviews.Any())
-{   
-    <h3>Reviews</h3>
-    @Html.Partial("BookPostList", Model.Reviews)
-}
 
 @if (Model.Events.Any())
 {   

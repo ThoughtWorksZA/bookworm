@@ -1,10 +1,21 @@
-﻿@{
+﻿@using BookWorm.Models
+@{
     ViewBag.Title = "PUKU | Home";
 }
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        toggleDiscoveryMenu();
+    });
+</script>
 <h2>What is PUKU</h2>
 <p>All you need to know about children's literature from southern Africa and beyond! Find books for your children, students or
     friends. Read reviews, find literary informationn. </p>
 
 <p>Your source for daily 
-    children's book news from around the world. <a href="/Home/About">About</a></p> 
+children's book news from around the world. @{
+var staticPages = ((List<StaticPage>) ViewBag.StaticPages);
+}
+@if (staticPages.Any())
+{
+    <li>@Html.ActionLink(staticPages.First().Title, "Details", "Pages", new { id = staticPages.First().Id, }, null)</li>
+}</p> 

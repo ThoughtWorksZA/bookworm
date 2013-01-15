@@ -20,9 +20,9 @@
                 <div class="span5">
                     <div class="row-fluid hand-cursor" onclick="window.location.href = '/'">
                         <div class="span3">
-                            <img src="/Images/logo.jpg" alt="PUKU Logo" />
+                            <img src="/Images/logo.png" alt="PUKU Logo" />
                         </div>
-                        <div class="span9">
+                        <div class="span9 brand-area">
                             <h1>PUKU</h1>
                             Childrens Literature in Southern Africa
                         </div>
@@ -35,29 +35,27 @@
                     </div>
                 </div>
             </div>
-
-                <div id="discovery_menu" style="display: none;">
-                    <div class="row">
-                        <div class="span5">
-                            <span class="lead">I am looking for a specific book</span>
-                        </div>
-                        <div class="span6">
-                            @using (Html.BeginForm("List", "Books", FormMethod.Post))
-                            {
-
-                                <div class="row">
-                                    <div class="span4  ">@Html.TextBox("searchQuery", "", new { placeholder = "Search by Title or ISBN" })</div>
-                                    <div class="span2">
-                                        <input type="submit" value="Search" class="btn" id="SearchButton" /></div>
-                                </div>
-                            }
-                        </div>
-                        <div class="span1"><a href="#" onclick="toggleDiscoveryMenu()"><i class="icon-arrow-up"></i>Hide</a></div>
-                    </div>
-            </div>
     </header>
     <div id="body">
+        <div id="discovery_menu" class="content-wrapper discovery-menu" style="display: none;">
+            <div class="row">
+                <div class="span5">
+                    <span class="lead">I am looking for a specific book</span>
+                </div>
+                <div class="span6">
+                    @using (Html.BeginForm("List", "Books", FormMethod.Post))
+                    {
 
+                        <div class="row">
+                            <div class="span4  ">@Html.TextBox("searchQuery", "", new { placeholder = "Search by Title or ISBN" })</div>
+                            <div class="span2">
+                                <input type="submit" value="Search" class="btn" id="SearchButton" /></div>
+                        </div>
+                    }
+                </div>
+                <div class="span1"><a href="#" onclick="toggleDiscoveryMenu()"><i class="icon-arrow-up"></i>Hide</a></div>
+            </div>
+        </div>
         @RenderSection("featured", required: false)
         <section class="content-wrapper main-content clear-fix">
             @if (TempData["flashError"] != null && !TempData["flashError"].ToString().IsEmpty())

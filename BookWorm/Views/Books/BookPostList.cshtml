@@ -1,46 +1,16 @@
 ﻿@model IEnumerable<BookWorm.ViewModels.BookPostInformation>
 
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BookPost.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookPost.Content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookPost.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookPost.CreatedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookPost.UpdatedAt)
-        </th>
-        <th></th>
-    </tr>
-
 @foreach (var item in Model) {
-    <tr>
-        <td>
+    <div id="" class="accordion-body accordion-inner collapse in">
+                <span class="lead">
             @Html.DisplayFor(modelItem => item.BookPost.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookPost.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookPost.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookPost.CreatedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookPost.UpdatedAt)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", "BookPosts", new { bookId=item.BookId, id=item.BookPost.Id }, null)
-        </td>
-    </tr>
+        </span>
+        <p>
+            @Html.DisplayFor(modelItem => item.BookPost.Content).ToString().Substring(0,340)
+            ...
+        </p>
+        @Html.ActionLink("View this review", "Details", "BookPosts", new { bookId=item.BookId, id=item.BookPost.Id }, null)
+    </div>
 }
 
-</table>
+

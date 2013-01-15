@@ -1,5 +1,5 @@
 ﻿html {
-    background-color: #e2e2e2;
+    background-color: #EFEEEF;
     margin: 0;
     padding: 0;
 }
@@ -108,7 +108,7 @@ h5, h6 {
 }
 
 #body {
-    background-color: #efeeef;
+    background-color: #ffffff;
     clear: both;
     padding-bottom: 35px;
     padding-top: 10px;
@@ -129,7 +129,7 @@ header .content-wrapper {
 
 footer {
     clear: both;
-    background-color: #e2e2e2;
+    background-color: #efeeef;
     font-size: .8em;
     height: 100px;
 }
@@ -185,19 +185,18 @@ footer {
 /* menu
 ----------------------------------------------------------*/
 ul#menu {
-    font-size: 1.3em;
+    font-size: 1.2em;
     margin: 0 0 5px;
     padding: 0;
 }
 
     ul#menu li {
-        display: inline;
-        list-style: none;
+        margin-right: 7px;
     }
 
         ul#menu li a {
             background: none;
-            color: #999;
+            color: #333333;
             text-decoration: none;
         }
 
@@ -582,7 +581,20 @@ tr.pager td {
 }
 
  header {
-            display: block;
+    display: block;
+    background-image: url('/Images/CoverImage.png');
+     background-repeat: no-repeat;
+     background-position: top right;
+     background-color: #bdf7f8;
+}
+
+ .brand-area {
+    /* Fallback for web browsers that doesn't support RGBa */
+    background: rgb(250, 250, 250);
+    /* RGBa with 0.6 opacity */
+    background: rgba(250, 250, 250, 0.3);
+     padding-left: 15px;
+     padding-bottom: 5px;
 }
 /********************
 *   Mobile Styles   *
@@ -835,18 +847,10 @@ clear: both;
 }
 
 .navbar-inner {
-    min-height: 0px;
-    padding-right: 0px;
-    padding-left: 0px;
-    background-color: transparent;
-    background-image: none;
     border: 0px solid #D4D4D4;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
-    -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.065);
-    -moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.065);
-    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.065);
 }
 
 .dropdown-menu {
@@ -862,5 +866,22 @@ strong {
 }
 
 .navbar .nav > li > a {
-    padding: 10px 10px 15px;
+    padding: 4px 10px 1px;
+    line-height: 30px;
+}
+
+.display-field {
+    max-width: 900px;
+}
+
+.navbar .nav .dropdown-toggle .caret {
+    margin-top: 14px;
+}
+
+.discovery-menu {
+    padding: 10px 0px 10px 0px;
+}
+
+.accordion-body {
+    padding: 15px;
 }
