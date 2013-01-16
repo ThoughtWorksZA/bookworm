@@ -70,7 +70,7 @@ namespace BookWorm.ViewModels
 
         public SelectList ValidLanguages()
         {
-            return new SelectList(new ValidLanguage().ValidLanguages);
+            return new SelectList(ValidLanguage.ValidLanguages);
         }
 
         public SelectList ValidAgeGroups()

@@ -394,6 +394,7 @@
     <Content Include="Views\BookPosts\Details.cshtml" />
     <Content Include="Views\BookPosts\Edit.cshtml" />
     <Content Include="Views\BookPosts\Form.cshtml" />
+    <Content Include="Views\Books\Filter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

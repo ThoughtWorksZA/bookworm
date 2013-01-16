@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
+using BookWorm.Models.Validations;
 using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -103,9 +104,10 @@ namespace BookWorm.Tests.Controllers
 
             var view = booksController.List();
 
-            var booksInView = ((FilterInformation)view.Model).BookInformations;
-            var actualBooks = booksInView.Select(bookInformation => bookInformation.Book).ToList();
+            var filterInformation = (FilterInformation) view.Model;
+            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
             Assert.IsTrue(books.SequenceEqual(actualBooks));
+            Assert.AreEqual(ValidLanguage.ValidLanguages, filterInformation.Languages);
 
             mockedRepo.Verify(repo => repo.List<Book>(), Times.Once());
         }
@@ -214,6 +216,7 @@ namespace BookWorm.Tests.Controllers
 
             var booksInView = ((FilterInformation)view.Model).BookInformations;
             var actualBooks = booksInView.Select(bookInformation => bookInformation.Book).ToList();
+            Assert.AreEqual(true, booksController.ViewBag.HideFilter);
             Assert.AreEqual(2, actualBooks.Count());
             Assert.AreEqual("Book 1", actualBooks.First().Title);
             Assert.AreEqual("Book 1", actualBooks.Last().Title);

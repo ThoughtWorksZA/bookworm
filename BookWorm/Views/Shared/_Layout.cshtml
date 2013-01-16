@@ -1,4 +1,5 @@
 ﻿@using BookWorm.Models
+@using BookWorm.Models.Validations
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +44,10 @@
                     <span class="lead">I am looking for a specific book</span>
                 </div>
                 <div class="span6">
+                    @foreach (var language in ValidLanguage.ValidLanguages)
+                    {
+                        @Html.ActionLink(language, "Language", "Books", new { language }, null);
+                    }
                     @using (Html.BeginForm("List", "Books", FormMethod.Post))
                     {
 

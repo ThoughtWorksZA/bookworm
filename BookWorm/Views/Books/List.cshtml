@@ -16,6 +16,10 @@
         @Html.ActionLink("Create New", "Create", null, new {id = "createNewBookLink"})
     }
 </p>
+@if (!Convert.ToBoolean(ViewBag.HideFilter))
+{
+    @Html.Partial("Filter")
+}
     @foreach (var item in Model.BookInformations)
     {
         

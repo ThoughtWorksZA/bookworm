@@ -6,7 +6,7 @@ namespace BookWorm.Models.Validations
 {
     public class ValidLanguage : ValidationAttribute //, IClientValidatable
     {
-        public List<string> ValidLanguages = new List<string>
+        public static List<string> ValidLanguages = new List<string>
             {
                 "Afrikaans",
                 "English",

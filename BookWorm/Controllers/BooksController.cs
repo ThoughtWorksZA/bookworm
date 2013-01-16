@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using BookWorm.Models;
+using BookWorm.Models.Validations;
 using BookWorm.ViewModels;
 using Raven.Client.Linq;
 
@@ -24,7 +25,7 @@ namespace BookWorm.Controllers
             var books = _repository.List<Book>();
             ViewBag.Title = "Books";
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
-            return View(new FilterInformation(bookInformations));
+            return View(new FilterInformation(ValidLanguage.ValidLanguages, bookInformations));
         }
 
         [AllowAnonymous]
@@ -102,6 +103,7 @@ namespace BookWorm.Controllers
             {
                 TempData["flashNotice"] = "No books found that match your search.";
             }
+            ViewBag.HideFilter = true;
             return View(new FilterInformation(bookInformations));
         }
 
@@ -118,15 +120,12 @@ namespace BookWorm.Controllers
             return View("List", new FilterInformation(new List<string>() {language}, bookInformations));
         }
 
+        [AllowAnonymous]
         public ActionResult Filter(List<string> languages)
         {
             var books = _repository.Search<Book>(book => book.Language.In(languages));
             ViewBag.Title = string.Format("{0} Books", string.Join(",", languages));
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
-            if (bookInformations.Count() == 1)
-            {
-                return RedirectToAction("Details", new { id = bookInformations.First().Book.Id });
-            }
             return View("List", new FilterInformation(languages, bookInformations)); 
         }
     }

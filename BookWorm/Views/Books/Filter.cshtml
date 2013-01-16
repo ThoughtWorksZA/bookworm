@@ -1,0 +1,25 @@
+﻿@using BookWorm.Models.Validations
+@model BookWorm.ViewModels.FilterInformation
+ @Scripts.Render("~/Scripts/puku/clickableDiv.js")
+
+<div id="filter">
+    <div class="filter-header">
+        Languages
+    </div>
+    @foreach (var language in ValidLanguage.ValidLanguages)
+    {
+        var url = "";
+        if (Model.Languages.Contains(language))
+        {
+            url = string.Format("/Books/Filter?{0}", string.Join("&", Model.Languages.Where(x => x != language).Select(x => "languages=" + Url.Encode(x))));
+        }
+        else
+        {
+            url = string.Format("/Books/Filter?languages={0}&{1}", Url.Encode(language), string.Join("&", Model.Languages.Select(x => "languages=" + Url.Encode(x))));
+        }
+        <div data-clickable-url=@url>
+            <input type="checkbox" @Html.Raw(Model.Languages.Contains(language) ? "checked=\"checked\"" : "")/>
+            <span>@language</span>
+        </div>
+    }
+</div>
