@@ -295,7 +295,6 @@ namespace BookWorm.Tests.Controllers
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
         }
-
     }
 
 }

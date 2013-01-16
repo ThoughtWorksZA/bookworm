@@ -169,6 +169,7 @@
   <ItemGroup>
     <Compile Include="Controllers\BookPostsControllerTest.cs" />
     <Compile Include="Controllers\BooksControllerTest.cs" />
+    <Compile Include="Controllers\Integration\BooksControllerTest.cs" />
     <Compile Include="Controllers\PagesControllerTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
     <Compile Include="Controllers\AccountControllerTest.cs" />

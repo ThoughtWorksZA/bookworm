@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using BookWorm.Models;
 using BookWorm.ViewModels;
+using Raven.Client.Linq;
 
 namespace BookWorm.Controllers
 {
@@ -115,6 +116,18 @@ namespace BookWorm.Controllers
                 return RedirectToAction("Details", new { id = bookInformations.First().Book.Id });
             }
             return View("List", new FilterInformation(new List<string>() {language}, bookInformations));
+        }
+
+        public ActionResult Filter(List<string> languages)
+        {
+            var books = _repository.Search<Book>(book => book.Language.In(languages));
+            ViewBag.Title = string.Format("{0} Books", string.Join(",", languages));
+            var bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            if (bookInformations.Count() == 1)
+            {
+                return RedirectToAction("Details", new { id = bookInformations.First().Book.Id });
+            }
+            return View("List", new FilterInformation(languages, bookInformations)); 
         }
     }
 }
