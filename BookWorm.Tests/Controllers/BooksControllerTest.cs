@@ -276,20 +276,6 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
-        public void BooksControllerFilterByLanguageShouldRedirectToDetailsWhenThereIsOnlyOneResult()
-        {
-            var mockedRepo = new Mock<Repository>();
-            var expectedBooks = new List<Book> { new Book { Id = 1, Title = "Book 1", Language = "Zulu"} };
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
-            var booksController = new BooksController(mockedRepo.Object);
-
-            var viewResult = (RedirectToRouteResult)booksController.Language("Zulu");
-            Assert.AreEqual(1, viewResult.RouteValues["id"]);
-
-
-        }
-
-        [TestMethod]
         public void BooksControllerFilterByLanguageShouldAllowAnonymous()
         {
             var booksControllerClass = typeof(BooksController);
