@@ -284,6 +284,25 @@ namespace BookWorm.Tests.Controllers
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
         }
+
+        [TestMethod]
+        public void BooksControllerFilterByLanguageShouldReturnNothingWhenNoLanguagesAreGiven()
+        {
+            var books = new List<Book>();
+            Enumerable.Range(1, 8).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i, Language = "Venda" }));
+            var book1 = new Book { Title = "Book 9", Language = "Zulu" };
+            books.Add(book1);
+            var book2 = new Book { Title = "Book 10", Language = "Zulu" };
+            books.Add(book2);
+            var mockedRepo = new Mock<Repository>();
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var view = (ViewResult)booksController.Filter(null);
+
+            var filterInformation = (FilterInformation)view.Model;
+            Assert.IsFalse(filterInformation.BookInformations.Any());
+            Assert.IsFalse(filterInformation.Languages.Any());
+        }
     }
 
 }

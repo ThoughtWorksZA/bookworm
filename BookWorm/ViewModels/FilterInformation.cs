@@ -21,5 +21,19 @@ namespace BookWorm.ViewModels
             Languages = languages;
             BookInformations = bookInformations;
         }
+
+        public string FilterUrl(string language)
+        {
+            var url = "";
+            if (Languages.Contains(language))
+            {
+                url = string.Format("/Books/Filter?{0}", string.Join("&", Languages.Where(x => x != language).Select(x => "languages=" + HttpUtility.UrlEncode(x))));
+            }
+            else
+            {
+                url = string.Format("/Books/Filter?languages={0}&{1}", HttpUtility.UrlEncode(language), string.Join("&", Languages.Select(x => "languages=" + HttpUtility.UrlEncode(x))));
+            }
+            return url;
+        }
     }
 }

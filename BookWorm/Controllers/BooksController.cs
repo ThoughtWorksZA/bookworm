@@ -119,6 +119,9 @@ namespace BookWorm.Controllers
         [AllowAnonymous]
         public ActionResult Filter(List<string> languages)
         {
+            if (languages == null || !languages.Any())
+                return View("List", new FilterInformation(new List<string>(), new List<BookInformation>())); 
+
             var books = _repository.Search<Book>(book => book.Language.In(languages));
             ViewBag.Title = "Books";
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
