@@ -245,6 +245,7 @@
     <Compile Include="Models\Repository.cs" />
     <Compile Include="ViewModels\BookInformation.cs" />
     <Compile Include="ViewModels\BookPostInformation.cs" />
+    <Compile Include="ViewModels\FilterInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-responsive.css" />
@@ -398,7 +399,6 @@
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Repository\" />
     <Folder Include="Views\Shared\Home\" />
   </ItemGroup>

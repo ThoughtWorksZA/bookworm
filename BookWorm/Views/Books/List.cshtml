@@ -1,6 +1,6 @@
 ﻿ @Scripts.Render("~/Scripts/puku/clickableDiv.js")
 
-@model IEnumerable<BookWorm.ViewModels.BookInformation>
+@model BookWorm.ViewModels.FilterInformation
 
 <h2>@ViewBag.Title</h2>
 
@@ -16,7 +16,7 @@
         @Html.ActionLink("Create New", "Create", null, new {id = "createNewBookLink"})
     }
 </p>
-    @foreach (var item in Model)
+    @foreach (var item in Model.BookInformations)
     {
         
         <div class="row link-row">

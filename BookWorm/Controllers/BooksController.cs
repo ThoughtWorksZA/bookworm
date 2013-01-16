@@ -23,7 +23,7 @@ namespace BookWorm.Controllers
             var books = _repository.List<Book>();
             ViewBag.Title = "Books";
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
-            return View(bookInformations);
+            return View(new FilterInformation(bookInformations));
         }
 
         [AllowAnonymous]
@@ -101,12 +101,11 @@ namespace BookWorm.Controllers
             {
                 TempData["flashNotice"] = "No books found that match your search.";
             }
-            return View(bookInformations);
+            return View(new FilterInformation(bookInformations));
         }
 
         [AllowAnonymous]
-        [HttpPost]
-        public ActionResult FilterByLanguage(string language)
+        public ActionResult Language(string language)
         {
             var books = _repository.Search<Book>(book => book.Language == language);
             ViewBag.Title = string.Format("{0} Books", language);
@@ -115,7 +114,7 @@ namespace BookWorm.Controllers
             {
                 return RedirectToAction("Details", new { id = bookInformations.First().Book.Id });
             }
-            return View("List", bookInformations);
+            return View("List", new FilterInformation(new List<string>() {language}, bookInformations));
         }
     }
 }

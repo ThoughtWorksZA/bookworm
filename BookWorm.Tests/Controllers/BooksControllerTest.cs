@@ -103,7 +103,7 @@ namespace BookWorm.Tests.Controllers
 
             var view = booksController.List();
 
-            var booksInView = (List<BookInformation>) view.Model;
+            var booksInView = ((FilterInformation)view.Model).BookInformations;
             var actualBooks = booksInView.Select(bookInformation => bookInformation.Book).ToList();
             Assert.IsTrue(books.SequenceEqual(actualBooks));
 
@@ -212,7 +212,7 @@ namespace BookWorm.Tests.Controllers
 
             var view = (ViewResult)booksController.List("Book 1");
 
-            var booksInView = (List<BookInformation>)view.Model;
+            var booksInView = ((FilterInformation)view.Model).BookInformations;
             var actualBooks = booksInView.Select(bookInformation => bookInformation.Book).ToList();
             Assert.AreEqual(2, actualBooks.Count());
             Assert.AreEqual("Book 1", actualBooks.First().Title);
@@ -260,15 +260,16 @@ namespace BookWorm.Tests.Controllers
             mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
             var booksController = new BooksController(mockedRepo.Object);
 
-            var view = (ViewResult)booksController.FilterByLanguage("Zulu");
+            var view = (ViewResult)booksController.Language("Zulu");
 
-            var booksInView = (List<BookInformation>)view.Model;
-            var actualBooks = booksInView.Select(bookInformation => bookInformation.Book).ToList();
+            var filterInformation = (FilterInformation)view.Model;
+            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
             Assert.AreEqual(2, actualBooks.Count());
             Assert.AreEqual("Zulu", actualBooks.First().Language);
             Assert.AreEqual("Zulu", actualBooks.Last().Language);
-
             mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()), Times.Once());
+            Assert.AreEqual(1, filterInformation.Languages.Count());
+            Assert.AreEqual("Zulu", filterInformation.Languages.First());
         }
 
         [TestMethod]
@@ -279,7 +280,7 @@ namespace BookWorm.Tests.Controllers
             mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
             var booksController = new BooksController(mockedRepo.Object);
 
-            var viewResult = (RedirectToRouteResult)booksController.FilterByLanguage("Zulu");
+            var viewResult = (RedirectToRouteResult)booksController.Language("Zulu");
             Assert.AreEqual(1, viewResult.RouteValues["id"]);
 
 
@@ -290,7 +291,7 @@ namespace BookWorm.Tests.Controllers
         {
             var booksControllerClass = typeof(BooksController);
             Assert.AreEqual(1, booksControllerClass.GetMethods()
-                                                   .First(method => method.Name == "FilterByLanguage" && method.GetParameters().Count() == 1)
+                                                   .First(method => method.Name == "Language" && method.GetParameters().Count() == 1)
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
         }
