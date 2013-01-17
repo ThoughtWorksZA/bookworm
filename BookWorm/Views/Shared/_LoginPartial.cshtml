@@ -1,13 +1,23 @@
-﻿@if (Request.IsAuthenticated) {
-    <text>
-        <i class="icon-user"></i> Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
-        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
-            @Html.AntiForgeryToken()
-            <a href="javascript:document.getElementById('logoutForm').submit()" id="LogOutLink">Log off</a>
-        }
-    </text>
-} else {
-    <ul>
-        <li><i class="icon-lock"></i> @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
-}
+﻿<div class="row-fluid pull-right">
+    @if (Request.IsAuthenticated)
+    {
+        <div class="span2 pull-right">
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+            {
+                 @Html.AntiForgeryToken()
+                <a href="javascript:document.getElementById('logoutForm').submit()" id="LogOutLink">Log off</a>
+            }
+        </div>
+        <div class="span6 pull-right">
+            <i class="icon-user"></i>Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
+        </div>
+    }
+    else
+    {
+        <div class="span12">
+            <ul class="no-list-style">
+                <li class="pull-right"><i class="icon-lock"></i>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+            </ul>
+        </div>
+    }
+</div>

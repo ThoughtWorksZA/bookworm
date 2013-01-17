@@ -3,62 +3,70 @@
 @{
     ViewBag.Title = "Log in";
 }
-<h2>Login to manage PUKU</h2>
-<hr/>
-<section id="loginForm">
+<div class="row-fluid">
+    <div class="row-content">
+         <span class="lead">Login to manage PUKU</span>
+    </div>
+</div>
+<div class="row-fluid gray-body-row">
+    <div class="row-content">
+        <div class="span6">
+           
+            <section id="loginForm">
 
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-
-    <fieldset class="">
-        <legend>Log in Form</legend>
-        
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
+                @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <fieldset class="">
+                        @Html.LabelFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName)
+                        @Html.ValidationMessageFor(m => m.UserName)
             
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
-                 <br />
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-        <div class="some-small-space"></div>
-        <div class="well">
-            <div class="row-fluid">
-                <div class="span9">
-                    Logging in gives you access to the
-                    admin dashboard and admin 
-                    functionality on Puku.co.za pages.                    
-                </div>
-                <div class="span3">
-                     <input type="submit" value="Log in" class="btn btn-success" id="LoginButton" />
-                </div>
-            </div>
-        </div>
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password)
+                        @Html.ValidationMessageFor(m => m.Password)
+                        <br />
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+                        <div class="some-small-space"></div>
+                        <div class="well">
+                            <div class="row-fluid">
+                                <div class="span9">
+                                    Logging in gives you access to the
+                                    admin dashboard and admin 
+                                    functionality on Puku.co.za pages.                    
+                                </div>
+                                <div class="span3">
+                                    <input type="submit" value="Log in" class="btn btn-success" id="LoginButton" />
+                                </div>
+                            </div>
+                        </div>
        
-                <div class="some-small-space"></div>
+                        <div class="some-small-space"></div>
     
-    </fieldset>
+                    </fieldset>
 
-}
-</section>
+                }
+            </section>
+        </div>
+        <div class="span6">
+            <section class="social" id="socialLoginForm">
+                <p class="lead">Are you an Admin?</p>
+                <p><i class="icon-edit"></i> Login to manage pages, posts and books.</p>
 
-<section class="social" id="socialLoginForm">
-    <p class="lead">Are you an Admin?</p>
-    <p><i class="icon-edit"></i> Login to manage pages, posts and books.</p>
+                <p class="lead">Are you here by mistake?</p>
+                <p>This login is only for
+                    PUKU users and partners. </p>
 
-    <p class="lead">Are you here by mistake?</p>
-    <p>This login is only for
-        PUKU users and partners. </p>
+                <p>PUKU is a organisation dedicated to bridging 
+                    the digital divide African <br />children experience
+                    when looking for books in their own languages.</p>
 
-    <p>PUKU is a organisation dedicated to bridging 
-        the digital divide African <br />children experience
-        when looking for books in their own languages.</p>
-
-    <a href="#">Find out more about PUKU.</a>
-</section>
+                <a href="#">Find out more about PUKU.</a>
+            </section>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

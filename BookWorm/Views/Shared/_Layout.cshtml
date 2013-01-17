@@ -15,88 +15,92 @@
     @Scripts.Render("~/bundles/jqueryval")
 </head>
 <body>
-    <header>
-        <div class="content-wrapper">
-            <div class="row-fluid">
-                <div class="span5">
-                    <div class="row-fluid hand-cursor" onclick="window.location.href = '/'">
-                        <div class="span3">
-                            <img src="/Images/logo.png" alt="PUKU Logo" />
-                        </div>
-                        <div class="span9 brand-area">
-                            <h1>PUKU</h1>
-                            Childrens Literature in Southern Africa
-                        </div>
+    <div class="row-fluid header">
+        <div class="row-content">
+            <div class="span5">
+                <div class="row-fluid hand-cursor" onclick="window.location.href = '/'">
+                    <div class="span3">
+                        <img src="/Images/logo.png" alt="PUKU Logo" />
                     </div>
-                </div>
-                <div class="span7">
-                    <div>
-                        <div class="some-small-space"></div>
-                        @Html.Partial("_Navigation")
-                    </div>
-                </div>
-            </div>
-    </header>
-    <div id="body">
-        <div id="discovery_menu" class="content-wrapper discovery-menu" style="display: none;">
-            <div class="row">
-                <div class="span3">
-                    <p class="lead">Choose from a<br> <strong>category</strong> to see <br> books:</p>
-                </div>
-                <div class="span8">
-                    <h4>Languages</h4>
-                    @foreach (var language in ValidLanguage.ValidLanguages)
-                    {
-                        @Html.ActionLink(language, "Language", "Books", new { language }, null);
-                    }
-                </div>
-                 <div class="span1"><a href="#" onclick="toggleDiscoveryMenu()"><i class="icon-minus-sign"></i> Hide</a></div>
-            </div>
-            <div class="row">
-                <div class="span5">
-                    <span class="lead">I am looking for a specific book</span>
-                </div>
-                <div class="span7">
-                    @using (Html.BeginForm("List", "Books", FormMethod.Post))
-                    {
-
-                        <div class="row">
-                            <div class="span4  ">@Html.TextBox("searchQuery", "", new { placeholder = "Search by Title or ISBN" })</div>
-                            <div class="span2">
-                                <input type="submit" value="Search" class="btn" id="SearchButton" /></div>
-                        </div>
-                    }
-                </div>
+                    <div class="span9 brand-area">
+                        <h1>PUKU</h1>
+                        Childrens Literature in Southern Africa
                
+                    </div>
+                </div>
             </div>
-            <hr class="some-small-space" />
+            <div class="span1"></div>
+            <div class="span6">
+                <div class="some-small-space"></div>
+                @Html.Partial("_Navigation")
+            </div>
+        </div>
+    </div>
+    <div id="body">
+        <div class="row-fluid" id="discovery_menu" style="display: none;">
+            <div class="row-content">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span3">
+                            <p class="lead">
+                                <i class="icon-th-large"></i>Choose from a<br>
+                                                                          <strong>category</strong> to see
+                                                                          <br>
+                                                                          books:
+                            </p>
+                        </div>
+                        <div class="span8 categories">
+                            <h4>Languages</h4>
+                            @foreach (var language in ValidLanguage.ValidLanguages)
+                            {
+                                @Html.ActionLink(language, "Language", "Books", new { language }, null);
+                            }
+                        </div>
+                        <div class="span1"><a href="#" onclick="toggleDiscoveryMenu()"><i class="icon-minus-sign"></i>Hide</a></div>
+                    </div>
+                    <div class="some-small-space"></div>
+                    <div class="row-fluid">
+                        <div class="span5">
+                            <span class="lead"><i class="icon-search"></i>I am looking for a specific book</span>
+                        </div>
+                        <div class="span7">
+                            @using (Html.BeginForm("List", "Books", FormMethod.Post))
+                            {
+                                <div class="row-fluid">
+                                    <div class="span5">@Html.TextBox("searchQuery", "", new { placeholder = "Search by Title or ISBN" })</div>
+                                    <div class="span2">
+                                        <input type="submit" value="Search" class="btn" id="SearchButton" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <hr class="some-small-space" />
+                </div>
+            </div>
+
         </div>
         @RenderSection("featured", required: false)
-        <section class="content-wrapper main-content clear-fix">
-            @if (TempData["flashError"] != null && !TempData["flashError"].ToString().IsEmpty())
-            {
-
-                <div class="alert alert-error">@TempData["flashError"]</div>
-            }
-            @if (TempData["flashSuccess"] != null && !TempData["flashSuccess"].ToString().IsEmpty())
-            {
-
-                <div class="alert alert-success">@TempData["flashSuccess"]</div>
-            }
-            @RenderBody()
-        </section>
+        @if (TempData["flashError"] != null && !TempData["flashError"].ToString().IsEmpty())
+        {
+            <div class="alert alert-error">@TempData["flashError"]</div>
+        }
+        @if (TempData["flashSuccess"] != null && !TempData["flashSuccess"].ToString().IsEmpty())
+        {
+            <div class="alert alert-success">@TempData["flashSuccess"]</div>
+        }
+        @RenderBody()
     </div>
-    <footer>
-        <div class="content-wrapper">
-            <div class="float-left">
+    <div class="row-fluid footer">
+        <div class="row-content">
+            <div class="span8">
                 <p>&copy; @DateTime.Now.Year</p>
             </div>
-            <section id="login">
-                            @Html.Partial("_LoginPartial")
-                        </section>
+            <div class="span4 pull-right">
+                @Html.Partial("_LoginPartial")
+            </div>
         </div>
-    </footer>
-
+    </div>
     @RenderSection("scripts", required: false)
 </body>
 </html>
