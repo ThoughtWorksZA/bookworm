@@ -63,14 +63,14 @@ namespace BookWorm.Models
             return List<T>(int.MaxValue);
         }
 
-        public ICollection<T> List<T>(int perPage) where T : Model
+        public virtual ICollection<T> List<T>(int perPage) where T : Model
         {
             return List<T>(1, perPage);
         }
 
-        public ICollection<T> List<T>(int page, int perPage) where T : Model
+        public virtual ICollection<T> List<T>(int page, int perPage) where T : Model
         {
-            var _ravenQueryable = _documentSession.Query<T>().OrderBy(d => d.CreatedAt).Skip((page - 1) * perPage).Take(perPage);
+            var _ravenQueryable = _documentSession.Query<T>().OrderByDescending(d => d.UpdatedAt).Skip((page - 1) * perPage).Take(perPage);
             return _ravenQueryable.ToList();
         }
 
@@ -79,23 +79,23 @@ namespace BookWorm.Models
             return Search(predicate, 1, int.MaxValue);
         }
 
-        public ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, int page, int perPage) where T : Model
+        public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, int page, int perPage) where T : Model
         {
             var ravenQueryable = _documentSession.Query<T>();
-            return ravenQueryable.Where(predicate).OrderBy(x => x.CreatedAt).Skip((page - 1) * perPage).Take(perPage).ToList();
+            return ravenQueryable.Where(predicate).OrderByDescending(x => x.UpdatedAt).Skip((page - 1) * perPage).Take(perPage).ToList();
         }
 
-        public ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, int perPage) where T : Model
+        public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, int perPage) where T : Model
         {
             return Search<T>(predicate, 1, perPage);
         }
-        
-        public int Count<T>() where T : Model
+
+        public virtual int Count<T>() where T : Model
         {
             return _documentSession.Query<T>().Count();
         }
 
-        public int Count<T>(Expression<Func<T, bool>> predicate) where T : Model
+        public virtual int Count<T>(Expression<Func<T, bool>> predicate) where T : Model
         {
             return _documentSession.Query<T>().Where(predicate).Count();
         }

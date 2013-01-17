@@ -127,15 +127,15 @@ namespace BookWorm.Tests.Models.Integration
         }
 
         [TestMethod]
-        public void ShouldKnowListOrdersByCreatedAt()
+        public void ShouldKnowListOrdersByUpdatedAt()
         {
             using (var session = _documentStore.OpenSession())
             {
-                session.Store(new StaticPage { Title = "test2", CreatedAt = DateTime.Now.AddMinutes(1) });
-                session.Store(new StaticPage { Title = "test", CreatedAt = DateTime.Now });
+                session.Store(new StaticPage { Title = "test2", CreatedAt = DateTime.Now.AddMinutes(-1), UpdatedAt = DateTime.Now.AddMinutes(1)});
+                session.Store(new StaticPage { Title = "test", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now});
                 session.SaveChanges();
                 var repository = new Repository(session);
-                Assert.AreEqual("test", repository.List<StaticPage>(1).First().Title);
+                Assert.AreEqual("test2", repository.List<StaticPage>(1).First().Title);
             }
         }
 
@@ -144,11 +144,11 @@ namespace BookWorm.Tests.Models.Integration
         {
             using (var session = _documentStore.OpenSession())
             {
-                session.Store(new StaticPage { Title = "test2", CreatedAt = DateTime.Now.AddMinutes(1) });
-                session.Store(new StaticPage { Title = "test", CreatedAt = DateTime.Now });
+                session.Store(new StaticPage { Title = "test2", UpdatedAt = DateTime.Now.AddMinutes(1) });
+                session.Store(new StaticPage { Title = "test", UpdatedAt = DateTime.Now });
                 session.SaveChanges();
                 var repository = new Repository(session);
-                Assert.AreEqual("test2", repository.List<StaticPage>(2, 1).First().Title);
+                Assert.AreEqual("test", repository.List<StaticPage>(2, 1).First().Title);
             }
         }
 
@@ -194,17 +194,22 @@ namespace BookWorm.Tests.Models.Integration
         }
 
         [TestMethod]
-        public void ShouldKnowSearchOrdersByCreatedAt()
+        public void ShouldKnowSearchOrdersByUpdatedAt()
         {
             using (var session = _documentStore.OpenSession())
             {
                 session.Store(new StaticPage { Id = 1, Title = "test", CreatedAt = DateTime.Now });
-                session.Store(new StaticPage { Id= 2, Title = "test2", CreatedAt = DateTime.Now.AddMinutes(1) });
+                var staticPage = new StaticPage {Id = 2, Title = "test2", CreatedAt = DateTime.Now.AddMinutes(1)};
+                session.Store(staticPage);
                 session.Store(new StaticPage { Id = 3, Title = "test2", CreatedAt = DateTime.Now.AddMinutes(2) });
+                staticPage.UpdatedAt = DateTime.Now.AddMinutes(3);
+                session.Store(staticPage);
                 session.SaveChanges();
                 var repository = new Repository(session);
-                var results = repository.Search<StaticPage>((x => x.Title == "test2"), 1);
-                Assert.AreEqual(2, results.First().Id);                
+                var results = repository.Search<StaticPage>(x => x.Title == "test2");
+                Assert.AreEqual(2, results.Count());
+                Assert.AreEqual(2, results.First().Id);
+                Assert.AreEqual(3, results.Last().Id);
             }
         }
 

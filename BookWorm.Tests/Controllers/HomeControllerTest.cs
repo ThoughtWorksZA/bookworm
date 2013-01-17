@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using BookWorm.Models;
+using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BookWorm;
 using BookWorm.Controllers;
+using Moq;
 
 namespace BookWorm.Tests.Controllers
 {
@@ -36,6 +39,17 @@ namespace BookWorm.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void IndexShouldHave4LatestUpdatedBooks()
+        {
+            var books = new List<Book> {new Book(), new Book(), new Book(), new Book()};
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(repo => repo.List<Book>(4)).Returns(books);
+            var controller = new HomeController(mockedRepo.Object);
+            controller.Index();
+            Assert.AreEqual(4, ((List<BookInformation>)controller.ViewBag.bookInformations).Count());
         }
     }
 }
