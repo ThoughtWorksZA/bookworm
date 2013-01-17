@@ -8,10 +8,20 @@
     </div>
     @foreach (var language in ValidLanguage.ValidLanguages)
     {
-        
-        <div data-clickable-url=@Model.FilterUrl(language)>
+        <div data-clickable-url=@Model.LanguageFilterUrl(language)>
             <input type="checkbox" @Html.Raw(Model.Languages.Contains(language) ? "checked=\"checked\"" : "")/>
             <span>@language</span>
+        </div>
+    }
+    <div class="filter-header">
+        <strong>Ages</strong>
+    </div>
+    @foreach (var ageRange in ValidAgeRange.ValidAgeRanges)
+    {
+        
+        <div data-clickable-url=@Model.AgeRangeFilterUrl(ageRange)>
+            <input type="checkbox" @Html.Raw(Model.AgeRanges.Contains(ageRange) ? "checked=\"checked\"" : "")/>
+            <span>@ageRange</span>
         </div>
     }
 </div>

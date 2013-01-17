@@ -211,6 +211,8 @@
     <Compile Include="Specs\BaseSteps.cs" />
     <Compile Include="Specs\Pages\StaticPageDetailsPage.cs" />
     <Compile Include="Specs\Pages\StaticPagesListPage.cs" />
+    <Compile Include="ViewModels\BookInformationTest.cs" />
+    <Compile Include="ViewModels\FilterInformationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config">

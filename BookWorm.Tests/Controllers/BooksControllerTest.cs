@@ -107,7 +107,7 @@ namespace BookWorm.Tests.Controllers
             var filterInformation = (FilterInformation) view.Model;
             var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
             Assert.IsTrue(books.SequenceEqual(actualBooks));
-            Assert.AreEqual(ValidLanguage.ValidLanguages, filterInformation.Languages);
+            Assert.IsFalse(filterInformation.Languages.Any());
 
             mockedRepo.Verify(repo => repo.List<Book>(), Times.Once());
         }
@@ -286,7 +286,7 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
-        public void BooksControllerFilterByLanguageShouldReturnNothingWhenNoLanguagesAreGiven()
+        public void BooksControllerFilterShouldReturnNothingWhenNoFiltersAreGiven()
         {
             var books = new List<Book>();
             Enumerable.Range(1, 8).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i, Language = "Venda" }));
@@ -297,7 +297,7 @@ namespace BookWorm.Tests.Controllers
             var mockedRepo = new Mock<Repository>();
             var booksController = new BooksController(mockedRepo.Object);
 
-            var view = (ViewResult)booksController.Filter(null);
+            var view = (ViewResult)booksController.Filter(null, null);
 
             var filterInformation = (FilterInformation)view.Model;
             Assert.IsFalse(filterInformation.BookInformations.Any());

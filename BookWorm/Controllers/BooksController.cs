@@ -25,7 +25,7 @@ namespace BookWorm.Controllers
             var books = _repository.List<Book>();
             ViewBag.Title = "Books";
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
-            return View(new FilterInformation(ValidLanguage.ValidLanguages, bookInformations));
+            return View(new FilterInformation(bookInformations));
         }
 
         [AllowAnonymous]
@@ -113,19 +113,20 @@ namespace BookWorm.Controllers
             var books = _repository.Search<Book>(book => book.Language == language);
             ViewBag.Title = string.Format("{0} Books", language);
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
-            return View("List", new FilterInformation(new List<string>() {language}, bookInformations));
+            return View("List", new FilterInformation(new List<string>() {language}, ValidAgeRange.ValidAgeRanges, bookInformations));
         }
 
         [AllowAnonymous]
-        public ActionResult Filter(List<string> languages)
+        public ActionResult Filter(List<string> languages, List<string> ageRanges)
         {
-            if (languages == null || !languages.Any())
-                return View("List", new FilterInformation(new List<string>(), new List<BookInformation>())); 
-
-            var books = _repository.Search<Book>(book => book.Language.In(languages));
+            var books = _repository.List<Book>().ToList();
+            if (languages.Any())
+                books = books.Where(book => book.Language.In(languages)).ToList();
+            if (ageRanges.Any())
+                books = books.Where(book => book.AgeRange.In(ageRanges)).ToList();
             ViewBag.Title = "Books";
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
-            return View("List", new FilterInformation(languages, bookInformations)); 
+            return View("List", new FilterInformation(languages, ageRanges, bookInformations)); 
         }
     }
 }

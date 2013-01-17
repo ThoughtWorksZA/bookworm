@@ -75,7 +75,7 @@ namespace BookWorm.ViewModels
 
         public SelectList ValidAgeGroups()
         {
-            return new SelectList(new ValidAgeRange().ValidAgeRanges);
+            return new SelectList(ValidAgeRange.ValidAgeRanges);
         }
 
         public SelectList ValidCountries()
@@ -89,6 +89,13 @@ namespace BookWorm.ViewModels
                 BookPostInformations.Where(
                     bookPostInformation => bookPostInformation.BookPost.Type.Equals(bookPostType))
                                     .ToList();
+        }
+
+        public string Summary(int characters)
+        {
+            if (Book.Description == null || Book.Description.Length < characters)
+                return Book.Description;
+            return Book.Description.Substring(0, Book.Description.IndexOf(" ", characters));
         }
     }
 }

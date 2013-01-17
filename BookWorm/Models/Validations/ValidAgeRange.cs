@@ -6,7 +6,7 @@ namespace BookWorm.Models.Validations
 {
     public class ValidAgeRange : ValidationAttribute //, IClientValidatable
     {
-        public List<string> ValidAgeRanges = new List<string>
+        public static List<string> ValidAgeRanges = new List<string>
             {
                 "0-2",
                 "3-5",
