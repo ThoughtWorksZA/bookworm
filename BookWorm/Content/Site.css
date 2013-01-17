@@ -14,17 +14,13 @@ body {
 }
 
 a {
-    color: #333;
+    color: #0088cc;
     outline: none;
     padding-left: 3px;
     padding-right: 3px;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
-    a:link, a:visited,
-    a:active, a:hover {
-        color: #333;
-    }
 
     a:hover {
         background-color: #c7d1d6;
@@ -82,13 +78,7 @@ h2 .lead {
   line-height: 30px;
 }
 
-h3 {
-    font-size: 1.2em;
-}
 
-h4 {
-    font-size: 1.1em;
-}
 
 h5, h6 {
     font-size: 1em;
@@ -116,7 +106,6 @@ h5, h6 {
 
     .main-content {
         padding-left: 10px;
-        padding-top: 15px;
     }
 
     .featured + .main-content {
@@ -884,4 +873,127 @@ strong {
 
 .accordion-body {
     padding: 15px;
+}
+
+.sub-title {
+    font-size: 15pt;
+}
+
+.book-cover {
+    position: relative;
+    min-height: 100px;
+    width: 200px;
+    background-repeat: no-repeat;
+    border: 5px #efeeef solid;
+    cursor: pointer;
+    background-image: url(images/loader.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.book-cover-info-wrapper {
+    padding-left: 8px;
+    padding-top: 5px;
+    padding-bottom: 4px;
+}
+
+.book-cover-info {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Fallback for web browsers that doesn't support RGBa */
+	background: rgb(250, 250, 250);
+	/* RGBa with 0.6 opacity */
+	background: rgba(250, 250, 250, 0.8);
+}
+
+.book-cover-hover-info {
+    display: none;
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    /* Fallback for web browsers that doesn't support RGBa */
+	background: rgb(250, 250, 250);
+	/* RGBa with 0.6 opacity */
+	background: rgba(250, 250, 250, 0.8);
+}
+
+.book-cover-info .span4 {
+    margin-left: 0%;
+    width: 66.666666px;
+}
+
+.label-language, .label-genre, .label-age-range {
+    padding-top: 4px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    font-size: 8pt;
+    text-align: center;
+    vertical-align: text-bottom;
+    line-height: 10px;
+}
+
+.label-language {
+    /* Fallback for web browsers that doesn't support RGBa */
+	background: rgb(136, 136, 136);
+	/* RGBa with 0.6 opacity */
+	background: rgba(136, 136, 136, 0.6);
+    color: #ffffff;
+}
+
+.label-age-range{
+    /* Fallback for web browsers that doesn't support RGBa */
+	background: rgb(73, 73, 73);
+	/* RGBa with 0.6 opacity */
+	background: rgba(73, 73, 73, 0.6);
+    color: #ffffff;
+}
+
+.label-genre {
+    /* Fallback for web browsers that doesn't support RGBa */
+	background: rgb(73, 73, 73);
+	/* RGBa with 0.6 opacity */
+	background: rgba(73, 73, 73, 1);
+    color: #ffffff;
+}
+.book-image:hover + .book-cover-hover-info {
+    display: block;
+} 
+
+.default-cover-image {
+    height: 300px;
+    background-image: url('Images/blank_cover.png');
+    background-repeat: repeat-y;
+}
+
+.default-cover-info {
+    padding: 20px;
+    padding-left: 30px;
+    font-size: 18pt;
+    color: #666666;
+}
+
+
+
+ /* allow room for 3 columns */
+ol {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+}
+
+/* float & allow room for the widest item */
+ol li {
+    float: left;
+    width: 235px;
+    height: 320px;
+}
+
+/* stop the float */
+br {
+    clear: left;
+}
+
+/* separate the list from subsequent markup */
+div.wrapper {
+    margin-bottom: 1em;
 }

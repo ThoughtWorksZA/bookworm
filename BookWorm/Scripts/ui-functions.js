@@ -9,7 +9,6 @@ function toggleDiscoveryMenu() {
     else {
         $("#discovery_menu").fadeIn(200);
         $("#discovery_menu_toggle").html("Close <i class='icon-chevron-up'></i>");
-        $("#searchQuery").focus();
         menuOpen = true;
     }
 

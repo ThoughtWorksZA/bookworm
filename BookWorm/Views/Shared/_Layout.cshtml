@@ -40,14 +40,23 @@
     <div id="body">
         <div id="discovery_menu" class="content-wrapper discovery-menu" style="display: none;">
             <div class="row">
-                <div class="span5">
-                    <span class="lead">I am looking for a specific book</span>
+                <div class="span3">
+                    <p class="lead">Choose from a<br> <strong>category</strong> to see <br> books:</p>
                 </div>
-                <div class="span6">
+                <div class="span8">
+                    <h4>Languages</h4>
                     @foreach (var language in ValidLanguage.ValidLanguages)
                     {
                         @Html.ActionLink(language, "Language", "Books", new { language }, null);
                     }
+                </div>
+                 <div class="span1"><a href="#" onclick="toggleDiscoveryMenu()"><i class="icon-minus-sign"></i> Hide</a></div>
+            </div>
+            <div class="row">
+                <div class="span5">
+                    <span class="lead">I am looking for a specific book</span>
+                </div>
+                <div class="span7">
                     @using (Html.BeginForm("List", "Books", FormMethod.Post))
                     {
 
@@ -58,8 +67,9 @@
                         </div>
                     }
                 </div>
-                <div class="span1"><a href="#" onclick="toggleDiscoveryMenu()"><i class="icon-arrow-up"></i>Hide</a></div>
+               
             </div>
+            <hr class="some-small-space" />
         </div>
         @RenderSection("featured", required: false)
         <section class="content-wrapper main-content clear-fix">
