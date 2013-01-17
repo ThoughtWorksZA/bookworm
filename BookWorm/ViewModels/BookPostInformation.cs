@@ -8,6 +8,10 @@ namespace BookWorm.ViewModels
         public BookPost BookPost { get; set; }
         public Book Book { get; set; }
 
+        public BookPostInformation()
+        {
+        }
+
         public BookPostInformation(int bookId, BookPost bookPost)
         {
             BookId = bookId;

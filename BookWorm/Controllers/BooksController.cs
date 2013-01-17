@@ -119,6 +119,8 @@ namespace BookWorm.Controllers
         [AllowAnonymous]
         public ActionResult Filter(List<string> languages, List<string> ageRanges)
         {
+            languages = languages ?? new List<string>();
+            ageRanges = ageRanges ?? new List<string>();
             var books = _repository.List<Book>().ToList();
             if (languages.Any())
                 books = books.Where(book => book.Language.In(languages)).ToList();

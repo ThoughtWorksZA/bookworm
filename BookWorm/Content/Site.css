@@ -87,9 +87,7 @@ clear: both;
     border-bottom-color: transparent;
 }
 
-.navbar {
-    width: 480px;
-}
+
 .navbar-inner {
     border: 0px solid #D4D4D4;
     background-color: rgb(250, 250, 250);

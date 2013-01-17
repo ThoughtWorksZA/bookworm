@@ -6,7 +6,7 @@
             @Html.DisplayFor(modelItem => item.BookPost.Title)
         </span>
         <p>
-            @Html.DisplayFor(modelItem => item.BookPost.Content)
+            @Html.Raw(item.Summary(350))
             ...
         </p>
         @Html.ActionLink("View this review", "Details", "BookPosts", new { bookId=item.BookId, id=item.BookPost.Id }, null)
