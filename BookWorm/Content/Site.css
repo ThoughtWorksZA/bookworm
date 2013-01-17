@@ -146,9 +146,6 @@ clear: both;
     padding: 10px 0px 10px 0px;
 }
 
-.accordion-body {
-    padding: 15px;
-}
 
 .sub-title {
     font-size: 15pt;
@@ -348,4 +345,22 @@ margin-right: auto;
   float: left;
   min-height: 1px;
   margin-left: 0px;
+}
+
+ .accordion-group {
+  margin-bottom: 2px;
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 0px;
+     -moz-border-radius: 0px;
+          border-radius: 0px;
+}
+
+ .breadcrumb {
+  padding: 0px 0px 15px;
+  margin: 0 0 0px;
+  list-style: none;
+  background-color: transparent;
+  -webkit-border-radius: 0px;
+     -moz-border-radius: 0px;
+          border-radius: 0px;
 }
