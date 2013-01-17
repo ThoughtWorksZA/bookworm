@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using BookWorm.Models;
+﻿using BookWorm.Models;
 
 namespace BookWorm.ViewModels
 {
@@ -11,10 +7,6 @@ namespace BookWorm.ViewModels
         public int BookId { get; set; }
         public BookPost BookPost { get; set; }
         public Book Book { get; set; }
-
-        public BookPostInformation()
-        {
-        }
 
         public BookPostInformation(int bookId, BookPost bookPost)
         {
@@ -27,6 +19,13 @@ namespace BookWorm.ViewModels
             BookId = bookId;
             BookPost = bookPost;
             Book = book;
+        }
+
+        public string Summary(int characters)
+        {
+            if (BookPost.Content == null || BookPost.Content.Length < characters)
+                return BookPost.Content;
+            return BookPost.Content.Substring(0, BookPost.Content.IndexOf(" ", characters));
         }
     }
 }

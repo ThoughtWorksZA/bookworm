@@ -52,11 +52,7 @@ namespace BookWorm.Tests.Controllers
             var repository = new Mock<Repository>();
             var book = new Book { Id = 1 };
             var bookPost = new BookPost {Title = "test title", Content = "some content"};
-            var submittedBookPostInformation = new BookPostInformation
-                {
-                    BookId = book.Id,
-                    BookPost = bookPost
-                };
+            var submittedBookPostInformation = new BookPostInformation(book.Id, bookPost);
             repository.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
             var controller = new BookPostsController(repository.Object);
             var result = (RedirectToRouteResult)controller.Create(submittedBookPostInformation);
@@ -117,11 +113,7 @@ namespace BookWorm.Tests.Controllers
             var repository = new Mock<Repository>();
             var book = new Book { Id = 1 };
             var bookPost = new BookPost { Title = "The Book Post", Content = "some content", Type = BookPost.BookPostType.Reviews };
-            var submittedBookPostInformation = new BookPostInformation
-                {
-                    BookId = book.Id,
-                    BookPost = bookPost
-                };
+            var submittedBookPostInformation = new BookPostInformation(book.Id, bookPost);
             repository.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
             var bookPostsController = new BookPostsController(repository.Object);
             var viewResult = (RedirectToRouteResult)bookPostsController.Create(submittedBookPostInformation);
@@ -140,11 +132,7 @@ namespace BookWorm.Tests.Controllers
             var repository = new Mock<Repository>();
             var book = new Book { Id = 1 };
             var bookPost = new BookPost { Title = "The Book Post", Content = "some content", Type = BookPost.BookPostType.Reviews };
-            var submittedBookPostInformation = new BookPostInformation
-            {
-                BookId = book.Id,
-                BookPost = bookPost
-            };
+            var submittedBookPostInformation = new BookPostInformation(book.Id, bookPost);
             repository.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
             var bookPostsController = new BookPostsController(repository.Object);
             bookPostsController.ModelState.AddModelError("test error", "test exception");

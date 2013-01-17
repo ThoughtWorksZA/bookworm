@@ -50,7 +50,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 var expectedBooks = new List<Book> { book1, book2 };
                 var booksController = new BooksController(repository);
 
-                var view = (ViewResult)booksController.Filter(new List<string>() { "Zulu", "Xhosa" }, null);
+                var view = (ViewResult)booksController.Filter(new List<string>() { "Zulu", "Xhosa" }, new List<string>());
 
                 var filterInformation = (FilterInformation)view.Model;
                 var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
