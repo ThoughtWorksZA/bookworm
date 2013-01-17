@@ -2,16 +2,13 @@
 
 @model BookWorm.ViewModels.FilterInformation
 
-
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
             <p class="lead">@ViewBag.Title</p>
             @if (TempData["flashNotice"] != null && !TempData["flashNotice"].ToString().IsEmpty())
             {
-
                 <div><i class="icon-inbox"></i>@TempData["flashNotice"]</div>
-
                 <div class="some-space">
                     <center><quote class="lead">“A room without books is like a body without a soul.” 
                      <span style="font-size: small">― Marcus Tullius Cicero</span></quote></center>
@@ -32,7 +29,7 @@
             <div class="row-fluid">
                 <div class="span3">
                     <div class="filters">
-                        <div class="popover-title">Narrow your search</div>
+                        <div class="popover-title"><i class="icon-tags"></i> Narrow your search</div>
                         <div class="popover-content">
                         @if (!Convert.ToBoolean(ViewBag.HideFilter))
                         {
