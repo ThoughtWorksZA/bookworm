@@ -31,11 +31,11 @@
                     <div class="filters">
                         <div class="popover-title"><i class="icon-tags"></i> Narrow your search</div>
                         <div class="popover-content">
-                        @if (!Convert.ToBoolean(ViewBag.HideFilter))
-                        {
-                            @Html.Partial("Filter")
-                        }
-                            </div>
+                            @if (!Convert.ToBoolean(ViewBag.HideFilter))
+                            {
+                                @Html.Partial("Filter")
+                            }
+                        </div>
                     </div>
                 </div>
                 <div class="span9">
@@ -44,7 +44,6 @@
                         {
                             <li>
                                 <div id="clickable-div" data-clickable-url="/Books/Details/@item.Book.Id">
-
                                     <div class="book-cover">
                                         @if (@Html.DisplayFor(model => item.Book.CoverImageUrl) != null && !@Html.DisplayFor(model => item.Book.CoverImageUrl).ToString().IsEmpty())
                                         {
@@ -53,14 +52,12 @@
                                         }
                                         else
                                         {
-
                                             <div class="book-image default-cover-image">
                                                 <div class="default-cover-info">
                                                     <h4>@item.Book.Title</h4>
                                                     @Html.DisplayFor(model => item.Book.Author)
                                                 </div>
                                             </div>
-                            
                                         }
                                         <div class="book-cover-hover-info">
                                             <div class="book-cover-info-wrapper">
@@ -93,5 +90,4 @@
             </div>
         </div>
     </div>
-
 </div>

@@ -15,9 +15,9 @@ namespace BookWorm.Models.Validations
                 "Rhymes and Riddles",
                 "Fables and Folktales",
                 "Educational",
-                "Young Adult – Fantasy/Science Fiction",
-                "Young Adult – Contemporary Fiction",
-                "Young Adult – Historical Fiction"
+                "Fantasy/Science Fiction",
+                "Contemporary Fiction",
+                "Historical Fiction"
             };
 
         public override bool IsValid(object genre)

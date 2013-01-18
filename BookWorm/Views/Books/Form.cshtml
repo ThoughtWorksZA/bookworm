@@ -30,7 +30,7 @@
                             Title*
                         </div>
                         <div class="span10">
-                            @Html.EditorFor(model => model.Book.Title)
+                            @Html.TextBoxFor(model => model.Book.Title, new { placeholder = "Book Title"})
                             @Html.ValidationMessageFor(model => model.Book.Title)
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                             Subtitle
                         </div>
                         <div class="span10">
-                            @Html.EditorFor(model => model.Book.Subtitle)
+                            @Html.TextBoxFor(model => model.Book.Subtitle, new { placeholder = "Sub Title"})
                             @Html.ValidationMessageFor(model => model.Book.Subtitle)
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                             Author*
                         </div>
                         <div class="span10">
-                            @Html.EditorFor(model => model.Book.Author)
+                            @Html.TextBoxFor(model => model.Book.Author, new { placeholder = "Author"})
                             @Html.ValidationMessageFor(model => model.Book.Author)
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                             Illustrator
                         </div>
                         <div class="span5">
-                            @Html.EditorFor(model => model.Book.Illustrator)<br/>
+                            @Html.TextBoxFor(model => model.Book.Illustrator, new { placeholder = "Illustrator"})<br/>
                             @Html.ValidationMessageFor(model => model.Book.Illustrator)
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                             Editor
                         </div>
                         <div class="span10">
-                            @Html.EditorFor(model => model.Book.Editor)
+                            @Html.EditorFor(model => model.Book.Editor, new { placeholder = "Editor"})
                             @Html.ValidationMessageFor(model => model.Book.Editor)
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                             ISBN*
                         </div>
                         <div class="span10">
-                            @Html.EditorFor(model => model.Book.Isbn)
+                            @Html.EditorFor(model => model.Book.Isbn, new { placeholder = "Book ISBN"})
                             @Html.ValidationMessageFor(model => model.Book.Isbn)
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                             Publisher*
                         </div>
                         <div class="span10">
-                            @Html.EditorFor(model => model.Book.Publisher)
+                            @Html.EditorFor(model => model.Book.Publisher, new { placeholder = "Publisher"})
                             @Html.ValidationMessageFor(model => model.Book.Publisher)
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                             Cover Image URL
                         </div>
                         <div class="span10">
-                            @Html.EditorFor(model => model.Book.CoverImageUrl)
+                            @Html.EditorFor(model => model.Book.CoverImageUrl, new { placeholder = "URL to Cover"})
                             @Html.ValidationMessageFor(model => model.Book.CoverImageUrl)
                         </div>
                     </div>
@@ -164,7 +164,7 @@
                             Description
                         </div>
                         <div class="span10">
-                            @Html.TextAreaFor(model => model.Book.Description)
+                            @Html.TextAreaFor(model => model.Book.Description, new { placeholder = "Book Description"})
                             @Html.ValidationMessageFor(model => model.Book.Description)
                         </div>
                     </div>

@@ -8,11 +8,11 @@ namespace BookWorm.Models.Validations
     {
         public static List<string> ValidAgeRanges = new List<string>
             {
-                "0-2",
-                "3-5",
-                "6-8",
-                "9-12",
-                "13-18"
+                "0-2 years",
+                "3-5 years",
+                "6-8 years",
+                "9-12 years",
+                "13-18 years"
             };
 
         public override bool IsValid(object specifiedAgeRange)

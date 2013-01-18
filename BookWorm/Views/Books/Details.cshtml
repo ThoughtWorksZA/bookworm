@@ -9,6 +9,11 @@
                 <li>@Html.ActionLink("Books", "List") <span class="divider">/</span></li>
                 <li class="active">@ViewBag.Title</li>
             </ul>
+            <h2>@ViewBag.Title</h2>
+                        <span class="sub-title">
+                            @Html.DisplayFor(model => model.Book.Subtitle) 
+                        </span>
+                        <p>by @Html.DisplayFor(model => model.Book.Author)</p> 
         </div>
     </div>
 </div>
@@ -24,12 +29,6 @@
                         </div>
                     }
                     <div class="span8">
-                        <h2>@ViewBag.Title</h2>
-                        <span class="sub-title">
-                            @Html.DisplayFor(model => model.Book.Subtitle) 
-                        </span>
-                        <p>by @Html.DisplayFor(model => model.Book.Author)</p> 
-                        <hr />
                         <p>ISBN: <em>@Html.DisplayFor(model => model.Book.Isbn)</em></p>    
                         <p>Publisher: <em>@Html.DisplayFor(model => model.Book.Publisher)</em></p>
                         @if (@Html.DisplayFor(model => model.Book.Illustrator) != null && !@Html.DisplayFor(model => model.Book.Illustrator).ToString().IsEmpty())
@@ -56,9 +55,9 @@
                     <div class="well">
                         <div class="row-fluid">
                             <div class="span7">
-                                <span class="lead">Admin Tools</span>
+                                <span class="lead">Admin Tools </span>
                                 @Html.ActionLink("Edit Book", "Edit", new {id = Model.Book.Id})
-                                @Html.Raw(" |")
+                                |   
                                 @Html.ActionLink("Add a Book Post", "Create", "BookPosts", new { bookId = Model.Book.Id }, null)
                             </div>
                             <div class="span5">
