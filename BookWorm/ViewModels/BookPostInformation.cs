@@ -27,9 +27,10 @@ namespace BookWorm.ViewModels
 
         public string Summary(int characters)
         {
+            var md = new MarkdownSharp.Markdown();
             if (BookPost.Content == null || BookPost.Content.Length < characters)
-                return BookPost.Content;
-            return BookPost.Content.Substring(0, BookPost.Content.IndexOf(" ", characters));
+                return md.Transform(BookPost.Content);
+            return md.Transform(BookPost.Content.Substring(0, BookPost.Content.IndexOf(" ", characters)));
         }
     }
 }

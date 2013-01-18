@@ -12,8 +12,8 @@ namespace BookWorm.Tests.ViewModels
         public void ShouldSummarizeDescription()
         {
             var bookPostInformation =
-                new BookPostInformation(1, new BookPost { Content = "The quick brown fox jumps over the lazy dog." });
-            Assert.AreEqual("The quick brown fox jumps", bookPostInformation.Summary(20));
+                new BookPostInformation(1, new BookPost { Content = "__The quick brown fox__ jumps over the lazy dog." });
+            Assert.AreEqual("<p><strong>The quick brown fox</strong> jumps</p>\n", bookPostInformation.Summary(24));
         }
 
         [TestMethod]
@@ -21,7 +21,7 @@ namespace BookWorm.Tests.ViewModels
         {
             var bookPostInformation =
                 new BookPostInformation(1, new BookPost { Content = "The quick brown fox jumps over the lazy dog." });
-            Assert.AreEqual("The quick brown fox jumps over the lazy dog.", bookPostInformation.Summary(200));
+            Assert.AreEqual("<p>The quick brown fox jumps over the lazy dog.</p>\n", bookPostInformation.Summary(200));
         }
     }
 }
