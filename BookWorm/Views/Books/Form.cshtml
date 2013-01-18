@@ -103,8 +103,7 @@
                             @Html.DropDownListFor(
                                 model => model.Book.Language, 
                                 Model.ValidLanguages(),
-                                "Select Language"
-                                 )
+                                "Select Language")
                             @Html.ValidationMessageFor(model => model.Book.Language)
                         </div>
                     </div>
@@ -114,7 +113,10 @@
                             Genre*
                         </div>
                         <div class="span10">
-                            @Html.EditorFor(model => model.Book.Genre)
+                            @Html.DropDownListFor(
+                                model => model.Book.Genre, 
+                                Model.ValidGenres(),
+                                "Select Genre")
                             @Html.ValidationMessageFor(model => model.Book.Genre)
                         </div>
                     </div>

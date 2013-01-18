@@ -289,7 +289,7 @@ namespace BookWorm.Tests.Controllers
         public void BooksControllerFilterShouldReturnNothingWhenNoFiltersAreGiven()
         {
             var books = new List<Book>();
-            Enumerable.Range(1, 8).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i, Language = "Venda" }));
+            Enumerable.Range(1, 8).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i, Language = "Venda", Genre = "Non-Fiction"}));
             var book1 = new Book { Title = "Book 9", Language = "Zulu" };
             books.Add(book1);
             var book2 = new Book { Title = "Book 10", Language = "Zulu" };
@@ -297,7 +297,7 @@ namespace BookWorm.Tests.Controllers
             var mockedRepo = new Mock<Repository>();
             var booksController = new BooksController(mockedRepo.Object);
 
-            var view = (ViewResult)booksController.Filter(null, null);
+            var view = (ViewResult)booksController.Filter(null, null, null);
 
             var filterInformation = (FilterInformation)view.Model;
             Assert.IsFalse(filterInformation.BookInformations.Any());

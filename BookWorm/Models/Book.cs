@@ -33,8 +33,8 @@ namespace BookWorm.Models
         [ValidLanguage]
         public string Language { get; set; }
 
-
         [Required]
+        [ValidGenre]
         public string Genre { get; set; }
 
         [DisplayName("Age Range")]

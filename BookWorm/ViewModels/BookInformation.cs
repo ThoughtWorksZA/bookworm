@@ -78,6 +78,11 @@ namespace BookWorm.ViewModels
             return new SelectList(ValidAgeRange.ValidAgeRanges);
         }
 
+        public SelectList ValidGenres()
+        {
+            return new SelectList(ValidGenre.ValidGenres);
+        }
+
         public SelectList ValidCountries()
         {
             return new SelectList(new ValidCountry().ValidCountries);

@@ -113,22 +113,31 @@ namespace BookWorm.Controllers
             var books = _repository.Search<Book>(book => book.Language == language);
             ViewBag.Title = string.Format("{0} Books", language);
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
-            return View("List", new FilterInformation(new List<string>() {language}, ValidAgeRange.ValidAgeRanges, bookInformations));
+            return View("List", new FilterInformation(new List<string>() {language}, ValidAgeRange.ValidAgeRanges, ValidGenre.ValidGenres, bookInformations));
         }
 
         [AllowAnonymous]
-        public ActionResult Filter(List<string> languages, List<string> ageRanges)
+        public ActionResult Filter(List<string> languages, List<string> ageRanges, List<string> genres)
         {
             languages = languages ?? new List<string>();
             ageRanges = ageRanges ?? new List<string>();
+            genres = genres ?? new List<string>();
             var books = _repository.List<Book>().ToList();
             if (languages.Any())
+            {
                 books = books.Where(book => book.Language.In(languages)).ToList();
+            }
             if (ageRanges.Any())
+            {
                 books = books.Where(book => book.AgeRange.In(ageRanges)).ToList();
+            }
+            if (genres.Any())
+            {
+                books = books.Where(book => book.Genre.In(genres)).ToList();
+            }
             ViewBag.Title = "Books";
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
-            return View("List", new FilterInformation(languages, ageRanges, bookInformations)); 
+            return View("List", new FilterInformation(languages, ageRanges, genres, bookInformations)); 
         }
     }
 }

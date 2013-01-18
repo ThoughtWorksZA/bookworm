@@ -29,7 +29,7 @@ namespace BookWorm.Tests.Specs.Pages
             driver.FindElement(By.Id("Book_Publisher")).SendKeys("ss");
             select = new SelectElement(driver.FindElement(By.Id("Book_Language")));
             select.SelectByText("Afrikaans");
-            driver.FindElement(By.Id("Book_Genre")).SendKeys("ss");
+            driver.FindElement(By.Id("Book_Genre")).SendKeys("Fiction");
             select = new SelectElement(driver.FindElement(By.Id("Book_AgeRange")));
             select.SelectByText("0-2");
             select = new SelectElement(driver.FindElement(By.Id("Book_Country")));

@@ -24,4 +24,15 @@
             <span>@ageRange</span>
         </div>
     }
+    <div class="filter-header">
+        <strong>Genres</strong>
+    </div>
+    @foreach (var genre in ValidGenre.ValidGenres)
+    {
+        
+        <div data-clickable-url=@Model.GenreFilterUrl(genre)>
+            <input type="checkbox" @Html.Raw(Model.Genres.Contains(genre) ? "checked=\"checked\"" : "")/>
+            <span>@genre</span>
+        </div>
+    }
 </div>
