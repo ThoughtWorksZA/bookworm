@@ -30,7 +30,17 @@ namespace BookWorm.ViewModels
 
         public string LanguageFilterUrl(string language)
         {
-            return FilterUrl("languages", language, Languages, new {Type = "ageRanges", Value = AgeRanges });
+            return FilterUrl("languages", language, Languages, new { Type = "ageRanges", Value = AgeRanges }, new { Type = "genres", Value = Genres });
+        }
+
+        public string AgeRangeFilterUrl(string ageRange)
+        {
+            return FilterUrl("ageRanges", ageRange, AgeRanges, new { Type = "languages", Value = Languages }, new { Type = "genres", Value = Genres });
+        }
+
+        public string GenreFilterUrl(string genre)
+        {
+            return FilterUrl("genres", genre, Genres, new { Type = "languages", Value = Languages }, new { Type = "ageRanges", Value = AgeRanges });
         }
 
         private string FilterUrl(string type, string value, List<string> primary, params dynamic[] secondaries)
@@ -62,16 +72,6 @@ namespace BookWorm.ViewModels
         private static dynamic BuildQueryUrl(string type, string values)
         {
             return string.Format("{0}={1}", type, HttpUtility.UrlEncode(values));
-        }
-
-        public string AgeRangeFilterUrl(string ageRange)
-        {
-            return FilterUrl("ageRanges", ageRange, AgeRanges, new { Type = "languages", Value = Languages });
-        }
-
-        public string GenreFilterUrl(string genre)
-        {
-            return FilterUrl("genres", genre, Genres, new { Type = "languages", Value = Languages }, new { Type = "ageRanges", Value = AgeRanges });
         }
     }
 }

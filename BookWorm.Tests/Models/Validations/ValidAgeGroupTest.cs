@@ -13,7 +13,7 @@ namespace BookWorm.Tests.Models.Validations
 
             var validator = new ValidAgeRange();
 
-            Assert.IsTrue(validator.IsValid("0-2"));
+            Assert.IsTrue(validator.IsValid("0-2 years"));
         }
     
         [TestMethod]
@@ -22,7 +22,7 @@ namespace BookWorm.Tests.Models.Validations
 
             var validator = new ValidAgeRange();
 
-            Assert.IsFalse(validator.IsValid("1-3"));
+            Assert.IsFalse(validator.IsValid("1-3 years"));
         }
     }
 

@@ -113,7 +113,7 @@ namespace BookWorm.Controllers
             var books = _repository.Search<Book>(book => book.Language == language);
             ViewBag.Title = string.Format("{0} Books", language);
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
-            return View("List", new FilterInformation(new List<string>() {language}, ValidAgeRange.ValidAgeRanges, ValidGenre.ValidGenres, bookInformations));
+            return View("List", new FilterInformation(new List<string>() {language}, new List<string>(), new List<string>(), bookInformations));
         }
 
         [AllowAnonymous]
@@ -145,7 +145,7 @@ namespace BookWorm.Controllers
             var books = _repository.Search<Book>(book => book.AgeRange == ageRange);
             ViewBag.Title = string.Format("{0} Books", ageRange);
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
-            return View("List", new FilterInformation(ValidLanguage.ValidLanguages, new List<string>() { ageRange }, ValidGenre.ValidGenres, bookInformations));
+            return View("List", new FilterInformation(new List<string>(), new List<string>() { ageRange }, new List<string>(), bookInformations));
         }
 
         public ActionResult Genre(string genre)
@@ -153,7 +153,7 @@ namespace BookWorm.Controllers
             var books = _repository.Search<Book>(book => book.Genre == genre);
             ViewBag.Title = string.Format("{0} Books", genre);
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
-            return View("List", new FilterInformation(ValidLanguage.ValidLanguages, ValidAgeRange.ValidAgeRanges, new List<string>() { genre }, bookInformations));
+            return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string>() { genre }, bookInformations));
         }
     }
 }
