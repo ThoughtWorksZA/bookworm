@@ -276,6 +276,58 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
+        public void BooksControllerFilterByAgeRangeShouldReturnBooksInGivenAgeRange()
+        {
+            var books = new List<Book>();
+            Enumerable.Range(1, 8).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i, AgeRange = "3-6" }));
+            var book1 = new Book { Title = "Book 9", AgeRange = "0-2" };
+            books.Add(book1);
+            var book2 = new Book { Title = "Book 10", AgeRange = "0-2" };
+            books.Add(book2);
+            var mockedRepo = new Mock<Repository>();
+            var expectedBooks = new List<Book> { book1, book2 };
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var view = (ViewResult)booksController.AgeRange("0-2");
+
+            var filterInformation = (FilterInformation)view.Model;
+            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
+            Assert.AreEqual(2, actualBooks.Count());
+            Assert.AreEqual("0-2", actualBooks.First().AgeRange);
+            Assert.AreEqual("0-2", actualBooks.Last().AgeRange);
+            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()), Times.Once());
+            Assert.AreEqual(1, filterInformation.AgeRanges.Count());
+            Assert.AreEqual("0-2", filterInformation.AgeRanges.First());
+        }
+
+        [TestMethod]
+        public void BooksControllerFilterByGenreShouldReturnBooksInGivenGenre()
+        {
+            var books = new List<Book>();
+            Enumerable.Range(1, 8).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i, Genre = "Fiction" }));
+            var book1 = new Book { Title = "Book 9", Genre = "Poetry" };
+            books.Add(book1);
+            var book2 = new Book { Title = "Book 10", Genre = "Poetry" };
+            books.Add(book2);
+            var mockedRepo = new Mock<Repository>();
+            var expectedBooks = new List<Book> { book1, book2 };
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var view = (ViewResult)booksController.Genre("Poetry");
+
+            var filterInformation = (FilterInformation)view.Model;
+            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
+            Assert.AreEqual(2, actualBooks.Count());
+            Assert.AreEqual("Poetry", actualBooks.First().Genre);
+            Assert.AreEqual("Poetry", actualBooks.Last().Genre);
+            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()), Times.Once());
+            Assert.AreEqual(1, filterInformation.Genres.Count());
+            Assert.AreEqual("Poetry", filterInformation.Genres.First());
+        }
+
+        [TestMethod]
         public void BooksControllerFilterByLanguageShouldAllowAnonymous()
         {
             var booksControllerClass = typeof(BooksController);
@@ -283,25 +335,6 @@ namespace BookWorm.Tests.Controllers
                                                    .First(method => method.Name == "Language" && method.GetParameters().Count() == 1)
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
-        }
-
-        [TestMethod]
-        public void BooksControllerFilterShouldReturnNothingWhenNoFiltersAreGiven()
-        {
-            var books = new List<Book>();
-            Enumerable.Range(1, 8).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i, Language = "Venda", Genre = "Non-Fiction"}));
-            var book1 = new Book { Title = "Book 9", Language = "Zulu" };
-            books.Add(book1);
-            var book2 = new Book { Title = "Book 10", Language = "Zulu" };
-            books.Add(book2);
-            var mockedRepo = new Mock<Repository>();
-            var booksController = new BooksController(mockedRepo.Object);
-
-            var view = (ViewResult)booksController.Filter(null, null, null);
-
-            var filterInformation = (FilterInformation)view.Model;
-            Assert.IsFalse(filterInformation.BookInformations.Any());
-            Assert.IsFalse(filterInformation.Languages.Any());
         }
     }
 

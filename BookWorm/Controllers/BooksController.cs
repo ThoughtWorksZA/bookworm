@@ -139,5 +139,21 @@ namespace BookWorm.Controllers
             var bookInformations = books.Select(book => new BookInformation(book)).ToList();
             return View("List", new FilterInformation(languages, ageRanges, genres, bookInformations)); 
         }
+
+        public ActionResult AgeRange(string ageRange)
+        {
+            var books = _repository.Search<Book>(book => book.AgeRange == ageRange);
+            ViewBag.Title = string.Format("{0} Books", ageRange);
+            var bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            return View("List", new FilterInformation(ValidLanguage.ValidLanguages, new List<string>() { ageRange }, ValidGenre.ValidGenres, bookInformations));
+        }
+
+        public ActionResult Genre(string genre)
+        {
+            var books = _repository.Search<Book>(book => book.Genre == genre);
+            ViewBag.Title = string.Format("{0} Books", genre);
+            var bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            return View("List", new FilterInformation(ValidLanguage.ValidLanguages, ValidAgeRange.ValidAgeRanges, new List<string>() { genre }, bookInformations));
+        }
     }
 }

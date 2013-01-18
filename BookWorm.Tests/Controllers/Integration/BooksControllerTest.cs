@@ -115,5 +115,30 @@ namespace BookWorm.Tests.Controllers.Integration
                 Assert.AreEqual("Picture Books", filterInformation.Genres.First());
             }
         }
+
+        [TestMethod]
+        public void BooksControllerFilterShouldReturnNothingWhenNoFiltersAreGiven()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                var repository = new Repository(session);
+                var books = new List<Book>();
+                Enumerable.Range(1, 8)
+                          .ToList()
+                          .ForEach(
+                              i => books.Add(new Book {Title = "Book " + i, Language = "Venda", Genre = "Non-Fiction"}));
+                var book1 = new Book {Title = "Book 9", Language = "Zulu"};
+                books.Add(book1);
+                var book2 = new Book {Title = "Book 10", Language = "Zulu"};
+                books.Add(book2);
+                var booksController = new BooksController(repository);
+
+                var view = (ViewResult) booksController.Filter(null, null, null);
+
+                var filterInformation = (FilterInformation) view.Model;
+                Assert.IsFalse(filterInformation.BookInformations.Any());
+                Assert.IsFalse(filterInformation.Languages.Any());
+            }
+        }
     }
 }
