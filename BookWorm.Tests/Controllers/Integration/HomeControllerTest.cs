@@ -51,6 +51,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 session.SaveChanges();
                 var controller = new HomeController(repository);
                 controller.Index();
+                Assert.AreEqual(5, ((List<IViewModel>)controller.ViewBag.AllPosts).Count());
                 Assert.AreEqual(5, ((List<PostInformation>)controller.ViewBag.PostInformations).Count() + ((List<BookPostInformation>)controller.ViewBag.BookPostInformations).Count());
                 Assert.AreEqual(101, ((List<PostInformation>) controller.ViewBag.PostInformations).First().Model.Id);
                 Assert.AreEqual(102, ((List<BookPostInformation>) controller.ViewBag.BookPostInformations).First().Model.Id);

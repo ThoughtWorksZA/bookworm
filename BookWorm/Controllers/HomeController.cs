@@ -27,6 +27,7 @@ namespace BookWorm.Controllers
             allPosts.AddRange(posts);
             allPosts.AddRange(bookPosts);
             allPosts = allPosts.OrderByDescending(x => x.Model.UpdatedAt).Take(5).ToList();
+            ViewBag.AllPosts = allPosts;
             ViewBag.PostInformations = allPosts.OfType<PostInformation>().ToList();
             ViewBag.BookPostInformations = allPosts.OfType<BookPostInformation>().ToList();
             ViewBag.BookInformations = books.Select(book => new BookInformation(book)).ToList();

@@ -4,6 +4,15 @@ namespace BookWorm.ViewModels
 {
     public class PostInformation : ViewModel<Post>
     {
+        public PostInformation()
+        {
+        }
+
+        public PostInformation(Post post)
+        {
+            Model = post;
+        }
+
         public override Post Model { get; set; }
         public string Content
         {
@@ -12,6 +21,14 @@ namespace BookWorm.ViewModels
                 var md = new MarkdownSharp.Markdown();
                 return md.Transform(Model.Content);
             }
+        }
+
+        public string Summary(int characters)
+        {
+            var md = new MarkdownSharp.Markdown();
+            if (Model.Content == null || Model.Content.Length < characters)
+                return md.Transform(Model.Content);
+            return md.Transform(Model.Content.Substring(0, Model.Content.IndexOf(" ", characters)));
         }
 
         public override string CreateSucceededMessage

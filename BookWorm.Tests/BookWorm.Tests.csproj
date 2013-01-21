@@ -215,6 +215,7 @@
     <Compile Include="Specs\Pages\StaticPagesListPage.cs" />
     <Compile Include="ViewModels\BookInformationTest.cs" />
     <Compile Include="ViewModels\BookPostInformationTest.cs" />
+    <Compile Include="ViewModels\PostInformationTest.cs" />
     <Compile Include="ViewModels\FilterInformationTest.cs" />
   </ItemGroup>
   <ItemGroup>
