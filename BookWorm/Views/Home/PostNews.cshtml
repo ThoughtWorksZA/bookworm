@@ -1,0 +1,9 @@
+﻿@model BookWorm.ViewModels.PostInformation
+<div class="span3">
+    <img class="featured-post-image" src="@Model.Model.FeaturedImage" />
+</div>
+<div class="span5">
+    <p class="lead">@Model.Model.Title</p>
+    <p>@Html.Raw(Model.Summary(400))</p>
+    <a href="/Posts/Details/@Model.Model.Id">Read more</a>
+</div>

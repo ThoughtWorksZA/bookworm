@@ -20,21 +20,28 @@
                 <fieldset>
                         
                     <div class="editor-label">
-                        @Html.LabelFor(model => model.Model.Title)
+                        Title*
                     </div>
                     <div class="editor-field">
                         @Html.EditorFor(model => model.Model.Title)
                         @Html.ValidationMessageFor(model => model.Model.Title)
                     </div>
+                      <div class="editor-label">
+                        Featured Image*
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Model.FeaturedImage)
+                        @Html.ValidationMessageFor(model => model.Model.FeaturedImage)
+                    </div>
                     <div class="editor-label">
-                        Post Type
+                        Post Type*
                     </div>
                     <div class="editor-field">
                         @Html.DropDownListFor(model => model.Model.Type, EnumHelper.ValidEnumOptions<Post.PostType>(), "Select type")
                         @Html.ValidationMessageFor(model => model.Model.Type)
                     </div>
                     <div class="editor-label">
-                        @Html.LabelFor(model => model.Model.Content)
+                        Content*
                     </div>
                     <div id="mdhelp" class="" style="right: -8px; width: 668px; top: 25px;">
                         <ul class="nav nav-tabs" id="myTab">

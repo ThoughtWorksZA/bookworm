@@ -387,3 +387,6 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     box-shadow: none;
 }
 
+.featured-post-image {
+    max-width: 220px;
+}

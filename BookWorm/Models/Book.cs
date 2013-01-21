@@ -18,7 +18,6 @@ namespace BookWorm.Models
 
         public string Illustrator { get; set; }
 
-        [Required]
         public string Editor { get; set; }
 
         [Required]
