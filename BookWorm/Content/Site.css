@@ -314,7 +314,7 @@ margin-right: auto;
     /* Fallback for web browsers that doesn't support RGBa */
     background: rgb(250, 250, 250);
     /* RGBa with 0.6 opacity */
-    background: rgba(250, 250, 250, 0.6);
+    background: rgba(250, 250, 250, 0.75);
      padding-left: 15px;
      padding-bottom: 10px;
 }
