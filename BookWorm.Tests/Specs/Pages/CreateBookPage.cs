@@ -31,7 +31,7 @@ namespace BookWorm.Tests.Specs.Pages
             select.SelectByText("Afrikaans");
             driver.FindElement(By.Id("Book_Genre")).SendKeys("Fiction");
             select = new SelectElement(driver.FindElement(By.Id("Book_AgeRange")));
-            select.SelectByText("0-2");
+            select.SelectByText("0-2 years");
             select = new SelectElement(driver.FindElement(By.Id("Book_Country")));
             select.SelectByText("Tanzania");
             driver.FindElement(By.Id("Book_CoverImageUrl")).SendKeys("http://images.google.co.za/intl/en_ALL/images/logos/images_logo_lg.gif");
