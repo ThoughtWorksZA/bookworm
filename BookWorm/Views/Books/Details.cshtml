@@ -4,16 +4,20 @@
 @model BookWorm.ViewModels.BookInformation
 <div class="row-fluid">
     <div class="row-content">
-        <div class="span12">
+        <div class="span8">
             <ul class="breadcrumb">
                 <li>@Html.ActionLink("Books", "List") <span class="divider">/</span></li>
                 <li class="active">@ViewBag.Title</li>
             </ul>
             <h2>@ViewBag.Title</h2>
-                        <span class="sub-title">
-                            @Html.DisplayFor(model => model.Book.Subtitle) 
-                        </span>
-                        <p>by @Html.DisplayFor(model => model.Book.Author)</p> 
+            <span class="sub-title">
+                @Html.DisplayFor(model => model.Book.Subtitle) 
+            </span>
+            <p>by @Html.DisplayFor(model => model.Book.Author)</p> 
+        </div>
+        
+        <div class="span4">
+            <div class="fb-like" data-href="http://www.puku.co.za/Books/Details/@Html.DisplayFor(model => model.Book.Id) " data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
         </div>
     </div>
 </div>
@@ -105,5 +109,6 @@
     </div>
 </div>
 }
+
 
 

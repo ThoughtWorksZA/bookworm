@@ -70,7 +70,7 @@
                             Editor
                         </div>
                         <div class="span10">
-                            @Html.EditorFor(model => model.Book.Editor, new { placeholder = "Editor"})
+                            @Html.TextBoxFor(model => model.Book.Editor, new { placeholder = "Editor"})
                             @Html.ValidationMessageFor(model => model.Book.Editor)
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                             ISBN*
                         </div>
                         <div class="span10">
-                            @Html.EditorFor(model => model.Book.Isbn, new { placeholder = "Book ISBN"})
+                            @Html.TextBoxFor(model => model.Book.Isbn, new { placeholder = "Book ISBN"})
                             @Html.ValidationMessageFor(model => model.Book.Isbn)
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                             Publisher*
                         </div>
                         <div class="span10">
-                            @Html.EditorFor(model => model.Book.Publisher, new { placeholder = "Publisher"})
+                            @Html.TextBoxFor(model => model.Book.Publisher, new { placeholder = "Publisher"})
                             @Html.ValidationMessageFor(model => model.Book.Publisher)
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                             Cover Image URL
                         </div>
                         <div class="span10">
-                            @Html.EditorFor(model => model.Book.CoverImageUrl, new { placeholder = "URL to Cover"})
+                            @Html.TextBoxFor(model => model.Book.CoverImageUrl, new { placeholder = "URL to Cover"})
                             @Html.ValidationMessageFor(model => model.Book.CoverImageUrl)
                         </div>
                     </div>
