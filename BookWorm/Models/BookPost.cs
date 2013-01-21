@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace BookWorm.Models
 {
@@ -8,6 +9,7 @@ namespace BookWorm.Models
         public string Title { get; set; }
         
         [Required]
+        [AllowHtml]
         public string Content { get; set; }
 
         [Required]
