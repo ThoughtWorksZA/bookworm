@@ -92,7 +92,7 @@ namespace BookWorm.ViewModels
         {
             return
                 BookPostInformations.Where(
-                    bookPostInformation => bookPostInformation.BookPost.Type.Equals(bookPostType))
+                    bookPostInformation => bookPostInformation.Model.Type.Equals(bookPostType))
                                     .ToList();
         }
 

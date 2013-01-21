@@ -43,9 +43,23 @@
                     <i class="icon-th"></i> @Html.ActionLink("All Books", "List", "Books", null, new { id = "BooksMenuLink" })
                 </div>
             </div>
+            <div id="news">
+                @foreach (var post in (List<PostInformation>) ViewBag.PostInformations)
+                {
+                    <div>
+                        @post.Model.Title
+                    </div>
+                }
+                @foreach (var post in (List<BookPostInformation>) ViewBag.BookPostInformations)
+                {
+                    <div>
+                        @post.Model.Title
+                    </div>
+                }
+            </div>
             <div id="lastest-books">
                 <ol>
-                    @foreach (var bookInformation in (List<BookInformation>) ViewBag.bookInformations)
+                    @foreach (var bookInformation in (List<BookInformation>) ViewBag.BookInformations)
                     {
                         <li>
                             <div id="clickable-div" data-clickable-url="/Books/Details/@bookInformation.Book.Id">

@@ -230,6 +230,7 @@
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\SimpleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -238,6 +239,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookPost.cs" />
+    <Compile Include="Models\Post.cs" />
     <Compile Include="Models\StaticPage.cs" />
     <Compile Include="Models\Validations\ValidAgeRange.cs" />
     <Compile Include="Models\Validations\ValidCountry.cs" />
@@ -248,6 +250,7 @@
     <Compile Include="ViewModels\BookInformation.cs" />
     <Compile Include="ViewModels\BookPostInformation.cs" />
     <Compile Include="ViewModels\FilterInformation.cs" />
+    <Compile Include="ViewModels\PostInformation.cs" />
     <Compile Include="ViewModels\StaticPageInformation.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
   </ItemGroup>
@@ -399,6 +402,10 @@
     <Content Include="Views\BookPosts\Edit.cshtml" />
     <Content Include="Views\BookPosts\Form.cshtml" />
     <Content Include="Views\Books\Filter.cshtml" />
+    <Content Include="Views\Posts\Create.cshtml" />
+    <Content Include="Views\Posts\Details.cshtml" />
+    <Content Include="Views\Posts\Edit.cshtml" />
+    <Content Include="Views\Posts\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

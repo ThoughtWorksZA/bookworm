@@ -6,8 +6,19 @@ using BookWorm.Models;
 
 namespace BookWorm.ViewModels
 {
-    public abstract class ViewModel<T> where T : Model
+    public interface IViewModel
     {
+        Model Model { get; }
+    }
+
+    public interface IViewModel<T> : IViewModel
+    {
+        new T Model { get; set; }
+    }
+
+    public abstract class ViewModel<T> : IViewModel<T> where T : Model
+    {
+        Model IViewModel.Model { get { return Model; } }
         public abstract T Model { get; set; }
         public virtual string CreateSucceededMessage { get { return string.Format("Added {0}", Model.GetType().Name); } }
         public virtual string CreateFailedMessage { get { return string.Format("Sorry, {0} with id {1} already exists.", Model.GetType().Name, Model.Id); } }

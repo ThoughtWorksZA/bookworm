@@ -38,7 +38,7 @@ namespace BookWorm.Controllers
         public ActionResult Create(int bookId)
         {
             ViewBag.Title = "Add a Book Post";
-            return View(new BookPostInformation(bookId, new BookPost()));
+            return View(new BookPostInformation(bookId, new BookPost{CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now}));
         }
 
         [HttpPost]
@@ -51,7 +51,7 @@ namespace BookWorm.Controllers
             }
             _repository.UseOptimisticConcurrency();
             var book = _repository.Get<Book>(submittedBookPostInformation.BookId);
-            var bookPost = submittedBookPostInformation.BookPost;
+            var bookPost = submittedBookPostInformation.Model;
             if (book.Posts.Any())
             {
                 bookPost.Id = book.Posts.Max(post => post.Id) + 1;
@@ -82,7 +82,8 @@ namespace BookWorm.Controllers
                 return View(editedBookPostInformation);
             }
             var book = _repository.Get<Book>(editedBookPostInformation.BookId);
-            var editedBookPost = editedBookPostInformation.BookPost;
+            var editedBookPost = editedBookPostInformation.Model;
+            editedBookPost.UpdatedAt = DateTime.Now;
             var oldBookPost = book.Posts.First(post => post.Id == editedBookPost.Id);
             book.Posts.Remove(oldBookPost);
             book.Posts.Add(editedBookPost);

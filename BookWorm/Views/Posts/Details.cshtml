@@ -1,0 +1,32 @@
+﻿@model BookWorm.ViewModels.PostInformation
+
+@{
+    ViewBag.Title = @Model.Model.Title;
+}
+<div class="row-fluid">
+    <div class="row-content">
+        <div class="span12">
+            <p class="lead">@Html.DisplayFor(model => model.Model.Title)</p>
+        </div>
+    </div>
+</div>
+<div class="row-fluid gray-body-row">
+    <div class="row-content">
+        <div class="span12">
+            <fieldset>
+                <div class="display-field">
+                    @Html.Raw(Model.Content)
+                </div>
+            </fieldset>
+            <p>
+                @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    @Html.ActionLink("Back to List", "List")
+                    @Html.Raw(" | ")<i class="icon-edit"></i>
+                    @Html.ActionLink("Edit", "Edit", new {id = Model.Model.Id})
+                }
+            </p>
+        </div>
+    </div>
+</div>
+

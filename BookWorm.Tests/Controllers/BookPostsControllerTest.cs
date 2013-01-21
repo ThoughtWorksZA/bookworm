@@ -183,7 +183,7 @@ namespace BookWorm.Tests.Controllers
             var result = controller.Details(id, book.Id);
             repository.Verify(it => it.Get<Book>(book.Id), Times.Once());
             Assert.AreEqual(book.Id, ((BookPostInformation)result.Model).BookId);
-            Assert.AreEqual(id, ((BookPostInformation)result.Model).BookPost.Id);
+            Assert.AreEqual(id, ((BookPostInformation)result.Model).Model.Id);
             Assert.AreEqual(book, ((BookPostInformation)result.Model).Book);
         }
 
@@ -200,7 +200,7 @@ namespace BookWorm.Tests.Controllers
             var result = bookPostsController.Edit(bookPost.Id, book.Id);
             var actualModel = (BookPostInformation)result.Model;
 
-            Assert.AreEqual(bookPost.Title, actualModel.BookPost.Title);
+            Assert.AreEqual(bookPost.Title, actualModel.Model.Title);
             Assert.AreEqual("PUT", bookPostsController.ViewBag.Method);
             repositoryMock.Verify(repo => repo.Get<Book>(book.Id), Times.Once());
         }
@@ -289,7 +289,7 @@ namespace BookWorm.Tests.Controllers
             repository.Verify(it => it.Get<Book>(book.Id), Times.Once());
             var transformedContent = markdown.Transform(savedBookPost.Content);
             Assert.AreEqual(transformedContent, result.ViewBag.transformedContent);
-            Assert.AreEqual(id, ((BookPostInformation)result.Model).BookPost.Id);
+            Assert.AreEqual(id, ((BookPostInformation)result.Model).Model.Id);
         }
     }
 }

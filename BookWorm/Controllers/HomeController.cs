@@ -21,7 +21,15 @@ namespace BookWorm.Controllers
         public ActionResult Index()
         {
             var books = _repository.List<Book>(4);
-            ViewBag.bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            var posts = _repository.List<Post>(5).Select(x => new PostInformation {Model = x});
+            var bookPosts = _repository.List<Book>().SelectMany(x => x.Posts.Select(y => new BookPostInformation(x.Id, y, x))).ToList();
+            var allPosts = new List<IViewModel>();
+            allPosts.AddRange(posts);
+            allPosts.AddRange(bookPosts);
+            allPosts = allPosts.OrderByDescending(x => x.Model.UpdatedAt).Take(5).ToList();
+            ViewBag.PostInformations = allPosts.OfType<PostInformation>().ToList();
+            ViewBag.BookPostInformations = allPosts.OfType<BookPostInformation>().ToList();
+            ViewBag.BookInformations = books.Select(book => new BookInformation(book)).ToList();
             return View();
         }
 

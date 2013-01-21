@@ -6,9 +6,9 @@
                 <ul class="breadcrumb">
                     <li><a href="/Books/List">Books</a><span class="divider">/</span></li>
                     <li><a href="/Books/Details/@Model.BookId">@Model.Book.Title</a><span class="divider">/</span></li>
-                    <li class="active">@Html.DisplayFor(model => model.BookPost.Title)</li>
+                    <li class="active">@Html.DisplayFor(model => model.Model.Title)</li>
                 </ul> 
-                <p class="lead">@Html.DisplayFor(model => model.BookPost.Title)</p>
+                <p class="lead">@Html.DisplayFor(model => model.Model.Title)</p>
             </div>
             <div class="span4">
             <div class="fb-like" data-href="http://www.puku.co.za/Books/Details/@Model.BookPost.Id?BookId=@Model.Book.Id" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
@@ -24,17 +24,17 @@
             </div>
 
             <div class="display-label">
-                @Html.DisplayNameFor(model => model.BookPost.CreatedAt)
+                @Html.DisplayNameFor(model => model.Model.CreatedAt)
             </div>
             <div class="display-field">
-                @Html.DisplayFor(model => model.BookPost.CreatedAt)
+                @Html.DisplayFor(model => model.Model.CreatedAt)
             </div>
 
             <div class="display-label">
-                @Html.DisplayNameFor(model => model.BookPost.UpdatedAt)
+                @Html.DisplayNameFor(model => model.Model.UpdatedAt)
             </div>
             <div class="display-field">
-                @Html.DisplayFor(model => model.BookPost.UpdatedAt)
+                @Html.DisplayFor(model => model.Model.UpdatedAt)
             </div>
         </fieldset>
         <div class="some-small-space"></div>
@@ -45,10 +45,10 @@
                         <div class="row-fluid">
                             <div class="span10">
                                 <span class="lead">Admin Tools</span>
-                                 @Html.ActionLink("Edit post", "Edit", new { bookId=Model.BookId, id=Model.BookPost.Id })
+                                 @Html.ActionLink("Edit post", "Edit", new { bookId=Model.BookId, id=Model.Model.Id })
                             </div>
                             <div class="span2">
-                                @using (Html.BeginForm("Delete", "BookPosts", new { @bookId = Model.BookId, @id = Model.BookPost.Id }))
+                                @using (Html.BeginForm("Delete", "BookPosts", new { @bookId = Model.BookId, @id = Model.Model.Id }))
             {
                 @Html.HttpMethodOverride(HttpVerbs.Delete)
                 <input type="submit" class="btn btn-danger" value="Delete" data-confirm="This action can not be undone. Are you sure you want to delete this book post?" />

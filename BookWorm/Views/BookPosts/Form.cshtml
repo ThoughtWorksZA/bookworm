@@ -9,34 +9,34 @@
     if (ViewBag.Method != null && ViewBag.Method == "PUT")
     {
  @Html.HttpMethodOverride(HttpVerbs.Put)
- @Html.HiddenFor(model => model.BookPost.Id)
+ @Html.HiddenFor(model => model.Model.Id)
     }
 
     <div class="row-fluid">
         <div class="row-content">
             <div class="span12">
                 <div class="editor-label">
-                    @Html.LabelFor(model => model.BookPost.Title)
+                    @Html.LabelFor(model => model.Model.Title)
                 </div>
                 <div class="editor-field">
-                    @Html.EditorFor(model => model.BookPost.Title)
-                    @Html.ValidationMessageFor(model => model.BookPost.Title)
+                    @Html.EditorFor(model => model.Model.Title)
+                    @Html.ValidationMessageFor(model => model.Model.Title)
                 </div>
                 <div class="editor-label">
                     Post Type
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownListFor(model => model.BookPost.Type, EnumHelper.ValidEnumOptions<BookPost.BookPostType>(), "Select type")
-                    @Html.ValidationMessageFor(model => model.BookPost.Type)
+                    @Html.DropDownListFor(model => model.Model.Type, EnumHelper.ValidEnumOptions<BookPost.BookPostType>(), "Select type")
+                    @Html.ValidationMessageFor(model => model.Model.Type)
                 </div>
                 <div class="editor-label">
-                    @Html.LabelFor(model => model.BookPost.Content)
+                    @Html.LabelFor(model => model.Model.Content)
                 </div>
                 <div class="wmd-panel">
                     <div id="wmd-button-bar"></div>
                     <div class="editor-field">
-                        @Html.TextAreaFor(model => model.BookPost.Content, new Dictionary<string, object>() { { "id", "wmd-input" }, { "class", "wmd-input" } })
-                        @Html.ValidationMessageFor(model => model.BookPost.Content)
+                        @Html.TextAreaFor(model => model.Model.Content, new Dictionary<string, object>() { { "id", "wmd-input" }, { "class", "wmd-input" } })
+                        @Html.ValidationMessageFor(model => model.Model.Content)
                     </div>
 
                     <div id="wmd-preview" class="wmd-panel wmd-preview"></div>

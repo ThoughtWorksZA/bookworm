@@ -2,10 +2,10 @@
 
 namespace BookWorm.ViewModels
 {
-    public class BookPostInformation
+    public class BookPostInformation : ViewModel<BookPost>
     {
         public int BookId { get; set; }
-        public BookPost BookPost { get; set; }
+        public override BookPost Model { get; set; }
         public Book Book { get; set; }
 
         public BookPostInformation()
@@ -15,22 +15,22 @@ namespace BookWorm.ViewModels
         public BookPostInformation(int bookId, BookPost bookPost)
         {
             BookId = bookId;
-            BookPost = bookPost;
+            Model = bookPost;
         }
 
         public BookPostInformation(int bookId, BookPost bookPost, Book book)
         {
             BookId = bookId;
-            BookPost = bookPost;
+            Model = bookPost;
             Book = book;
         }
 
         public string Summary(int characters)
         {
             var md = new MarkdownSharp.Markdown();
-            if (BookPost.Content == null || BookPost.Content.Length < characters)
-                return md.Transform(BookPost.Content);
-            return md.Transform(BookPost.Content.Substring(0, BookPost.Content.IndexOf(" ", characters)));
+            if (Model.Content == null || Model.Content.Length < characters)
+                return md.Transform(Model.Content);
+            return md.Transform(Model.Content.Substring(0, Model.Content.IndexOf(" ", characters)));
         }
     }
 }

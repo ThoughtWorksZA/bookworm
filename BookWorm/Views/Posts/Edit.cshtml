@@ -1,4 +1,6 @@
-﻿@model BookWorm.ViewModels.StaticPageInformation
+﻿@using BookWorm.Helpers
+@using BookWorm.Models
+@model BookWorm.ViewModels.PostInformation
 
 @{
     ViewBag.Title = "Edit";
@@ -6,7 +8,7 @@
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
-            <p class="lead">Update Page</p>
+            <p class="lead">Update Post</p>
             <div>Fill in the required fields and click save changes</div>
             <div class="some-small-space"></div>
             @using (Html.BeginForm())
@@ -24,7 +26,13 @@
                         @Html.EditorFor(model => model.Model.Title)
                         @Html.ValidationMessageFor(model => model.Model.Title)
                     </div>
-
+                    <div class="editor-label">
+                        Post Type
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.Model.Type, EnumHelper.ValidEnumOptions<Post.PostType>(), "Select type")
+                        @Html.ValidationMessageFor(model => model.Model.Type)
+                    </div>
                     <div class="editor-label">
                         @Html.LabelFor(model => model.Model.Content)
                     </div>

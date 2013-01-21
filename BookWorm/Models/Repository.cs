@@ -36,7 +36,14 @@ namespace BookWorm.Models
 
         public virtual T Create<T>(T model) where T : Model
         {
-            model.CreatedAt = model.UpdatedAt = DateTime.Now;
+            if (model.CreatedAt == DateTime.MinValue)
+            {
+                model.CreatedAt = model.UpdatedAt = DateTime.Now;
+            }
+            else
+            {
+                model.UpdatedAt = model.CreatedAt;
+            }
             _documentSession.Store(model);
             return model;
         }
@@ -81,8 +88,13 @@ namespace BookWorm.Models
 
         public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, int page, int perPage) where T : Model
         {
+            return Search(predicate, x => x.UpdatedAt, page, perPage);
+        }
+
+        public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, Func<T, object> orderSelector, int page, int perPage) where T : Model
+        {
             var ravenQueryable = _documentSession.Query<T>();
-            return ravenQueryable.Where(predicate).OrderByDescending(x => x.UpdatedAt).Skip((page - 1) * perPage).Take(perPage).ToList();
+            return ravenQueryable.Where(predicate).OrderByDescending(orderSelector).Skip((page - 1) * perPage).Take(perPage).ToList();
         }
 
         public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, int perPage) where T : Model
