@@ -230,6 +230,7 @@
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
+    <Compile Include="Controllers\SimpleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -247,6 +248,8 @@
     <Compile Include="ViewModels\BookInformation.cs" />
     <Compile Include="ViewModels\BookPostInformation.cs" />
     <Compile Include="ViewModels\FilterInformation.cs" />
+    <Compile Include="ViewModels\StaticPageInformation.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-responsive.css" />

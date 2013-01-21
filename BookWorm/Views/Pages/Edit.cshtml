@@ -1,4 +1,4 @@
-﻿@model BookWorm.Models.StaticPage
+﻿@model BookWorm.ViewModels.StaticPageInformation
 
 @{
     ViewBag.Title = "Edit";
@@ -17,15 +17,15 @@
                 <fieldset>
                         
                     <div class="editor-label">
-                        @Html.LabelFor(model => model.Title)
+                        @Html.LabelFor(model => model.Model.Title)
                     </div>
                     <div class="editor-field">
-                        @Html.EditorFor(model => model.Title)
-                        @Html.ValidationMessageFor(model => model.Title)
+                        @Html.EditorFor(model => model.Model.Title)
+                        @Html.ValidationMessageFor(model => model.Model.Title)
                     </div>
 
                     <div class="editor-label">
-                        @Html.LabelFor(model => model.Content)
+                        @Html.LabelFor(model => model.Model.Content)
                     </div>
                     <div id="mdhelp" class="" style="right: -8px; width: 668px; top: 25px;">
                         <ul class="nav nav-tabs" id="myTab">
@@ -232,8 +232,8 @@
                     <div class="wmd-panel">
                         <div id="wmd-button-bar"></div>
                         <div class="editor-field">
-                            @Html.TextAreaFor(model => model.Content, new Dictionary<string, object>() {{"id", "wmd-input"}, {"class", "wmd-input"}})
-                            @Html.ValidationMessageFor(model => model.Content)
+                            @Html.TextAreaFor(model => model.Model.Content, new Dictionary<string, object>() {{"id", "wmd-input"}, {"class", "wmd-input"}})
+                            @Html.ValidationMessageFor(model => model.Model.Content)
                         </div>
         
                         <div id="wmd-preview" class="wmd-panel wmd-preview"></div>

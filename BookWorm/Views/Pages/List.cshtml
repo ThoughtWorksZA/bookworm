@@ -2,7 +2,8 @@
 @Scripts.Render("~/Scripts/puku/clickableDiv.js")
 
 @using BookWorm.Models
-@model IEnumerable<BookWorm.Models.StaticPage>
+@using BookWorm.ViewModels
+@model IEnumerable<BookWorm.ViewModels.StaticPageInformation>
 
 
 <div class="row-fluid">
@@ -21,24 +22,24 @@
 <div class="row-fluid gray-body-row">
     <div class="row-content">
         <div class="span12">
-            @foreach (StaticPage item in Model)
+            @foreach (StaticPageInformation item in Model)
             {
 
                 <div class="row link-row">
-                    <div data-clickable-url="/Pages/Details/@item.Id">
+                    <div data-clickable-url="/Pages/Details/@item.Model.Id">
                         <div class="span10">
-                            <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
+                            <h4>@Html.DisplayFor(modelItem => item.Model.Title)</h4>
                         </div>
                     </div>
                     @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
                     {
 
                         <div class="span1">
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Model.Id })
                         </div>
 
                         <div class="span1">
-                            @using (Html.BeginForm("Delete", "Pages", new { @id = item.Id }))
+                            @using (Html.BeginForm("Delete", "Pages", new { @id = item.Model.Id }))
                             {
                                 @Html.HttpMethodOverride(HttpVerbs.Delete)
 

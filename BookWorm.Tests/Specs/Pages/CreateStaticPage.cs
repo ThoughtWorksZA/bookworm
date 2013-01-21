@@ -18,8 +18,8 @@ namespace BookWorm.Tests.Specs.Pages
         public CreateStaticPage FillForm(string myPageTitle)
         {
             WaitForPageToLoad();
-            driver.FindElement(By.Id("Title")).SendKeys(myPageTitle);
-            driver.FindElement(By.Name("Content")).SendKeys("This is my content");
+            driver.FindElement(By.Name("Model.Title")).SendKeys(myPageTitle);
+            driver.FindElement(By.Name("Model.Content")).SendKeys("This is my content");
             return new CreateStaticPage(driver);
         }
 

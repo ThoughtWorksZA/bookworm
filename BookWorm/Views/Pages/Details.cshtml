@@ -1,12 +1,12 @@
-﻿@model BookWorm.Models.StaticPage
+﻿@model BookWorm.ViewModels.StaticPageInformation
 
 @{
-    ViewBag.Title = @Model.Title;
+    ViewBag.Title = @Model.Model.Title;
 }
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
-            <p class="lead">@Html.DisplayFor(model => model.Title)</p>
+            <p class="lead">@Html.DisplayFor(model => model.Model.Title)</p>
         </div>
     </div>
 </div>
@@ -15,7 +15,7 @@
         <div class="span12">
             <fieldset>
                 <div class="display-field">
-                    @Html.Raw(ViewBag.transformedContent)
+                    @Html.Raw(Model.Content)
                 </div>
             </fieldset>
             <p>
@@ -23,7 +23,7 @@
                 {
                     @Html.ActionLink("Back to List", "List")
                     @Html.Raw(" | ")<i class="icon-edit"></i>
-                    @Html.ActionLink("Edit", "Edit", new {id = Model.Id})
+                    @Html.ActionLink("Edit", "Edit", new {id = Model.Model.Id})
                 }
             </p>
         </div>
