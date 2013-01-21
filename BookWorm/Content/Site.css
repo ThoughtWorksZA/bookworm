@@ -303,8 +303,8 @@ margin-right: auto;
     display: block;
     background-image: url('/Images/CoverImage.png');
      background-repeat: no-repeat;
-     background-position: top right;
-     background-color: #bbf7f7;
+     background-position: top center;
+     background-color: #000000;
 }
 
  .brand-area {
