@@ -22,7 +22,9 @@ namespace BookWorm.Controllers
         {
             var books = _repository.List<Book>(4);
             var posts = _repository.List<Post>(5).Select(x => new PostInformation {Model = x});
-            var bookPosts = _repository.List<Book>().SelectMany(x => x.Posts.Where(bp => bp.Type == BookPost.BookPostType.News || bp.Type == BookPost.BookPostType.Events).Select(y => new BookPostInformation(x.Id, y, x))).ToList();
+            var bookPosts = _repository.List<Book>()
+                .SelectMany(x => x.Posts.Where(bp => bp.Type == BookPost.BookPostType.News || bp.Type == BookPost.BookPostType.Events)
+                    .Select(y => new BookPostInformation(x.Id, y, x))).ToList();
             var allPosts = new List<IViewModel>();
             allPosts.AddRange(posts);
             allPosts.AddRange(bookPosts);

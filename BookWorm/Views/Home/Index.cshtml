@@ -110,13 +110,11 @@
                             var firstPost = allPosts.First();
                             if (firstPost is PostInformation)
                             {
-                                @Html.Partial("PostNews", firstPost)
-                                ;
+                                @Html.Partial("PostNews", firstPost);
                             }
                             else if (firstPost is BookPostInformation)
                             {
-                                @Html.Partial("BookPostNews", firstPost)
-                                ;
+                                @Html.Partial("BookPostNews", firstPost);
                             }
                             <div class="span3">
                                 <strong>Also in the News</strong>
@@ -129,7 +127,7 @@
                                             var post = (PostInformation) p;
                                             <li> <a href="/Posts/Details/@post.Model.Id">@post.Model.Title</a></li>
                                         }
-                                        else if (firstPost is BookPostInformation)
+                                        else if (p is BookPostInformation)
                                         {
                                             var post = (BookPostInformation) p;
                                             <li> <a href="/Books/Details/@post.Book.Id">@post.Model.Title</a></li>

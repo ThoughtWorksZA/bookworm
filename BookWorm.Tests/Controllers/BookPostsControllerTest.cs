@@ -16,7 +16,7 @@ namespace BookWorm.Tests.Controllers
     public class BookPostsControllerTest : BaseControllerTest
     {
         [TestMethod]
-        public void ShouldReturnCreatePageOnGetCreate()
+        public void ShouldReturnCreateBookPostOnGetCreate()
         {
             var book = new Book { Id = 1, Title = "A book" };
             var mockedRepo = new Mock<Repository>();
@@ -28,6 +28,21 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual("Add a Book Post", controller.ViewBag.Title);
             Assert.IsInstanceOfType(model, typeof(BookPostInformation));
             Assert.AreEqual(book.Id, model.BookId);
+        }
+
+        [TestMethod]
+        public void ShouldSetCreatedAtAndUpdatedAtOnBookPostCreation()
+        {
+            var now = DateTime.Now;
+            var repository = new Mock<Repository>();
+            var book = new Book { Id = 1 };
+            var bookPost = new BookPost { Title = "test title", Content = "some content" };
+            var submittedBookPostInformation = new BookPostInformation(book.Id, bookPost);
+            repository.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
+            var controller = new BookPostsController(repository.Object);
+            controller.Create(submittedBookPostInformation);
+            Assert.IsTrue(bookPost.CreatedAt >= now);
+            Assert.IsTrue(bookPost.UpdatedAt >= now);
         }
 
         [TestMethod]

@@ -32,7 +32,7 @@ namespace BookWorm.Controllers
         public ActionResult Create(int bookId)
         {
             ViewBag.Title = "Add a Book Post";
-            return View(new BookPostInformation(bookId, new BookPost{CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now}));
+            return View(new BookPostInformation(bookId, new BookPost()));
         }
 
         [HttpPost]
@@ -43,9 +43,9 @@ namespace BookWorm.Controllers
                 TempData["flashError"] = "There were problems saving this book post";
                 return View(submittedBookPostInformation);
             }
-            _repository.UseOptimisticConcurrency();
             var book = _repository.Get<Book>(submittedBookPostInformation.BookId);
             var bookPost = submittedBookPostInformation.Model;
+            bookPost.CreatedAt = bookPost.UpdatedAt = DateTime.Now;
             if (book.Posts.Any())
             {
                 bookPost.Id = book.Posts.Max(post => post.Id) + 1;
