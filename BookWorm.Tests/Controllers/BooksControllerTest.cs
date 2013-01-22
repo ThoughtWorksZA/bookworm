@@ -336,6 +336,26 @@ namespace BookWorm.Tests.Controllers
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
         }
+
+        [TestMethod]
+        public void BooksControllerFilterByAgeRangeShouldAllowAnonymous()
+        {
+            var booksControllerClass = typeof(BooksController);
+            Assert.AreEqual(1, booksControllerClass.GetMethods()
+                                                   .First(method => method.Name == "AgeRange" && method.GetParameters().Count() == 1)
+                                                   .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
+                                                   .Count());
+        }
+
+        [TestMethod]
+        public void BooksControllerFilterByGenreShouldAllowAnonymous()
+        {
+            var booksControllerClass = typeof(BooksController);
+            Assert.AreEqual(1, booksControllerClass.GetMethods()
+                                                   .First(method => method.Name == "Genre" && method.GetParameters().Count() == 1)
+                                                   .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
+                                                   .Count());
+        }
     }
 
 }

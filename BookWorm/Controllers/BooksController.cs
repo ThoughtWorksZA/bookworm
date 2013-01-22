@@ -140,6 +140,7 @@ namespace BookWorm.Controllers
             return View("List", new FilterInformation(languages, ageRanges, genres, bookInformations)); 
         }
 
+        [AllowAnonymous]
         public ActionResult AgeRange(string ageRange)
         {
             var books = _repository.Search<Book>(book => book.AgeRange == ageRange);
@@ -148,6 +149,7 @@ namespace BookWorm.Controllers
             return View("List", new FilterInformation(new List<string>(), new List<string>() { ageRange }, new List<string>(), bookInformations));
         }
 
+        [AllowAnonymous]
         public ActionResult Genre(string genre)
         {
             var books = _repository.Search<Book>(book => book.Genre == genre);
