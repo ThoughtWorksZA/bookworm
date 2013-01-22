@@ -6,6 +6,10 @@
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
+            <ul class="breadcrumb">
+                <li><a href="/Posts/List">News and Events</a><span class="divider">/</span></li>
+                <li class="active">@Html.DisplayFor(model => model.Model.Title)</li>
+            </ul> 
             <p class="lead">@Html.DisplayFor(model => model.Model.Title)</p>
         </div>
     </div>

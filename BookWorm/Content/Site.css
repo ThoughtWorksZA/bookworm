@@ -169,6 +169,10 @@ clear: both;
     padding-bottom: 4px;
 }
 
+.book-image {
+    width: 300px;
+}
+
 .book-cover-info {
     position: absolute;
     bottom: 0;
