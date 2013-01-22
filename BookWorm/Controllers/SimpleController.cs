@@ -7,6 +7,7 @@ using BookWorm.Models;
 using BookWorm.ViewModels;
 using MarkdownSharp;
 using Raven.Client.Exceptions;
+using PagedList;
 
 namespace BookWorm.Controllers
 {
@@ -51,15 +52,15 @@ namespace BookWorm.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ViewResult List()
+        public ViewResult List(int page = 1, int perPage = 9)
         {
             var viewModels = new List<U>();
-            var models = _repository.List<T>();
+            var models = _repository.List<T>(page, perPage);
             foreach (var model in models)
             {
                 viewModels.Add(new U {Model = model});
             }
-            return View(viewModels);
+            return View(new StaticPagedList<U>(viewModels, page, perPage, _repository.Count<T>()));
         }
 
         [HttpDelete]

@@ -115,12 +115,12 @@ namespace BookWorm.Tests.Controllers
                 new StaticPageInformation {Model = savedPages[0]}, 
                 new StaticPageInformation {Model = savedPages[1]}
             };
-            repository.Setup(repo => repo.List<StaticPage>()).Returns(savedPages);
+            repository.Setup(repo => repo.List<StaticPage>(It.IsAny<int>(), It.IsAny<int>())).Returns(savedPages);
             var controller = new PagesController(repository.Object);
             var result = controller.List();
-            repository.Verify(it => it.List<StaticPage>(), Times.Once());
-            Assert.AreEqual(savedPageInformations[0].Model, ((List<StaticPageInformation>)result.Model)[0].Model);
-            Assert.AreEqual(savedPageInformations[1].Model, ((List<StaticPageInformation>)result.Model)[1].Model);
+            repository.Verify(it => it.List<StaticPage>(It.IsAny<int>(), It.IsAny<int>()), Times.Once());
+            Assert.AreEqual(savedPageInformations[0].Model, ((PagedList.IPagedList<StaticPageInformation>)result.Model)[0].Model);
+            Assert.AreEqual(savedPageInformations[1].Model, ((PagedList.IPagedList<StaticPageInformation>)result.Model)[1].Model);
         }
 
         [TestMethod]

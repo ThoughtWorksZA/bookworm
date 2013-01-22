@@ -3,7 +3,9 @@
 
 @using BookWorm.Models
 @using BookWorm.ViewModels
-@model IEnumerable<BookWorm.ViewModels.StaticPageInformation>
+@using PagedList.Mvc
+@using PagedList
+@model PagedList.IPagedList<StaticPageInformation>
 
 
 <div class="row-fluid">
@@ -30,7 +32,7 @@
                         <div class="span10">
                             <h4>@Html.DisplayFor(modelItem => item.Model.Title)</h4>
                         </div>
-                    </div>
+                    </div> 
                     @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
                     {
 
@@ -51,6 +53,7 @@
 
                 <div class="list-seperator"></div>
             }
+            @Html.PagedListPager( Model, page => Url.Action("List", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast )
         </div>
     </div>
 </div>
