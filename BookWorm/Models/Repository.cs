@@ -50,6 +50,9 @@ namespace BookWorm.Models
 
         public virtual void Edit<T>(T editedModel) where T : Model
         {
+            var existingModel = Get<T>(editedModel.Id);
+            _documentSession.Advanced.Evict(existingModel);
+            editedModel.CreatedAt = existingModel.CreatedAt;
             editedModel.UpdatedAt = DateTime.Now;
             _documentSession.Store(editedModel);
         }

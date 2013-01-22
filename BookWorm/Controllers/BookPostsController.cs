@@ -21,12 +21,6 @@ namespace BookWorm.Controllers
         }
 
         [AllowAnonymous]
-        public ViewResult List()
-        {
-            return View(_repository.List<BookPost>());
-        }
-
-        [AllowAnonymous]
         public ViewResult Details(int id, int bookId)
         {
             var book = _repository.Get<Book>(bookId);
@@ -85,6 +79,7 @@ namespace BookWorm.Controllers
             var editedBookPost = editedBookPostInformation.Model;
             editedBookPost.UpdatedAt = DateTime.Now;
             var oldBookPost = book.Posts.First(post => post.Id == editedBookPost.Id);
+            editedBookPost.CreatedAt = oldBookPost.CreatedAt;
             book.Posts.Remove(oldBookPost);
             book.Posts.Add(editedBookPost);
             _repository.Edit(book);

@@ -16,22 +16,6 @@ namespace BookWorm.Tests.Controllers
     public class BookPostsControllerTest : BaseControllerTest
     {
         [TestMethod]
-        public void ShouldListBookPosts()
-        {
-            var repository = new Mock<Repository>();
-            var savedPages = new List<BookPost> 
-                {
-                    new BookPost { Id = 1, Title = "test title", Content = "Hello\n=====\nWorld" }, 
-                    new BookPost { Id = 2, Title = "test title2", Content = "Hello\n=====\nAnother World" }
-                };
-            repository.Setup(repo => repo.List<BookPost>()).Returns(savedPages);
-            var controller = new BookPostsController(repository.Object);
-            var result = controller.List();
-            repository.Verify(it => it.List<BookPost>(), Times.Once());
-            Assert.AreEqual(savedPages, result.Model);
-        }
-
-        [TestMethod]
         public void ShouldReturnCreatePageOnGetCreate()
         {
             var book = new Book { Id = 1, Title = "A book" };
@@ -151,16 +135,6 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
-        public void ShouldKnowBookPostsControllerListAllowsAnonymous()
-        {
-            var pagesControllerClass = typeof(BookPostsController);
-            Assert.AreEqual(1, pagesControllerClass.GetMethods()
-                                                   .First(method => method.Name == "List")
-                                                   .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
-                                                   .Count());
-        }
-
-        [TestMethod]
         public void ShouldKnowBookPostsControllerDetailsAllowsAnonymous()
         {
             var pagesControllerClass = typeof(BookPostsController);
@@ -206,7 +180,7 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
-        public void ShouldKnowHowToUpdateAPage()
+        public void ShouldKnowHowToUpdateABookPost()
         {
             var repository = new Mock<Repository>();
             var book = new Book {Id = 1};
@@ -218,6 +192,20 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual(existingBookPost.Id, result.RouteValues["id"]);
             Assert.AreEqual("Updated Derping for dummies successfully", bookPostsController.TempData["flashSuccess"]);
             repository.Verify(repo => repo.Edit(book), Times.Once());
+        }
+
+        [TestMethod]
+        public void ShouldSetCreatedAtFromExisitingBookPost()
+        {
+            var repository = new Mock<Repository>();
+            var book = new Book { Id = 1 };
+            var existingBookPost = new BookPost { Id = 1, Title = "Derping for dummies", Type = BookPost.BookPostType.Reviews, CreatedAt = DateTime.Now.AddMinutes(-1)};
+            book.Posts.Add(existingBookPost);
+            repository.Setup(repo => repo.Get<Book>(book.Id)).Returns(book);
+            var bookPostsController = new BookPostsController(repository.Object);
+            var editedBookPost = new BookPost { Id = 1, Title = "Derping for dummies II", Type = BookPost.BookPostType.Reviews, CreatedAt = DateTime.Now };
+            bookPostsController.Edit(new BookPostInformation(book.Id, editedBookPost));
+            Assert.AreEqual(existingBookPost.CreatedAt, editedBookPost.CreatedAt);
         }
 
         [TestMethod]

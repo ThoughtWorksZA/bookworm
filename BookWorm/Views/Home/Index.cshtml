@@ -104,38 +104,41 @@
                 </div>
                 <div class="row">
                     @{ 
-                       var allPosts = (List<IViewModel>)ViewBag.AllPosts;
-                       var firstPost = allPosts.First();
-                    }
-                    @{
-                        if (firstPost is PostInformation)
+                        var allPosts = (List<IViewModel>)ViewBag.AllPosts;
+                        if (allPosts.Any())
                         {
-                            @Html.Partial("PostNews", firstPost);
-                        }
-                        else if (firstPost is BookPostInformation)
-                        {
-                            @Html.Partial("BookPostNews", firstPost);
-                        }
-                    }
-                    <div class="span3">
-                        <strong>Also in the News</strong>
-                        <hr/>
-                        <ul>
-                            @foreach (var p in allPosts.Except(new List<IViewModel>{firstPost}))
+                            var firstPost = allPosts.First();
+                            if (firstPost is PostInformation)
                             {
-                                if (p is PostInformation)
-                                {
-                                    var post = (PostInformation) p;
-                                    <li> <a href="/Posts/Details/@post.Model.Id">@post.Model.Title</a></li>
-                                }
-                                else if (firstPost is BookPostInformation)
-                                {
-                                    var post = (BookPostInformation) p;
-                                    <li> <a href="/Books/Details/@post.Book.Id">@post.Model.Title</a></li>
-                                }
+                                @Html.Partial("PostNews", firstPost)
+                                ;
                             }
-                        </ul>
-                    </div>
+                            else if (firstPost is BookPostInformation)
+                            {
+                                @Html.Partial("BookPostNews", firstPost)
+                                ;
+                            }
+                            <div class="span3">
+                                <strong>Also in the News</strong>
+                                <hr/>
+                                <ul>
+                                    @foreach (var p in allPosts.Except(new List<IViewModel> {firstPost}))
+                                    {
+                                        if (p is PostInformation)
+                                        {
+                                            var post = (PostInformation) p;
+                                            <li> <a href="/Posts/Details/@post.Model.Id">@post.Model.Title</a></li>
+                                        }
+                                        else if (firstPost is BookPostInformation)
+                                        {
+                                            var post = (BookPostInformation) p;
+                                            <li> <a href="/Books/Details/@post.Book.Id">@post.Model.Title</a></li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>

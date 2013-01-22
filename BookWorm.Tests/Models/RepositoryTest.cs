@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BirdBrain;
 using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -119,5 +120,21 @@ namespace BookWorm.Tests.Models
             repository.Detach(persistedModel);
             _syncAdvancedSessionOperation.Verify(session => session.Evict(persistedModel), Times.Once());
         }
+
+        [TestMethod]
+        public void ShouldSetCreatedAtFromExistingValueOnEdit()
+        {
+            var persistedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes chicken. You're going to love it.", CreatedAt = DateTime.Now.AddMinutes(-1)};
+            var documentSession = new Mock<IDocumentSession>();
+            documentSession.Setup(session => session.Load<StaticPage>(persistedModel.Id)).Returns(persistedModel);
+            var repository = new Repository(documentSession.Object);
+            var editedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes chicken. You're going to love it.", CreatedAt = DateTime.Now };
+
+            repository.Edit<StaticPage>(editedModel);
+
+            Assert.AreEqual(persistedModel.CreatedAt, editedModel.CreatedAt);
+
+        }
+
     }
 }

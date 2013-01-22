@@ -20,7 +20,6 @@ namespace BookWorm.Tests.Models
                 {
                     "Title",
                     "Author",
-                    "Editor",
                     "Isbn",
                     "Publisher",
                     "Language",
