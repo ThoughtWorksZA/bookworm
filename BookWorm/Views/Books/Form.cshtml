@@ -21,7 +21,7 @@
                 if (ViewBag.Method != null && ViewBag.Method == "PUT")
                 {
                     @Html.HttpMethodOverride(HttpVerbs.Put)
-                    @Html.HiddenFor(model => model.Book.Id)
+                    @Html.HiddenFor(model => model.Model.Id)
                 }
                 <fieldset>
       
@@ -30,8 +30,8 @@
                             Title*
                         </div>
                         <div class="span10">
-                            @Html.TextBoxFor(model => model.Book.Title, new { placeholder = "Book Title"})
-                            @Html.ValidationMessageFor(model => model.Book.Title)
+                            @Html.TextBoxFor(model => model.Model.Title, new { placeholder = "Book Title"})
+                            @Html.ValidationMessageFor(model => model.Model.Title)
                         </div>
                     </div>
 
@@ -40,8 +40,8 @@
                             Subtitle
                         </div>
                         <div class="span10">
-                            @Html.TextBoxFor(model => model.Book.Subtitle, new { placeholder = "Sub Title"})
-                            @Html.ValidationMessageFor(model => model.Book.Subtitle)
+                            @Html.TextBoxFor(model => model.Model.Subtitle, new { placeholder = "Sub Title"})
+                            @Html.ValidationMessageFor(model => model.Model.Subtitle)
                         </div>
                     </div>
 
@@ -50,8 +50,8 @@
                             Author*
                         </div>
                         <div class="span10">
-                            @Html.TextBoxFor(model => model.Book.Author, new { placeholder = "Author"})
-                            @Html.ValidationMessageFor(model => model.Book.Author)
+                            @Html.TextBoxFor(model => model.Model.Author, new { placeholder = "Author"})
+                            @Html.ValidationMessageFor(model => model.Model.Author)
                         </div>
                     </div>
 
@@ -60,8 +60,8 @@
                             Illustrator
                         </div>
                         <div class="span5">
-                            @Html.TextBoxFor(model => model.Book.Illustrator, new { placeholder = "Illustrator"})<br/>
-                            @Html.ValidationMessageFor(model => model.Book.Illustrator)
+                            @Html.TextBoxFor(model => model.Model.Illustrator, new { placeholder = "Illustrator"})<br/>
+                            @Html.ValidationMessageFor(model => model.Model.Illustrator)
                         </div>
                     </div>
 
@@ -70,8 +70,8 @@
                             Editor
                         </div>
                         <div class="span10">
-                            @Html.TextBoxFor(model => model.Book.Editor, new { placeholder = "Editor"})
-                            @Html.ValidationMessageFor(model => model.Book.Editor)
+                            @Html.TextBoxFor(model => model.Model.Editor, new { placeholder = "Editor"})
+                            @Html.ValidationMessageFor(model => model.Model.Editor)
                         </div>
                     </div>
 
@@ -80,8 +80,8 @@
                             ISBN*
                         </div>
                         <div class="span10">
-                            @Html.TextBoxFor(model => model.Book.Isbn, new { placeholder = "Book ISBN"})
-                            @Html.ValidationMessageFor(model => model.Book.Isbn)
+                            @Html.TextBoxFor(model => model.Model.Isbn, new { placeholder = "Book ISBN"})
+                            @Html.ValidationMessageFor(model => model.Model.Isbn)
                         </div>
                     </div>
 
@@ -90,8 +90,8 @@
                             Publisher*
                         </div>
                         <div class="span10">
-                            @Html.TextBoxFor(model => model.Book.Publisher, new { placeholder = "Publisher"})
-                            @Html.ValidationMessageFor(model => model.Book.Publisher)
+                            @Html.TextBoxFor(model => model.Model.Publisher, new { placeholder = "Publisher"})
+                            @Html.ValidationMessageFor(model => model.Model.Publisher)
                         </div>
                     </div>
 
@@ -101,10 +101,10 @@
                         </div>
                         <div class="span10">
                             @Html.DropDownListFor(
-                                model => model.Book.Language, 
+                                model => model.Model.Language, 
                                 Model.ValidLanguages(),
                                 "Select Language")
-                            @Html.ValidationMessageFor(model => model.Book.Language)
+                            @Html.ValidationMessageFor(model => model.Model.Language)
                         </div>
                     </div>
 
@@ -114,10 +114,10 @@
                         </div>
                         <div class="span10">
                             @Html.DropDownListFor(
-                                model => model.Book.Genre, 
+                                model => model.Model.Genre, 
                                 Model.ValidGenres(),
                                 "Select Genre")
-                            @Html.ValidationMessageFor(model => model.Book.Genre)
+                            @Html.ValidationMessageFor(model => model.Model.Genre)
                         </div>
                     </div>
 
@@ -127,11 +127,11 @@
                         </div>
                         <div class="span10">
                             @Html.DropDownListFor(
-                                model => model.Book.AgeRange, 
+                                model => model.Model.AgeRange, 
                                 Model.ValidAgeGroups(),
                                 "Select Age Range"
                                  )
-                            @Html.ValidationMessageFor(model => model.Book.AgeRange)
+                            @Html.ValidationMessageFor(model => model.Model.AgeRange)
                         </div>
                     </div>
 
@@ -141,11 +141,11 @@
                         </div>
                         <div class="span10">
                             @Html.DropDownListFor(
-                                model => model.Book.Country,
+                                model => model.Model.Country,
                                 Model.ValidCountries(), 
                                 "Select Country"
                                  )
-                            @Html.ValidationMessageFor(model => model.Book.Country)
+                            @Html.ValidationMessageFor(model => model.Model.Country)
                         </div>
                     </div>
 
@@ -154,8 +154,8 @@
                             Cover Image URL
                         </div>
                         <div class="span10">
-                            @Html.TextBoxFor(model => model.Book.CoverImageUrl, new { placeholder = "URL to Cover"})
-                            @Html.ValidationMessageFor(model => model.Book.CoverImageUrl)
+                            @Html.TextBoxFor(model => model.Model.CoverImageUrl, new { placeholder = "URL to Cover"})
+                            @Html.ValidationMessageFor(model => model.Model.CoverImageUrl)
                         </div>
                     </div>
 
@@ -164,8 +164,8 @@
                             Description
                         </div>
                         <div class="span10">
-                            @Html.TextAreaFor(model => model.Book.Description, new { placeholder = "Book Description"})
-                            @Html.ValidationMessageFor(model => model.Book.Description)
+                            @Html.TextAreaFor(model => model.Model.Description, new { placeholder = "Book Description"})
+                            @Html.ValidationMessageFor(model => model.Model.Description)
                         </div>
                     </div>
                     <p>

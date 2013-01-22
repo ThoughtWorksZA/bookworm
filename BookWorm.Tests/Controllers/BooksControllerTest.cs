@@ -25,7 +25,7 @@ namespace BookWorm.Tests.Controllers
 
             Assert.AreEqual("Add a Book", booksController.ViewBag.Title);
             Assert.IsInstanceOfType(model, typeof(BookInformation));
-            Assert.IsInstanceOfType(model.Book, typeof(Book));
+            Assert.IsInstanceOfType(model.Model, typeof(Book));
         }
 
         [TestMethod]
@@ -89,7 +89,7 @@ namespace BookWorm.Tests.Controllers
             var bookInView = (BookInformation) view.Model;
             Assert.IsInstanceOfType(view, typeof(ViewResult));
             mockedRepo.Verify(repo => repo.Get<Book>(book.Id), Times.Once());
-            Assert.AreEqual(book, bookInView.Book);
+            Assert.AreEqual(book, bookInView.Model);
             Assert.AreEqual("A book", booksController.ViewBag.Title);
         }
 
@@ -99,17 +99,17 @@ namespace BookWorm.Tests.Controllers
             var books = new List<Book>();
             Enumerable.Range(1, 10).ToList().ForEach(i=>books.Add(new Book{Id = i}));
             var mockedRepo = new Mock<Repository>();
-            mockedRepo.Setup(repo => repo.List<Book>()).Returns(books);
+            mockedRepo.Setup(repo => repo.List<Book>(It.IsAny<int>(), It.IsAny<int>())).Returns(books);
             var booksController = new BooksController(mockedRepo.Object);
 
             var view = booksController.List();
 
             var filterInformation = (FilterInformation) view.Model;
-            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
+            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
             Assert.IsTrue(books.SequenceEqual(actualBooks));
             Assert.IsFalse(filterInformation.Languages.Any());
 
-            mockedRepo.Verify(repo => repo.List<Book>(), Times.Once());
+            mockedRepo.Verify(repo => repo.List<Book>(It.IsAny<int>(), It.IsAny<int>()), Times.Once());
         }
 
         [TestMethod]
@@ -125,7 +125,7 @@ namespace BookWorm.Tests.Controllers
            
             Assert.AreEqual("PUT", booksController.ViewBag.Method);
             Assert.AreEqual("Edit a Book", booksController.ViewBag.Title);
-            Assert.AreEqual(book.Title, model.Book.Title);
+            Assert.AreEqual(book.Title, model.Model.Title);
         }
 
         [TestMethod]
@@ -209,19 +209,19 @@ namespace BookWorm.Tests.Controllers
             books.Add(new Book { Title = "Book 1" });
             var mockedRepo = new Mock<Repository>();
             var expectedBooks = new List<Book> {books.First(), books.Last()};
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<int>(), It.IsAny<int>())).Returns(expectedBooks);
             var booksController = new BooksController(mockedRepo.Object);
 
             var view = (ViewResult)booksController.List("Book 1");
 
             var booksInView = ((FilterInformation)view.Model).BookInformations;
-            var actualBooks = booksInView.Select(bookInformation => bookInformation.Book).ToList();
+            var actualBooks = booksInView.Select(bookInformation => bookInformation.Model).ToList();
             Assert.AreEqual(true, booksController.ViewBag.HideFilter);
             Assert.AreEqual(2, actualBooks.Count());
             Assert.AreEqual("Book 1", actualBooks.First().Title);
             Assert.AreEqual("Book 1", actualBooks.Last().Title);
 
-            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()), Times.Once());
+            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once());
         }
 
 
@@ -230,7 +230,7 @@ namespace BookWorm.Tests.Controllers
         {
             var booksControllerClass = typeof(BooksController);
             Assert.AreEqual(1, booksControllerClass.GetMethods()
-                                                   .First(method => method.Name == "List" && method.GetParameters().Count() == 1)
+                                                   .First(method => method.Name == "List" && method.GetParameters().Count() == 3)
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
         }
@@ -240,7 +240,7 @@ namespace BookWorm.Tests.Controllers
         {
             var mockedRepo = new Mock<Repository>();
             var expectedBooks = new List<Book> { new Book {Id=1, Title = "Book 1" } };
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<int>(), It.IsAny<int>())).Returns(expectedBooks);
             var booksController = new BooksController(mockedRepo.Object);
 
             var viewResult = (RedirectToRouteResult)booksController.List("Book 1");
@@ -266,7 +266,7 @@ namespace BookWorm.Tests.Controllers
             var view = (ViewResult)booksController.Language("Zulu");
 
             var filterInformation = (FilterInformation)view.Model;
-            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
+            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
             Assert.AreEqual(2, actualBooks.Count());
             Assert.AreEqual("Zulu", actualBooks.First().Language);
             Assert.AreEqual("Zulu", actualBooks.Last().Language);
@@ -292,7 +292,7 @@ namespace BookWorm.Tests.Controllers
             var view = (ViewResult)booksController.AgeRange("0-2");
 
             var filterInformation = (FilterInformation)view.Model;
-            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
+            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
             Assert.AreEqual(2, actualBooks.Count());
             Assert.AreEqual("0-2", actualBooks.First().AgeRange);
             Assert.AreEqual("0-2", actualBooks.Last().AgeRange);
@@ -318,7 +318,7 @@ namespace BookWorm.Tests.Controllers
             var view = (ViewResult)booksController.Genre("Poetry");
 
             var filterInformation = (FilterInformation)view.Model;
-            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
+            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
             Assert.AreEqual(2, actualBooks.Count());
             Assert.AreEqual("Poetry", actualBooks.First().Genre);
             Assert.AreEqual("Poetry", actualBooks.Last().Genre);
@@ -332,7 +332,7 @@ namespace BookWorm.Tests.Controllers
         {
             var booksControllerClass = typeof(BooksController);
             Assert.AreEqual(1, booksControllerClass.GetMethods()
-                                                   .First(method => method.Name == "Language" && method.GetParameters().Count() == 1)
+                                                   .First(method => method.Name == "Language")
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
         }
@@ -342,7 +342,7 @@ namespace BookWorm.Tests.Controllers
         {
             var booksControllerClass = typeof(BooksController);
             Assert.AreEqual(1, booksControllerClass.GetMethods()
-                                                   .First(method => method.Name == "AgeRange" && method.GetParameters().Count() == 1)
+                                                   .First(method => method.Name == "AgeRange")
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
         }
@@ -352,7 +352,7 @@ namespace BookWorm.Tests.Controllers
         {
             var booksControllerClass = typeof(BooksController);
             Assert.AreEqual(1, booksControllerClass.GetMethods()
-                                                   .First(method => method.Name == "Genre" && method.GetParameters().Count() == 1)
+                                                   .First(method => method.Name == "Genre")
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
         }

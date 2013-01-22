@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Mvc;
 using BookWorm.Models;
 using BookWorm.Models.Validations;
 using BookWorm.ViewModels;
+using PagedList;
 using Raven.Client.Linq;
 
 namespace BookWorm.Controllers
@@ -20,11 +23,11 @@ namespace BookWorm.Controllers
         }
 
         [AllowAnonymous]
-        public ViewResult List()
+        public ViewResult List(int page = 1, int perPage = 9)
         {
-            var books = _repository.List<Book>();
+            var books = _repository.List<Book>(page, perPage);
             ViewBag.Title = "Books";
-            var bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            var bookInformations = new StaticPagedList<BookInformation>(books.Select(book => new BookInformation(book)).ToList(), page, perPage, _repository.Count<Book>());
             return View(new FilterInformation(bookInformations));
         }
 
@@ -33,7 +36,7 @@ namespace BookWorm.Controllers
         {
             var book = (Book) _repository.Get<Book>(id);
             var bookInformation = new BookInformation(book, book.Posts.Select(post => new BookPostInformation(book.Id, post)).ToList());
-            ViewBag.Title = bookInformation.Book.Title;
+            ViewBag.Title = bookInformation.Model.Title;
             return View(bookInformation);
         }
 
@@ -53,7 +56,7 @@ namespace BookWorm.Controllers
                 return View(bookInformation);
             }
 
-            var createdBook = (Book) _repository.Create(bookInformation.Book);
+            var createdBook = (Book) _repository.Create(bookInformation.Model);
             TempData["flashSuccess"] = string.Format("Added {0} successfully", createdBook.Title);
             return RedirectToAction("Details", new { id = createdBook.Id });
         }
@@ -74,9 +77,9 @@ namespace BookWorm.Controllers
                 return View(editedBookInformation);
             }
 
-            _repository.Edit(editedBookInformation.Book);
-            TempData["flashSuccess"] = string.Format("Updated {0} successfully", editedBookInformation.Book.Title);
-            return RedirectToAction("Details", new { id = editedBookInformation.Book.Id });
+            _repository.Edit(editedBookInformation.Model);
+            TempData["flashSuccess"] = string.Format("Updated {0} successfully", editedBookInformation.Model.Title);
+            return RedirectToAction("Details", new { id = editedBookInformation.Model.Id });
 
         }
 
@@ -90,14 +93,15 @@ namespace BookWorm.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult List(string searchQuery)
+        public ActionResult List(string searchQuery, int page = 1, int perPage = 9)
         {
-            var books = _repository.Search<Book>(book => book.Title == searchQuery || book.Isbn == searchQuery);
+            Expression<Func<Book, bool>> searchPredicate = book => book.Title == searchQuery || book.Isbn == searchQuery;
+            var books = _repository.Search(searchPredicate, page, perPage);
             ViewBag.Title = string.Format("Search Results for \"{0}\"", searchQuery);
-            var bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            var bookInformations = new StaticPagedList<BookInformation>(books.Select(book => new BookInformation(book)).ToList(), page, perPage, _repository.Count(searchPredicate));
             if (bookInformations.Count() == 1)
             {
-                return RedirectToAction("Details", new { id = bookInformations.First().Book.Id });                
+                return RedirectToAction("Details", new { id = bookInformations.First().Model.Id });                
             }
             if (!bookInformations.Any())
             {
@@ -108,16 +112,24 @@ namespace BookWorm.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Language(string language)
+        public ActionResult Language(string language, int page = 1, int perPage = 9)
         {
-            var books = _repository.Search<Book>(book => book.Language == language);
-            ViewBag.Title = string.Format("{0} Books", language);
-            var bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            Expression<Func<Book, bool>> searchPredicate = book => book.Language == language;
+            var bookInformations = DiscoverBooks(language, page, perPage, searchPredicate);
             return View("List", new FilterInformation(new List<string>() {language}, new List<string>(), new List<string>(), bookInformations));
         }
 
+        private StaticPagedList<BookInformation> DiscoverBooks(string filterType, int page, int perPage, Expression<Func<Book, bool>> searchPredicate)
+        {
+            var books = _repository.Search(searchPredicate);
+            ViewBag.Title = string.Format("{0} Books", filterType);
+            var bookInformations = new StaticPagedList<BookInformation>(
+                books.Select(book => new BookInformation(book)).ToList(), page, perPage, _repository.Count(searchPredicate));
+            return bookInformations;
+        }
+
         [AllowAnonymous]
-        public ActionResult Filter(List<string> languages, List<string> ageRanges, List<string> genres)
+        public ActionResult Filter(List<string> languages, List<string> ageRanges, List<string> genres, int page = 1, int perPage = 9)
         {
             languages = languages ?? new List<string>();
             ageRanges = ageRanges ?? new List<string>();
@@ -136,25 +148,23 @@ namespace BookWorm.Controllers
                 books = books.Where(book => book.Genre.In(genres)).ToList();
             }
             ViewBag.Title = "Books";
-            var bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            var bookInformations = books.Select(book => new BookInformation(book)).ToList().ToPagedList(page, perPage);
             return View("List", new FilterInformation(languages, ageRanges, genres, bookInformations)); 
         }
 
         [AllowAnonymous]
-        public ActionResult AgeRange(string ageRange)
+        public ActionResult AgeRange(string ageRange, int page = 1, int perPage = 9)
         {
-            var books = _repository.Search<Book>(book => book.AgeRange == ageRange);
-            ViewBag.Title = string.Format("{0} Books", ageRange);
-            var bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            Expression<Func<Book, bool>> searchPredicate = book => book.AgeRange == ageRange;
+            var bookInformations = DiscoverBooks(ageRange, page, perPage, searchPredicate);
             return View("List", new FilterInformation(new List<string>(), new List<string>() { ageRange }, new List<string>(), bookInformations));
         }
 
         [AllowAnonymous]
-        public ActionResult Genre(string genre)
+        public ActionResult Genre(string genre, int page = 1, int perPage = 9)
         {
-            var books = _repository.Search<Book>(book => book.Genre == genre);
-            ViewBag.Title = string.Format("{0} Books", genre);
-            var bookInformations = books.Select(book => new BookInformation(book)).ToList();
+            Expression<Func<Book, bool>> searchPredicate = book => book.Genre == genre;
+            var bookInformations = DiscoverBooks(genre, page, perPage, searchPredicate);
             return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string>() { genre }, bookInformations));
         }
     }

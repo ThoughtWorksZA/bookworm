@@ -9,9 +9,9 @@ using BookWorm.Models.Validations;
 
 namespace BookWorm.ViewModels
 {
-    public class BookInformation
+    public class BookInformation : ViewModel<Book>
     {
-        public Book Book { get; set; }
+        public override Book Model { get; set; }
         public List<BookPostInformation> BookPostInformations { get; set; }
         public List<BookPostInformation> Reviews 
         { 
@@ -54,13 +54,13 @@ namespace BookWorm.ViewModels
 
         public BookInformation(Book book)
         {
-            Book = book;
+            Model = book;
             BookPostInformations = new List<BookPostInformation>();
         }
 
         public BookInformation(Book book, List<BookPostInformation> bookPostInformations)
         {
-            Book = book;
+            Model = book;
             BookPostInformations = bookPostInformations;
         }
 
@@ -98,9 +98,9 @@ namespace BookWorm.ViewModels
 
         public string Summary(int characters)
         {
-            if (Book.Description == null || Book.Description.Length < characters)
-                return Book.Description;
-            return Book.Description.Substring(0, Book.Description.IndexOf(" ", characters));
+            if (Model.Description == null || Model.Description.Length < characters)
+                return Model.Description;
+            return Model.Description.Substring(0, Model.Description.IndexOf(" ", characters));
         }
     }
 }

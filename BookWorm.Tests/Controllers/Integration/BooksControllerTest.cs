@@ -46,7 +46,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 var view = (ViewResult)booksController.Filter(new List<string>() { "Zulu", "Xhosa" }, new List<string>(), new List<string>());
 
                 var filterInformation = (FilterInformation)view.Model;
-                var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
+                var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
                 Assert.AreEqual(2, actualBooks.Count());
                 Assert.AreEqual(expectedBooks.First().Language, actualBooks.First().Language);
                 Assert.AreEqual(expectedBooks.Last().Language, actualBooks.Last().Language);
@@ -77,7 +77,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 var view = (ViewResult)booksController.Filter(new List<string>() { "Zulu" }, new List<string>() { "0-2" }, new List<string>());
 
                 var filterInformation = (FilterInformation)view.Model;
-                var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
+                var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
                 Assert.AreEqual(1, actualBooks.Count());
                 Assert.AreEqual(expectedBooks.First().Language, actualBooks.First().Language);
                 Assert.AreEqual(expectedBooks.First().AgeRange, actualBooks.First().AgeRange);
@@ -107,7 +107,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 var view = (ViewResult)booksController.Filter(new List<string>(), new List<string>(), new List<string> {"Picture Books"});
 
                 var filterInformation = (FilterInformation)view.Model;
-                var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Book).ToList();
+                var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
                 Assert.AreEqual(1, actualBooks.Count());
                 Assert.AreEqual(expectedBooks.First().Language, actualBooks.First().Language);
                 Assert.AreEqual(expectedBooks.First().AgeRange, actualBooks.First().AgeRange);

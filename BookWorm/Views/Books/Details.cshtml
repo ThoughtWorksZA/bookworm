@@ -11,13 +11,13 @@
             </ul>
             <h2>@ViewBag.Title</h2>
             <span class="sub-title">
-                @Html.DisplayFor(model => model.Book.Subtitle) 
+                @Html.DisplayFor(model => model.Model.Subtitle) 
             </span>
-            <p>by @Html.DisplayFor(model => model.Book.Author)</p> 
+            <p>by @Html.DisplayFor(model => model.Model.Author)</p> 
         </div>
         
         <div class="span4">
-            <div class="fb-like" data-href="http://www.puku.co.za/Books/Details/@Html.DisplayFor(model => model.Book.Id) " data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
+            <div class="fb-like" data-href="http://www.puku.co.za/Books/Details/@Html.DisplayFor(model => model.Model.Id) " data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
         </div>
     </div>
 </div>
@@ -26,27 +26,27 @@
         <div class="span12">
             <fieldset>
                 <div class="row">
-                    @if (@Html.DisplayFor(model => model.Book.CoverImageUrl) != null && !@Html.DisplayFor(model => model.Book.CoverImageUrl).ToString().IsEmpty())
+                    @if (@Html.DisplayFor(model => model.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => model.Model.CoverImageUrl).ToString().IsEmpty())
                     {
                         <div class="span3">
-                            <img src="@Model.Book.CoverImageUrl"/>
+                            <img src="@Model.Model.CoverImageUrl"/>
                         </div>
                     }
                     <div class="span8">
-                        <p>ISBN: <em>@Html.DisplayFor(model => model.Book.Isbn)</em></p>    
-                        <p>Publisher: <em>@Html.DisplayFor(model => model.Book.Publisher)</em></p>
-                        @if (@Html.DisplayFor(model => model.Book.Illustrator) != null && !@Html.DisplayFor(model => model.Book.Illustrator).ToString().IsEmpty())
+                        <p>ISBN: <em>@Html.DisplayFor(model => model.Model.Isbn)</em></p>    
+                        <p>Publisher: <em>@Html.DisplayFor(model => model.Model.Publisher)</em></p>
+                        @if (@Html.DisplayFor(model => model.Model.Illustrator) != null && !@Html.DisplayFor(model => model.Model.Illustrator).ToString().IsEmpty())
                         {
-                            <p>Illustrator: <em>@Html.DisplayFor(model => model.Book.Illustrator)</em></p>
+                            <p>Illustrator: <em>@Html.DisplayFor(model => model.Model.Illustrator)</em></p>
                         }
-                        <p>Editor: <em>@Html.DisplayFor(model => model.Book.Editor)</em></p>
-                        <p>Language: <em>@Html.DisplayFor(model => model.Book.Language)</em></p>
-                        <p>Genre: <em>@Html.DisplayFor(model => model.Book.Genre)</em></p>
-                        <p>Age Range: <em>@Html.DisplayFor(model => model.Book.AgeRange)</em></p>
-                        <p>Country: <em>@Html.DisplayFor(model => model.Book.Country)</em></p>
-                        @if (@Html.DisplayFor(model => model.Book.Description) != null && !@Html.DisplayFor(model => model.Book.Description).ToString().IsEmpty())
+                        <p>Editor: <em>@Html.DisplayFor(model => model.Model.Editor)</em></p>
+                        <p>Language: <em>@Html.DisplayFor(model => model.Model.Language)</em></p>
+                        <p>Genre: <em>@Html.DisplayFor(model => model.Model.Genre)</em></p>
+                        <p>Age Range: <em>@Html.DisplayFor(model => model.Model.AgeRange)</em></p>
+                        <p>Country: <em>@Html.DisplayFor(model => model.Model.Country)</em></p>
+                        @if (@Html.DisplayFor(model => model.Model.Description) != null && !@Html.DisplayFor(model => model.Model.Description).ToString().IsEmpty())
                         {
-                            <p>Description: <em>@Html.DisplayFor(model => model.Book.Description)</em></p>
+                            <p>Description: <em>@Html.DisplayFor(model => model.Model.Description)</em></p>
                         }
                     </div>
        
@@ -60,12 +60,12 @@
                         <div class="row-fluid">
                             <div class="span7">
                                 <span class="lead">Admin Tools </span>
-                                @Html.ActionLink("Edit Book", "Edit", new {id = Model.Book.Id})
+                                @Html.ActionLink("Edit Book", "Edit", new {id = Model.Model.Id})
                                 |   
-                                @Html.ActionLink("Add a Book Post", "Create", "BookPosts", new { bookId = Model.Book.Id }, null)
+                                @Html.ActionLink("Add a Book Post", "Create", "BookPosts", new { bookId = Model.Model.Id }, null)
                             </div>
                             <div class="span5">
-                                @using (Html.BeginForm("Delete", "Books", new { id = Model.Book.Id }))
+                                @using (Html.BeginForm("Delete", "Books", new { id = Model.Model.Id }))
                                 {
                                     @Html.HttpMethodOverride(HttpVerbs.Delete)
                                     <input type="submit" class="btn btn-danger pull-right" value="Delete Book" title="Permanently remove this book from PUKU's catalog." data-confirm="This action can not be undone. Are you sure you want to delete this book?" />
