@@ -178,6 +178,7 @@
     <Compile Include="Controllers\PagesControllerTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
     <Compile Include="Controllers\AccountControllerTest.cs" />
+    <Compile Include="Controllers\PostsControllerTest.cs" />
     <Compile Include="Models\UnitTest1.cs" />
     <Compile Include="Specs\CreateAStaticPage.feature.cs">
       <AutoGen>True</AutoGen>

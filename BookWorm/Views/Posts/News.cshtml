@@ -3,7 +3,8 @@
 
 @using BookWorm.Models
 @using BookWorm.ViewModels
-@model IEnumerable<BookWorm.ViewModels.PostInformation>
+@using PagedList.Mvc
+@model PagedList.IPagedList<IBasePostInformation>
 
 
 <div class="row-fluid">
@@ -22,35 +23,21 @@
 <div class="row-fluid gray-body-row">
     <div class="row-content">
         <div class="span12">
-            @foreach (PostInformation item in Model)
+            @foreach (var item in Model)
             {
 
                 <div class="row link-row">
-                    <div data-clickable-url="/Posts/Details/@item.Model.Id">
+                    <div data-clickable-url="@item.DetailsUrl">
                         <div class="span10">
                             <h4>@Html.DisplayFor(modelItem => item.Model.Title)</h4>
+                            <span>@Html.Raw(item.Summary(400))</span>
                         </div>
                     </div>
-                    @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
-                    {
-
-                        <div class="span1">
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Model.Id })
-                        </div>
-
-                        <div class="span1">
-                            @using (Html.BeginForm("Delete", "Posts", new { @id = item.Model.Id }))
-                            {
-                                @Html.HttpMethodOverride(HttpVerbs.Delete)
-
-                                <input type="submit" class="btn btn-danger" value="x" data-confirm="This action can not be undone. Are you sure you want to delete this post?" />
-                            }
-                        </div>
-                    }
                 </div>
 
                 <div class="list-seperator"></div>
             }
+            @Html.PagedListPager( Model, page => Url.Action("News", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast )
         </div>
     </div>
 </div>

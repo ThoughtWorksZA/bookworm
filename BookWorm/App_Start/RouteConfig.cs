@@ -19,6 +19,12 @@ namespace BookWorm
                 new {controller = "Books", action = "Language"}
                 );
 
+            routes.MapRoute(
+                "News",
+                "News",
+                new { controller = "Posts", action = "News" }
+                );
+
 
             routes.MapRoute(
                 name: "Default",

@@ -410,7 +410,7 @@
     <Content Include="Views\Posts\Create.cshtml" />
     <Content Include="Views\Posts\Details.cshtml" />
     <Content Include="Views\Posts\Edit.cshtml" />
-    <Content Include="Views\Posts\List.cshtml" />
+    <Content Include="Views\Posts\News.cshtml" />
     <Content Include="Views\Home\PostNews.cshtml" />
   </ItemGroup>
   <ItemGroup>
