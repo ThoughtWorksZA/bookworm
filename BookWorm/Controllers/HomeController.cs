@@ -20,20 +20,16 @@ namespace BookWorm.Controllers
 
         public ActionResult Index()
         {
-            var books = _repository.List<Book>(4);
+            var books = _repository.List<Book>(4).Select(x => new BookInformation(x)).ToList();
             var posts = _repository.List<Post>(5).Select(x => new PostInformation {Model = x});
             var bookPosts = _repository.List<Book>()
                 .SelectMany(x => x.Posts.Where(bp => bp.Type == BookPost.BookPostType.News || bp.Type == BookPost.BookPostType.Events)
                     .Select(y => new BookPostInformation(x.Id, y, x))).ToList();
-            var allPosts = new List<IViewModel>();
+            var allPosts = new List<IBasePostInformation>();
             allPosts.AddRange(posts);
             allPosts.AddRange(bookPosts);
             allPosts = allPosts.OrderByDescending(x => x.Model.UpdatedAt).Take(5).ToList();
-            ViewBag.AllPosts = allPosts;
-            ViewBag.PostInformations = allPosts.OfType<PostInformation>().ToList();
-            ViewBag.BookPostInformations = allPosts.OfType<BookPostInformation>().ToList();
-            ViewBag.BookInformations = books.Select(book => new BookInformation(book)).ToList();
-            return View();
+            return View(new HomeViewModel {Books = books, News = allPosts});
         }
 
         public ActionResult About()

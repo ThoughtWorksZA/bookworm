@@ -23,5 +23,13 @@ namespace BookWorm.Tests.ViewModels
                 new BookPostInformation(1, new BookPost { Content = "The quick brown fox jumps over the lazy dog." });
             Assert.AreEqual("<p>The quick brown fox jumps over the lazy dog.</p>\n", bookPostInformation.Summary(200));
         }
+
+        [TestMethod]
+        public void ShouldReturnBookImageFromBook()
+        {
+            var bookPostInformation =
+               new BookPostInformation(1, new BookPost (), new Book {CoverImageUrl = "someurl"});
+            Assert.AreEqual("someurl", bookPostInformation.FeaturedImage);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿@Scripts.Render("~/Scripts/puku/clickableDiv.js")
+﻿@model BookWorm.ViewModels.HomeViewModel
+@Scripts.Render("~/Scripts/puku/clickableDiv.js")
 
 @using BookWorm.Models
 @using BookWorm.ViewModels
@@ -45,7 +46,7 @@
                 </div>
                 <div id="lastest-books">
                     <ol>
-                        @foreach (var bookInformation in (List<BookInformation>) ViewBag.BookInformations)
+                        @foreach (var bookInformation in Model.Books)
                         {
                             <li>
                                 <div id="clickable-div" data-clickable-url="/Books/Details/@bookInformation.Book.Id">
@@ -104,34 +105,17 @@
                 </div>
                 <div class="row">
                     @{ 
-                        var allPosts = (List<IViewModel>)ViewBag.AllPosts;
-                        if (allPosts.Any())
+                        if (Model.News.Any())
                         {
-                            var firstPost = allPosts.First();
-                            if (firstPost is PostInformation)
-                            {
-                                @Html.Partial("PostNews", firstPost);
-                            }
-                            else if (firstPost is BookPostInformation)
-                            {
-                                @Html.Partial("BookPostNews", firstPost);
-                            }
+                            var firstPost = Model.News.First();
+                            @Html.Partial("PostNews", firstPost);
                             <div class="span3">
                                 <strong>Also in the News</strong>
                                 <hr/>
                                 <ul>
-                                    @foreach (var p in allPosts.Except(new List<IViewModel> {firstPost}))
+                                    @foreach (var post in Model.News.Except(new List<IBasePostInformation> {firstPost}))
                                     {
-                                        if (p is PostInformation)
-                                        {
-                                            var post = (PostInformation) p;
-                                            <li> <a href="/Posts/Details/@post.Model.Id">@post.Model.Title</a></li>
-                                        }
-                                        else if (p is BookPostInformation)
-                                        {
-                                            var post = (BookPostInformation) p;
-                                            <li> <a href="/Books/Details/@post.Book.Id">@post.Model.Title</a></li>
-                                        }
+                                        <li> <a href="@post.DetailsUrl">@post.Model.Title</a></li>
                                     }
                                 </ul>
                             </div>

@@ -2,7 +2,19 @@
 
 namespace BookWorm.ViewModels
 {
-    public class PostInformation : ViewModel<Post>
+    public interface IBasePostInformation : IViewModel
+    {
+        new BasePost Model { get;  }
+        string FeaturedImage { get; }
+        string Summary(int characters);
+        string DetailsUrl { get; }
+    }
+
+    public interface IBasePostInformation<T> : IViewModel<T>, IBasePostInformation where T : BasePost
+    {
+    }
+
+    public class PostInformation : ViewModel<Post>, IBasePostInformation<Post>
     {
         public PostInformation()
         {
@@ -12,7 +24,8 @@ namespace BookWorm.ViewModels
         {
             Model = post;
         }
-
+        BasePost IBasePostInformation.Model { get { return Model; } }
+        public string FeaturedImage { get { return Model.FeaturedImage; } }
         public override Post Model { get; set; }
         public string Content
         {
@@ -22,6 +35,8 @@ namespace BookWorm.ViewModels
                 return md.Transform(Model.Content);
             }
         }
+
+        public string DetailsUrl { get { return string.Format("/Posts/Details/{0}", Model.Id); } }
 
         public string Summary(int characters)
         {

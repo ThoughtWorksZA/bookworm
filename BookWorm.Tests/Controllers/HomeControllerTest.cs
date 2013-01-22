@@ -50,8 +50,9 @@ namespace BookWorm.Tests.Controllers
             mockedRepo.Setup(repo => repo.List<Post>(5)).Returns(new List<Post>());
             mockedRepo.Setup(repo => repo.List<Book>()).Returns(new List<Book>());
             var controller = new HomeController(mockedRepo.Object);
-            controller.Index();
-            Assert.AreEqual(4, ((List<BookInformation>)controller.ViewBag.bookInformations).Count());
+            var result = (ViewResult)controller.Index();
+            var model = (HomeViewModel)result.Model;
+            Assert.AreEqual(4, model.Books.Count());
         }
     }
 }

@@ -5,6 +5,7 @@ using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Raven.Client;
+using Raven.Client.Document;
 using Raven.Client.Linq;
 
 namespace BookWorm.Tests.Models
@@ -87,6 +88,7 @@ namespace BookWorm.Tests.Models
         {
             var persistedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes chicken. You're going to love it." };
             var documentSession = new Mock<IDocumentSession>();
+            documentSession.SetupGet(x => x.Advanced).Returns(new Mock<ISyncAdvancedSessionOperation>().Object);
             documentSession.Setup(session => session.Load<StaticPage>(persistedModel.Id)).Returns(persistedModel);
             var repository = new Repository(documentSession.Object);
 
@@ -101,6 +103,7 @@ namespace BookWorm.Tests.Models
         {
             var persistedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes veggie burger. You're going to love it." };
             var documentSession = new Mock<IDocumentSession>();
+            documentSession.SetupGet(x => x.Advanced).Returns(new Mock<ISyncAdvancedSessionOperation>().Object);
             documentSession.Setup(session => session.Load<StaticPage>(persistedModel.Id)).Returns(persistedModel);
             documentSession.Setup(session => session.Store(persistedModel))
                            .Throws(new System.InvalidOperationException());
@@ -126,6 +129,7 @@ namespace BookWorm.Tests.Models
         {
             var persistedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes chicken. You're going to love it.", CreatedAt = DateTime.Now.AddMinutes(-1)};
             var documentSession = new Mock<IDocumentSession>();
+            documentSession.SetupGet(x => x.Advanced).Returns(new Mock<ISyncAdvancedSessionOperation>().Object);
             documentSession.Setup(session => session.Load<StaticPage>(persistedModel.Id)).Returns(persistedModel);
             var repository = new Repository(documentSession.Object);
             var editedModel = new StaticPage { Title = "Nandos Rocks", Id = 1337, Content = "Nandos makes chicken. You're going to love it.", CreatedAt = DateTime.Now };

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
 using BookWorm.ViewModels;
@@ -42,19 +43,20 @@ namespace BookWorm.Tests.Controllers.Integration
                 repository.Create(new Book { Posts = new List<BookPost> { new BookPost { Id = 6, Title = "BookPost", Content = "Derp", Type = BookPost.BookPostType.News, UpdatedAt = DateTime.Now.AddMinutes(3) } } });
                 var post = new Post { Id = 101, Title = "Latest Post", Content = "Derp", CreatedAt = DateTime.Now.AddMinutes(10) };
                 repository.Create(post);
-                var bookPost = new Book { Posts = new List<BookPost> { new BookPost { Id = 102, Title = "Latest BookPost", Content = "Derp", Type = BookPost.BookPostType.Events, UpdatedAt = DateTime.Now.AddMinutes(4) } } };
-                repository.Create(bookPost);
+                var book = new Book { Posts = new List<BookPost> { new BookPost { Id = 102, Title = "Latest BookPost", Content = "Derp", Type = BookPost.BookPostType.Events, UpdatedAt = DateTime.Now.AddMinutes(5) } } };
+                repository.Create(book);
                 repository.Create(new Post { Id = 7, Title = "Post", Content = "Derp", CreatedAt = DateTime.Now.AddMinutes(4) });
-                repository.Create(new Book { Posts = new List<BookPost> { new BookPost { Id = 8, Title = "BookPost", Content = "Derp", Type = BookPost.BookPostType.TeachingGuides, UpdatedAt = DateTime.Now.AddMinutes(4) } } });
-                repository.Create(new Post { Id = 9, Title = "Post", Content = "Derp", CreatedAt = DateTime.Now.AddMinutes(5) });
-                repository.Create(new Book { Posts = new List<BookPost> { new BookPost { Id = 10, Title = "BookPost", Content = "Derp", Type = BookPost.BookPostType.Reviews, UpdatedAt = DateTime.Now.AddMinutes(5) } } });
+                repository.Create(new Book { Posts = new List<BookPost> { new BookPost { Id = 8, Title = "BookPost", Content = "Derp", Type = BookPost.BookPostType.TeachingGuides, UpdatedAt = DateTime.Now.AddMinutes(5) } } });
+                repository.Create(new Post { Id = 9, Title = "Post", Content = "Derp", CreatedAt = DateTime.Now.AddMinutes(6) });
+                repository.Create(new Book { Posts = new List<BookPost> { new BookPost { Id = 10, Title = "BookPost", Content = "Derp", Type = BookPost.BookPostType.Reviews, UpdatedAt = DateTime.Now.AddMinutes(6) } } });
                 session.SaveChanges();
                 var controller = new HomeController(repository);
-                controller.Index();
-                Assert.AreEqual(5, ((List<IViewModel>)controller.ViewBag.AllPosts).Count());
-                Assert.AreEqual(5, ((List<PostInformation>)controller.ViewBag.PostInformations).Count() + ((List<BookPostInformation>)controller.ViewBag.BookPostInformations).Count());
-                Assert.AreEqual(101, ((List<PostInformation>) controller.ViewBag.PostInformations).First().Model.Id);
-                Assert.AreEqual(102, ((List<BookPostInformation>) controller.ViewBag.BookPostInformations).First().Model.Id);
+                var result = (ViewResult)controller.Index();
+                var homeViewModel = (HomeViewModel)result.Model;
+                Assert.AreEqual(5, homeViewModel.News.Count());
+                var ids = homeViewModel.News.Select(x => x.Model.Id).ToList();
+                Assert.IsTrue(ids.Contains(post.Id));
+                Assert.IsTrue(ids.Contains(book.Posts.First().Id));
             }
         }
     }

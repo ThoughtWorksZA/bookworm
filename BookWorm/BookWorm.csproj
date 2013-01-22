@@ -250,6 +250,7 @@
     <Compile Include="ViewModels\BookInformation.cs" />
     <Compile Include="ViewModels\BookPostInformation.cs" />
     <Compile Include="ViewModels\FilterInformation.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\PostInformation.cs" />
     <Compile Include="ViewModels\StaticPageInformation.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
@@ -407,7 +408,6 @@
     <Content Include="Views\Posts\Edit.cshtml" />
     <Content Include="Views\Posts\List.cshtml" />
     <Content Include="Views\Home\PostNews.cshtml" />
-    <Content Include="Views\Home\BookPostNews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace BookWorm.Models
 {
-    public class Post : Model
+    public class BasePost : Model
     {
         [Required]
         [StringLength(140, ErrorMessage = "{0} must be between {2} and {1} characters long", MinimumLength = 3)]
@@ -11,6 +11,10 @@ namespace BookWorm.Models
         [Required]
         [AllowHtml]
         public string Content { get; set; }
+    }
+
+    public class Post : BasePost
+    {
         [Required]
         public string FeaturedImage { get; set; }
         [Required]
@@ -21,7 +25,5 @@ namespace BookWorm.Models
             News,
             Events
         }
-
-     
     }
 }
