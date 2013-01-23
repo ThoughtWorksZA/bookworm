@@ -4,23 +4,32 @@
 @model BookWorm.ViewModels.BookInformation
 <div class="row-fluid">
     <div class="row-content">
-        <div class="span8">
+        <div class="span7">
             <ul class="breadcrumb">
                 <li>@Html.ActionLink("Books", "List") <span class="divider">/</span></li>
                 <li class="active">@ViewBag.Title</li>
             </ul>
-            <h2>@ViewBag.Title</h2>
+        </div>
+        <div class="span2">
+            <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+        </div>
+        <div class="span3">
+            <div class="fb-like" data-href="http://www.puku.co.za/Books/Details/@Html.DisplayFor(model => model.Model.Id) " data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="row-content">
+        <div class="span12">
+        <h2>@ViewBag.Title</h2>
             <span class="sub-title">
                 @Html.DisplayFor(model => model.Model.Subtitle) 
             </span>
             <p>by @Html.DisplayFor(model => model.Model.Author)</p> 
         </div>
-        
-        <div class="span4">
-            <div class="fb-like" data-href="http://www.puku.co.za/Books/Details/@Html.DisplayFor(model => model.Model.Id) " data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
-        </div>
     </div>
 </div>
+
 <div class="row-fluid gray-body-row">
     <div class="row-content">
         <div class="span12">
@@ -78,6 +87,17 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var currentToggleItem = "";
+    function determineToggle(newToggleItem) {
+        if (currentToggleItem == "") {
+            currentToggleItem = newToggleItem;
+        }
+    };
+    $("#document").ready(function () {
+        $("#" + currentToggleItem).collapse();
+    });
+</script>
 @if (@Model.BookPostInformations.Any()) {
 <div class="row-fluid">
     <div class="row-content">
@@ -87,22 +107,27 @@
                 @if (Model.Reviews.Any())
                 {
                     @Html.Partial("BookPostList", Model.Reviews)
+                    <script type="text/javascript"> determineToggle("Reviews");</script>
                 }
                 @if (Model.TeachingGuides.Any())
                 {
                     @Html.Partial("BookPostList", Model.TeachingGuides)
+                    <script type="text/javascript"> determineToggle("TeachingGuides");</script>
                 }
                 @if (Model.News.Any())
                 { 
                     @Html.Partial("BookPostList", Model.News)
+                    <script type="text/javascript"> determineToggle("News");</script>
                 }
                 @if (Model.Events.Any())
                 { 
                     @Html.Partial("BookPostList", Model.Events)
+                    <script type="text/javascript"> determineToggle("Events");</script>
                 }
                 @if (Model.Other.Any())
                 { 
                     @Html.Partial("BookPostList", Model.Other)
+                    <script type="text/javascript"> determineToggle("Other");</script>
                 }
             </div>
         </div>
@@ -110,5 +135,6 @@
 </div>
 }
 
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 

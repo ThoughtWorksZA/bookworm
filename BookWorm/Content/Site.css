@@ -394,3 +394,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 .featured-post-image {
     max-width: 220px;
 }
+
+.news {
+    padding: 10px;
+}

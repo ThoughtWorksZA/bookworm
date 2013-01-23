@@ -5,40 +5,62 @@
 @using BookWorm.ViewModels
 @using PagedList.Mvc
 @model PagedList.IPagedList<IBasePostInformation>
-
+@{
+    ViewBag.Title = "PUKU | News and Events";
+}
 
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
-            <p class="lead">Posts</p>
+            <p class="lead">Latest News and Events</p>
             <p>
                 @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
                 {
- @Html.ActionLink("Create New", "Create", null, new { Id = "createNewPostLink" })
+                    @Html.ActionLink("Create New", "Create", null, new { Id = "createNewPostLink" })
                 }
             </p>
         </div>
     </div>
 </div>
-<div class="row-fluid gray-body-row">
+<div class="row-fluid">
     <div class="row-content">
         <div class="span12">
-            @foreach (var item in Model)
-            {
-
-                <div class="row link-row">
-                    <div data-clickable-url="@item.DetailsUrl">
-                        <div class="span10">
-                            <h4>@Html.DisplayFor(modelItem => item.Model.Title)</h4>
-                            <span>@Html.Raw(item.Summary(400))</span>
+        @if (Model.Any())
+        {
+            <div class="row-fluid">
+                <div class="span8 news">
+                    @foreach (var post in Model.Take(4))
+                    {
+                        <div class="row-fluid">
+                            @Html.Partial("PostNews", post)
                         </div>
-                    </div>
+                        <div class="some-small-space"><hr /></div>
+                    }
                 </div>
-
-                <div class="list-seperator"></div>
-            }
-            @Html.PagedListPager( Model, page => Url.Action("News", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast )
-        </div>
+                <div class="span4 gray-body-row news">
+                    <ul class="no-list-style">
+                        @foreach (var post in Model.Skip(4).Take(5))
+                        {
+                            <li>
+                                <p class="lead">
+                                    @if (post is BookPostInformation)
+                                    {
+                                        <i class="icon-book"></i>
+                                    }
+                                    @post.Model.Title
+                                </p>@Html.Raw(post.Summary(100))<a href="@post.DetailsUrl">Read more</a><hr />
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+           
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <center>@Html.PagedListPager( Model, page => Url.Action("News", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast )</center>
     </div>
 </div>
 

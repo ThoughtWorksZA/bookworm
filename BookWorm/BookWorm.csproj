@@ -412,6 +412,7 @@
     <Content Include="Views\Posts\Edit.cshtml" />
     <Content Include="Views\Posts\News.cshtml" />
     <Content Include="Views\Home\PostNews.cshtml" />
+    <Content Include="Views\Posts\PostNews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
