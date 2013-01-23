@@ -14,16 +14,26 @@ namespace BookWorm
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
-        public static DocumentStore Store { get; private set; }
+        private DocumentStore _store;
+        public DocumentStore Store
+        {
+            get 
+            { 
+                if (_store == null || _store.WasDisposed)
+                {
+                    _store = new DocumentStore
+                    {
+                        ConnectionStringName = "RavenDB"
+                    };
+                    _store.Initialize();
+                }
+                return _store;
+            }
+        }
         protected void Application_Start()
         {
-            Store = new DocumentStore
-                {
-                    ConnectionStringName = "RavenDB"
-                };
-            Store.Initialize();
             //WebSecurity.Initialized = true;
             AreaRegistration.RegisterAllAreas();
 

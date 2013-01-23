@@ -39,7 +39,7 @@ namespace BookWorm.Controllers
 
         protected virtual IDocumentStore GetDocumentStore()
         {
-            return MvcApplication.Store;
+            return ((MvcApplication)HttpContext.ApplicationInstance).Store;
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
