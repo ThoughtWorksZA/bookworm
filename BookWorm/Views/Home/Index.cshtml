@@ -105,7 +105,7 @@
                         <p class="lead">News and Events</p>
                     </div>
                     <div class="span2">
-                        <i class="icon-list"></i> <a href="/Posts/List">All News</a>
+                        <i class="icon-list"></i> <a href="/News">All News</a>
                     </div>
                 </div>
                 <div class="row">
@@ -115,7 +115,7 @@
                             <div class="span9">
                                 <div class="row-fluid">
                                     @{ var firstPost = Model.News.First(); }
-                                    @Html.Partial("PostNews",@firstPost);
+                                    @Html.Partial("PostNews",@firstPost)
                                 </div>
                             </div>
                             <div class="span3">
