@@ -18,7 +18,7 @@ namespace BookWorm.Tests.Controllers
         {
         }
 
-        public override ICollection<T> List<T>()
+        public override List<T> List<T>()
         {
             return new List<T>();
         }

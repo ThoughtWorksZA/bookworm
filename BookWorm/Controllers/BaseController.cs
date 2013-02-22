@@ -23,7 +23,9 @@ namespace BookWorm.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             _repository = GetRepository();
-            ViewBag.StaticPages = _repository.List<StaticPage>();
+            var staticPages = _repository.List<StaticPage>();
+            staticPages.Sort((x, y) => x.CreatedAt.CompareTo(y.CreatedAt));
+            ViewBag.StaticPages = staticPages;
             foreach (StaticPage page in ViewBag.StaticPages)
             {
                 _repository.Detach(page);

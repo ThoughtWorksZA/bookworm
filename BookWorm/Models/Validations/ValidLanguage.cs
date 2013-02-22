@@ -10,15 +10,15 @@ namespace BookWorm.Models.Validations
             {
                 "Afrikaans",
                 "English",
-                "Ndebele",
-                "Northern Sotho",
-                "Sotho",
-                "Swazi",
-                "Tswana",
-                "Tsonga",
-                "Venda",
-                "Xhosa",
-                "Zulu"
+                "isiNdebele",
+                "Sepedi",
+                "Sesotho",
+                "Siswati",
+                "Setswana",
+                "Xitsonga",
+                "Tshivenda",
+                "isiXhosa",
+                "isiZulu"
             };
 
         public override bool IsValid(object specifiedLanguage)

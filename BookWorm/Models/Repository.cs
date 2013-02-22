@@ -68,39 +68,39 @@ namespace BookWorm.Models
             return _documentSession.Load<T>(id);
         }
 
-        public virtual ICollection<T> List<T>() where T : Model
+        public virtual List<T> List<T>() where T : Model
         {
             return List<T>(int.MaxValue);
         }
 
-        public virtual ICollection<T> List<T>(int perPage) where T : Model
+        public virtual List<T> List<T>(int perPage) where T : Model
         {
             return List<T>(1, perPage);
         }
 
-        public virtual ICollection<T> List<T>(int page, int perPage) where T : Model
+        public virtual List<T> List<T>(int page, int perPage) where T : Model
         {
             var _ravenQueryable = _documentSession.Query<T>().OrderByDescending(d => d.UpdatedAt).Skip((page - 1) * perPage).Take(perPage);
             return _ravenQueryable.ToList();
         }
 
-        public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate) where T : Model
+        public virtual List<T> Search<T>(Expression<Func<T, bool>> predicate) where T : Model
         {
             return Search(predicate, 1, int.MaxValue);
         }
 
-        public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, int page, int perPage) where T : Model
+        public virtual List<T> Search<T>(Expression<Func<T, bool>> predicate, int page, int perPage) where T : Model
         {
             return Search(predicate, x => x.UpdatedAt, page, perPage);
         }
 
-        public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, Func<T, object> orderSelector, int page, int perPage) where T : Model
+        public virtual List<T> Search<T>(Expression<Func<T, bool>> predicate, Func<T, object> orderSelector, int page, int perPage) where T : Model
         {
             var ravenQueryable = _documentSession.Query<T>();
             return ravenQueryable.Where(predicate).OrderByDescending(orderSelector).Skip((page - 1) * perPage).Take(perPage).ToList();
         }
 
-        public virtual ICollection<T> Search<T>(Expression<Func<T, bool>> predicate, int perPage) where T : Model
+        public virtual List<T> Search<T>(Expression<Func<T, bool>> predicate, int perPage) where T : Model
         {
             return Search<T>(predicate, 1, perPage);
         }

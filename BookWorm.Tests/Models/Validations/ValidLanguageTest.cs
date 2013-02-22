@@ -13,7 +13,7 @@ namespace BookWorm.Tests.Models.Validations
 
             var validator = new ValidLanguage();
 
-            Assert.IsTrue(validator.IsValid("Zulu"));
+            Assert.IsTrue(validator.IsValid("isiZulu"));
         }
     
         [TestMethod]
