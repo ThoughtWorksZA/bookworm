@@ -39,7 +39,7 @@
             <p>
                 @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
                 {
-                    @Html.ActionLink("Back to List", "List")
+                    @Html.ActionLink("Back to News", "News")
                     @Html.Raw(" | ")<i class="icon-edit"></i>
                     @Html.ActionLink("Edit", "Edit", new {id = Model.Model.Id})
                 }
