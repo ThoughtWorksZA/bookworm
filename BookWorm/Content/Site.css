@@ -170,7 +170,13 @@ clear: both;
 }
 
 .book-image {
-    width: 300px;
+    width: 200px;
+}
+
+.book-image-wrapper {
+    width: 200px;
+    max-height: 300px;
+    overflow: hidden;
 }
 
 .book-cover-info {
