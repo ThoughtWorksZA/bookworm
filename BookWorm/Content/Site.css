@@ -71,6 +71,18 @@ display: none;
 line-height: 1.2;
 }
 
+/*Wrap text around images in news post edit preview*/
+div.wmd-panel img {
+    float: left;
+    padding-right: 2em;
+}
+
+/*Wrap text around images in news post view*/
+div.display-field img {
+    float: left;
+    padding-right: 2em;
+}
+
 .cbt {
 clear: both;
 }
