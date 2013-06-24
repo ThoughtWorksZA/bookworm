@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -33,7 +33,7 @@ namespace BookWorm.Models
         {
             _documentSession.Advanced.Evict(model);
         }
-
+         
         public virtual T Create<T>(T model) where T : Model
         {
             if (model.CreatedAt == DateTime.MinValue)

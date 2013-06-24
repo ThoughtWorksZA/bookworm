@@ -14,6 +14,8 @@ namespace BookWorm.Controllers
     [Authorize]
     public class BooksController : BaseController
     {
+        private static readonly object synclock = new object();
+
         public BooksController()
         {
         }
@@ -55,8 +57,20 @@ namespace BookWorm.Controllers
                 TempData["flashError"] = "There were problems saving this book";
                 return View(bookInformation);
             }
+              Book createdBook;
 
-            var createdBook = (Book) _repository.Create(bookInformation.Model);
+            //Warning: this wouldn't work in a cluster - need to use transactions on the DB for atomicity
+            lock (synclock) //Provide some atomicity for checking the ISBN exists and then create it
+            {
+                List<Book> search = _repository.Search<Book>(b => b.Isbn == bookInformation.Model.Isbn);
+                if ( search.Any())
+                {
+                    TempData["flashError"] = "The ISBN number already exists";
+                    return View(bookInformation);
+                }
+                createdBook = (Book) _repository.Create(bookInformation.Model);
+            }
+          
             TempData["flashSuccess"] = string.Format("Added {0} successfully", createdBook.Title);
             return RedirectToAction("Details", new { id = createdBook.Id });
         }

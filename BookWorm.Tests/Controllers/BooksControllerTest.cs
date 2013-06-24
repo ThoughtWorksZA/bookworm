@@ -61,6 +61,24 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
+        public void createBookShouldNotSaveWhenIsbnAlreadyExists()
+        {
+
+            var book = new Book() { Isbn = "ffff" };
+            var bookInformation = new BookInformation(book);
+            var mockedRepo = new Mock<Repository>();
+            var booksController = new BooksController(mockedRepo.Object);
+            var bookList = new List<Book>{book};
+            
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns( bookList);
+            var result = (ViewResult)booksController.Create(bookInformation);
+            mockedRepo.Verify(repo => repo.Create(book), Times.Never(), "duplicate ISBN should prevent creating book");
+            Assert.AreEqual("The ISBN number already exists", booksController.TempData["flashError"]);
+        }
+
+       
+
+        [TestMethod]
         public void CreateBookShouldNotSaveWhenBookIsInvalid()
         {
             var book = new Book();

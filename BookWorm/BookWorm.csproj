@@ -244,13 +244,13 @@
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookPost.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\Repository.cs" />
     <Compile Include="Models\StaticPage.cs" />
     <Compile Include="Models\Validations\ValidAgeRange.cs" />
     <Compile Include="Models\Validations\ValidCountry.cs" />
     <Compile Include="Models\Validations\ValidGenre.cs" />
     <Compile Include="Models\Validations\ValidLanguage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\Repository.cs" />
     <Compile Include="ViewModels\BookInformation.cs" />
     <Compile Include="ViewModels\BookPostInformation.cs" />
     <Compile Include="ViewModels\FilterInformation.cs" />
