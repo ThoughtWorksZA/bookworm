@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using BookWorm.Models;
-using BookWorm.Models.Validations;
 using BookWorm.ViewModels;
 using PagedList;
 using Raven.Client.Linq;
@@ -59,10 +58,10 @@ namespace BookWorm.Controllers
             }
               Book createdBook;
 
-            //Warning: this wouldn't work in a cluster - need to use transactions on the DB for atomicity
+            //Warning: this wouldn't work in a cluster - need to use concurrency on the DB for atomicity
             lock (synclock) //Provide some atomicity for checking the ISBN exists and then create it
             {
-                List<Book> search = _repository.Search<Book>(b => b.Isbn == bookInformation.Model.Isbn);
+                List<Book> search = SearchByIsbn(bookInformation);
                 if ( search.Any())
                 {
                     TempData["flashError"] = "The ISBN number already exists";
@@ -90,11 +89,29 @@ namespace BookWorm.Controllers
                 TempData["flashError"] = "There were problems saving this book";
                 return View(editedBookInformation);
             }
+            lock (synclock)
+            {
+                List<Book> search = SearchByIsbn(editedBookInformation);
+                if (search.Any())
+                {
+                    TempData["flashError"] = "The Book Edit was not saved because the provided ISBN number already exists";
+                    return View(editedBookInformation);
+                }
 
-            _repository.Edit(editedBookInformation.Model);
+                _repository.Edit(editedBookInformation.Model);
+                
+            }
+            
             TempData["flashSuccess"] = string.Format("Updated {0} successfully", editedBookInformation.Model.Title);
             return RedirectToAction("Details", new { id = editedBookInformation.Model.Id });
 
+        }
+
+        private List<Book> SearchByIsbn(BookInformation editedBookInformation)
+        {
+            return _repository.Search<Book>(b => b.Isbn == editedBookInformation.Model.Isbn)
+                              .Where(b => b.Id != editedBookInformation.Model.Id)
+                              .ToList();
         }
 
         [HttpDelete]

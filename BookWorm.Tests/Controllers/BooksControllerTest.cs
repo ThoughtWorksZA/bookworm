@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
-using BookWorm.Models.Validations;
 using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -34,7 +33,7 @@ namespace BookWorm.Tests.Controllers
             var book = new Book { Title = "The Book" };
             var bookInformation = new BookInformation(book);
 
-            var mockedRepo = new Mock<Repository>();
+            var mockedRepo = GetMockedRepo();
             mockedRepo.Setup(repo => repo.Create(book)).Returns(new Book { Id = 1, Title = "The Book"});
             var booksController = new BooksController(mockedRepo.Object);
 
@@ -45,13 +44,20 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual(1, viewResult.RouteValues["id"]);
         }
 
+        private static Mock<Repository> GetMockedRepo()
+        {
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(r => r.Search(It.IsAny<Expression<Func<Book, bool>>>())).Returns(new List<Book>());
+            return mockedRepo;
+        }
+
         [TestMethod]
         public void ShouldUseRepositoryWhenCreatingABook()
         {
             var book = new Book();
             var bookInformation = new BookInformation(book);
 
-            var mockedRepo = new Mock<Repository>();
+            var mockedRepo = GetMockedRepo();
             mockedRepo.Setup(repo => repo.Create(book)).Returns(new Book());
 
             var booksController = new BooksController(mockedRepo.Object);
@@ -63,20 +69,17 @@ namespace BookWorm.Tests.Controllers
         [TestMethod]
         public void createBookShouldNotSaveWhenIsbnAlreadyExists()
         {
-
-            var book = new Book() { Isbn = "ffff" };
-            var bookInformation = new BookInformation(book);
+            var bookAlreadyInDB = new Book() {Id = 1, Isbn = "ffff" };
+            var bookToCreate = new Book() { Isbn = "ffff" };
             var mockedRepo = new Mock<Repository>();
             var booksController = new BooksController(mockedRepo.Object);
-            var bookList = new List<Book>{book};
             
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns( bookList);
-            var result = (ViewResult)booksController.Create(bookInformation);
-            mockedRepo.Verify(repo => repo.Create(book), Times.Never(), "duplicate ISBN should prevent creating book");
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()))
+                .Returns( new List<Book> { bookAlreadyInDB });
+            var result = (ViewResult)booksController.Create(new BookInformation(bookToCreate));
+            mockedRepo.Verify(repo => repo.Create(bookToCreate), Times.Never(), "duplicate ISBN should prevent creating book");
             Assert.AreEqual("The ISBN number already exists", booksController.TempData["flashError"]);
         }
-
-       
 
         [TestMethod]
         public void CreateBookShouldNotSaveWhenBookIsInvalid()
@@ -151,7 +154,7 @@ namespace BookWorm.Tests.Controllers
         {
             var editedBook = new Book { Id = 1, Title = "A book" };
             var editedBookInformation = new BookInformation(editedBook);
-            var mockedRepo = new Mock<Repository>();
+            var mockedRepo = GetMockedRepo();
             mockedRepo.Setup(repo => repo.Edit(editedBook));
             var booksController = new BooksController(mockedRepo.Object);
 
@@ -161,7 +164,51 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual("Updated A book successfully", booksController.TempData["flashSuccess"]);
             Assert.AreEqual(1, viewResult.RouteValues["id"]);
             
+        }  
+        
+        [TestMethod]
+        public void ShouldNotUpdateBookOnEditPostIfIsbnIsChangedAndIsDuplicate()
+        {
+            //Given
+            string isbnForAlreadyExistingBook = "12345";
+            var bookforEditing = new Book { Id = 1, Title = "A book", Isbn = "11111" };
+            var bookAlreadyExistingInDb = new Book { Id = 2, Title = "Another book", Isbn = isbnForAlreadyExistingBook};
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()))
+                .Returns(new List<Book> { bookAlreadyExistingInDb, bookforEditing });
+
+            //When   
+            bookforEditing.Isbn = isbnForAlreadyExistingBook;
+            var booksController = new BooksController(mockedRepo.Object);
+            ActionResult viewResult = booksController.Edit(new BookInformation(bookforEditing));
+
+            //Then
+            mockedRepo.Verify(repo => repo.Edit<Book>(bookforEditing), Times.Never(), "A book whose ISBN number is edited and duplicates an already existing ISBN number should not be saved to the database");
+            Assert.AreEqual("The Book Edit was not saved because the provided ISBN number already exists", booksController.TempData["flashError"], "should return the error message in the model");
+         //   Assert.AreEqual("/views/Books/Edit.cshtml", ((ViewResult)viewResult).MasterName, "Should return the book edit view");
+            
         }
+        
+        [TestMethod]
+        public void ShouldUpdateBookOnEditPostWithIsbnUnChanged()
+        {
+            //Given
+            var bookforEditing = new Book { Id = 1, Title = "A book", Isbn = "11111" };
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()))
+                .Returns(new List<Book> { bookforEditing });
+
+            //When   
+            bookforEditing.Title = "Changed Book Name";
+            var booksController = new BooksController(mockedRepo.Object);
+            ActionResult viewResult = booksController.Edit(new BookInformation(bookforEditing));
+
+            //Then
+            mockedRepo.Verify(repo => repo.Edit<Book>(bookforEditing), Times.Once(), "Book Should be Edited");
+            
+        }
+
+      
 
         [TestMethod]
         public void EditBookShouldNotSaveWhenBookIsInvalid()
