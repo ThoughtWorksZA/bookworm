@@ -64,4 +64,4 @@ packages/
 #Test files
 *.testsettings
 
-checkImages/images_all
+checkBookCoverImages/images_all
