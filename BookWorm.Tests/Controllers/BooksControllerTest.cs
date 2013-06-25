@@ -69,18 +69,45 @@ namespace BookWorm.Tests.Controllers
         [TestMethod]
         public void createBookShouldNotSaveWhenIsbnAlreadyExists()
         {
-            var bookAlreadyInDB = new Book() {Id = 1, Isbn = "ffff" };
-            var bookToCreate = new Book() { Isbn = "ffff" };
+            //Given
+            const string alreadyExistingIsbn = "12345";
+            var bookAlreadyInDB = new Book() { Id = 1, Isbn = alreadyExistingIsbn };
+            var bookToCreate = new Book() { Isbn = alreadyExistingIsbn };
             var mockedRepo = new Mock<Repository>();
-            var booksController = new BooksController(mockedRepo.Object);
-            
             mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()))
-                .Returns( new List<Book> { bookAlreadyInDB });
+                .Returns(new List<Book> { bookAlreadyInDB });
+            var booksController = new BooksController(mockedRepo.Object);
+
+            //When
             var result = (ViewResult)booksController.Create(new BookInformation(bookToCreate));
+
+            //Then
             mockedRepo.Verify(repo => repo.Create(bookToCreate), Times.Never(), "duplicate ISBN should prevent creating book");
             Assert.AreEqual("The ISBN number already exists", booksController.TempData["flashError"]);
         }
 
+
+
+        [TestMethod]
+        public void createBookShouldNotSaveWhenIsbnAlreadyExistsWithFakeRepo()
+        {
+            //Given
+            const string alreadyExistingIsbn = "12345";
+            var bookAlreadyInDB = new Book() { Id = 1, Isbn = alreadyExistingIsbn };
+            var bookToCreate = new Book() { Isbn = alreadyExistingIsbn };
+            var fakeRepo = new FakeRepository();
+            fakeRepo.Create(bookAlreadyInDB);
+            var booksController = new BooksController(fakeRepo);
+
+            //When
+            var result = booksController.Create(new BookInformation(bookToCreate));
+
+            //Then
+            Assert.AreEqual(fakeRepo.Count<Book>(), 1);
+            Assert.AreEqual("The ISBN number already exists", booksController.TempData["flashError"]);
+        }
+
+       
         [TestMethod]
         public void CreateBookShouldNotSaveWhenBookIsInvalid()
         {
@@ -421,6 +448,77 @@ namespace BookWorm.Tests.Controllers
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
         }
+
+
+        class FakeRepository : Repository
+        {
+            List<Model> objects = new List<Model>();
+
+            public override void Detach<T>(T model) 
+            {
+                objects.Remove(model);
+            }
+
+            public override T Create<T>(T model)
+            {
+                objects.Add(model);
+                return model;
+            }
+
+            public override void Delete<T>(int id)
+            {
+                objects.Remove(Get<T>(id));
+            }
+
+            public override T Get<T>(int id)
+            {
+                return (T)objects.First<Model>(o => o.Id == id);
+            }
+
+            public override List<T> List<T>()
+            {
+                return objects.ConvertAll(a => (T)a);
+
+            }
+
+            public override List<T> List<T>(int perPage)
+            {
+                return List<T>(0, perPage);
+            }
+
+            public override List<T> Search<T>(Expression<Func<T, bool>> predicate)
+            {
+                return new List<T>(List<T>().Where(predicate.Compile()));
+            }
+
+            public override List<T> List<T>(int page, int perPage)
+            {
+                return objects.GetRange(page * perPage, perPage).ConvertAll(a => (T)a);
+            }
+
+            public override List<T> Search<T>(Expression<Func<T, bool>> predicate, int page, int perPage)
+            {
+                return new List<T>(List<T>(page, perPage).Where(predicate.Compile()));
+            }
+
+
+            public override List<T> Search<T>(Expression<Func<T, bool>> predicate, int perPage)
+            {
+                return Search(predicate, 0, perPage);
+            }
+
+            public override int Count<T>()
+            {
+                return objects.Count;
+            }
+
+            public override int Count<T>(Expression<Func<T, bool>> predicate)
+            {
+                return Search(predicate).Count();
+            }
+        }
     }
+
+
 
 }
