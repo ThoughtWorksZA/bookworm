@@ -109,8 +109,8 @@ namespace BookWorm.Controllers
 
         private List<Book> SearchByIsbn(BookInformation editedBookInformation)
         {
-            return _repository.Search<Book>(b => b.Isbn == editedBookInformation.Model.Isbn)
-                              .Where(b => b.Id != editedBookInformation.Model.Id)
+            return _repository.Search<Book>(b => (b.Isbn == editedBookInformation.Model.Isbn && b.Id != editedBookInformation.Model.Id))
+                              
                               .ToList();
         }
 
