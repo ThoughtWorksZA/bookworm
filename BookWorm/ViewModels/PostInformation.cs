@@ -41,7 +41,7 @@ namespace BookWorm.ViewModels
 
         public string Summary(int characters)
         {
-            return MarkDownHelper.MarkDownSummary(Model.Content, characters);
+            return MarkDownHelper.Summary(Model.Content, characters);
         }
 
         public override string CreateSucceededMessage

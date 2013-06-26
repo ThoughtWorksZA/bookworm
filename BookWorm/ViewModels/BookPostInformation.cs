@@ -30,7 +30,7 @@ namespace BookWorm.ViewModels
 
         public string Summary(int characters)
         {
-            return MarkDownHelper.MarkDownSummary(Model.Content, characters);
+            return MarkDownHelper.Summary(Model.Content, characters);
         }
 
         public string DetailsUrl { get { return string.Format("/Books/Details/{0}", Book.Id); } }
