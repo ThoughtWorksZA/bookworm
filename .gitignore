@@ -63,3 +63,5 @@ packages/
 
 #Test files
 *.testsettings
+
+checkBookCoverImages/images_all
