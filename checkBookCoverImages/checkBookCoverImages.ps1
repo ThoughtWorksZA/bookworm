@@ -32,11 +32,10 @@ import-csv $csv|`
         }
 
 $total = $urls.length
-write-host "$total in total"
 
 $index = 1
 foreach ($url in $urls) {
-    write-host "$index"
+    write-host -f green -NoNewline "`b`b`b`b`b`b`b`b`b`b`b`b`b`b`b$index of $total"
     try {
         $imageName = ($books[$index-1] -replace '/', '_')
         (New-Object System.Net.WebClient).DownloadFile($url, "$imagesPath\$imageName.jpg")
