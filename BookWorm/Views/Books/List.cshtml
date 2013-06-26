@@ -51,7 +51,7 @@
                                               {
 
                                                   defaultBookCoverDisplay = "none";
-                                                  <div class="book-image-wrapper"><img class="book-image" src="@item.Model.CoverImageUrl" onerror="$('#default-image-@item.Model.Id').show()"/></div>
+                                                  <div class="book-image-wrapper"><img class="book-image" src="@item.Model.CoverImageUrl" onerror="$(this).hide(); $('#default-image-@item.Model.Id').show()"/></div>
                                             
                                               }
 
