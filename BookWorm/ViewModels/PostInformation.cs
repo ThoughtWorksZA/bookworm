@@ -1,4 +1,5 @@
-﻿using BookWorm.Models;
+﻿using BookWorm.Helpers;
+using BookWorm.Models;
 
 namespace BookWorm.ViewModels
 {
@@ -40,10 +41,7 @@ namespace BookWorm.ViewModels
 
         public string Summary(int characters)
         {
-            var md = new MarkdownSharp.Markdown();
-            if (Model.Content == null || Model.Content.Length < characters)
-                return md.Transform(Model.Content);
-            return md.Transform(Model.Content.Substring(0, Model.Content.IndexOf(" ", characters)));
+            return MarkDownHelper.Summary(Model.Content, characters);
         }
 
         public override string CreateSucceededMessage

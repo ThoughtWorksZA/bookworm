@@ -179,6 +179,7 @@
     <Compile Include="Controllers\BaseControllerTest.cs" />
     <Compile Include="Controllers\AccountControllerTest.cs" />
     <Compile Include="Controllers\PostsControllerTest.cs" />
+    <Compile Include="Helpers\MarkDownHelperTest.cs" />
     <Compile Include="Models\UnitTest1.cs" />
     <Compile Include="Specs\CreateAStaticPage.feature.cs">
       <AutoGen>True</AutoGen>
@@ -218,7 +219,6 @@
     <Compile Include="Specs\BaseSteps.cs" />
     <Compile Include="Specs\Pages\StaticPageDetailsPage.cs" />
     <Compile Include="Specs\Pages\StaticPagesListPage.cs" />
-    <Compile Include="ViewModels\BookInformationTest.cs" />
     <Compile Include="ViewModels\BookPostInformationTest.cs" />
     <Compile Include="ViewModels\PostInformationTest.cs" />
     <Compile Include="ViewModels\FilterInformationTest.cs" />
