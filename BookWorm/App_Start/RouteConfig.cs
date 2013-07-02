@@ -15,7 +15,7 @@ namespace BookWorm
 
             routes.MapRoute(
                 "Language",
-                "Books/Language/{language}",
+                "Books/Language/{languages}",
                 new {controller = "Books", action = "Language"}
                 );
 

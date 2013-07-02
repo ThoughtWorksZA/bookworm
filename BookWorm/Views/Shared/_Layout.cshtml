@@ -63,7 +63,7 @@
                                 <ul class="no-list-style">
                                     @foreach (var language in ValidLanguage.ValidLanguages)
                                     {
-                                        <li>@Html.ActionLink(language, "Language", "Books", new { language }, null)</li>
+                                        <li>@Html.ActionLink(language, "Language", "Books", new { languages = language }, null)</li>
                                     }
                                 </ul>
                             </div>

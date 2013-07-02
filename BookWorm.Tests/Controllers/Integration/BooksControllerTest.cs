@@ -63,7 +63,7 @@ namespace BookWorm.Tests.Controllers.Integration
             {
                 var repository = new Repository(session);
                 Enumerable.Range(1, 8).ToList().ForEach(i => repository.Create(new Book { Title = "Book " + i, Language = "Venda" }));
-                var book1 = new Book { Title = "Book 9", Language = "Zulu", AgeRange = "0-2" };
+                var book1 = new Book { Title = "Book 9", Language = "Zulu", AgeRange = "0-2", Genre = "Fiction"};
                 repository.Create(book1);
                 var book2 = new Book { Title = "Book 10", Language = "Zulu", AgeRange = "3-5" };
                 repository.Create(book2);
@@ -74,7 +74,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 var expectedBooks = new List<Book> { book1 };
                 var booksController = new BooksController(repository);
 
-                var view = (ViewResult)booksController.Filter(new List<string>() { "Zulu" }, new List<string>() { "0-2" }, new List<string>());
+                var view = (ViewResult)booksController.Filter(new List<string>() { "Zulu" }, new List<string>() { "0-2" }, new List<string>() { "Fiction" });
 
                 var filterInformation = (FilterInformation)view.Model;
                 var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();

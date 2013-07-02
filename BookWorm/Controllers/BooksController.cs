@@ -143,19 +143,20 @@ namespace BookWorm.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Language(string language, int page = 1, int perPage = 9)
+        public ActionResult Language(string languages, int page = 1, int perPage = 9)
         {
-            Expression<Func<Book, bool>> searchPredicate = book => book.Language == language;
-            var bookInformations = DiscoverBooks(language, page, perPage, searchPredicate);
-            return View("List", new FilterInformation(new List<string>() {language}, new List<string>(), new List<string>(), bookInformations));
+            Expression<Func<Book, bool>> searchPredicate = book => book.Language == languages;
+            var bookInformations = DiscoverBooks(languages, page, perPage, searchPredicate);
+            return View("List", new FilterInformation(new List<string>() {languages}, new List<string>(), new List<string>(), bookInformations));
         }
 
         private StaticPagedList<BookInformation> DiscoverBooks(string filterType, int page, int perPage, Expression<Func<Book, bool>> searchPredicate)
         {
-            var books = _repository.Search(searchPredicate);
             ViewBag.Title = string.Format("{0} Books", filterType);
+            var books = _repository.Search(searchPredicate, page, perPage);
+            var totalItemCount = _repository.Count(searchPredicate);
             var bookInformations = new StaticPagedList<BookInformation>(
-                books.Select(book => new BookInformation(book)).ToList(), page, perPage, _repository.Count(searchPredicate));
+                books.Select(book => new BookInformation(book)), page, perPage, totalItemCount);
             return bookInformations;
         }
 
@@ -165,7 +166,7 @@ namespace BookWorm.Controllers
             languages = languages ?? new List<string>();
             ageRanges = ageRanges ?? new List<string>();
             genres = genres ?? new List<string>();
-            var books = _repository.List<Book>().ToList();
+            var books = _repository.List<Book>();
             if (languages.Any())
             {
                 books = books.Where(book => book.Language.In(languages)).ToList();
