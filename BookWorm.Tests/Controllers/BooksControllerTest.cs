@@ -369,6 +369,33 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
+        public void BooksControllerFilterByLanguageShouldReturnBooksInGivenLanguageWithPagination()
+        {
+            var books = new List<Book>();
+            Enumerable.Range(1, 8).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i, Language = "Venda" }));
+           
+            var mockedRepo = new Mock<Repository>();
+
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(books);
+            var booksController = new BooksController(mockedRepo.Object);
+
+            var view = (ViewResult)booksController.Language("Venda", 1, 3);
+
+            var filterInformation = (FilterInformation)view.Model;
+            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
+            Assert.AreEqual(3, actualBooks.Count());
+            Assert.AreEqual("Book 1", actualBooks.First().Title);
+
+            view = (ViewResult)booksController.Language("Venda", 3, 3);
+
+            filterInformation = (FilterInformation)view.Model;
+            actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
+            Assert.AreEqual(2, actualBooks.Count());
+            Assert.AreEqual("Book 7", actualBooks.First().Title);
+            Assert.AreEqual("Book 8", actualBooks.Last().Title);
+        }
+
+        [TestMethod]
         public void BooksControllerFilterByAgeRangeShouldReturnBooksInGivenAgeRange()
         {
             var books = new List<Book>();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Raven.Client;
+using Raven.Client.Linq;
 
 namespace BookWorm.Models
 {
@@ -80,7 +81,8 @@ namespace BookWorm.Models
 
         public virtual List<T> List<T>(int page, int perPage) where T : Model
         {
-            var _ravenQueryable = _documentSession.Query<T>().OrderByDescending(d => d.UpdatedAt).Skip((page - 1) * perPage).Take(perPage);
+            //TODO: If the POCOs filtered by Query exceeds 1024, then this does not work.
+            var _ravenQueryable = Query<T>().OrderByDescending(d => d.UpdatedAt).Skip((page - 1) * perPage).Take(perPage);
             return _ravenQueryable.ToList();
         }
 
@@ -96,8 +98,8 @@ namespace BookWorm.Models
 
         public virtual List<T> Search<T>(Expression<Func<T, bool>> predicate, Func<T, object> orderSelector, int page, int perPage) where T : Model
         {
-            var ravenQueryable = _documentSession.Query<T>();
-            return ravenQueryable.Where(predicate).OrderByDescending(orderSelector).Skip((page - 1) * perPage).Take(perPage).ToList();
+            //TODO: If the POCOs filtered by predicate exceeds 1024, then the take and order won't not work.
+            return Query<T>().Where(predicate).Take(int.MaxValue).ToList().OrderByDescending(orderSelector).Skip((page - 1) * perPage).Take(perPage).ToList();
         }
 
         public virtual List<T> Search<T>(Expression<Func<T, bool>> predicate, int perPage) where T : Model
@@ -107,13 +109,18 @@ namespace BookWorm.Models
 
         public virtual int Count<T>() where T : Model
         {
-            return _documentSession.Query<T>().Count();
+            return Query<T>().Count();
         }
 
         public virtual int Count<T>(Expression<Func<T, bool>> predicate) where T : Model
         {
-            return _documentSession.Query<T>().Where(predicate).Count();
+            return Query<T>().Where(predicate).Count();
         }
+
+        private IRavenQueryable<T> Query<T>() where T : Model
+        {
+            return _documentSession.Query<T>();
+        } 
     }
 
     public class Model
