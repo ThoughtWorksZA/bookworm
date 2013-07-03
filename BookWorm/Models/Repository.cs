@@ -9,7 +9,7 @@ namespace BookWorm.Models
 {
     public class Repository
     {
-        private IDocumentSession _documentSession;
+        private readonly IDocumentSession _documentSession;
 
         public Repository()
         {
@@ -93,13 +93,7 @@ namespace BookWorm.Models
 
         public virtual List<T> Search<T>(Expression<Func<T, bool>> predicate, int page, int perPage) where T : Model
         {
-            return Search(predicate, x => x.UpdatedAt, page, perPage);
-        }
-
-        public virtual List<T> Search<T>(Expression<Func<T, bool>> predicate, Func<T, object> orderSelector, int page, int perPage) where T : Model
-        {
-            //TODO: If the POCOs filtered by predicate exceeds 1024, then the take and order won't not work.
-            return Query<T>().Where(predicate).Take(int.MaxValue).ToList().OrderByDescending(orderSelector).Skip((page - 1) * perPage).Take(perPage).ToList();
+            return Query<T>().Where(predicate).OrderByDescending(x => x.UpdatedAt).Skip((page - 1) * perPage).Take(perPage).ToList();
         }
 
         public virtual List<T> Search<T>(Expression<Func<T, bool>> predicate, int perPage) where T : Model
