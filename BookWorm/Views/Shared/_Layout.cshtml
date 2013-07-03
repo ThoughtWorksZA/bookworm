@@ -72,7 +72,7 @@
                                 <ul class="no-list-style">
                                     @foreach (var agerange in ValidAgeRange.ValidAgeRanges)
                                     {
-                                        <li>@Html.ActionLink(agerange, "AgeRange", "Books", new { agerange }, null)</li>
+                                        <li>@Html.ActionLink(agerange, "AgeRange", "Books", new { ageRanges = agerange }, null)</li>
                                     }
                                 </ul>
                             </div>
@@ -81,7 +81,7 @@
                                 <ul class="no-list-style">
                                     @foreach (var genre in ValidGenre.ValidGenres)
                                     {
-                                        <li>@Html.ActionLink(genre, "Genre", "Books", new { genre }, null)</li>
+                                        <li>@Html.ActionLink(genre, "Genre", "Books", new { genres = genre }, null)</li>
                                     }
                                 </ul>
                             </div>

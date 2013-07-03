@@ -192,19 +192,19 @@ namespace BookWorm.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult AgeRange(string ageRange, int page = 1, int perPage = 9)
+        public ActionResult AgeRange(string ageRanges, int page = 1, int perPage = 9)
         {
-            Expression<Func<Book, bool>> searchPredicate = book => book.AgeRange == ageRange;
-            var bookInformations = DiscoverBooks(ageRange, page, perPage, searchPredicate);
-            return View("List", new FilterInformation(new List<string>(), new List<string>() { ageRange }, new List<string>(), bookInformations));
+            Expression<Func<Book, bool>> searchPredicate = book => book.AgeRange == ageRanges;
+            var bookInformations = DiscoverBooks(ageRanges, page, perPage, searchPredicate);
+            return View("List", new FilterInformation(new List<string>(), new List<string>() { ageRanges }, new List<string>(), bookInformations));
         }
 
         [AllowAnonymous]
-        public ActionResult Genre(string genre, int page = 1, int perPage = 9)
+        public ActionResult Genre(string genres, int page = 1, int perPage = 9)
         {
-            Expression<Func<Book, bool>> searchPredicate = book => book.Genre == genre;
-            var bookInformations = DiscoverBooks(genre, page, perPage, searchPredicate);
-            return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string>() { genre }, bookInformations));
+            Expression<Func<Book, bool>> searchPredicate = book => book.Genre == genres;
+            var bookInformations = DiscoverBooks(genres, page, perPage, searchPredicate);
+            return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string>() { genres }, bookInformations));
         }
     }
 }
