@@ -222,8 +222,9 @@ namespace BookWorm.Tests.Controllers
             //Given
             var bookforEditing = new Book { Id = 1, Title = "A book", Isbn = "11111" };
             var mockedRepo = new Mock<Repository>();
+            var existingBooks = new List<Book> {bookforEditing};
             mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()))
-                .Returns(new List<Book> { bookforEditing });
+                .Returns((Expression<Func<Book, bool>> predicate) => existingBooks.Where(predicate.Compile()).ToList());
 
             //When   
             bookforEditing.Title = "Changed Book Name";
