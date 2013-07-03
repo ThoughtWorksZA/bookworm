@@ -353,7 +353,7 @@ namespace BookWorm.Tests.Controllers
             books.Add(book2);
             var mockedRepo = new Mock<Repository>();
             var expectedBooks = new List<Book> { book1, book2 };
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<int>(), It.IsAny<int>())).Returns(expectedBooks);
             var booksController = new BooksController(mockedRepo.Object);
 
             var view = (ViewResult)booksController.Language("Zulu");
@@ -363,36 +363,9 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual(2, actualBooks.Count());
             Assert.AreEqual("Zulu", actualBooks.First().Language);
             Assert.AreEqual("Zulu", actualBooks.Last().Language);
-            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()), Times.Once());
+            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once());
             Assert.AreEqual(1, filterInformation.Languages.Count());
             Assert.AreEqual("Zulu", filterInformation.Languages.First());
-        }
-
-        [TestMethod]
-        public void BooksControllerFilterByLanguageShouldReturnBooksInGivenLanguageWithPagination()
-        {
-            var books = new List<Book>();
-            Enumerable.Range(1, 8).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i, Language = "Venda" }));
-           
-            var mockedRepo = new Mock<Repository>();
-
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(books);
-            var booksController = new BooksController(mockedRepo.Object);
-
-            var view = (ViewResult)booksController.Language("Venda", 1, 3);
-
-            var filterInformation = (FilterInformation)view.Model;
-            var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
-            Assert.AreEqual(3, actualBooks.Count());
-            Assert.AreEqual("Book 1", actualBooks.First().Title);
-
-            view = (ViewResult)booksController.Language("Venda", 3, 3);
-
-            filterInformation = (FilterInformation)view.Model;
-            actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
-            Assert.AreEqual(2, actualBooks.Count());
-            Assert.AreEqual("Book 7", actualBooks.First().Title);
-            Assert.AreEqual("Book 8", actualBooks.Last().Title);
         }
 
         [TestMethod]
@@ -406,7 +379,7 @@ namespace BookWorm.Tests.Controllers
             books.Add(book2);
             var mockedRepo = new Mock<Repository>();
             var expectedBooks = new List<Book> { book1, book2 };
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>(),It.IsAny<int>(), It.IsAny<int>())).Returns(expectedBooks);
             var booksController = new BooksController(mockedRepo.Object);
 
             var view = (ViewResult)booksController.AgeRange("0-2");
@@ -416,7 +389,7 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual(2, actualBooks.Count());
             Assert.AreEqual("0-2", actualBooks.First().AgeRange);
             Assert.AreEqual("0-2", actualBooks.Last().AgeRange);
-            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()), Times.Once());
+            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once());
             Assert.AreEqual(1, filterInformation.AgeRanges.Count());
             Assert.AreEqual("0-2", filterInformation.AgeRanges.First());
         }
@@ -432,7 +405,7 @@ namespace BookWorm.Tests.Controllers
             books.Add(book2);
             var mockedRepo = new Mock<Repository>();
             var expectedBooks = new List<Book> { book1, book2 };
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>())).Returns(expectedBooks);
+            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<int>(), It.IsAny<int>())).Returns(expectedBooks);
             var booksController = new BooksController(mockedRepo.Object);
 
             var view = (ViewResult)booksController.Genre("Poetry");
@@ -442,7 +415,7 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual(2, actualBooks.Count());
             Assert.AreEqual("Poetry", actualBooks.First().Genre);
             Assert.AreEqual("Poetry", actualBooks.Last().Genre);
-            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()), Times.Once());
+            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once());
             Assert.AreEqual(1, filterInformation.Genres.Count());
             Assert.AreEqual("Poetry", filterInformation.Genres.First());
         }
