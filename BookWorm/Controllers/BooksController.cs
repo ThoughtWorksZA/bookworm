@@ -14,7 +14,8 @@ namespace BookWorm.Controllers
     public class BooksController : BaseController
     {
         private static readonly object synclock = new object();
-        private const string NoBooksFoundTxt = "No books found that match your search.";
+        private const string NoBooksFoundTxtSearch = "No books found that match your search. Change the search text to widen your search.";
+        private const string NoBooksFoundTxtFilter = "No books found that match your search. Change the filter options on the left to widen your search.";
 
         public BooksController()
         {
@@ -137,7 +138,7 @@ namespace BookWorm.Controllers
             }
             if (!bookInformations.Any())
             {
-                TempData["flashNotice"] = NoBooksFoundTxt;
+                TempData["flashNotice"] = NoBooksFoundTxtSearch;
             }
             ViewBag.HideFilter = true;
             return View(new FilterInformation(bookInformations));
@@ -185,7 +186,7 @@ namespace BookWorm.Controllers
 
             if (!bookInformations.Any())
             {
-                TempData["flashNotice"] = NoBooksFoundTxt;
+                TempData["flashNotice"] = NoBooksFoundTxtFilter;
             }
             return View("List", new FilterInformation(languages, ageRanges, genres, bookInformations)); 
         }

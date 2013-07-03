@@ -15,17 +15,17 @@
     <div class="row-content">
         <div class="span12">
             <div class="row-fluid">
-                <div class="span3">
-                    <div class="filters">
-                        <div class="popover-title"><i class="icon-tags"></i> Narrow your search</div>
-                        <div class="popover-content">
-                            @if (!Convert.ToBoolean(ViewBag.HideFilter))
-                            {
+                @if (!Convert.ToBoolean(ViewBag.HideFilter))
+                {
+                    <div class="span3">
+                        <div class="filters">
+                            <div class="popover-title"><i class="icon-tags"></i> Narrow your search</div>
+                            <div class="popover-content">
                                 @Html.Partial("Filter")
-                            }
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
                 <div class="span9">
                     @if (TempData["flashNotice"] != null && !TempData["flashNotice"].ToString().IsEmpty())
                     {
@@ -89,14 +89,17 @@
        
                             }
                         </ol>
-                        }
+                    }
                 </div>
             </div>
-            <div class="row-fluid">
-                <div class="span12">
-                    <center>@Html.PagedListPager( Model.BookInformations, page => Model.PaginationUrl(ViewContext.RouteData.Values["Action"].ToString(), page), PagedListRenderOptions.ClassicPlusFirstAndLast )</center>
-                </div>
-            </div>
+             @if (Model.BookInformations != null && Model.BookInformations.Any())
+             {
+                 <div class="row-fluid">
+                     <div class="span12">
+                         <center>@Html.PagedListPager(Model.BookInformations, page => Model.PaginationUrl(ViewContext.RouteData.Values["Action"].ToString(), page), PagedListRenderOptions.ClassicPlusFirstAndLast)</center>
+                     </div>
+                 </div>
+             }
         </div>
     </div>
 </div>
