@@ -14,6 +14,7 @@ namespace BookWorm.Controllers
     public class BooksController : BaseController
     {
         private static readonly object synclock = new object();
+        private const string NoBooksFoundTxt = "No books found that match your search.";
 
         public BooksController()
         {
@@ -61,7 +62,7 @@ namespace BookWorm.Controllers
             //Warning: this wouldn't work in a cluster - need to use concurrency on the DB for atomicity
             lock (synclock) //Provide some atomicity for checking the ISBN exists and then create it
             {
-                List<Book> search = SearchByIsbn(bookInformation);
+                IEnumerable<Book> search = SearchByIsbn(bookInformation);
                 if ( search.Any())
                 {
                     TempData["flashError"] = "The ISBN number already exists";
@@ -91,7 +92,7 @@ namespace BookWorm.Controllers
             }
             lock (synclock)
             {
-                List<Book> search = SearchByIsbn(editedBookInformation);
+                IEnumerable<Book> search = SearchByIsbn(editedBookInformation);
                 if (search.Any())
                 {
                     TempData["flashError"] = "The Book Edit was not saved because the provided ISBN number already exists";
@@ -107,7 +108,7 @@ namespace BookWorm.Controllers
 
         }
 
-        private List<Book> SearchByIsbn(BookInformation editedBookInformation)
+        private IEnumerable<Book> SearchByIsbn(BookInformation editedBookInformation)
         {
             return _repository.Search<Book>(b => b.Isbn == editedBookInformation.Model.Isbn)
                               .Where(b => b.Id != editedBookInformation.Model.Id)
@@ -136,7 +137,7 @@ namespace BookWorm.Controllers
             }
             if (!bookInformations.Any())
             {
-                TempData["flashNotice"] = "No books found that match your search.";
+                TempData["flashNotice"] = NoBooksFoundTxt;
             }
             ViewBag.HideFilter = true;
             return View(new FilterInformation(bookInformations));
@@ -181,6 +182,11 @@ namespace BookWorm.Controllers
             }
             ViewBag.Title = "Books";
             var bookInformations = books.Select(book => new BookInformation(book)).ToList().ToPagedList(page, perPage);
+
+            if (!bookInformations.Any())
+            {
+                TempData["flashNotice"] = NoBooksFoundTxt;
+            }
             return View("List", new FilterInformation(languages, ageRanges, genres, bookInformations)); 
         }
 
