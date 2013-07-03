@@ -111,7 +111,7 @@ namespace BookWorm.Models
             return Query<T>().Where(predicate).Count();
         }
 
-        private IRavenQueryable<T> Query<T>() where T : Model
+        public virtual IRavenQueryable<T> Query<T>() where T : Model
         {
             return _documentSession.Query<T>();
         } 

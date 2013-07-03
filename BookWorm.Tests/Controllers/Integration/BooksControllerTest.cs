@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using BookWorm.Controllers;
@@ -138,6 +139,43 @@ namespace BookWorm.Tests.Controllers.Integration
                 var filterInformation = (FilterInformation) view.Model;
                 Assert.IsFalse(filterInformation.BookInformations.Any());
                 Assert.IsFalse(filterInformation.Languages.Any());
+            }
+        }
+
+        [TestMethod]
+        public void ShouldFilterByLanguageWithMoreThan1024Books()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                var repository = new Repository(session);
+                Enumerable.Range(1, 2000).ToList().ForEach(
+                    i => repository.Create(new Book
+                        {
+                            Title = "Book " + i, 
+                            Language = "Venda", 
+                            Genre = "Fiction",
+                            AgeRange = "0-2",
+                            CreatedAt = new DateTime(2000,1,1).AddDays(i)
+                        }));
+                session.SaveChanges();
+
+                var booksController = new BooksController(repository);
+
+                var view = (ViewResult)booksController.Filter(new List<string>() { "Venda" }, new List<string>{"0-2"}, new List<string>{"Fiction"}, 1, 9);
+
+                var filterInformation = (FilterInformation)view.Model;
+                var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
+                Assert.AreEqual(9, actualBooks.Count());
+                Assert.AreEqual("Book 2000", actualBooks.First().Title);
+                Assert.AreEqual("Book 1992", actualBooks.Last().Title);
+
+                view = (ViewResult)booksController.Filter(new List<string>() { "Venda" }, new List<string> { "0-2" }, new List<string> { "Fiction" }, 223, 9);
+
+                filterInformation = (FilterInformation)view.Model;
+                actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
+                Assert.AreEqual(2, actualBooks.Count());
+                Assert.AreEqual("Book 2", actualBooks.First().Title);
+                Assert.AreEqual("Book 1", actualBooks.Last().Title);
             }
         }
     }

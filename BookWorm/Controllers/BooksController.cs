@@ -168,26 +168,35 @@ namespace BookWorm.Controllers
             languages = languages ?? new List<string>();
             ageRanges = ageRanges ?? new List<string>();
             genres = genres ?? new List<string>();
-            var books = _repository.List<Book>();
-            if (languages.Any())
-            {
-                books = books.Where(book => book.Language.In(languages)).ToList();
-            }
+            var books = _repository.Query<Book>();
+
             if (ageRanges.Any())
             {
-                books = books.Where(book => book.AgeRange.In(ageRanges)).ToList();
+                books = books.Where(book => book.AgeRange.In(ageRanges));
+            }
+            if (languages.Any())
+            {
+                books = books.Where(book => book.Language.In(languages));
             }
             if (genres.Any())
             {
-                books = books.Where(book => book.Genre.In(genres)).ToList();
+                books = books.Where(book => book.Genre.In(genres));
             }
+
             ViewBag.Title = "Books";
-            var bookInformations = books.Select(book => new BookInformation(book)).ToList().ToPagedList(page, perPage);
+
+            var bookPage = books.OrderByDescending(b => b.UpdatedAt)
+                .Skip((page - 1)*perPage).Take(perPage)
+                .ToList();
+            
+            var bookInformations = new StaticPagedList<BookInformation>(
+                bookPage.Select(book => new BookInformation(book)), page, perPage, books.Count());
 
             if (!bookInformations.Any())
             {
                 TempData["flashNotice"] = NoBooksFoundTxtFilter;
             }
+
             return View("List", new FilterInformation(languages, ageRanges, genres, bookInformations)); 
         }
 
