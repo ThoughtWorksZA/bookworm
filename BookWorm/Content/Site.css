@@ -249,7 +249,7 @@ clear: both;
 	background: rgba(73, 73, 73, 1);
     color: #ffffff;
 }
-.book-image:hover + .book-cover-hover-info {
+.book-image:hover ~ .book-cover-hover-info {
     display: block;
 } 
 

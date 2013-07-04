@@ -52,7 +52,7 @@
                                             @if (@Html.DisplayFor(model => item.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => item.Model.CoverImageUrl).ToString().IsEmpty())
                                             {
                                                 defaultBookCoverDisplay = "none";
-                                                <div class="book-image-wrapper"><img class="book-image" src="@item.Model.CoverImageUrl" onerror="$('#default-image-@item.Model.Id').show()"/></div>
+                                                <div class="book-image book-image-wrapper"><img class="book-image" src="@item.Model.CoverImageUrl" onerror="$('#default-image-@item.Model.Id').show()"/></div>
                                             }
 
                                             <div id="default-image-@item.Model.Id" class="book-image default-cover-image" style="display: @defaultBookCoverDisplay">
