@@ -38,9 +38,16 @@
                     @if (@Html.DisplayFor(model => model.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => model.Model.CoverImageUrl).ToString().IsEmpty())
                     {
                         <div class="span3">
-                            <img src="@Model.Model.CoverImageUrl"/>
+                            <img src="@Model.Model.CoverImageUrl" onerror=" $('#default-image').show();$(this).parent().remove(); "/>
                         </div>
                     }
+                    
+                    <div id="default-image" class="book-image span3 default-cover-image" style="display: none">
+                        <div class="default-cover-info">
+                            <h4>@Model.Model.Title</h4>
+                            @Html.DisplayFor(model => model.Model.Author)
+                        </div>
+                    </div>
                     <div class="span8">
                         <p>ISBN: <em>@Html.DisplayFor(model => model.Model.Isbn)</em></p>    
                         <p>Publisher: <em>@Html.DisplayFor(model => model.Model.Publisher)</em></p>

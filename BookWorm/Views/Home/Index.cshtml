@@ -53,19 +53,17 @@
                     <ol>
                         @foreach (var bookInformation in Model.Books)
                         {
-                            string defaultBookCoverDisplay = "block";
                             <li>
                                 <div id="clickable-div" data-clickable-url="/Books/Details/@bookInformation.Model.Id">
                
                                     <div class="book-cover">
                                         @if (@Html.DisplayFor(model => bookInformation.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => bookInformation.Model.CoverImageUrl).ToString().IsEmpty())
                                         {
-                                             defaultBookCoverDisplay = "none";
-                                                  <div class="book-image book-image-wrapper"><img class="book-image" src="@bookInformation.Model.CoverImageUrl" onerror="$(this).hide();$('#default-image-@bookInformation.Model.Id').show(); "/></div>
+                                                  <div class="book-image book-image-wrapper"><img class="book-image" src="@bookInformation.Model.CoverImageUrl" onerror="$('#default-image-@bookInformation.Model.Id').show();$(this).parent().remove(); "/></div>
                                             
                                         }
                                        
-                                            <div id="default-image-@bookInformation.Model.Id" class="book-image default-cover-image" style="display: @defaultBookCoverDisplay">
+                                            <div id="default-image-@bookInformation.Model.Id" class="book-image default-cover-image" style="display: none">
                                         
                                                 <div class="default-cover-info">
                                                     <h4>@bookInformation.Model.Title</h4>
