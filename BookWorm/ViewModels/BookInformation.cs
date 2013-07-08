@@ -95,12 +95,5 @@ namespace BookWorm.ViewModels
                     bookPostInformation => bookPostInformation.Model.Type.Equals(bookPostType))
                                     .ToList();
         }
-
-        public string Summary(int characters)
-        {
-            if (Model.Description == null || Model.Description.Length < characters)
-                return Model.Description;
-            return Model.Description.Substring(0, Model.Description.IndexOf(" ", characters));
-        }
     }
 }
