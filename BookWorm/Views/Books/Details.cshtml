@@ -35,14 +35,16 @@
         <div class="span12">
             <fieldset>
                 <div class="row">
+                    @{ var defaultBookCoverDisplay = "block"; }
                     @if (@Html.DisplayFor(model => model.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => model.Model.CoverImageUrl).ToString().IsEmpty())
                     {
+                        defaultBookCoverDisplay = "none";
                         <div class="span3">
                             <img src="@Model.Model.CoverImageUrl" onerror=" $('#default-image').show();$(this).parent().remove(); "/>
                         </div>
                     }
                     
-                    <div id="default-image" class="book-image span3 default-cover-image" style="display: none">
+                    <div id="default-image" class="book-image span3 default-cover-image" style="display: @defaultBookCoverDisplay">
                         <div class="default-cover-info">
                             <h4>@Model.Model.Title</h4>
                             @Html.DisplayFor(model => model.Model.Author)
