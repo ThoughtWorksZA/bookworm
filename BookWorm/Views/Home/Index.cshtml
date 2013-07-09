@@ -1,6 +1,7 @@
 ﻿@model BookWorm.ViewModels.HomeViewModel
 @Scripts.Render("~/Scripts/puku/clickableDiv.js")
 
+@using BookWorm.Helpers
 @using BookWorm.Models
 @using BookWorm.ViewModels
 @{
@@ -55,7 +56,7 @@
                         {
                             string defaultBookCoverDisplay = "block";
                             <li>
-                                    <a href="/Books/@bookInformation.Model.Id/@bookInformation.Model.Title">
+                                    <a href="/Books/@bookInformation.Model.Id/@UrlFilter.FilterInvalidCharacters(bookInformation.Model.Title)">
                                     <div class="book-cover">
                                         @if (@Html.DisplayFor(model => bookInformation.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => bookInformation.Model.CoverImageUrl).ToString().IsEmpty())
                                         {

@@ -2,13 +2,14 @@
 @{
     ViewBag.Title = @Model.Model.Title;
 }
+@using BookWorm.Helpers
 @model BookWorm.ViewModels.BookPostInformation
 <div class="row-fluid">
     <div class="row-content">
         <div class="span7">
             <ul class="breadcrumb">
                 <li><a href="/Books/List">Books</a><span class="divider">/</span></li>
-                <li><a href="/Books/@Model.BookId/@Model.Book.Title">@Model.Book.Title</a><span class="divider">/</span></li>
+                <li><a href="/Books/@Model.BookId/@UrlFilter.FilterInvalidCharacters(Model.Book.Title)">@Model.Book.Title</a><span class="divider">/</span></li>
                 <li class="active">@Html.DisplayFor(model => model.Model.Title)</li>
             </ul> 
         </div>

@@ -1,5 +1,6 @@
 ﻿@Scripts.Render("~/Scripts/puku/clickableDiv.js")
 
+@using BookWorm.Helpers
 @using PagedList.Mvc
 @model BookWorm.ViewModels.FilterInformation
 
@@ -46,7 +47,7 @@
                             @foreach (var item in Model.BookInformations)
                             {
                                 string defaultBookCoverDisplay = "block";
-                                <li><a href="/Books/@item.Model.Id/@item.Model.Title">
+                                <li><a href="/Books/@item.Model.Id/@UrlFilter.FilterInvalidCharacters(item.Model.Title)">
                                         <div class="book-cover">
                                             @if (@Html.DisplayFor(model => item.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => item.Model.CoverImageUrl).ToString().IsEmpty())
                                             {

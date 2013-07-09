@@ -1,5 +1,6 @@
 ﻿@Scripts.Render("~/Scripts/puku/confirmModal.js")
 
+@using BookWorm.Helpers
 @using BookWorm.Models
 @model BookWorm.ViewModels.BookInformation
 <div class="row-fluid">
@@ -14,7 +15,7 @@
             <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
         </div>
         <div class="span3">
-            <div class="fb-like" data-href="http://www.puku.co.za/Books/@Html.DisplayFor(model => model.Model.Id) " data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
+            <div class="fb-like" data-href="http://www.puku.co.za/Books/@Html.DisplayFor(model => model.Model.Id)/@UrlFilter.FilterInvalidCharacters(Model.Model.Title) " data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
         </div>
     </div>
 </div>
