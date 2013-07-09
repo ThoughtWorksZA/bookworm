@@ -26,6 +26,13 @@ namespace BookWorm
                 );
 
             routes.MapRoute(
+                "Book Detail",
+                "Books/{id}/{title}",
+                new { controller = "Books", action = "Details", title = UrlParameter.Optional },
+                new {id = @"\d+"}
+                );
+
+            routes.MapRoute(
                 "News",
                 "News",
                 new { controller = "Posts", action = "News" }

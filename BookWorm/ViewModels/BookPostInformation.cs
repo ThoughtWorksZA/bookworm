@@ -33,6 +33,6 @@ namespace BookWorm.ViewModels
             return MarkDownHelper.Summary(Model.Content, characters);
         }
 
-        public string DetailsUrl { get { return string.Format("/Books/Details/{0}", Book.Id); } }
+        public string DetailsUrl { get { return string.Format("/Books/{0}/{1}", Book.Id, Book.Title); } }
     }
 }

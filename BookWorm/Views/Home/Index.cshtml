@@ -55,7 +55,7 @@
                         {
                             string defaultBookCoverDisplay = "block";
                             <li>
-                                    <a href="/Books/Details/@bookInformation.Model.Id">
+                                    <a href="/Books/@bookInformation.Model.Id/@bookInformation.Model.Title">
                                     <div class="book-cover">
                                         @if (@Html.DisplayFor(model => bookInformation.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => bookInformation.Model.CoverImageUrl).ToString().IsEmpty())
                                         {
