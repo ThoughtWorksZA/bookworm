@@ -20,6 +20,12 @@ namespace BookWorm
                 );
 
             routes.MapRoute(
+                "Books",
+                "Books",
+                new { controller = "Books", action = "List" }
+                );
+
+            routes.MapRoute(
                 "News",
                 "News",
                 new { controller = "Posts", action = "News" }
