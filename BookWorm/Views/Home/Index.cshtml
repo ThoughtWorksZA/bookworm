@@ -55,8 +55,7 @@
                         {
                             string defaultBookCoverDisplay = "block";
                             <li>
-                                <div id="clickable-div" data-clickable-url="/Books/Details/@bookInformation.Model.Id">
-               
+                                    <a href="/Books/Details/@bookInformation.Model.Id">
                                     <div class="book-cover">
                                         @if (@Html.DisplayFor(model => bookInformation.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => bookInformation.Model.CoverImageUrl).ToString().IsEmpty())
                                         {
@@ -65,13 +64,13 @@
                                             
                                         }
                                        
-                                            <div id="default-image-@bookInformation.Model.Id" class="book-image default-cover-image" style="display: @defaultBookCoverDisplay">
+                                        <div id="default-image-@bookInformation.Model.Id" class="book-image default-cover-image" style="display: @defaultBookCoverDisplay">
                                         
-                                                <div class="default-cover-info">
-                                                    <h4>@bookInformation.Model.Title</h4>
-                                                    @Html.DisplayFor(model => bookInformation.Model.Author)
-                                                </div>
+                                            <div class="default-cover-info">
+                                                <h4>@bookInformation.Model.Title</h4>
+                                                @Html.DisplayFor(model => bookInformation.Model.Author)
                                             </div>
+                                        </div>
                                         
                                         <div class="book-cover-hover-info">
                                             <div class="book-cover-info-wrapper">
@@ -92,7 +91,7 @@
                            
                                         </div>
                                     </div>
-                                </div>  
+                                </a>  
                             </li>
                         }
                     </ol>
