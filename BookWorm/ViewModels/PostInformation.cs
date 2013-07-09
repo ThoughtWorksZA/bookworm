@@ -1,4 +1,5 @@
-﻿using BookWorm.Helpers;
+﻿using System;
+using BookWorm.Helpers;
 using BookWorm.Models;
 
 namespace BookWorm.ViewModels
@@ -37,7 +38,7 @@ namespace BookWorm.ViewModels
             }
         }
 
-        public string DetailsUrl { get { return string.Format("/Posts/Details/{0}", Model.Id); } }
+        public string DetailsUrl { get { return string.Format("/News/{0}/{1}", Model.Id, UrlFilter.FilterInvalidCharacters(Model.Title)); } }
 
         public string Summary(int characters)
         {

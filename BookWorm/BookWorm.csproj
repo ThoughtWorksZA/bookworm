@@ -241,6 +241,7 @@
     </Compile>
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\MarkDownHelper.cs" />
+    <Compile Include="Helpers\UrlFilter.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookPost.cs" />

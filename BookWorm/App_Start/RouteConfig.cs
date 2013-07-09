@@ -38,6 +38,13 @@ namespace BookWorm
                 new { controller = "Posts", action = "News" }
                 );
 
+            routes.MapRoute(
+                "News Details",
+                "News/{id}/{title}",
+                new { controller = "Posts", action = "Details", title = UrlParameter.Optional },
+                new { id = @"\d+" }
+                );
+
 
             routes.MapRoute(
                 name: "Default",
