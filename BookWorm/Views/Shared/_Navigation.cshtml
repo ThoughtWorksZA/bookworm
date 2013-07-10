@@ -1,4 +1,5 @@
-﻿@using BookWorm.Models
+﻿@using BookWorm.Helpers
+@using BookWorm.Models
 
 <div class="navbar">
     <div class="navbar-inner">
@@ -11,26 +12,26 @@
                 }
                 @if (staticPages.Any())
                 {
-                    <li>@Html.ActionLink(staticPages.First().Title, "Details", "Pages", new { id = staticPages.First().Id, }, null)</li>
+                    <li>@Html.ActionLink(staticPages.First().Title, "Details", "Pages", new { id = staticPages.First().Id, title = UrlFilter.FilterInvalidCharacters(staticPages.First().Title) }, null)</li>
                 }
                 <li><a href="#" onclick="toggleDiscoveryMenu()" style="color: #0088cc">Find a Book</a></li>
                 <li><a id="BooksMenuLink" href="/Books">Books</a></li>
                 <li><a href="/News">News</a></li>
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="/Pages/List" id="moreMenuLink">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="/Pages" id="moreMenuLink">
                         More
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
                         @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
                         {
-                            @Html.Raw("<li><a href='/Pages/List' id='PagesMenuLink'><i class='icon-th-list'></i> View List</a></li><li class='divider'><hr /></li><li class='nav-header'>Pages</li>")
+                            @Html.Raw("<li><a href='/Pages' id='PagesMenuLink'><i class='icon-th-list'></i> View List</a></li><li class='divider'><hr /></li><li class='nav-header'>Pages</li>")
                         }
                        
                         @foreach (StaticPage page in ViewBag.StaticPages)
                         {
                             <li>
-                                @Html.ActionLink(page.Title, "Details", "Pages", new { id = page.Id, }, null)
+                                @Html.ActionLink(page.Title, "Details", "Pages", new { id = page.Id, title = UrlFilter.FilterInvalidCharacters(page.Title)}, null)
                             </li>
                         }
                     </ul>

@@ -45,6 +45,18 @@ namespace BookWorm
                 new { id = @"\d+" }
                 );
 
+            routes.MapRoute(
+                "Pages",
+                "Pages",
+                new { controller = "Pages", action = "List" }
+                );
+
+            routes.MapRoute(
+                "Page Details",
+                "Pages/{id}/{title}",
+                new { controller = "Pages", action = "Details", title = UrlParameter.Optional },
+                new { id = @"\d+" }
+                );
 
             routes.MapRoute(
                 name: "Default",
