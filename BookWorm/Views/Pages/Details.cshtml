@@ -3,6 +3,11 @@
 @{
     ViewBag.Title = @Model.Model.Title;
 }
+@if (Model.Model.Title.Equals("About"))
+{
+    ViewBag.Title += " | Weekly Literary Newspaper for Children";
+} 
+
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
