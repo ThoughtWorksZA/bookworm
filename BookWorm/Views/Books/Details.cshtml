@@ -41,7 +41,7 @@
                     {
                         defaultBookCoverDisplay = "none";
                         <div class="span3">
-                            <img src="@Model.Model.CoverImageUrl" onerror=" $('#default-image').show();$(this).parent().remove(); "/>
+                            <img alt="@Model.Model.Title" src="@Model.Model.CoverImageUrl" onerror=" $('#default-image').show();$(this).parent().remove(); "/>
                         </div>
                     }
                     
