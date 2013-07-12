@@ -16,8 +16,8 @@
             <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
         </div>
         <div class="span3">
-            <div class="fb-like" data-href="http://www.puku.co.za/Books/Details/@Html.DisplayFor(model => model.Model.Id) " data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
-        </div>
+            <div class="fb-like" data-href="http://www.puku.co.za/Books/@Html.DisplayFor(model => model.Model.Id)/@UrlUtils.FilterInvalidCharacters(Model.Model.Title) " data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
+       </div>
     </div>
 </div>
 <div class="row-fluid">
@@ -37,12 +37,22 @@
         <div class="span12">
             <fieldset>
                 <div class="row">
+                    @{ var defaultBookCoverDisplay = "block"; }
                     @if (@Html.DisplayFor(model => model.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => model.Model.CoverImageUrl).ToString().IsEmpty())
                     {
+                        defaultBookCoverDisplay = "none";
                         <div class="span3">
                             <img alt="@Model.Model.Title" src="@Model.Model.CoverImageUrl" onerror=" $('#default-image').show();$(this).parent().remove(); "/>
                         </div>
                     }
+                    
+                    <div id="default-image" class="book-image span3 default-cover-image" style="display: @defaultBookCoverDisplay">
+                        <div class="default-cover-info">
+                            <h4>@Model.Model.Title</h4>
+                            @Html.DisplayFor(model => model.Model.Author)
+                        </div>
+                    </div>
+
                     <div class="span8">
                         <p>ISBN: <em>@Html.DisplayFor(model => model.Model.Isbn)</em></p>    
                         <p>Publisher: <em>@Html.DisplayFor(model => model.Model.Publisher)</em></p>
