@@ -51,6 +51,9 @@ namespace BookWorm.Models
 
         public List<BookPost> Posts { get; set; }
 
+        [DisplayName("Buy Book Here")]
+        public string BuyBookUrl { get; set; }
+
         public Book()
         {
             Posts = new List<BookPost>();

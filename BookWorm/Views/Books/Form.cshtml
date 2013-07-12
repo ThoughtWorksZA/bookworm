@@ -168,6 +168,16 @@
                             @Html.ValidationMessageFor(model => model.Model.Description)
                         </div>
                     </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span2">
+                            Buy Book Here
+                        </div>
+                        <div class="span10">
+                            @Html.TextBoxFor(model => model.Model.BuyBookUrl, new { placeholder = "URL to buy Book"})
+                            @Html.ValidationMessageFor(model => model.Model.BuyBookUrl)
+                        </div>
+                    </div>
                     <p>
                         <input type="submit" value="Save" class="btn" id="SaveButton" />
                     </p>

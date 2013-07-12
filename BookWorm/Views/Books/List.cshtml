@@ -47,7 +47,7 @@
                             @foreach (var item in Model.BookInformations)
                             {
                                 string defaultBookCoverDisplay = "block";
-                                <li><a class="book-detail-link" href="/Books/@item.Model.Id/@UrlFilter.FilterInvalidCharacters(item.Model.Title)">
+                                <li><a class="book-detail-link" href="/Books/@item.Model.Id/@UrlUtils.FilterInvalidCharacters(item.Model.Title)">
                                         <div class="book-cover">
                                             @if (@Html.DisplayFor(model => item.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => item.Model.CoverImageUrl).ToString().IsEmpty())
                                             {

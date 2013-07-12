@@ -1,7 +1,8 @@
 ﻿@Scripts.Render("~/Scripts/puku/confirmModal.js")
 
-@using BookWorm.Helpers
 @using BookWorm.Models
+@using BookWorm.Helpers
+@using System.Web
 @model BookWorm.ViewModels.BookInformation
 <div class="row-fluid">
     <div class="row-content">
@@ -15,7 +16,7 @@
             <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
         </div>
         <div class="span3">
-            <div class="fb-like" data-href="http://www.puku.co.za/Books/@Html.DisplayFor(model => model.Model.Id)/@UrlFilter.FilterInvalidCharacters(Model.Model.Title) " data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
+            <div class="fb-like" data-href="http://www.puku.co.za/Books/Details/@Html.DisplayFor(model => model.Model.Id) " data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
         </div>
     </div>
 </div>
@@ -36,21 +37,12 @@
         <div class="span12">
             <fieldset>
                 <div class="row">
-                    @{ var defaultBookCoverDisplay = "block"; }
                     @if (@Html.DisplayFor(model => model.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => model.Model.CoverImageUrl).ToString().IsEmpty())
                     {
-                        defaultBookCoverDisplay = "none";
                         <div class="span3">
                             <img alt="@Model.Model.Title" src="@Model.Model.CoverImageUrl" onerror=" $('#default-image').show();$(this).parent().remove(); "/>
                         </div>
                     }
-                    
-                    <div id="default-image" class="book-image span3 default-cover-image" style="display: @defaultBookCoverDisplay">
-                        <div class="default-cover-info">
-                            <h4>@Model.Model.Title</h4>
-                            @Html.DisplayFor(model => model.Model.Author)
-                        </div>
-                    </div>
                     <div class="span8">
                         <p>ISBN: <em>@Html.DisplayFor(model => model.Model.Isbn)</em></p>    
                         <p>Publisher: <em>@Html.DisplayFor(model => model.Model.Publisher)</em></p>
@@ -67,6 +59,10 @@
                         {
                             <p>Description: <em>@Html.DisplayFor(model => model.Model.Description)</em></p>
                         }
+                        @if (@Html.DisplayFor(model => model.Model.BuyBookUrl) != null && !Html.DisplayFor(model => model.Model.BuyBookUrl).ToString().IsEmpty())
+                        {  
+                            <p>Buy this book: @(new HtmlString(UrlUtils.BuyBookContactHtml(Model.Model.BuyBookUrl)))</p>
+                        }
                     </div>
        
                 </div>
@@ -79,7 +75,7 @@
                         <div class="row-fluid">
                             <div class="span7">
                                 <span class="lead">Admin Tools </span>
-                                @Html.ActionLink("Edit Book", "Edit", new {id = Model.Model.Id})
+                                @Html.ActionLink("Edit Book", "Edit", new { id = Model.Model.Id })
                                 |   
                                 @Html.ActionLink("Add a Book Post", "Create", "BookPosts", new { bookId = Model.Model.Id }, null)
                             </div>
@@ -108,7 +104,8 @@
         $("#" + currentToggleItem).collapse();
     });
 </script>
-@if (@Model.BookPostInformations.Any()) {
+@if (@Model.BookPostInformations.Any())
+{
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
