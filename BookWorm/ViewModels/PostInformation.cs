@@ -38,7 +38,7 @@ namespace BookWorm.ViewModels
             }
         }
 
-        public string DetailsUrl { get { return string.Format("/News/{0}/{1}", Model.Id, UrlUtils.FilterInvalidCharacters(Model.Title)); } }
+        public string DetailsUrl { get { return string.Format("/News/{0}/{1}", Model.Id, UrlUtils.ConvertTitleForUrl(Model.Title)); } }
 
         public string Summary(int characters)
         {

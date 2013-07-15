@@ -56,7 +56,7 @@
                         {
                             string defaultBookCoverDisplay = "block";
                             <li>
-                                    <a class="book-detail-link" href="/Books/@bookInformation.Model.Id/@UrlUtils.FilterInvalidCharacters(bookInformation.Model.Title)">
+                                    <a class="book-detail-link" href="/Books/@bookInformation.Model.Id/@UrlUtils.ConvertTitleForUrl(bookInformation.Model.Title)">
                                     <div class="book-cover">
                                         @if (@Html.DisplayFor(model => bookInformation.Model.CoverImageUrl) != null && !@Html.DisplayFor(model => bookInformation.Model.CoverImageUrl).ToString().IsEmpty())
                                         {

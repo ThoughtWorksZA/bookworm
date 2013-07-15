@@ -8,7 +8,7 @@
     <div class="row-content">
         <div class="span7">
             <ul class="breadcrumb">
-                <li><a href="/Posts/News">News</a><span class="divider">/</span></li>
+                <li><a href="/News">News</a><span class="divider">/</span></li>
                 <li class="active">@Html.DisplayFor(model => model.Model.Title)</li>
             </ul> 
         </div>
@@ -16,7 +16,7 @@
             <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
         </div>
         <div class="span3">
-            <div class="fb-like" data-href="http://www.puku.co.za/News/@Model.Model.Id/@UrlUtils.FilterInvalidCharacters(Model.Model.Title)" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
+            <div class="fb-like" data-href="http://www.puku.co.za/News/@Model.Model.Id/@UrlUtils.ConvertTitleForUrl(Model.Model.Title)" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-action="recommend"></div>
         </div>
 
         </div>

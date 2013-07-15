@@ -9,7 +9,21 @@ namespace BookWorm.Tests.Helpers
         public void ShouldFilterInvalidCharactersInPath()
         {
             const string title = @"a<b>c*d%e&f:g\h?i/j";
-            Assert.AreEqual("abcdefghij", UrlUtils.FilterInvalidCharacters(title));
+            Assert.AreEqual("abcdefghij", UrlUtils.ConvertTitleForUrl(title));
+        }
+
+        [TestMethod]
+        public void ShouldJoinTitleWordsWithHyphen()
+        {
+            const string title = @"Oliver Orphan";
+            Assert.AreEqual("Oliver-Orphan", UrlUtils.ConvertTitleForUrl(title));
+        }
+
+        [TestMethod]
+        public void ShouldJoinTitleWordsWith2NeighborSpacesWith1Hyphen()
+        {
+            const string title = @"Oliver< Orphan";
+            Assert.AreEqual("Oliver-Orphan", UrlUtils.ConvertTitleForUrl(title));
         }
 
         [TestMethod]

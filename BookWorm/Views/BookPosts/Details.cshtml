@@ -9,7 +9,7 @@
         <div class="span7">
             <ul class="breadcrumb">
                 <li><a href="/Books/List">Books</a><span class="divider">/</span></li>
-                <li><a href="/Books/@Model.BookId/@UrlUtils.FilterInvalidCharacters(Model.Book.Title)">@Model.Book.Title</a><span class="divider">/</span></li>
+                <li><a href="/Books/@Model.BookId/@UrlUtils.ConvertTitleForUrl(Model.Book.Title)">@Model.Book.Title</a><span class="divider">/</span></li>
                 <li class="active">@Html.DisplayFor(model => model.Model.Title)</li>
             </ul> 
         </div>

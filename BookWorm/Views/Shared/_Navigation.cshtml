@@ -12,7 +12,7 @@
                 }
                 @if (staticPages.Any())
                 {
-                    <li>@Html.ActionLink(staticPages.First().Title, "Details", "Pages", new { id = staticPages.First().Id, title = UrlUtils.FilterInvalidCharacters(staticPages.First().Title) }, null)</li>
+                    <li>@Html.ActionLink(staticPages.First().Title, "Details", "Pages", new { id = staticPages.First().Id, title = UrlUtils.ConvertTitleForUrl(staticPages.First().Title) }, null)</li>
                 }
                 <li><a href="#" onclick="toggleDiscoveryMenu()" style="color: #0088cc">Find a Book</a></li>
                 <li><a id="BooksMenuLink" href="/Books">Books</a></li>
@@ -31,7 +31,7 @@
                         @foreach (StaticPage page in ViewBag.StaticPages)
                         {
                             <li>
-                                @Html.ActionLink(page.Title, "Details", "Pages", new { id = page.Id, title = UrlUtils.FilterInvalidCharacters(page.Title)}, null)
+                                @Html.ActionLink(page.Title, "Details", "Pages", new { id = page.Id, title = UrlUtils.ConvertTitleForUrl(page.Title)}, null)
                             </li>
                         }
                     </ul>

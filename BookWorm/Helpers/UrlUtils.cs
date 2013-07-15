@@ -5,9 +5,9 @@ namespace BookWorm.Helpers
     public class UrlUtils
     {
         private const string Invalid = @"<>*%&:\?/";
-        public static string FilterInvalidCharacters(string content)
+        public static string ConvertTitleForUrl(string content)
         {
-            return Invalid.Aggregate(content, (current, c) => current.Replace(c.ToString(), string.Empty));
+            return Invalid.Aggregate(content, (current, c) => current.Replace(c.ToString(), string.Empty)).Replace("  "," ").Replace(" ","-");
         }
 
         public static string BuyBookContactHtml(string buyBookContactDetails)
