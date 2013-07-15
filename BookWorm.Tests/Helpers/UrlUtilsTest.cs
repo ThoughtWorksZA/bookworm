@@ -8,8 +8,8 @@ namespace BookWorm.Tests.Helpers
         [TestMethod]
         public void ShouldFilterInvalidCharactersInPath()
         {
-            const string title = @"a<b>c*d%e&f:g\h?i/j";
-            Assert.AreEqual("abcdefghij", UrlUtils.ConvertTitleForUrl(title));
+            const string title = @"a<b>c*d%e&f:g\h?i/j,k";
+            Assert.AreEqual("abcdefghijk", UrlUtils.ConvertTitleForUrl(title));
         }
 
         [TestMethod]
@@ -22,7 +22,7 @@ namespace BookWorm.Tests.Helpers
         [TestMethod]
         public void ShouldJoinTitleWordsWith2NeighborSpacesWith1Hyphen()
         {
-            const string title = @"Oliver< Orphan";
+            const string title = @"Oliver<&& Orphan";
             Assert.AreEqual("Oliver-Orphan", UrlUtils.ConvertTitleForUrl(title));
         }
 

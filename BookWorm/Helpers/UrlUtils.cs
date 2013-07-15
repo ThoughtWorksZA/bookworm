@@ -4,7 +4,7 @@ namespace BookWorm.Helpers
 {
     public class UrlUtils
     {
-        private const string Invalid = @"<>*%&:\?/";
+        private const string Invalid = @"<>*%&:\?/,";
         public static string ConvertTitleForUrl(string content)
         {
             return Invalid.Aggregate(content, (current, c) => current.Replace(c.ToString(), string.Empty)).Replace("  "," ").Replace(" ","-");
