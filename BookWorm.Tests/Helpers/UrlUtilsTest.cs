@@ -20,10 +20,11 @@ namespace BookWorm.Tests.Helpers
         }
 
         [TestMethod]
-        public void ShouldJoinTitleWordsWith2NeighborSpacesWith1Hyphen()
+        public void ShouldJoinTitleWordsWithNNeighborSpacesWith1Hyphen()
         {
-            const string title = @"Oliver<&& Orphan";
-            Assert.AreEqual("Oliver-Orphan", UrlUtils.ConvertTitleForUrl(title));
+            const string title = @"Oliver  Orphan";
+            Assert.AreEqual("Oliver-Orphan", UrlUtils.ConvertTitleForUrl(@"Oliver  Orphan"));
+            Assert.AreEqual("Oliver-Orphan", UrlUtils.ConvertTitleForUrl(@"Oliver   Orphan"));
         }
 
         [TestMethod]

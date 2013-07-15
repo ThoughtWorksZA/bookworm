@@ -1,23 +1,29 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace BookWorm.Helpers
 {
     public class UrlUtils
     {
-        private const string Invalid = @"<>*%&:\?/,";
+        private static readonly Regex SpacesRegex = new Regex(@"\s+");
+        private static readonly Regex InvalidCharactersRegex = new Regex(@"[<,>,*,%,&,:,\\,?,/,\,]");
+
         public static string ConvertTitleForUrl(string content)
         {
-            return Invalid.Aggregate(content, (current, c) => current.Replace(c.ToString(), string.Empty)).Replace("  "," ").Replace(" ","-");
+            return SpacesRegex.Replace(InvalidCharactersRegex.Replace(content, string.Empty), "-");
         }
 
         public static string BuyBookContactHtml(string buyBookContactDetails)
         {
             if (buyBookContactDetails.ToLower().StartsWith("http"))
-                return @"<a href=""" + buyBookContactDetails + @""">" + buyBookContactDetails + "</a>";
+            {
+                return string.Format(@"<a href=""{0}"">{0}</a>",buyBookContactDetails);
+            }
             if (buyBookContactDetails.ToLower().StartsWith("www"))
-                return @"<a href=""http://" + buyBookContactDetails + @""">http://" + buyBookContactDetails +
-                       "</a>";
-            return "<em>" + buyBookContactDetails + "</em>";
+            {
+                return string.Format(@"<a href=""http://{0}"">http://{0}</a>",buyBookContactDetails);
+            }
+            return string.Format("<em>{0}</em>",buyBookContactDetails);
         }
     }
 
