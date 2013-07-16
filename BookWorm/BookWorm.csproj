@@ -268,7 +268,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\blank_cover.png" />
     <Content Include="Content\images\loader.gif" />
-    <Content Include="googlef151fbd16e02e40d.html" />
     <Content Include="Images\CoverImage.png" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
@@ -332,6 +331,7 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\wmd-buttons.png" />
+    <Content Include="robots.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
