@@ -8,15 +8,15 @@ namespace BookWorm.Tests.Helpers
         [TestMethod]
         public void ShouldFilterInvalidCharactersInPath()
         {
-            const string title = @"a<b>c*d%e&f:g\h?i/j,k.l";
-            Assert.AreEqual("abcdefghijkl", UrlUtils.ConvertTitleForUrl(title));
+            const string title = @"a<b>c*d%e&f:g\h?i/j,k.l(m)n";
+            Assert.AreEqual("abcdefghijklmn", UrlUtils.ConvertTitleForUrl(title));
         }
 
         [TestMethod]
         public void ShouldJoinTitleWordsWithHyphen()
         {
-            const string title = @"Oliver Orphan";
-            Assert.AreEqual("Oliver-Orphan", UrlUtils.ConvertTitleForUrl(title));
+            Assert.AreEqual("Oliver-Orphan", UrlUtils.ConvertTitleForUrl(@"Oliver Orphan"));
+            Assert.AreEqual("Oliver-Orphan", UrlUtils.ConvertTitleForUrl(@"Oliver - Orphan"));
         }
 
         [TestMethod]
