@@ -6,7 +6,7 @@ namespace BookWorm.Helpers
     public class UrlUtils
     {
         private static readonly Regex SpacesRegex = new Regex(@"\s+");
-        private static readonly Regex InvalidCharactersRegex = new Regex(@"[<,>,*,%,&,:,\\,?,/,\,]");
+        private static readonly Regex InvalidCharactersRegex = new Regex(@"[<,>,*,%,&,:,\\,?,/,\,,.]");
 
         public static string ConvertTitleForUrl(string content)
         {
