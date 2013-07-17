@@ -14,6 +14,10 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
     <meta name="google-site-verification" content="TB5aNTuAYVq7rSI-zvJa6k2lNSGAKKx0s0ADGPXdjIk" />
+    @if (ViewBag.NoIndex != null && ViewBag.NoIndex)
+    {
+        <meta name="robots" content="noindex">
+    }
 </head>
     <body>
 <div id="fb-root"></div>
@@ -63,7 +67,7 @@
                                 <ul class="no-list-style">
                                     @foreach (var language in ValidLanguage.ValidLanguages)
                                     {
-                                        <li>@Html.ActionLink(language, "Language", "Books", new { languages = language }, new { rel="nofollow" })</li>
+                                        <li>@Html.ActionLink(language, "Language", "Books", new { languages = language }, new { rel = "nofollow" })</li>
                                     }
                                 </ul>
                             </div>
@@ -72,7 +76,7 @@
                                 <ul class="no-list-style">
                                     @foreach (var agerange in ValidAgeRange.ValidAgeRanges)
                                     {
-                                        <li>@Html.ActionLink(agerange, "AgeRange", "Books", new { ageRanges = agerange }, new { rel="nofollow" })</li>
+                                        <li>@Html.ActionLink(agerange, "AgeRange", "Books", new { ageRanges = agerange }, new { rel = "nofollow" })</li>
                                     }
                                 </ul>
                             </div>
@@ -81,7 +85,7 @@
                                 <ul class="no-list-style">
                                     @foreach (var genre in ValidGenre.ValidGenres)
                                     {
-                                        <li>@Html.ActionLink(genre, "Genre", "Books", new { genres = genre }, new { rel="nofollow" })</li>
+                                        <li>@Html.ActionLink(genre, "Genre", "Books", new { genres = genre }, new { rel = "nofollow" })</li>
                                     }
                                 </ul>
                             </div>
