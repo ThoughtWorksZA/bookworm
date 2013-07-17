@@ -12,7 +12,7 @@ namespace BookWorm.Helpers
         public static string ConvertTitleForUrl(string content)
         {
             return MultiHyphens.Replace(
-                SpacesRegex.Replace(InvalidCharactersRegex.Replace(content, string.Empty), "-"), "-");
+                SpacesRegex.Replace(InvalidCharactersRegex.Replace(content.Trim(), string.Empty), "-"), "-");
         }
 
         public static string BuyBookContactHtml(string buyBookContactDetails)

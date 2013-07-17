@@ -20,6 +20,12 @@ namespace BookWorm.Tests.Helpers
         }
 
         [TestMethod]
+        public void ShouldTrim()
+        {
+            Assert.AreEqual("OliverOrphan", UrlUtils.ConvertTitleForUrl(@" OliverOrphan "));
+        }
+
+        [TestMethod]
         public void ShouldJoinTitleWordsWithNNeighborSpacesWith1Hyphen()
         {
             const string title = @"Oliver  Orphan";
