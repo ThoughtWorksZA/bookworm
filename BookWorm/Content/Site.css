@@ -258,7 +258,7 @@ clear: both;
 }
 .book-image:hover ~ .book-cover-hover-info {
     display: block;
-} 
+}
 
 .default-cover-image {
     height: 300px;
