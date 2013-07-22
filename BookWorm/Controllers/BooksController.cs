@@ -44,6 +44,7 @@ namespace BookWorm.Controllers
             return View(bookInformation);
         }
 
+        [Authorize(Roles = Roles.Admin)]
         public ViewResult Create()
         {
             ViewBag.Title = "Add a Book";
@@ -51,6 +52,7 @@ namespace BookWorm.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
         public ActionResult Create(BookInformation bookInformation)
         {
 
@@ -76,7 +78,8 @@ namespace BookWorm.Controllers
             TempData["flashSuccess"] = string.Format("Added {0} successfully", createdBook.Title);
             return RedirectToAction("Details", new { id = createdBook.Id });
         }
-
+        
+        [Authorize(Roles = Roles.Admin)]
         public ViewResult Edit(int id)
         {
             ViewBag.Title = "Edit a Book";
@@ -85,6 +88,7 @@ namespace BookWorm.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = Roles.Admin)]
         public ActionResult Edit(BookInformation editedBookInformation)
         {
             if (!ModelState.IsValid)
@@ -118,6 +122,7 @@ namespace BookWorm.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = Roles.Admin)]
         public RedirectToRouteResult Delete(int id)
         {
             _repository.Delete<Book>(id);

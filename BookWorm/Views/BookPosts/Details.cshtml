@@ -52,7 +52,7 @@
         </fieldset>
         <div class="some-small-space"></div>
         <p> @Html.ActionLink("Back to List", "Details", "Books", new { id = Model.BookId }, null)</p>
-         @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
+         @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
                 {
                     <div class="well">
                         <div class="row-fluid">

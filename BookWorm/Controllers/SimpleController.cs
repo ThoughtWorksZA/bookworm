@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using BookWorm.Models;
 using BookWorm.ViewModels;
-using MarkdownSharp;
 using Raven.Client.Exceptions;
 using PagedList;
 
@@ -22,12 +18,14 @@ namespace BookWorm.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
         public virtual ActionResult Create()
         {
             return View("Create", new U {Model = new T()});
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
         public virtual ActionResult Create(U viewModel)
         {
             try
@@ -64,6 +62,7 @@ namespace BookWorm.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = Roles.Admin)]
         public RedirectToRouteResult Delete(int id)
         {
             var viewModel = new U();
@@ -73,12 +72,14 @@ namespace BookWorm.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
         public ViewResult Edit(int id)
         {
             return View(new U {Model = _repository.Get<T>(id)});
         }
 
         [HttpPut]
+        [Authorize(Roles = Roles.Admin)]
         public RedirectToRouteResult Edit(U viewModel)
         {
             _repository.Edit(viewModel.Model);

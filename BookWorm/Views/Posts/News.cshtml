@@ -15,7 +15,7 @@
         <div class="span12">
             <p class="lead">Latest News and Events</p>
             <p>
-                @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
                 {
                     @Html.ActionLink("Create New", "Create", null, new { Id = "createNewPostLink" })
                 }

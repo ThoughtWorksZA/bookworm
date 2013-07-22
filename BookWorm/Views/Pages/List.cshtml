@@ -17,7 +17,7 @@
         <div class="span12">
             <p class="lead">Pages</p>
             <p>
-                @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
                 {
  @Html.ActionLink("Create New", "Create", null, new { Id = "createNewStaticPageLink" })
                 }
@@ -37,7 +37,7 @@
                             <h4>@Html.DisplayFor(modelItem => item.Model.Title)</h4>
                         </div>
                     </div> 
-                    @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                    @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
                     {
 
                         <div class="span1">

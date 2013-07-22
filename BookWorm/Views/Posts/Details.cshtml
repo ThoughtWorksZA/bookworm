@@ -39,7 +39,7 @@
                 </div>
             </fieldset>
             <p>
-                @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
                 {
                     @Html.ActionLink("Back to News", "News")
                     @Html.Raw(" | ")<i class="icon-edit"></i>

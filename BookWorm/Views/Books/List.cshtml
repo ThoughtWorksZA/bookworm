@@ -41,7 +41,7 @@
                         </div>
                     }
                     <p>
-                        @if (Html.ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                        @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
                         {
                             @Html.ActionLink("Create New", "Create", null, new {id = "createNewBookLink"})
                         }

@@ -32,6 +32,7 @@ namespace BookWorm.Controllers
             return View(bookPostInformation);
         }
 
+        [Authorize(Roles = Roles.Admin)]
         public ActionResult Create(int bookId)
         {
             ViewBag.Title = "Add a Book Post";
@@ -39,6 +40,7 @@ namespace BookWorm.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
         public ActionResult Create(BookPostInformation submittedBookPostInformation)
         {
             if (!ModelState.IsValid)
@@ -63,6 +65,7 @@ namespace BookWorm.Controllers
             return RedirectToAction("Details", "Books", new { id = book.Id });
         }
 
+        [Authorize(Roles = Roles.Admin)]
         public ViewResult Edit(int id, int bookId)
         {
             ViewBag.Method = "PUT";
@@ -71,6 +74,7 @@ namespace BookWorm.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = Roles.Admin)]
         public ActionResult Edit(BookPostInformation editedBookPostInformation)
         {
             if (!ModelState.IsValid)
@@ -91,6 +95,7 @@ namespace BookWorm.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = Roles.Admin)]
         public RedirectToRouteResult Delete(int id, int bookId)
         {
             var book = _repository.Get<Book>(bookId);

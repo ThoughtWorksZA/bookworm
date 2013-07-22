@@ -247,6 +247,7 @@
     <Compile Include="Models\BookPost.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Repository.cs" />
+    <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\StaticPage.cs" />
     <Compile Include="Models\Validations\ValidAgeRange.cs" />
     <Compile Include="Models\Validations\ValidCountry.cs" />
