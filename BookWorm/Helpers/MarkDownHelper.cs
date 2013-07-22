@@ -9,16 +9,16 @@ namespace BookWorm.Helpers
         public static string Summary(string content, int characters)
         {
             var md = new MarkdownSharp.Markdown();
-            if (content == null || content.Length < characters)
-                return md.Transform(content);
-
             return md.Transform(GetUnTransformedSummary(content, characters));
         }
 
         private static string GetUnTransformedSummary(string content, int characters)
         {
             content = FilterImgs(content);
-
+            if (content == null || content.Length < characters)
+            {
+                return content;
+            }
             var summary = GetSummaryPart(content, characters);
 
             return AddClosingAsterisk(RemoveEndingBracket(summary));
