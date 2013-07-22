@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = @Model.Model.Title;
+    ViewBag.MetaDescription = MarkDownHelper.SummaryForMetaDescription(Model.Model.Content, 155);
 }
 <div class="row-fluid">
     <div class="row-content">

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using BookWorm.Models;
 using BookWorm.Models.Validations;
@@ -94,6 +91,13 @@ namespace BookWorm.ViewModels
                 BookPostInformations.Where(
                     bookPostInformation => bookPostInformation.Model.Type.Equals(bookPostType))
                                     .ToList();
+        }
+
+        public string Summary(int characters)
+        {
+            if (Model.Description == null || Model.Description.Length < characters)
+                return Model.Description;
+            return Model.Description.Substring(0, Model.Description.IndexOf(" ", characters));
         }
     }
 }

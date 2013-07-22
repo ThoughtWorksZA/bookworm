@@ -18,6 +18,10 @@
     {
         <meta name="robots" content="noindex">
     }
+    @if (ViewBag.MetaDescription != null && ViewBag.MetaDescription.Trim() != "")
+    {
+        <meta name="Description" content="@(new HtmlString(@ViewBag.MetaDescription))"/>
+    }
 </head>
     <body>
 <div id="fb-root"></div>

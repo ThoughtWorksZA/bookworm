@@ -11,12 +11,17 @@ namespace BookWorm.Helpers
             var md = new MarkdownSharp.Markdown();
             if (content == null || content.Length < characters)
                 return md.Transform(content);
-            
+
+            return md.Transform(GetUnTransformedSummary(content, characters));
+        }
+
+        private static string GetUnTransformedSummary(string content, int characters)
+        {
             content = FilterImgs(content);
 
             var summary = GetSummaryPart(content, characters);
 
-            return md.Transform(AddClosingAsterisk(RemoveEndingBracket(summary)));
+            return AddClosingAsterisk(RemoveEndingBracket(summary));
         }
 
         private static string RemoveEndingBracket(string summary)
@@ -39,7 +44,12 @@ namespace BookWorm.Helpers
 
         private static string GetSummaryPart(string content, int characters)
         {
-            return content.Substring(0, content.IndexOf(" ", characters)).Trim();
+            var index = content.IndexOf(" ", characters);
+            if (index == -1)
+            {
+                index = content.Length;
+            }
+            return content.Substring(0, index).Trim();
         }
 
         private static string FilterImgs(string content)
@@ -47,6 +57,11 @@ namespace BookWorm.Helpers
             var matchImgRegex = new Regex(MatchImgPattern);
             content = matchImgRegex.Replace(content, "");
             return content;
+        }
+
+        public static string SummaryForMetaDescription(string content, int num)
+        {
+            return new Regex(@"[\*,_,\n,>]").Replace(GetUnTransformedSummary(content,num), "");
         }
     }
 }

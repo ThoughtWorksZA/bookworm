@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BookWorm.Helpers;
 using BookWorm.Models;
 using BookWorm.ViewModels;
 using MarkdownSharp;
@@ -26,7 +27,9 @@ namespace BookWorm.Controllers
             var book = _repository.Get<Book>(bookId);
             var bookPost = book.Posts.First(post => post.Id == id);
             ViewBag.transformedContent = new Markdown().Transform(bookPost.Content);
-            return View(new BookPostInformation(bookId, bookPost, book));
+            var bookPostInformation = new BookPostInformation(bookId, bookPost, book);
+            ViewBag.MetaDescription = MarkDownHelper.SummaryForMetaDescription(bookPost.Content, 155);
+            return View(bookPostInformation);
         }
 
         public ActionResult Create(int bookId)

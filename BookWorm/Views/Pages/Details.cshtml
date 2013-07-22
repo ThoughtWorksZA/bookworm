@@ -1,7 +1,9 @@
-﻿@model BookWorm.ViewModels.StaticPageInformation
+﻿@using BookWorm.Helpers
+@model BookWorm.ViewModels.StaticPageInformation
 
 @{
     ViewBag.Title = @Model.Model.Title;
+    ViewBag.MetaDescription = MarkDownHelper.SummaryForMetaDescription(Model.Model.Content, 155);
 }
 @if (Model.Model.Title.Equals("About"))
 {

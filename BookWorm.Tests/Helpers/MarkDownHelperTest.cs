@@ -53,5 +53,40 @@ namespace BookWorm.Tests.Helpers
             const string content = "The quick brown fox jumps over<br/> the lazy dog.";
             Assert.AreEqual("<p>The quick brown fox jumps over<br/></p>\n", MarkDownHelper.Summary(content, 30));
         }
+
+        [TestMethod]
+        public void ShouldRemoveAsterisksInMetaDescriptionSummary()
+        {
+            const string content = "*Michael Knight's car is amazing.*";
+            Assert.AreEqual("Michael Knight's car is amazing.", MarkDownHelper.SummaryForMetaDescription(content, 32));
+        }
+
+        [TestMethod]
+        public void ShouldRemoveUnderscoresInMetaDescriptionSummary()
+        {
+            const string content = "__Michael Knight's__ car is amazing.";
+            Assert.AreEqual("Michael Knight's car is amazing.", MarkDownHelper.SummaryForMetaDescription(content, 32));
+        }
+
+        [TestMethod]
+        public void ShouldRemoveEndingCharReturnValueInMetaDescriptionSummary()
+        {
+            const string content = "Michael Knight's\n> car is amazing.";
+            Assert.AreEqual("Michael Knight's car is amazing.", MarkDownHelper.SummaryForMetaDescription(content, 32));
+        }
+
+        [TestMethod]
+        public void ShouldTruncateTheExtraWordsInMetaDescriptionSummary()
+        {
+            const string content = "Michael Knight's\n> car is amazing.";
+            Assert.AreEqual("Michael Knight's", MarkDownHelper.SummaryForMetaDescription(content, 10));
+        }
+
+        [TestMethod]
+        public void ShouldIgnoreImagesInMetaDescriptionSummary()
+        {
+            const string content = "![enter image description here][2]Michael Knight's\n> car is amazing.";
+            Assert.AreEqual("Michael Knight's", MarkDownHelper.SummaryForMetaDescription(content, 10));
+        }
     }
 }

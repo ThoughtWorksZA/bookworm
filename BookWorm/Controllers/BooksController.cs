@@ -40,6 +40,7 @@ namespace BookWorm.Controllers
             var book = (Book) _repository.Get<Book>(id);
             var bookInformation = new BookInformation(book, book.Posts.Select(post => new BookPostInformation(book.Id, post)).ToList());
             ViewBag.Title = bookInformation.Model.Title;
+            ViewBag.MetaDescription = bookInformation.Summary(155);
             return View(bookInformation);
         }
 
