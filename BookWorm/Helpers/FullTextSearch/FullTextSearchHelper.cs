@@ -19,11 +19,12 @@ namespace BookWorm.Helpers.FullTextSearch
         {
             var query = _session.Query<Book, Book_AllProperties>();
 
-            var books = query.Search(b=>b.Title, text)
-                .Search(b => b.Description, text)
-                .Search(b => b.Isbn, text)
-                .Search(b => b.Author, text)
-                .Search(b => b.Description, text);
+            var books = query.Search(b => b.Title, text)
+                             .Search(b => b.Description, text)
+                             .Search(b => b.Isbn, text)
+                             .Search(b => b.Author, text)
+                             .Search(b => b.Description, text)
+                             .Search(b => b.Posts, text);
             return books.ToList();
         }
     }

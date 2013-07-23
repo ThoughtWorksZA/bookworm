@@ -19,7 +19,8 @@ namespace BookWorm.Models.indices
                                    Subtitle = book.Subtitle.Boost(8),
                                    Author = book.Author.Boost(8),
                                    Isbn = book.Isbn.Boost(10),
-                                   Description = book.Description.Boost(5)
+                                   Description = book.Description.Boost(5),
+                                   Posts = book.Posts.Boost(1)
                                };
 
             Indexes = new Dictionary<Expression<Func<Book, object>>, FieldIndexing>
@@ -29,6 +30,7 @@ namespace BookWorm.Models.indices
                     {b=>b.Author, FieldIndexing.Analyzed},
                     {b=>b.Isbn, FieldIndexing.Analyzed},
                     {b=>b.Description, FieldIndexing.Analyzed},
+                    {b=>b.Posts, FieldIndexing.Analyzed},
                 };
         }
     }

@@ -34,6 +34,7 @@ namespace BookWorm.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
         public ViewResult List(int page = 1, int perPage = 9)
         {
             var books = _repository.List<Book>(page, perPage);

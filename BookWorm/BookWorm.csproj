@@ -404,7 +404,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Books\Details.cshtml" />
-    <Content Include="Views\Books\List.cshtml" />
     <Content Include="Views\Books\Edit.cshtml" />
     <Content Include="Views\Pages\Create.cshtml" />
     <Content Include="Views\Pages\Details.cshtml" />
@@ -424,6 +423,7 @@
     <Content Include="Views\Posts\News.cshtml" />
     <Content Include="Views\Home\PostNews.cshtml" />
     <Content Include="Views\Posts\PostNews.cshtml" />
+    <Content Include="Views\Books\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
