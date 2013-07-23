@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using BookWorm.Models;
+using BookWorm.Models.indices;
 using BookWorm.ViewModels;
 using PagedList;
 using Raven.Client.Linq;
@@ -13,7 +14,7 @@ namespace BookWorm.Controllers
     [Authorize]
     public class BooksController : BaseController
     {
-        private static readonly object synclock = new object();
+        private static readonly object Synclock = new object();
         private const string NoBooksFoundTxtSearch = "No books found that match your search. Change the search text to widen your search.";
         private const string NoBooksFoundTxtFilter = "No books found that match your search. Change the filter options on the left to widen your search.";
 
@@ -64,7 +65,7 @@ namespace BookWorm.Controllers
               Book createdBook;
 
             //Warning: this wouldn't work in a cluster - need to use concurrency on the DB for atomicity
-            lock (synclock) //Provide some atomicity for checking the ISBN exists and then create it
+            lock (Synclock) //Provide some atomicity for checking the ISBN exists and then create it
             {
                 IEnumerable<Book> search = SearchByIsbn(bookInformation);
                 if ( search.Any())
@@ -96,7 +97,7 @@ namespace BookWorm.Controllers
                 TempData["flashError"] = "There were problems saving this book";
                 return View(editedBookInformation);
             }
-            lock (synclock)
+            lock (Synclock)
             {
                 IEnumerable<Book> search = SearchByIsbn(editedBookInformation);
                 if (search.Any())
@@ -112,6 +113,14 @@ namespace BookWorm.Controllers
             TempData["flashSuccess"] = string.Format("Updated {0} successfully", editedBookInformation.Model.Title);
             return RedirectToAction("Details", new { id = editedBookInformation.Model.Id });
 
+        }
+       
+        private List<Book> SearchByFullText(string text)
+        {
+            return _session.Query<Book_AllProperties.Result, Book_AllProperties>()
+                           .Where(x => x.Query == text) // search first name
+                           .OfType<Book>()
+                           .ToList();
         }
 
         private IEnumerable<Book> SearchByIsbn(BookInformation editedBookInformation)
@@ -134,10 +143,9 @@ namespace BookWorm.Controllers
         [HttpPost]
         public ActionResult List(string searchQuery, int page = 1, int perPage = 9)
         {
-            Expression<Func<Book, bool>> searchPredicate = book => book.Title == searchQuery || book.Isbn == searchQuery;
-            var books = _repository.Search(searchPredicate, page, perPage);
+            var books = SearchByFullText(searchQuery);
             ViewBag.Title = string.Format("Search Results for \"{0}\"", searchQuery);
-            var bookInformations = new StaticPagedList<BookInformation>(books.Select(book => new BookInformation(book)).ToList(), page, perPage, _repository.Count(searchPredicate));
+            var bookInformations = new StaticPagedList<BookInformation>(books.Select(book => new BookInformation(book)).ToList(), page, perPage, books.Count);
             if (bookInformations.Count() == 1)
             {
                 return RedirectToAction("Details", new { id = bookInformations.First().Model.Id });                

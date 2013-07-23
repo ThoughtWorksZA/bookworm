@@ -6,7 +6,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using BookWorm.Models.indices;
 using Raven.Client.Document;
+using Raven.Client.Indexes;
 using WebMatrix.WebData;
 
 namespace BookWorm
@@ -42,6 +44,7 @@ namespace BookWorm
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+            IndexCreation.CreateIndexes(typeof(Book_AllProperties).Assembly, Store);
         }
 
         public override void Dispose()

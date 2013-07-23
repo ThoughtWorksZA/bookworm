@@ -245,6 +245,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookPost.cs" />
+    <Compile Include="Models\indices\Book_AllProperties.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Repository.cs" />
     <Compile Include="Models\Roles.cs" />
