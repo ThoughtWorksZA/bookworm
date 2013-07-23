@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using BookWorm.Helpers;
+using BookWorm.Helpers.FullTextSearch;
 using BookWorm.Models;
-using BookWorm.Models.indices;
 using BookWorm.ViewModels;
 using PagedList;
 using Raven.Client.Linq;
@@ -18,9 +17,16 @@ namespace BookWorm.Controllers
         private static readonly object Synclock = new object();
         private const string NoBooksFoundTxtSearch = "No books found that match your search. Change the search text to widen your search.";
         private const string NoBooksFoundTxtFilter = "No books found that match your search. Change the filter options on the left to widen your search.";
-
+        
+        private IFullTextSearch _fullTextSearch;
+        
         public BooksController()
         {
+        }
+
+        public BooksController(IFullTextSearch fullTextSearch)
+        {
+            _fullTextSearch = fullTextSearch;
         }
 
         public BooksController(Repository repository) : base (repository)
@@ -115,15 +121,6 @@ namespace BookWorm.Controllers
             return RedirectToAction("Details", new { id = editedBookInformation.Model.Id });
 
         }
-       
-        private List<Book> SearchByFullText(string text)
-        {
-            return _session.Query<Book, Book_AllProperties>()
-                           .Where(x => x.Title == text) // search first name
-                           .OfType<Book>()
-                           .ToList();
-        }
-
 
         private IEnumerable<Book> SearchByIsbn(BookInformation editedBookInformation)
         {
@@ -142,13 +139,20 @@ namespace BookWorm.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
+        [HttpGet]
         public ActionResult List(string searchQuery, int page = 1, int perPage = 9)
         {
-            var books = new FullTextSearchHelper(_session).SearchByFullText(searchQuery);
+            if (_fullTextSearch == null)
+            {
+                _fullTextSearch = new FullTextSearchHelper(_session);
+            }
+            var books = _fullTextSearch.Search(searchQuery);
             ViewBag.Title = string.Format("Search Results for \"{0}\"", searchQuery);
-            var bookInformations = new StaticPagedList<BookInformation>(books.Select(book => new BookInformation(book)).ToList(), page, perPage, books.Count);
-            if (bookInformations.Count() == 1)
+            var bookInformations = new StaticPagedList<BookInformation>(books.Skip((page-1)*perPage).Take(perPage)
+                .Select(book => new BookInformation(book))
+                .ToList(), page, perPage, books.Count);
+
+            if (books.Count() == 1)
             {
                 return RedirectToAction("Details", new { id = bookInformations.First().Model.Id });                
             }
@@ -157,6 +161,7 @@ namespace BookWorm.Controllers
                 TempData["flashNotice"] = NoBooksFoundTxtSearch;
             }
             ViewBag.HideFilter = true;
+            ViewBag.SearchQuery = searchQuery;
             return View(new FilterInformation(bookInformations));
         }
 

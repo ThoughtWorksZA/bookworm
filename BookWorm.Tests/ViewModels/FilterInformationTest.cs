@@ -71,5 +71,12 @@ namespace BookWorm.Tests.ViewModels
             var filterInformation = new FilterInformation(new List<BookInformation>().ToPagedList(1, 9));
             Assert.AreEqual("/Books/List?page=2", filterInformation.PaginationUrl("List", 2));
         }
+
+        [TestMethod]
+        public void ShouldBuildUrlForPaginationWithSearchQuery()
+        {
+            var filterInformation = new FilterInformation(new List<BookInformation>().ToPagedList(1, 9));
+            Assert.AreEqual("/Books/List?page=2&searchQuery=Jane Eye", filterInformation.PaginationUrl("List", 2, "Jane Eye"));
+        }
     }
 }

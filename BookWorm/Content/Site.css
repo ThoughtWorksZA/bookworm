@@ -267,7 +267,7 @@ clear: both;
 }
 
 .default-cover-info {
-    padding: 50px 20px 190px 30px;
+    padding: 50px 20px 0 30px;
     font-size: 18pt;
     color: #666666;
 }

@@ -96,7 +96,9 @@
              {
                  <div class="row-fluid">
                      <div class="span12">
-                         <center>@Html.PagedListPager(Model.BookInformations, page => Model.PaginationUrl(ViewContext.RouteData.Values["Action"].ToString(), page), PagedListRenderOptions.ClassicPlusFirstAndLast)</center>
+                         <center>@Html.PagedListPager(Model.BookInformations,
+                         page => Model.PaginationUrl(ViewContext.RouteData.Values["Action"].ToString(), page, ViewBag.SearchQuery), 
+                         PagedListRenderOptions.ClassicPlusFirstAndLast)</center>
                      </div>
                  </div>
              }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Raven.Abstractions.Indexing;
 using Raven.Client.Indexes;
+using Raven.Client.Linq.Indexing;
 
 namespace BookWorm.Models.indices
 {
@@ -14,11 +15,11 @@ namespace BookWorm.Models.indices
             Map = books => from book in books
                            select new
                                {
-                                   Title = book.Title,
-                                   Subtitle = book.Subtitle,
-                                   Author = book.Author,
-                                   Isbn = book.Isbn,
-                                   Description = book.Description
+                                   Title = book.Title.Boost(10),
+                                   Subtitle = book.Subtitle.Boost(8),
+                                   Author = book.Author.Boost(8),
+                                   Isbn = book.Isbn.Boost(10),
+                                   Description = book.Description.Boost(5)
                                };
 
             Indexes = new Dictionary<Expression<Func<Book, object>>, FieldIndexing>
@@ -28,8 +29,7 @@ namespace BookWorm.Models.indices
                     {b=>b.Author, FieldIndexing.Analyzed},
                     {b=>b.Isbn, FieldIndexing.Analyzed},
                     {b=>b.Description, FieldIndexing.Analyzed},
-                }
-            ;
+                };
         }
     }
 }

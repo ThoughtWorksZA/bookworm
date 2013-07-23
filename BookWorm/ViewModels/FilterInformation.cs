@@ -82,9 +82,14 @@ namespace BookWorm.ViewModels
             return string.Format("{0}={1}", type, HttpUtility.UrlEncode(values));
         }
 
-        public string PaginationUrl(string action, int page)
+        public string PaginationUrl(string action, int page, string searchQuery = null)
         {
-            return string.Format("/Books/{0}?page={1}{2}", action, page, BuildSecondaryFilter(new { Type = "genres", Value = Genres }, new { Type = "languages", Value = Languages }, new { Type = "ageRanges", Value = AgeRanges }));
+            var paginationUrl = string.Format("/Books/{0}?page={1}{2}", action, page, BuildSecondaryFilter(new {Type = "genres", Value = Genres}, new {Type = "languages", Value = Languages}, new {Type = "ageRanges", Value = AgeRanges}));
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                paginationUrl = string.Format("{0}&searchQuery={1}", paginationUrl, searchQuery);
+            }
+            return paginationUrl;
         }
     }
 }

@@ -240,6 +240,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\FullTextSearch\FullTextSearchHelper.cs" />
+    <Compile Include="Helpers\FullTextSearch\IFullTextSearch.cs" />
     <Compile Include="Helpers\MarkDownHelper.cs" />
     <Compile Include="Helpers\UrlUtils.cs" />
     <Compile Include="Models\AccountModels.cs" />

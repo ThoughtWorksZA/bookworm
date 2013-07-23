@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using BookWorm.Controllers;
+using BookWorm.Helpers.FullTextSearch;
 using BookWorm.Models;
 using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -300,10 +301,10 @@ namespace BookWorm.Tests.Controllers
             var books = new List<Book>();
             Enumerable.Range(1, 9).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i}));
             books.Add(new Book { Title = "Book 1" });
-            var mockedRepo = new Mock<Repository>();
+            var mock = new Mock<IFullTextSearch>();
             var expectedBooks = new List<Book> {books.First(), books.Last()};
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<int>(), It.IsAny<int>())).Returns(expectedBooks);
-            var booksController = new BooksController(mockedRepo.Object);
+            mock.Setup(repo => repo.Search(It.IsAny<string>())).Returns(expectedBooks);
+            var booksController = new BooksController(mock.Object);
 
             var view = (ViewResult)booksController.List("Book 1");
 
@@ -314,7 +315,27 @@ namespace BookWorm.Tests.Controllers
             Assert.AreEqual("Book 1", actualBooks.First().Title);
             Assert.AreEqual("Book 1", actualBooks.Last().Title);
 
-            mockedRepo.Verify(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once());
+            mock.Verify(repo => repo.Search(It.IsAny<string>()), Times.Once());
+        }
+
+        [TestMethod]
+        public void BooksControllerListWithSearchQueryShouldPageWithTheQueryText()
+        {
+            var books = new List<Book>();
+            Enumerable.Range(1, 10).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i }));
+            books.Add(new Book { Title = "Book 1" });
+            var mock = new Mock<IFullTextSearch>();
+            var matched = books;
+            mock.Setup(repo => repo.Search(It.IsAny<string>())).Returns(matched);
+            var booksController = new BooksController(mock.Object);
+
+            var view = (ViewResult)booksController.List("Book 1");
+
+            var booksInView = ((FilterInformation)view.Model).BookInformations;
+            var actualBooks = booksInView.Select(bookInformation => bookInformation.Model).ToList();
+            Assert.AreEqual(9, actualBooks.Count());
+            Assert.AreEqual(2, booksInView.PageCount);
+            Assert.AreEqual("Book 1", booksController.ViewBag.SearchQuery);
         }
 
 
@@ -331,10 +352,10 @@ namespace BookWorm.Tests.Controllers
         [TestMethod]
         public void BooksControllerListWithSearchQueryShouldRedirectToDetailsWhenThereIsOnlyOneResult()
         {
-            var mockedRepo = new Mock<Repository>();
+            var mock = new Mock<IFullTextSearch>();
             var expectedBooks = new List<Book> { new Book {Id=1, Title = "Book 1" } };
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<int>(), It.IsAny<int>())).Returns(expectedBooks);
-            var booksController = new BooksController(mockedRepo.Object);
+            mock.Setup(repo => repo.Search(It.IsAny<string>())).Returns(expectedBooks);
+            var booksController = new BooksController(mock.Object);
 
             var viewResult = (RedirectToRouteResult)booksController.List("Book 1");
             Assert.AreEqual(1, viewResult.RouteValues["id"]);
