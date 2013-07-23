@@ -101,7 +101,7 @@
                                 <span class="lead"><i class="icon-search"></i> I am looking for a specific book</span>
                             </div>
                             <div class="span7">
-                                @using (Html.BeginForm("List", "Books", FormMethod.Get))
+                                @using (Html.BeginForm("Search", "Books", FormMethod.Get))
                                 {
                                     <div class="row-fluid">
                                         <div class="span7">@Html.TextBox("searchQuery", "", new { placeholder = "Full Text Search" })</div>

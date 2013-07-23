@@ -135,13 +135,13 @@ namespace BookWorm.Controllers
         public RedirectToRouteResult Delete(int id)
         {
             _repository.Delete<Book>(id);
-            TempData["flashSuccess"] = string.Format("Book successfully deleted");            
+            TempData["flashSuccess"] = string.Format("Book successfully deleted");
             return RedirectToAction("List");
         }
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult List(string searchQuery, int page = 1, int perPage = 9)
+        public ActionResult Search(string searchQuery, int page = 1, int perPage = 9)
         {
             if (_fullTextSearch == null)
             {
@@ -163,7 +163,7 @@ namespace BookWorm.Controllers
             }
             ViewBag.HideFilter = true;
             ViewBag.SearchQuery = searchQuery;
-            return View(new FilterInformation(bookInformations));
+            return View("List", new FilterInformation(bookInformations));
         }
 
         [AllowAnonymous]

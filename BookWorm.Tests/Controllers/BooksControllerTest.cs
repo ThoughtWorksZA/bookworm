@@ -306,7 +306,7 @@ namespace BookWorm.Tests.Controllers
             mock.Setup(repo => repo.Search(It.IsAny<string>())).Returns(expectedBooks);
             var booksController = new BooksController(mock.Object);
 
-            var view = (ViewResult)booksController.List("Book 1");
+            var view = (ViewResult)booksController.Search("Book 1");
 
             var booksInView = ((FilterInformation)view.Model).BookInformations;
             var actualBooks = booksInView.Select(bookInformation => bookInformation.Model).ToList();
@@ -329,7 +329,7 @@ namespace BookWorm.Tests.Controllers
             mock.Setup(repo => repo.Search(It.IsAny<string>())).Returns(matched);
             var booksController = new BooksController(mock.Object);
 
-            var view = (ViewResult)booksController.List("Book 1");
+            var view = (ViewResult)booksController.Search("Book 1");
 
             var booksInView = ((FilterInformation)view.Model).BookInformations;
             var actualBooks = booksInView.Select(bookInformation => bookInformation.Model).ToList();
@@ -357,7 +357,7 @@ namespace BookWorm.Tests.Controllers
             mock.Setup(repo => repo.Search(It.IsAny<string>())).Returns(expectedBooks);
             var booksController = new BooksController(mock.Object);
 
-            var viewResult = (RedirectToRouteResult)booksController.List("Book 1");
+            var viewResult = (RedirectToRouteResult)booksController.Search("Book 1");
             Assert.AreEqual(1, viewResult.RouteValues["id"]);
 
 
