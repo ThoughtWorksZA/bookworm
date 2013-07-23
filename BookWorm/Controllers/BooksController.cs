@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
+using BookWorm.Helpers;
 using BookWorm.Models;
 using BookWorm.Models.indices;
 using BookWorm.ViewModels;
@@ -38,7 +39,7 @@ namespace BookWorm.Controllers
         [AllowAnonymous]
         public ViewResult Details(int id)
         {
-            var book = (Book) _repository.Get<Book>(id);
+            var book = _repository.Get<Book>(id);
             var bookInformation = new BookInformation(book, book.Posts.Select(post => new BookPostInformation(book.Id, post)).ToList());
             ViewBag.Title = bookInformation.Model.Title;
             ViewBag.MetaDescription = bookInformation.Summary(155);
@@ -73,7 +74,7 @@ namespace BookWorm.Controllers
                     TempData["flashError"] = "The ISBN number already exists";
                     return View(bookInformation);
                 }
-                createdBook = (Book) _repository.Create(bookInformation.Model);
+                createdBook = _repository.Create(bookInformation.Model);
             }
           
             TempData["flashSuccess"] = string.Format("Added {0} successfully", createdBook.Title);
@@ -117,11 +118,12 @@ namespace BookWorm.Controllers
        
         private List<Book> SearchByFullText(string text)
         {
-            return _session.Query<Book_AllProperties.Result, Book_AllProperties>()
-                           .Where(x => x.Query == text) // search first name
+            return _session.Query<Book, Book_AllProperties>()
+                           .Where(x => x.Title == text) // search first name
                            .OfType<Book>()
                            .ToList();
         }
+
 
         private IEnumerable<Book> SearchByIsbn(BookInformation editedBookInformation)
         {
@@ -143,7 +145,7 @@ namespace BookWorm.Controllers
         [HttpPost]
         public ActionResult List(string searchQuery, int page = 1, int perPage = 9)
         {
-            var books = SearchByFullText(searchQuery);
+            var books = new FullTextSearchHelper(_session).SearchByFullText(searchQuery);
             ViewBag.Title = string.Format("Search Results for \"{0}\"", searchQuery);
             var bookInformations = new StaticPagedList<BookInformation>(books.Select(book => new BookInformation(book)).ToList(), page, perPage, books.Count);
             if (bookInformations.Count() == 1)
