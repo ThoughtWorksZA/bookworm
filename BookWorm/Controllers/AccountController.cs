@@ -9,6 +9,7 @@ using BirdBrain;
 using BookWorm.ViewModels;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
+using Raven.Client;
 using WebMatrix.WebData;
 using BookWorm.Models;
 using Roles = BookWorm.Models.Roles;
@@ -25,6 +26,11 @@ namespace BookWorm.Controllers
 
         public AccountController(Repository repository) : base(repository)
         {
+        }
+
+        public AccountController(IDocumentSession session)
+        {
+            _session = session;
         }
 
         //
