@@ -6,10 +6,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using BirdBrain;
+using BookWorm.ViewModels;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using BookWorm.Models;
+using Roles = BookWorm.Models.Roles;
 
 namespace BookWorm.Controllers
 {
@@ -416,5 +418,41 @@ namespace BookWorm.Controllers
             }
         }
         #endregion
+
+        [HttpGet]
+        public ViewResult List()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
+        public ViewResult Create()
+        {
+            ViewBag.Title = "Add a User";
+            return View(new UserInformation(new RegisterModel()));
+        }
+
+        [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
+        public ActionResult Create(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                    System.Web.Security.Roles.AddUsersToRole(new string[] { model.UserName }, model.Role);
+                    return RedirectToAction("List", "Account");
+                }
+                catch (MembershipCreateUserException e)
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(new UserInformation(model));
+        }
     }
 }

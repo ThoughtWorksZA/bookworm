@@ -252,6 +252,7 @@
     <Compile Include="Models\Repository.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\StaticPage.cs" />
+    <Compile Include="Models\UserInformation.cs" />
     <Compile Include="Models\Validations\ValidAgeRange.cs" />
     <Compile Include="Models\Validations\ValidCountry.cs" />
     <Compile Include="Models\Validations\ValidGenre.cs" />
@@ -424,6 +425,8 @@
     <Content Include="Views\Home\PostNews.cshtml" />
     <Content Include="Views\Posts\PostNews.cshtml" />
     <Content Include="Views\Books\List.cshtml" />
+    <Content Include="Views\Account\List.cshtml" />
+    <Content Include="Views\Account\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

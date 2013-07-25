@@ -181,7 +181,6 @@
     <Compile Include="Controllers\PostsControllerTest.cs" />
     <Compile Include="Helpers\UrlUtilsTest.cs" />
     <Compile Include="Helpers\MarkDownHelperTest.cs" />
-    <Compile Include="Models\UnitTest1.cs" />
     <Compile Include="Specs\CreateAStaticPage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

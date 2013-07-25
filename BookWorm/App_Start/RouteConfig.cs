@@ -59,6 +59,18 @@ namespace BookWorm
                 );
 
             routes.MapRoute(
+                "Users",
+                "Users",
+                new { controller = "Account", action = "List" }
+                );
+
+            routes.MapRoute(
+                "UsersCreate",
+                "Users/Create",
+                new { controller = "Account", action = "Create" }
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

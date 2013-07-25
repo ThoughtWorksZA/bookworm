@@ -1,10 +1,6 @@
-﻿using System;
-using System.Web.Mvc;
-using BirdBrain;
+﻿using System.Web.Mvc;
 using BookWorm.Controllers;
-using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 
 namespace BookWorm.Tests.Controllers
 {
@@ -40,6 +36,22 @@ namespace BookWorm.Tests.Controllers
             var controller = new TestAccountController(1);
             var result = (HttpStatusCodeResult) controller.Register();
             Assert.AreEqual(403, result.StatusCode);
+        }
+
+        [TestMethod]
+        public void ShouldGoToListPage()
+        {
+            var controller = new AccountController();
+            var result = controller.List();
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ShouldGoToNewAccountPage()
+        {
+            var controller = new AccountController();
+            var result = controller.Create();
+            Assert.AreEqual("Add a User",result.ViewBag.Title );
         }
     }
 }
