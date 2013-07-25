@@ -344,7 +344,7 @@ namespace BookWorm.Tests.Controllers
         {
             var booksControllerClass = typeof(BooksController);
             Assert.AreEqual(1, booksControllerClass.GetMethods()
-                                                   .First(method => method.Name == "List" && method.GetParameters().Count() == 3)
+                                                   .First(method => method.Name == "Search")
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
         }
