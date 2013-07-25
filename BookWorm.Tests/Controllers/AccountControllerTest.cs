@@ -37,21 +37,5 @@ namespace BookWorm.Tests.Controllers
             var result = (HttpStatusCodeResult) controller.Register();
             Assert.AreEqual(403, result.StatusCode);
         }
-
-        [TestMethod]
-        public void ShouldGoToListPage()
-        {
-            var controller = new AccountController();
-            var result = controller.List();
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void ShouldGoToNewAccountPage()
-        {
-            var controller = new AccountController();
-            var result = controller.Create();
-            Assert.AreEqual("Add a User",result.ViewBag.Title );
-        }
     }
 }
