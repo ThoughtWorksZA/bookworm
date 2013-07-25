@@ -442,6 +442,7 @@ namespace BookWorm.Controllers
                 try
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                    _session.Query<User>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).Where(u => u.Username == model.UserName).ToList();
                     System.Web.Security.Roles.AddUsersToRole(new string[] { model.UserName }, model.Role);
                     return RedirectToAction("List", "Account");
                 }
