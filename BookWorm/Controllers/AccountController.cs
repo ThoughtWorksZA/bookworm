@@ -12,6 +12,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using BookWorm.Models;
 using Roles = BookWorm.Models.Roles;
+using Raven.Database.Linq.PrivateExtensions;
 
 namespace BookWorm.Controllers
 {
@@ -422,7 +423,10 @@ namespace BookWorm.Controllers
         [HttpGet]
         public ViewResult List()
         {
-            return View();
+            var membershipUserCollection = Membership.GetAllUsers();
+            var usernames = (from MembershipUser member in membershipUserCollection select member.UserName).ToList();
+            var users = usernames.SelectMany(u => _session.Query<User>().Where(user => user.Username == u));
+            return View(users);
         }
 
         [HttpGet]
