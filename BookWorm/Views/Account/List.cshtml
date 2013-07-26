@@ -1,8 +1,44 @@
-﻿
+﻿@model List<BirdBrain.User>
+
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "System Users";
+    ViewBag.NoIndex = true;
 }
 
-<h2>title</h2>
-
-<a href="~/Users/Create">Create New</a>
+<div class="row-fluid">
+    <div class="row-content">
+        <div class="span12">
+            <p class="lead">@ViewBag.Title</p>
+            
+        </div>
+    </div>
+</div>
+<div class="row gray-body-row">
+    <div class="row-content">
+        <div class="span12">
+            <div class="row-fluid">
+                <table class="table">  
+                    <thead>  
+                        <tr>  
+                            <th>User name</th>  
+                            <th>Data added</th>  
+                            <th>Role</th>  
+                            <th>Status</th>  
+                        </tr>  
+                    </thead>  
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>  
+                                <td>@item.Username</td>  
+                                <td>@item.Created.ToShortDateString()</td>  
+                                <td>@(item.Roles.Count()>0?item.Roles[0]:"")</td>  
+                                <td>@(item.IsApproved ? "Confirmed" : "Pending")</td>  
+                            </tr>
+                        }    
+                    </tbody>  
+                </table> 
+            </div>
+        </div>
+    </div>
+</div>
