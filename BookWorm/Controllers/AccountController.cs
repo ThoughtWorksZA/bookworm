@@ -429,9 +429,7 @@ namespace BookWorm.Controllers
         [HttpGet]
         public ViewResult List()
         {
-            var membershipUserCollection = Membership.GetAllUsers();
-            var usernames = (from MembershipUser member in membershipUserCollection select member.UserName).ToList();
-            var users = usernames.SelectMany(u => _session.Query<User>().Where(user => user.Username == u));
+            var users = _session.Query<User>().OrderByDescending(u=>u.Created).ToList();
             return View(users);
         }
 

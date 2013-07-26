@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
+using BookWorm.Models.Validations;
 
 namespace BookWorm.Models
 {
@@ -74,6 +75,7 @@ namespace BookWorm.Models
     {
         [Required]
         [Display(Name = "User name")]
+        [EmailAddress]
         public string UserName { get; set; }
 
         [Required]
@@ -87,6 +89,8 @@ namespace BookWorm.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
+        [ValidRole]
         public string Role { get; set; }
     }
 

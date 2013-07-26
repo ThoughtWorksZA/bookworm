@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using BirdBrain;
@@ -48,6 +49,47 @@ namespace BookWorm.Tests.Controllers.Integration
         }
 
         [TestMethod]
+        public void ShouldListUsers()
+        {
+            var ruimin = new User()
+            {
+                Username = "Ruimin@tw.com",
+                Roles = new string[] { Roles.Admin },
+                Created = DateTime.UtcNow.AddDays(-1),
+                IsApproved = true
+            };
+
+            var akani = new User()
+            {
+                Username = "Akani@tw.com",
+                Roles = new string[] { Roles.Author },
+                Created = DateTime.UtcNow,
+                IsApproved = false
+            };
+            UsingSession(session =>
+                {
+                    session.Store(ruimin);
+                    session.Store(akani);
+                });
+
+            UsingSession(session =>
+                {
+                    var accountController = new AccountController(session);
+                    var viewResult = accountController.List();
+                    var actualUsers = ((List<User>) (viewResult.Model));
+                    Assert.AreEqual(2, actualUsers.Count);
+                    Assert.IsTrue(UserEqual(actualUsers.First(), akani));
+                    Assert.IsTrue(UserEqual(actualUsers.Last(), ruimin));
+                });
+        }
+
+        private bool UserEqual(User expected, User actual)
+        {
+            return expected.Username == actual.Username && expected.Created == actual.Created &&
+                   expected.Roles[0] == actual.Roles[0] && expected.IsApproved == actual.IsApproved;
+        }
+
+        [TestMethod]
         public void ShouldGoToNewAccountPage()
         {
             var controller = new AccountController();
@@ -60,7 +102,7 @@ namespace BookWorm.Tests.Controllers.Integration
         {
             var model = new RegisterModel()
                 {
-                    UserName = "Akani",
+                    UserName = "Akani@thoughtworks.com",
                     Password = "111111",
                     ConfirmPassword = "111111",
                     Role = Roles.Admin

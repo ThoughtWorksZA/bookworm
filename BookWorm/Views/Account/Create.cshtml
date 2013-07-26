@@ -30,7 +30,7 @@
                         </div>
                         <div class="span10">
                             @Html.TextBoxFor(model => model.Model.UserName, new { placeholder = "Username"})
-@*                            @Html.ValidationMessageFor(model => model.Model.Title)*@
+                            @Html.ValidationMessageFor(model => model.Model.UserName)
                         </div>
                     </div>
 
@@ -40,17 +40,17 @@
                         </div>
                         <div class="span10">
                             @Html.TextBoxFor(model => model.Model.Password, new { placeholder = "Password"})
-                            @*                            @Html.ValidationMessageFor(model => model.Model.Subtitle)*@
+                            @Html.ValidationMessageFor(model => model.Model.Password)
                         </div>
                     </div>
                     
                     <div class="row-fluid">
                         <div class="span2">
-                            Password*
+                            Confirm Password*
                         </div>
                         <div class="span10">
                             @Html.TextBoxFor(model => model.Model.ConfirmPassword, new { placeholder = "Confirm Password"})
-@*                            @Html.ValidationMessageFor(model => model.Model.Subtitle)*@
+                            @Html.ValidationMessageFor(model => model.Model.ConfirmPassword)
                         </div>
                     </div>
 
@@ -63,7 +63,7 @@
                                 model => model.Model.Role, 
                                 new SelectList(Model.ValidRoles()),
                                 "Select Role")
-@*                            @Html.ValidationMessageFor(model => model.Model.Language)*@
+                            @Html.ValidationMessageFor(model => model.Model.Role)
                         </div>
                     </div>
                     <p>
