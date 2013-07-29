@@ -43,33 +43,36 @@ namespace BookWorm.Tests.Controllers.Integration
         [TestMethod]
         public void ShouldGoToListPage()
         {
-            var controller = new AccountController();
-            var result = controller.List();
-            Assert.IsNotNull(result);
+            UsingSession(s =>
+                {
+                    var controller = new AccountController(s);
+                    var result = controller.List();
+                    Assert.IsNotNull(result);
+                });
         }
 
         [TestMethod]
         public void ShouldListUsers()
         {
-            var ruimin = new User()
-            {
-                Username = "Ruimin@tw.com",
-                Roles = new string[] { Roles.Admin },
-                Created = DateTime.UtcNow.AddDays(-1),
-                IsApproved = true
-            };
-
-            var akani = new User()
-            {
-                Username = "Akani@tw.com",
-                Roles = new string[] { Roles.Author },
-                Created = DateTime.UtcNow,
-                IsApproved = false
-            };
+            var ruimin = new RegisterModel()
+                {
+                    UserName = "Ruimin@tw.com",
+                    Password = "111111",
+                    ConfirmPassword = "111111",
+                    Role = Roles.Admin
+                };
+            var akani = new RegisterModel()
+                {
+                    UserName = "Akani@tw.com",
+                    Password = "111111",
+                    ConfirmPassword = "111111",
+                    Role = Roles.Admin
+                };
             UsingSession(session =>
                 {
-                    session.Store(ruimin);
-                    session.Store(akani);
+                    var accountController = new AccountController(session);
+                    accountController.Create(ruimin);
+                    accountController.Create(akani);
                 });
 
             UsingSession(session =>
@@ -78,15 +81,15 @@ namespace BookWorm.Tests.Controllers.Integration
                     var viewResult = accountController.List();
                     var actualUsers = ((List<User>) (viewResult.Model));
                     Assert.AreEqual(2, actualUsers.Count);
-                    Assert.IsTrue(UserEqual(actualUsers.First(), akani));
-                    Assert.IsTrue(UserEqual(actualUsers.Last(), ruimin));
+                    Assert.IsTrue(UserEqual(akani, actualUsers.First()));
+                    Assert.IsTrue(UserEqual(ruimin, actualUsers.Last()));
                 });
         }
 
-        private bool UserEqual(User expected, User actual)
+        private bool UserEqual(RegisterModel expected, User actual)
         {
-            return expected.Username == actual.Username && expected.Created == actual.Created &&
-                   expected.Roles[0] == actual.Roles[0] && expected.IsApproved == actual.IsApproved;
+            return expected.UserName == actual.Username &&
+                   expected.Role == actual.Roles[0];
         }
 
         [TestMethod]
@@ -112,9 +115,9 @@ namespace BookWorm.Tests.Controllers.Integration
                 {
                     var controller = new AccountController(session);
 
-                    var actionResult = (System.Web.Mvc.RedirectToRouteResult)(controller.Create(model));
-                    Assert.AreEqual("Account",actionResult.RouteValues["controller"]);
-                    Assert.AreEqual("List",actionResult.RouteValues["action"]);
+                    var actionResult = (System.Web.Mvc.RedirectToRouteResult) (controller.Create(model));
+                    Assert.AreEqual("Account", actionResult.RouteValues["controller"]);
+                    Assert.AreEqual("List", actionResult.RouteValues["action"]);
                 });
 
             UsingSession((session) =>
