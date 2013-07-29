@@ -12,6 +12,7 @@ namespace BookWorm.Tests.Models.Validations
         {
             var validator = new ValidRole();
             Assert.IsTrue(validator.IsValid(Roles.Admin));
+            Assert.IsTrue(validator.IsValid(Roles.Author));
         }
     
         [TestMethod]

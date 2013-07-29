@@ -16,6 +16,12 @@
 <div class="row gray-body-row">
     <div class="row-content">
         <div class="span12">
+            <p>
+                @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
+                {
+                    @Html.ActionLink("Create New", "Create")
+                }
+            </p>
             <div class="row-fluid">
                 <table class="table">  
                     <thead>  

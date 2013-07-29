@@ -10,7 +10,7 @@ namespace BookWorm.Models.Validations
     {
         public static List<string> ValidRoles = new List<string>()
             {
-                "admin"
+                Roles.Admin, Roles.Author
             };
 
         public override bool IsValid(object specifiedRole)
