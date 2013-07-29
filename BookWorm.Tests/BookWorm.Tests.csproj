@@ -35,8 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BirdBrain">
-      <HintPath>..\packages\BirdBrain.0.2.3-Unstable\lib\net45\BirdBrain.dll</HintPath>
+    <Reference Include="BirdBrain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\birdbrain\BirdBrain\bin\Debug\BirdBrain.dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Crypto">
       <HintPath>..\packages\RavenDB.Database.2.0.2170-Unstable\lib\net40\BouncyCastle.Crypto.dll</HintPath>
@@ -171,6 +172,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\RegisterModelBuilder.cs" />
     <Compile Include="Controllers\BookPostsControllerTest.cs" />
     <Compile Include="Controllers\BooksControllerTest.cs" />
     <Compile Include="Controllers\Integration\AccountControllerTest.cs" />

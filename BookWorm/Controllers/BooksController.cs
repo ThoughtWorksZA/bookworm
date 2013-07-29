@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using BookWorm.Helpers.FullTextSearch;
 using BookWorm.Models;
+using BookWorm.Services.FullTextSearch;
 using BookWorm.ViewModels;
 using PagedList;
 using Raven.Client.Linq;
@@ -145,7 +145,7 @@ namespace BookWorm.Controllers
         {
             if (_fullTextSearch == null)
             {
-                _fullTextSearch = new FullTextSearchHelper(_session);
+                _fullTextSearch = new FullTextSearchService(_session);
             }
             var books = _fullTextSearch.Search(searchQuery);
             ViewBag.Title = string.Format("Search Results for \"{0}\"", searchQuery);

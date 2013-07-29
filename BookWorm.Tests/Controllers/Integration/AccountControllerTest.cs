@@ -5,8 +5,10 @@ using System.Linq;
 using BirdBrain;
 using BookWorm.Controllers;
 using BookWorm.Models;
+using BookWorm.Services.Email;
 using BookWorm.Tests.Builders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using Raven.Abstractions.Extensions;
 using Raven.Client;
 using Raven.Client.Document;
@@ -66,7 +68,10 @@ namespace BookWorm.Tests.Controllers.Integration
 
             UsingSession(session =>
                 {
-                    var accountController = new AccountController(session);
+                    var accountController = new AccountController(session)
+                        {
+                            Email = GetEmailMock().Object
+                        };
                     accountController.Create(ruimin);
                     accountController.Create(akani);
                 });
@@ -106,7 +111,10 @@ namespace BookWorm.Tests.Controllers.Integration
 
             UsingSession((session) =>
                 {
-                    var controller = new AccountController(session);
+                    var controller = new AccountController(session)
+                        {
+                            Email = GetEmailMock().Object
+                        };
 
                     var actionResult = (System.Web.Mvc.RedirectToRouteResult) (controller.Create(model));
                     Assert.AreEqual("Account", actionResult.RouteValues["controller"]);
@@ -121,6 +129,36 @@ namespace BookWorm.Tests.Controllers.Integration
                     Assert.AreEqual(model.UserName, user.Username);
                     Assert.AreEqual(model.Role, user.Roles.First());
                 });
+        }
+
+        [TestMethod]
+        public void ShouldCreateNewUserNotApproved()
+        {
+            var model = new RegisterModelBuilder()
+                .Build();
+
+            var mock = GetEmailMock();
+
+            UsingSession((session) =>
+            {
+                var controller = new AccountController(session) {Email = mock.Object};
+                controller.Create(model);
+            });
+
+            UsingSession((session) =>
+            {
+                var users = session.Query<User>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).ToList();
+                var user = users.First();
+                Assert.IsFalse(user.IsApproved);
+                mock.Verify(e => e.SendConfirmation("donotreply@puku.co.za", model.UserName, It.IsAny<string>()), Times.Once());
+            });
+        }
+
+        private static Mock<IEmail> GetEmailMock()
+        {
+            var mock = new Mock<IEmail>();
+            mock.Setup(e => e.SendConfirmation(It.IsAny<string>(), It.IsAny<string>(),  It.IsAny<string>()));
+            return mock;
         }
 
         public void UsingSession(Action<IDocumentSession> action)

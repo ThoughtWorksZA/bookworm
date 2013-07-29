@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using BookWorm.Models;
 
-namespace BookWorm.Helpers.FullTextSearch
+namespace BookWorm.Services.FullTextSearch
 {
     public interface IFullTextSearch
     {
