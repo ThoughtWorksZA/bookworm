@@ -5,6 +5,7 @@ using System.Linq;
 using BirdBrain;
 using BookWorm.Controllers;
 using BookWorm.Models;
+using BookWorm.Tests.Builders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raven.Abstractions.Extensions;
 using Raven.Client;
@@ -54,20 +55,15 @@ namespace BookWorm.Tests.Controllers.Integration
         [TestMethod]
         public void ShouldListUsers()
         {
-            var ruimin = new RegisterModel()
-                {
-                    UserName = "Ruimin@tw.com",
-                    Password = "111111",
-                    ConfirmPassword = "111111",
-                    Role = Roles.Admin
-                };
-            var akani = new RegisterModel()
-                {
-                    UserName = "Akani@tw.com",
-                    Password = "111111",
-                    ConfirmPassword = "111111",
-                    Role = Roles.Admin
-                };
+            var ruimin = new RegisterModelBuilder()
+                .WithUserName("Ruimin@tw.com")
+                .WithRole(Roles.Author)
+                .Build();
+            var akani = new RegisterModelBuilder()
+                .WithUserName("Akani@tw.com")
+                .WithRole(Roles.Admin)
+                .Build();
+
             UsingSession(session =>
                 {
                     var accountController = new AccountController(session);
@@ -103,13 +99,10 @@ namespace BookWorm.Tests.Controllers.Integration
         [TestMethod]
         public void ShouldCreateNewUser()
         {
-            var model = new RegisterModel()
-                {
-                    UserName = "Akani@thoughtworks.com",
-                    Password = "111111",
-                    ConfirmPassword = "111111",
-                    Role = Roles.Admin
-                };
+            var model = new RegisterModelBuilder()
+                .WithUserName("Akani@tw.com")
+                .WithRole(Roles.Admin)
+                .Build();
 
             UsingSession((session) =>
                 {
