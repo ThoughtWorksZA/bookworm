@@ -131,7 +131,7 @@ namespace BookWorm.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.Admin + "," + Roles.Author)]
         public RedirectToRouteResult Delete(int id)
         {
             _repository.Delete<Book>(id);
