@@ -3,6 +3,7 @@
 
 @using BookWorm.Helpers
 @using PagedList.Mvc
+@using Roles = BookWorm.Models.Roles
 @model BookWorm.ViewModels.FilterInformation
 @{
     ViewBag.NoIndex = true;
@@ -41,7 +42,7 @@
                         </div>
                     }
                     <p>
-                        @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
+                        @if (Html.ViewContext.HttpContext.User.IsInRoles(Roles.Admin,Roles.Author))
                         {
                             @Html.ActionLink("Create New", "Create", null, new {id = "createNewBookLink"})
                         }

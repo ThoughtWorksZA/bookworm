@@ -180,6 +180,7 @@
     <Compile Include="Controllers\BaseControllerTest.cs" />
     <Compile Include="Controllers\AccountControllerTest.cs" />
     <Compile Include="Controllers\PostsControllerTest.cs" />
+    <Compile Include="Helpers\IPrincipalExtensionTest.cs" />
     <Compile Include="Helpers\UrlUtilsTest.cs" />
     <Compile Include="Helpers\MarkDownHelperTest.cs" />
     <Compile Include="Models\Validations\ValidRoleTest.cs" />

@@ -1,8 +1,8 @@
 ﻿@Scripts.Render("~/Scripts/puku/confirmModal.js")
 
-@using BookWorm.Models
 @using BookWorm.Helpers
 @using System.Web
+@using Roles = BookWorm.Models.Roles
 @model BookWorm.ViewModels.BookInformation
 <div class="row-fluid">
     <div class="row-content">
@@ -79,7 +79,7 @@
                 <div class="some-small-space">
                     
                 </div>
-                @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
+                @if (Html.ViewContext.HttpContext.User.IsInRoles(Roles.Admin, Roles.Author))
                 {
                     <div class="well">
                         <div class="row-fluid">
