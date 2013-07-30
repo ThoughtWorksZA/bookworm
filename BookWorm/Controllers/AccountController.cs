@@ -5,7 +5,6 @@ using System.Transactions;
 using System.Web.Mvc;
 using System.Web.Security;
 using BirdBrain;
-using BookWorm.Services.Email;
 using BookWorm.ViewModels;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
@@ -19,8 +18,6 @@ namespace BookWorm.Controllers
     [Authorize]
     public class AccountController : BaseController
     {
-        public IEmail Email { get; set; }
-
         public AccountController()
         {
         }
@@ -450,13 +447,8 @@ namespace BookWorm.Controllers
             {
                 try
                 {
-                    var securityToken = WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new {Email = model.UserName}, true);
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     _session.Query<User>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).Where(u => u.Username == model.UserName).ToList();
-                    if (Email == null)
-                    {
-                        Email = new Email();
-                    }
-                    Email.SendConfirmation("donotreply@puku.co.za", model.UserName, securityToken);
                     System.Web.Security.Roles.AddUsersToRole(new string[] { model.UserName }, model.Role);
                     return RedirectToAction("List", "Account");
                 }

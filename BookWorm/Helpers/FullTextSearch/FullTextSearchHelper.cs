@@ -4,13 +4,13 @@ using BookWorm.Models;
 using BookWorm.Models.indices;
 using Raven.Client;
 
-namespace BookWorm.Services.FullTextSearch
+namespace BookWorm.Helpers.FullTextSearch
 {
-    public class FullTextSearchService : IFullTextSearch
+    public class FullTextSearchHelper : IFullTextSearch
     {
         private readonly IDocumentSession _session;
 
-        public FullTextSearchService(IDocumentSession session)
+        public FullTextSearchHelper(IDocumentSession session)
         {
             _session = session;
         }
