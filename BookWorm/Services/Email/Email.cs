@@ -7,7 +7,7 @@ namespace BookWorm.Services.Email
 {
     public class Email : IEmail
     {
-        public const string ConfirmationEmailSubject = "The administror of PUKU created a user you";
+        public const string ConfirmationEmailSubject = "The administror of PUKU created a user for you";
         private const string Template = @"Dear User,
 The administrator of PUKU has created an account for you. To complete the registration process click on this link
 http://puku.co.za/Account/RegisterConfirmation/{0}";
