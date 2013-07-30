@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using BirdBrain;
@@ -14,7 +13,6 @@ using Raven.Client;
 using WebMatrix.WebData;
 using BookWorm.Models;
 using Roles = BookWorm.Models.Roles;
-using Raven.Database.Linq.PrivateExtensions;
 
 namespace BookWorm.Controllers
 {
