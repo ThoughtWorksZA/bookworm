@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BirdBrain">
-      <HintPath>..\packages\BirdBrain.0.2.3-Unstable\lib\net45\BirdBrain.dll</HintPath>
+      <HintPath>..\packages\BirdBrain.0.2.5-Unstable\lib\net45\BirdBrain.dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Crypto">
       <HintPath>..\packages\RavenDB.Database.2.0.2170-Unstable\lib\net40\BouncyCastle.Crypto.dll</HintPath>
