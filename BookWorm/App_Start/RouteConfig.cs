@@ -71,6 +71,18 @@ namespace BookWorm
                 );
 
             routes.MapRoute(
+                "UsersConfirmation",
+                "Users/{userId}/RegisterConfirmation/{secureToken}",
+                new { controller = "Account", action = "RegisterConfirmation" }
+                );
+
+            routes.MapRoute(
+               "UsersConfirmationPut",
+               "Users/RegisterConfirmation",
+               new { controller = "Account", action = "RegisterConfirmation" }
+              );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

@@ -34,26 +34,9 @@
                         </div>
                     </div>
 
-                    <div class="row-fluid">
-                        <div class="span2">
-                            Password*
-                        </div>
-                        <div class="span10">
-                            @Html.TextBoxFor(model => model.Model.Password, new { placeholder = "Password"})
-                            @Html.ValidationMessageFor(model => model.Model.Password)
-                        </div>
-                    </div>
-                    
-                    <div class="row-fluid">
-                        <div class="span2">
-                            Confirm Password*
-                        </div>
-                        <div class="span10">
-                            @Html.TextBoxFor(model => model.Model.ConfirmPassword, new { placeholder = "Confirm Password"})
-                            @Html.ValidationMessageFor(model => model.Model.ConfirmPassword)
-                        </div>
-                    </div>
-
+                    @Html.HiddenFor(model => model.Model.Password)
+                    @Html.HiddenFor(model => model.Model.ConfirmPassword)
+                           
                     <div class="row-fluid">
                         <div class="span2 ">
                             Role *

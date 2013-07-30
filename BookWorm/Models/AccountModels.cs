@@ -54,6 +54,10 @@ namespace BookWorm.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string SecurityToken { get; set; }
+
+        public int UserId { get; set; }
     }
 
     public class LoginModel
@@ -92,6 +96,8 @@ namespace BookWorm.Models
         [Required]
         [ValidRole]
         public string Role { get; set; }
+
+        public const string DefaultPassword = "111111";
     }
 
     public class ExternalLogin

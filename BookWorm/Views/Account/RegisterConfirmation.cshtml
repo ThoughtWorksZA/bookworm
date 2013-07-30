@@ -1,0 +1,42 @@
+﻿@model BookWorm.Models.LocalPasswordModel
+
+<div class="row-fluid">
+    <div class="row-content">
+        <div class="span7">
+            <p class="lead">@ViewBag.Title</p>
+        </div>
+    </div>
+</div>
+<div class="row-fluid gray-body-row">
+    <div class="row-content">
+        <div class="span12">
+            <p class="lead">
+            <p class="message-success">@ViewBag.StatusMessage</p>
+
+            <p>
+                You do not have a local password for this site. Add a local
+                password so you can log in without an external login.
+            </p>
+
+            @using (Html.BeginForm("RegisterConfirmation", "Users", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary()
+
+                @Html.HiddenFor(m => m.OldPassword)
+                
+                @Html.LabelFor(m => m.NewPassword)
+                @Html.PasswordFor(m => m.NewPassword)
+                @Html.LabelFor(m => m.ConfirmPassword)
+                @Html.PasswordFor(m => m.ConfirmPassword)
+                @Html.HiddenFor(m => m.SecurityToken)
+                @Html.HiddenFor(m => m.UserId)
+                <div class="some-small-space"></div>
+                <input type="submit" class="btn" value="Set password" />
+                <div class="some-small-space"></div>
+            }
+            
+            
+        </div>
+    </div>
+</div>

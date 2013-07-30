@@ -171,6 +171,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\LocalPasswordModelBuilder.cs" />
     <Compile Include="Builders\RegisterModelBuilder.cs" />
     <Compile Include="Controllers\BookPostsControllerTest.cs" />
     <Compile Include="Controllers\BooksControllerTest.cs" />

@@ -8,6 +8,7 @@ using BirdBrain;
 using BookWorm.Services.Email;
 using BookWorm.ViewModels;
 using DotNetOpenAuth.AspNet;
+using Lucene.Net.Search;
 using Microsoft.Web.WebPages.OAuth;
 using Raven.Client;
 using WebMatrix.WebData;
@@ -439,7 +440,11 @@ namespace BookWorm.Controllers
         public ViewResult Create()
         {
             ViewBag.Title = "Add a User";
-            return View(new UserInformation(new RegisterModel()));
+            return View(new UserInformation(new RegisterModel()
+                {
+                    ConfirmPassword = RegisterModel.DefaultPassword,
+                    Password = RegisterModel.DefaultPassword
+                }));
         }
 
         [HttpPost]
@@ -451,12 +456,12 @@ namespace BookWorm.Controllers
                 try
                 {
                     var securityToken = WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new {Email = model.UserName}, true);
-                    _session.Query<User>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).Where(u => u.Username == model.UserName).ToList();
+                    var user = _session.Query<User>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).First(u => u.Username == model.UserName);
                     if (Email == null)
                     {
                         Email = new Email();
                     }
-                    Email.SendConfirmation("donotreply@puku.co.za", model.UserName, securityToken);
+                    Email.SendConfirmation("donotreply@puku.co.za", model.UserName, securityToken, user.Id);
                     System.Web.Security.Roles.AddUsersToRole(new string[] { model.UserName }, model.Role);
                     return RedirectToAction("List", "Account");
                 }
@@ -468,6 +473,34 @@ namespace BookWorm.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(new UserInformation(model));
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ViewResult RegisterConfirmation(string secureToken, int userId)
+        {
+            ViewBag.Title = "Confirm user account";
+            return View(new LocalPasswordModel()
+                {
+                    SecurityToken = secureToken,
+                    UserId = userId,
+                    OldPassword = RegisterModel.DefaultPassword
+                });
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult RegisterConfirmation(LocalPasswordModel localPasswordModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _session.Load<User>(localPasswordModel.UserId);
+                WebSecurity.ConfirmAccount(user.Username, localPasswordModel.SecurityToken);
+                WebSecurity.ChangePassword(user.Username, RegisterModel.DefaultPassword,
+                                           localPasswordModel.NewPassword);
+                return RedirectToAction("Index", "Home");
+            }
+            return View(localPasswordModel);
         }
     }
 }

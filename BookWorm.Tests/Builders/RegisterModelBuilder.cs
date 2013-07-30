@@ -4,13 +4,15 @@ namespace BookWorm.Tests.Builders
 {
     public class RegisterModelBuilder
     {
+        private const string DefaultPassword = RegisterModel.DefaultPassword;
         private readonly RegisterModel _registerModel = new RegisterModel()
             {
                 UserName = "Akani@thoughtworks.com",
-                Password = "111111",
-                ConfirmPassword = "111111",
+                Password = DefaultPassword,
+                ConfirmPassword = DefaultPassword,
                 Role = Roles.Admin
             };
+
         public RegisterModel Build()
         {
             return _registerModel;

@@ -7,6 +7,7 @@ using BookWorm.Controllers;
 using BookWorm.Models;
 using BookWorm.Services.Email;
 using BookWorm.Tests.Builders;
+using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Raven.Abstractions.Extensions;
@@ -99,6 +100,8 @@ namespace BookWorm.Tests.Controllers.Integration
             var controller = new AccountController();
             var result = controller.Create();
             Assert.AreEqual("Add a User", result.ViewBag.Title);
+            Assert.AreEqual(RegisterModel.DefaultPassword, ((UserInformation)(result.Model)).Model.Password);
+            Assert.AreEqual(RegisterModel.DefaultPassword, ((UserInformation)(result.Model)).Model.ConfirmPassword);
         }
 
         [TestMethod]
@@ -147,17 +150,76 @@ namespace BookWorm.Tests.Controllers.Integration
 
             UsingSession((session) =>
             {
-                var users = session.Query<User>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).ToList();
-                var user = users.First();
+                var user = session.Query<User>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).First();
                 Assert.IsFalse(user.IsApproved);
-                mock.Verify(e => e.SendConfirmation("donotreply@puku.co.za", model.UserName, It.IsAny<string>()), Times.Once());
+                mock.Verify(e => e.SendConfirmation("donotreply@puku.co.za", model.UserName, user.ConfirmationToken, user.Id), Times.Once());
+            });
+        }
+
+        [TestMethod]
+        public void ShouldRedirectToChangePasswordToConfirmNewUserWithToken()
+        {
+            var mock = GetEmailMock();
+            var secureToken = Guid.NewGuid().ToString();
+            const int userId = 1;
+            UsingSession((session) =>
+            {
+                var controller = new AccountController(session) { Email = mock.Object };
+                var registerConfirmationView = controller.RegisterConfirmation(secureToken, userId);
+                Assert.AreEqual("Confirm user account", registerConfirmationView.ViewBag.Title);
+                Assert.AreEqual(secureToken, ((LocalPasswordModel)(registerConfirmationView.Model)).SecurityToken);
+                Assert.AreEqual(userId, ((LocalPasswordModel)(registerConfirmationView.Model)).UserId);
+                Assert.AreEqual(RegisterModel.DefaultPassword, ((LocalPasswordModel)(registerConfirmationView.Model)).OldPassword);
+            });
+        }
+
+        [TestMethod]
+        public void ShouldConfirmNewUserWithTokenAndNewPassword()
+        {
+            var model = new RegisterModelBuilder()
+                .Build();
+
+            var mock = GetEmailMock();
+            string secureToken = null;
+
+            mock.Setup(e => e.SendConfirmation(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
+                .Callback<string, string, string, int>((from, to, token, userId) =>
+                {
+                    secureToken = token;
+                });
+            string oldPassword = "";
+            UsingSession((session) =>
+            {
+                var controller = new AccountController(session) { Email = mock.Object };
+                controller.Create(model);
+                oldPassword = session.Query<User>().First(u => u.Username == model.UserName).Password;
+            });
+
+            UsingSession((session) =>
+            {
+                var user = session.Query<User>().First();
+                var controller = new AccountController(session) { Email = mock.Object };
+                var localPasswordModel = new LocalPasswordModelBuilder()
+                    .WithSecurityToken(secureToken)
+                    .WithUserId(user.Id)
+                    .Build();
+                var actionResult = (System.Web.Mvc.RedirectToRouteResult)(controller.RegisterConfirmation(localPasswordModel));
+                Assert.AreEqual("Home", actionResult.RouteValues["controller"]);
+                Assert.AreEqual("Index", actionResult.RouteValues["action"]);
+            });
+
+            UsingSession((session) =>
+            {
+                Assert.IsTrue(session.Query<User>().First(u=>u.Username==model.UserName).IsApproved);
+                Assert.AreNotEqual(oldPassword,
+                    session.Query<User>().First(u => u.Username == model.UserName).Password);
             });
         }
 
         private static Mock<IEmail> GetEmailMock()
         {
             var mock = new Mock<IEmail>();
-            mock.Setup(e => e.SendConfirmation(It.IsAny<string>(), It.IsAny<string>(),  It.IsAny<string>()));
+            mock.Setup(e => e.SendConfirmation(It.IsAny<string>(), It.IsAny<string>(),  It.IsAny<string>(), It.IsAny<int>()));
             return mock;
         }
 

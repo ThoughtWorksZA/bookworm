@@ -431,6 +431,7 @@
     <Content Include="Views\Books\List.cshtml" />
     <Content Include="Views\Account\List.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Account\RegisterConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
