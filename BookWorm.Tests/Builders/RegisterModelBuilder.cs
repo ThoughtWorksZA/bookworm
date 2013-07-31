@@ -7,7 +7,7 @@ namespace BookWorm.Tests.Builders
         private const string DefaultPassword = RegisterModel.DefaultPassword;
         private readonly RegisterModel _registerModel = new RegisterModel()
             {
-                UserName = "Akani@thoughtworks.com",
+                Email = "Akani@thoughtworks.com",
                 Password = DefaultPassword,
                 ConfirmPassword = DefaultPassword,
                 Role = Roles.Admin
@@ -18,9 +18,9 @@ namespace BookWorm.Tests.Builders
             return _registerModel;
         }
 
-        public RegisterModelBuilder WithUserName(string username)
+        public RegisterModelBuilder WithEmail(string email)
         {
-            _registerModel.UserName = username;
+            _registerModel.Email = email;
             return this;
         }
 

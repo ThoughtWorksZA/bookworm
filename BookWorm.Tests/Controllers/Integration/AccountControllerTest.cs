@@ -59,11 +59,11 @@ namespace BookWorm.Tests.Controllers.Integration
         public void ShouldListUsers()
         {
             var ruimin = new RegisterModelBuilder()
-                .WithUserName("Ruimin@tw.com")
+                .WithEmail("Ruimin@tw.com")
                 .WithRole(Roles.Author)
                 .Build();
             var akani = new RegisterModelBuilder()
-                .WithUserName("Akani@tw.com")
+                .WithEmail("Akani@tw.com")
                 .WithRole(Roles.Admin)
                 .Build();
 
@@ -90,7 +90,7 @@ namespace BookWorm.Tests.Controllers.Integration
 
         private bool UserEqual(RegisterModel expected, User actual)
         {
-            return expected.UserName == actual.Username &&
+            return expected.Email == actual.Username &&
                    expected.Role == actual.Roles[0];
         }
 
@@ -108,7 +108,7 @@ namespace BookWorm.Tests.Controllers.Integration
         public void ShouldCreateNewUser()
         {
             var model = new RegisterModelBuilder()
-                .WithUserName("Akani@tw.com")
+                .WithEmail("Akani@tw.com")
                 .WithRole(Roles.Admin)
                 .Build();
 
@@ -129,16 +129,16 @@ namespace BookWorm.Tests.Controllers.Integration
                     var users = session.Query<User>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).ToList();
                     Assert.AreEqual(1, users.Count());
                     var user = users.First();
-                    Assert.AreEqual(model.UserName, user.Username);
+                    Assert.AreEqual(model.Email, user.Username);
                     Assert.AreEqual(model.Role, user.Roles.First());
                 });
         }
 
         [TestMethod]
-        public void ShouldNotBeAbleToCreateUserWithAnExistingUsername()
+        public void ShouldNotBeAbleToCreateUserWithAnExistingEmail()
         {
             var model = new RegisterModelBuilder()
-                .WithUserName("Akani@tw.com")
+                .WithEmail("Akani@tw.com")
                 .WithRole(Roles.Admin)
                 .Build();
 
@@ -161,7 +161,7 @@ namespace BookWorm.Tests.Controllers.Integration
 
                 var viewResult = (System.Web.Mvc.ViewResult)(controller.Create(model));
 
-                Assert.AreEqual("A user with this username already exists", controller.TempData["flashError"]);
+                Assert.AreEqual("A user with this email already exists", controller.TempData["flashError"]);
                 Assert.AreEqual(string.Empty, viewResult.MasterName);
                 Assert.AreEqual("Add a User", viewResult.ViewBag.Title);
             });
@@ -185,7 +185,7 @@ namespace BookWorm.Tests.Controllers.Integration
             {
                 var user = session.Query<User>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).First();
                 Assert.IsFalse(user.IsApproved);
-                mock.Verify(e => e.SendConfirmation("donotreply@puku.co.za", model.UserName, user.ConfirmationToken, user.Id), Times.Once());
+                mock.Verify(e => e.SendConfirmation("donotreply@puku.co.za", model.Email, user.ConfirmationToken, user.Id), Times.Once());
             });
         }
 
@@ -225,7 +225,7 @@ namespace BookWorm.Tests.Controllers.Integration
             {
                 var controller = new AccountController(session) { Email = mock.Object };
                 controller.Create(model);
-                oldPassword = session.Query<User>().First(u => u.Username == model.UserName).Password;
+                oldPassword = session.Query<User>().First(u => u.Username == model.Email).Password;
             });
 
             UsingSession((session) =>
@@ -243,9 +243,9 @@ namespace BookWorm.Tests.Controllers.Integration
 
             UsingSession((session) =>
             {
-                Assert.IsTrue(session.Query<User>().First(u=>u.Username==model.UserName).IsApproved);
+                Assert.IsTrue(session.Query<User>().First(u=>u.Username==model.Email).IsApproved);
                 Assert.AreNotEqual(oldPassword,
-                    session.Query<User>().First(u => u.Username == model.UserName).Password);
+                    session.Query<User>().First(u => u.Username == model.Email).Password);
             });
         }
 
