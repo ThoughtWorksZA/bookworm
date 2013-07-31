@@ -453,15 +453,23 @@ namespace BookWorm.Controllers
         {
             if (ModelState.IsValid)
             {
+                var existingUser =  Membership.GetUser(model.UserName);
+
+                if (existingUser != null)
+                {
+                    ViewBag.Title = "Add a User";
+                    TempData["flashError"] = "A user with this username already exists";
+                    return View(new UserInformation(model));
+                }
                 try
                 {
                     var securityToken = WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new {Email = model.UserName}, true);
-                    var user = _session.Query<User>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).First(u => u.Username == model.UserName);
+
                     if (Email == null)
                     {
                         Email = new Email();
                     }
-                    Email.SendConfirmation("donotreply@puku.co.za", model.UserName, securityToken, user.Id);
+                    Email.SendConfirmation("donotreply@puku.co.za", model.UserName, securityToken, WebSecurity.GetUserId(model.UserName));
                     System.Web.Security.Roles.AddUsersToRole(new string[] { model.UserName }, model.Role);
                     return RedirectToAction("List", "Account");
                 }

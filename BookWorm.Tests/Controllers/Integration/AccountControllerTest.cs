@@ -135,6 +135,39 @@ namespace BookWorm.Tests.Controllers.Integration
         }
 
         [TestMethod]
+        public void ShouldNotBeAbleToCreateUserWithAnExistingUsername()
+        {
+            var model = new RegisterModelBuilder()
+                .WithUserName("Akani@tw.com")
+                .WithRole(Roles.Admin)
+                .Build();
+
+            UsingSession((session) =>
+            {
+                var controller = new AccountController(session)
+                {
+                    Email = GetEmailMock().Object
+                };
+
+                controller.Create(model);
+            });
+
+            UsingSession((session) =>
+            {
+                var controller = new AccountController(session)
+                {
+                    Email = GetEmailMock().Object
+                };
+
+                var viewResult = (System.Web.Mvc.ViewResult)(controller.Create(model));
+
+                Assert.AreEqual("A user with this username already exists", controller.TempData["flashError"]);
+                Assert.AreEqual(string.Empty, viewResult.MasterName);
+                Assert.AreEqual("Add a User", viewResult.ViewBag.Title);
+            });
+        }
+
+        [TestMethod]
         public void ShouldCreateNewUserNotApproved()
         {
             var model = new RegisterModelBuilder()
