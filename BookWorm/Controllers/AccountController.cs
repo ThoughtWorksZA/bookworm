@@ -329,7 +329,7 @@ namespace BookWorm.Controllers
                 WebSecurity.ConfirmAccount(user.Username, localPasswordModel.SecurityToken);
                 WebSecurity.ChangePassword(user.Username, RegisterModel.DefaultPassword,
                                            localPasswordModel.NewPassword);
-                return RedirectToAction("Index", "Home");
+                return Login(new LoginModel {Email = user.Username, Password = localPasswordModel.NewPassword}, "");
             }
             return View(localPasswordModel);
         }

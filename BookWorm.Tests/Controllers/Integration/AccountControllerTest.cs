@@ -236,9 +236,10 @@ namespace BookWorm.Tests.Controllers.Integration
                     .WithSecurityToken(secureToken)
                     .WithUserId(user.Id)
                     .Build();
-                var actionResult = (System.Web.Mvc.RedirectToRouteResult)(controller.RegisterConfirmation(localPasswordModel));
-                Assert.AreEqual("Home", actionResult.RouteValues["controller"]);
-                Assert.AreEqual("Index", actionResult.RouteValues["action"]);
+                var actionResult = (System.Web.Mvc.ViewResult)(controller.RegisterConfirmation(localPasswordModel));
+                Assert.IsNotNull(actionResult);
+                Assert.AreEqual("",actionResult.MasterName);
+                Assert.IsTrue(actionResult.Model is LoginModel);
             });
 
             UsingSession((session) =>
