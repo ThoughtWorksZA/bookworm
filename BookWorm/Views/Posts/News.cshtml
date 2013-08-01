@@ -1,9 +1,11 @@
 ﻿@Scripts.Render("~/Scripts/puku/confirmModal.js")
 @Scripts.Render("~/Scripts/puku/clickableDiv.js")
 
+@using BookWorm.Helpers
 @using BookWorm.Models
 @using BookWorm.ViewModels
 @using PagedList.Mvc
+@using Roles = BookWorm.Models.Roles
 @model PagedList.IPagedList<IBasePostInformation>
 @{
     ViewBag.Title = "PUKU | News and Events";
@@ -15,7 +17,7 @@
         <div class="span12">
             <p class="lead">Latest News and Events</p>
             <p>
-                @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
+                @if (Html.ViewContext.HttpContext.User.IsInRoles(Roles.Admin, Roles.Author))
                 {
                     @Html.ActionLink("Create New", "Create", null, new { Id = "createNewPostLink" })
                 }

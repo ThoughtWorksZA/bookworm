@@ -18,14 +18,14 @@ namespace BookWorm.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.Admin + "," + Roles.Author)]
         public virtual ActionResult Create()
         {
             return View("Create", new U {Model = new T()});
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.Admin + "," + Roles.Author)]
         public virtual ActionResult Create(U viewModel)
         {
             try

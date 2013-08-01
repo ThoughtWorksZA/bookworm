@@ -16,5 +16,19 @@ namespace BookWorm.Controllers
         public PagesController(Repository repository) : base(repository)
         {
         }
+
+        [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
+        public override ActionResult Create()
+        {
+            return base.Create();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
+        public override ActionResult Create(StaticPageInformation viewModel)
+        {
+            return base.Create(viewModel);
+        }
     }
 }
