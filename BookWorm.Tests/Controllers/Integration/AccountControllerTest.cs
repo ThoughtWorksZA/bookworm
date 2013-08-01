@@ -5,6 +5,7 @@ using System.Linq;
 using BirdBrain;
 using BookWorm.Controllers;
 using BookWorm.Models;
+using BookWorm.Services.Account;
 using BookWorm.Services.Email;
 using BookWorm.Tests.Builders;
 using BookWorm.ViewModels;
@@ -236,6 +237,9 @@ namespace BookWorm.Tests.Controllers.Integration
                     .WithSecurityToken(secureToken)
                     .WithUserId(user.Id)
                     .Build();
+                var mockAccountService = new Mock<IAccountService>();
+                mockAccountService.Setup(s => s.Login(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>())).Returns(false);
+                controller.AccountService = mockAccountService.Object;
                 var actionResult = (System.Web.Mvc.ViewResult)(controller.RegisterConfirmation(localPasswordModel));
                 Assert.IsNotNull(actionResult);
                 Assert.AreEqual("",actionResult.MasterName);

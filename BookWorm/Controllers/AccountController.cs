@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
 using BirdBrain;
+using BookWorm.Services.Account;
 using BookWorm.Services.Email;
 using BookWorm.ViewModels;
 using Lucene.Net.Search;
@@ -18,6 +19,7 @@ namespace BookWorm.Controllers
     public class AccountController : BaseController
     {
         public IEmail Email { get; set; }
+        public IAccountService AccountService { get; set; }
 
         public AccountController()
         {
@@ -50,7 +52,8 @@ namespace BookWorm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.Email, model.Password, persistCookie: model.RememberMe))
+            AccountService = AccountService ?? new AccountService();
+            if (ModelState.IsValid && AccountService.Login(model.Email, model.Password, model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
             }
