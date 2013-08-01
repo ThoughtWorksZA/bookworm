@@ -72,15 +72,15 @@ namespace BookWorm.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.Admin)]
-        public ViewResult Edit(int id)
+        [Authorize(Roles = Roles.Admin + "," + Roles.Author)]
+        public virtual ViewResult Edit(int id)
         {
             return View(new U {Model = _repository.Get<T>(id)});
         }
 
         [HttpPut]
-        [Authorize(Roles = Roles.Admin)]
-        public RedirectToRouteResult Edit(U viewModel)
+        [Authorize(Roles = Roles.Admin + "," + Roles.Author)]
+        public virtual RedirectToRouteResult Edit(U viewModel)
         {
             _repository.Edit(viewModel.Model);
             TempData["flashSuccess"] = viewModel.UpdateSucceededMessage;

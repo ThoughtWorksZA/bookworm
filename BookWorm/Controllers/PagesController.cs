@@ -30,5 +30,19 @@ namespace BookWorm.Controllers
         {
             return base.Create(viewModel);
         }
+
+        [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
+        public override ViewResult Edit(int id)
+        {
+            return base.Edit(id);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
+        public override RedirectToRouteResult Edit(StaticPageInformation viewModel)
+        {
+            return base.Edit(viewModel);
+        }
     }
 }

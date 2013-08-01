@@ -1,4 +1,5 @@
 ﻿@using BookWorm.Helpers
+@using Roles = BookWorm.Models.Roles
 @model BookWorm.ViewModels.PostInformation
 
 @{
@@ -39,7 +40,7 @@
                 </div>
             </fieldset>
             <p>
-                @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
+                @if (Html.ViewContext.HttpContext.User.IsInRoles(Roles.Admin, Roles.Author))
                 {
                     @Html.ActionLink("Back to News", "News")
                     @Html.Raw(" | ")<i class="icon-edit"></i>
