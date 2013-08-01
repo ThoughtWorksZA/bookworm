@@ -1,0 +1,44 @@
+﻿@model List<BookWorm.Models.Author>
+
+@{
+    ViewBag.Title = "Authors";
+    ViewBag.NoIndex = true;
+}
+
+<div class="row-fluid">
+    <div class="row-content">
+        <div class="span12">
+            <p class="lead">@ViewBag.Title</p>
+            
+        </div>
+    </div>
+</div>
+<div class="row gray-body-row">
+    <div class="row-content">
+        <div class="span12">
+            <p>
+                @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
+                {
+                    @Html.ActionLink("Create New", "Create")
+                }
+            </p>
+            <div class="row-fluid">
+                <table class="table">  
+                    <thead>  
+                        <tr>  
+                            <th>Name</th>   
+                        </tr>  
+                    </thead>  
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>  
+                                <td>@item.Name</td>  
+                            </tr>
+                        }    
+                    </tbody>  
+                </table> 
+            </div>
+        </div>
+    </div>
+</div>

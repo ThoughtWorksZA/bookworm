@@ -17,6 +17,7 @@
                 <li><a href="#" onclick="toggleDiscoveryMenu()" style="color: #0088cc">Find a Book</a></li>
                 <li><a id="BooksMenuLink" href="~/Books">Books</a></li>
                 <li><a href="~/News">News</a></li>
+                <li><a href="~/Authors">Author</a></li>
                 @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
                 {
                     <li><a href="~/Users">Users</a></li>

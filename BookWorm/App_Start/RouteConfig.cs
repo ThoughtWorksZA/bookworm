@@ -33,7 +33,7 @@ namespace BookWorm
                 );
 
             routes.MapRoute(
-                "News",
+                "",
                 "News",
                 new { controller = "Posts", action = "News" }
                 );
@@ -70,6 +70,13 @@ namespace BookWorm
                 new { controller = "Account", action = "Create" }
                 );
 
+            
+            routes.MapRoute(
+                "Authored",
+                "Authors",
+                new { controller = "Author", action = "List" }
+            );
+
             routes.MapRoute(
                 "UsersConfirmation",
                 "Users/{userId}/RegisterConfirmation/{secureToken}",
@@ -87,6 +94,7 @@ namespace BookWorm
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
         }
     }
 }

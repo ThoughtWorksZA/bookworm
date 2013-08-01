@@ -229,6 +229,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BookPostsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="Helpers\MarkDownHelper.cs" />
     <Compile Include="Helpers\UrlUtils.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookPost.cs" />
     <Compile Include="Models\indices\Book_AllProperties.cs" />
@@ -430,6 +432,8 @@
     <Content Include="Views\Account\List.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Account\RegisterConfirmation.cshtml" />
+    <Content Include="Views\Author\Create.cshtml" />
+    <Content Include="Views\Author\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
