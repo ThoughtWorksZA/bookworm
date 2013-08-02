@@ -238,12 +238,11 @@ namespace BookWorm.Tests.Controllers.Integration
                     .WithUserId(user.Id)
                     .Build();
                 var mockAccountService = new Mock<IAccountService>();
-                mockAccountService.Setup(s => s.Login(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>())).Returns(false);
+                mockAccountService.Setup(s => s.Login(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>())).Returns(true);
                 controller.AccountService = mockAccountService.Object;
-                var actionResult = (System.Web.Mvc.ViewResult)(controller.RegisterConfirmation(localPasswordModel));
-                Assert.IsNotNull(actionResult);
-                Assert.AreEqual("",actionResult.MasterName);
-                Assert.IsTrue(actionResult.Model is LoginModel);
+                var actionResult = (System.Web.Mvc.RedirectToRouteResult)(controller.RegisterConfirmation(localPasswordModel));
+                Assert.AreEqual("Home", actionResult.RouteValues["controller"]);
+                Assert.AreEqual("Index", actionResult.RouteValues["action"]);
             });
 
             UsingSession((session) =>

@@ -332,9 +332,23 @@ namespace BookWorm.Controllers
                 WebSecurity.ConfirmAccount(user.Username, localPasswordModel.SecurityToken);
                 WebSecurity.ChangePassword(user.Username, RegisterModel.DefaultPassword,
                                            localPasswordModel.NewPassword);
-                return Login(new LoginModel {Email = user.Username, Password = localPasswordModel.NewPassword}, "");
+
+                WaitForTheEndOfWritingPassword(user.Username);
+
+                AccountService = AccountService ?? new AccountService();
+                if (AccountService.Login(user.Username, localPasswordModel.NewPassword, false))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             return View(localPasswordModel);
+        }
+
+        private void WaitForTheEndOfWritingPassword(string username)
+        {
+            _session.Query<User>()
+                    .Customize(u => u.WaitForNonStaleResultsAsOfLastWrite())
+                    .First(u => u.Username == username);
         }
     }
 }
