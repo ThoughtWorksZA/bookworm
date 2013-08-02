@@ -10,5 +10,9 @@ namespace BookWorm.Models
     {
         [Required]
         public string Name { get; set; }
+
+        public string PictureUrl{ get; set; }
+
+        public string Biography { get; set; }
     }
 }

@@ -6,26 +6,12 @@ using BookWorm.Controllers;
 using BookWorm.Models;
 using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Raven.Client;
-using Raven.Client.Embedded;
 
 namespace BookWorm.Tests.Controllers.Integration
 {
     [TestClass]
-    public class BooksControllerTest
+    public class BooksControllerTest:ControllerInMemoryRavenTestBase
     {
-        private IDocumentStore _documentStore;
-
-        [TestInitialize]
-        public void Setup()
-        {
-            _documentStore = new EmbeddableDocumentStore
-            {
-                RunInMemory = true
-            };
-            _documentStore.Initialize();
-        }
-
         [TestMethod]
         public void ShouldFilterByLanguage()
         {

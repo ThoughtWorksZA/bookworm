@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BirdBrain;
 using BookWorm.Models;
 using BookWorm.ViewModels;
+using Raven.Client;
 
 namespace BookWorm.Controllers
 {
@@ -22,6 +23,11 @@ namespace BookWorm.Controllers
             
         }
 
+        public AuthorController(IDocumentSession session)
+        {
+            _session = session;
+        }
+
         [HttpGet]
         public ViewResult List()
         {
@@ -29,12 +35,25 @@ namespace BookWorm.Controllers
             return View(authors);
         }
 
-        [Authorize(Roles = Roles.Admin + "," + Roles.Author)]
+        [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
         public ViewResult Create()
         {
-            
             return View(new Author());
         }
+
+        [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
+        public ActionResult Create(Author author)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.Create(author);
+                return RedirectToAction("List", "Author");
+            }
+            return null;
+        }
+
 
     }
 }
