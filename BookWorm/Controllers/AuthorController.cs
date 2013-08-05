@@ -30,6 +30,7 @@ namespace BookWorm.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ViewResult List()
         {
             var authors = _repository.List<Author>();
@@ -79,6 +80,8 @@ namespace BookWorm.Controllers
             return View(_repository.Get<Author>(id));
         }
 
+        [HttpPut]
+        [Authorize(Roles = Roles.Admin)]
         public ActionResult Edit(Author author)
         {
             if (ModelState.IsValid)
