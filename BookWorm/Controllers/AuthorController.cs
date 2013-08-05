@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using BirdBrain;
 using BookWorm.Models;
 using BookWorm.ViewModels;
+using PagedList;
 using Raven.Client;
 
 namespace BookWorm.Controllers
@@ -31,11 +32,11 @@ namespace BookWorm.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ViewResult List()
+        public ViewResult List(int page = 1, int perPage = 9)
         {
-            var authors = _repository.List<Author>();
+            var authors = _repository.List<Author>(page, perPage);
             ViewBag.Title = "Authors";
-            return View(authors);
+            return View(new StaticPagedList<Author>(authors, page, perPage, _repository.Count<Author>()));
         }
 
         [HttpGet]

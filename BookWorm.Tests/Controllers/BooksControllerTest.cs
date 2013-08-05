@@ -322,8 +322,7 @@ namespace BookWorm.Tests.Controllers
         public void BooksControllerListWithSearchQueryShouldPageWithTheQueryText()
         {
             var books = new List<Book>();
-            Enumerable.Range(1, 10).ToList().ForEach(i => books.Add(new Book { Title = "Book " + i }));
-            books.Add(new Book { Title = "Book 1" });
+            Enumerable.Range(1, 11).ToList().ForEach(i => books.Add(new Book { Title = "Book 1" }));
             var mock = new Mock<IFullTextSearch>();
             var matched = books;
             mock.Setup(repo => repo.Search(It.IsAny<string>())).Returns(matched);

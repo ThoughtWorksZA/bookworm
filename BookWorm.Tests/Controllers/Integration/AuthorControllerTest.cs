@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using Raven.Client;
+using PagedList;
 
 namespace BookWorm.Tests.Controllers.Integration
 {
@@ -99,7 +98,7 @@ namespace BookWorm.Tests.Controllers.Integration
                     WaitForTheLastWrite<Author>(session);
                     var controller = new AuthorController(new Repository(session));
                     var viewResult = controller.List();
-                    var authors = (List<Author>) (viewResult.Model);
+                    var authors = (IPagedList<Author>)(viewResult.Model);
 
                     Assert.AreEqual("", viewResult.MasterName);
                     Assert.AreEqual("Authors", viewResult.ViewBag.Title);
@@ -178,6 +177,28 @@ namespace BookWorm.Tests.Controllers.Integration
             {
                 var updatedAuthor = WaitForTheLastWrite<Author>(session);
                 AssertEqual(updatedAuthorInfo, updatedAuthor);
+            });
+        }
+
+        [TestMethod]
+        public void ShouldListAuthorsWithPagination()
+        {
+            UsingSession((session) =>
+                {
+                    var controller = new AuthorController(new Repository(session));
+                    Enumerable.Range(1, 9)
+                              .ToList()
+                              .ForEach(i => controller.Create(new Author {Name = "Author " + i, Biography = "Biography " + i}));
+                });
+
+            UsingSession((session) =>
+            {
+                WaitForTheLastWrite<Author>(session);
+                var controller = new AuthorController(new Repository(session));
+                var viewResult = controller.List(1, 4);
+                var authors = (IPagedList<Author>)(viewResult.Model);
+                Assert.AreEqual(4, authors.Count);
+                Assert.AreEqual(3, authors.PageCount);
             });
         }
 
