@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,19 +21,20 @@ namespace BookWorm.Tests.Controllers.Integration
                     Biography = "Biography",
                     PictureUrl = "myPicture.jpg"
                 };
-
+            RedirectToRouteResult actionResult = null;
             UsingSession((session) =>
                 {
                     var controller = new AuthorController(new Repository(session));
 
-                    var actionResult = (System.Web.Mvc.RedirectToRouteResult) (controller.Create(model));
+                    actionResult = (RedirectToRouteResult) (controller.Create(model));
                     Assert.AreEqual("Author", actionResult.RouteValues["controller"]);
-                    Assert.AreEqual("List", actionResult.RouteValues["action"]);
+                    Assert.AreEqual("Details", actionResult.RouteValues["action"]);
                 });
 
             UsingSession((session) =>
                 {
                     var author = WaitForTheLastWrite<Author>(session);
+                    Assert.AreEqual(author.Id, actionResult.RouteValues["id"]);
                     AssertEqual(model, author);
                 });
         }
@@ -133,6 +135,49 @@ namespace BookWorm.Tests.Controllers.Integration
                 var authorInView = (Author)(viewResult.Model);
                 
                 AssertEqual(author1,authorInView);
+            });
+        }
+
+        [TestMethod]
+        public void ShouldUpdateAuthor()
+        {
+            var author1 = new Author()
+            {
+                Name = "Author1",
+                Biography = "Biography1",
+                PictureUrl = "myPicture1.jpg",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            UsingSession((session) =>
+            {
+                var controller = new AuthorController(new Repository(session));
+                controller.Create(author1);
+            });
+
+            Author updatedAuthorInfo = null;
+            UsingSession((session) =>
+            {
+                var author = WaitForTheLastWrite<Author>(session);
+
+                updatedAuthorInfo = new Author()
+                {
+                    Id = author.Id,
+                    Name = "Author updated",
+                    Biography = "Biography updated",
+                    PictureUrl = "myPictureupdated.jpg",
+                };
+                var controller = new AuthorController(new Repository(session));
+                var actionResult = (RedirectToRouteResult)(controller.Edit(updatedAuthorInfo));
+                Assert.AreEqual("Author", actionResult.RouteValues["controller"]);
+                Assert.AreEqual("Details", actionResult.RouteValues["action"]);
+                Assert.AreEqual(author.Id, actionResult.RouteValues["id"]);
+            });
+
+            UsingSession((session) =>
+            {
+                var updatedAuthor = WaitForTheLastWrite<Author>(session);
+                AssertEqual(updatedAuthorInfo, updatedAuthor);
             });
         }
 

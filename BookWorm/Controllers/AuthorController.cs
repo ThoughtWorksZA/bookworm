@@ -59,8 +59,8 @@ namespace BookWorm.Controllers
                     return View(author);
                 }
 
-                _repository.Create(author);
-                return RedirectToAction("List", "Author");
+                var createdAuthor = _repository.Create(author);
+                return RedirectToAction("Details", "Author", new { id = createdAuthor.Id }); ;
             }
             return View(author);
         }
@@ -77,6 +77,16 @@ namespace BookWorm.Controllers
         public ViewResult Edit(int id)
         {
             return View(_repository.Get<Author>(id));
+        }
+
+        public ActionResult Edit(Author author)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.Edit(author);
+                return RedirectToAction("Details", "Author", new { id = author.Id });
+            }
+            return View(author);
         }
     }
 }
