@@ -10,6 +10,7 @@ namespace BookWorm.Models
 
         public string PictureUrl{ get; set; }
 
+        [Required]
         [AllowHtml]
         public string Biography { get; set; }
     }

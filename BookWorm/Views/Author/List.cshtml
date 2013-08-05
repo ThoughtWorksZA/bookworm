@@ -1,4 +1,5 @@
-﻿@model List<BookWorm.Models.Author>
+﻿@using BookWorm.Helpers
+@model List<BookWorm.Models.Author>
 
 @{
     ViewBag.Title = "Authors";
@@ -14,30 +15,40 @@
     </div>
 </div>
 <div class="row gray-body-row">
-    <div class="row-content">
-        <div class="span12">
-            <p>
-                @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
-                {
-                    @Html.ActionLink("Create New", "Create")
-                }
-            </p>
-            <div class="row-fluid">
-                <table class="table">  
-                    <thead>  
-                        <tr>  
-                            <th>Name</th>   
-                        </tr>  
-                    </thead>  
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>  
-                                <td>@item.Name</td>  
-                            </tr>
-                        }    
-                    </tbody>  
-                </table> 
+<div class="row-content">
+    <div class="span12">
+        <p>
+            @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
+            {
+                @Html.ActionLink("Create New", "Create")
+            }
+        </p>
+        <div class="row-fluid">
+            <div class="row-content">
+                <div class="span12">
+                    @if (Model.Any())
+                    {
+                        <div class="row-fluid">
+                            <div class="span8 news">
+                                @foreach (var author in Model)
+                                {
+                                    <div class="row-fluid">
+                                        <div class="span5">
+                                            <img class="featured-post-image" src="@author.PictureUrl" />
+                                        </div>
+                                        <div class="span7">
+                                            <p class="lead">@author.Name</p>
+                                            <p>@Html.Raw(MarkDownHelper.Summary(author.Biography, 350))</p>
+                                            <a href="#">Read more</a>
+                                        </div>
+                                    </div>
+                                    <div class="some-small-space"><hr /></div>
+                                }
+                            </div>
+                        </div>
+                    }
+           
+                </div>
             </div>
         </div>
     </div>
