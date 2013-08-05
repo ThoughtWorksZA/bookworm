@@ -60,7 +60,7 @@ namespace BookWorm.Controllers
                 _repository.Create(author);
                 return RedirectToAction("List", "Author");
             }
-            return null;
+            return View(author);
         }
 
 
