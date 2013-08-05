@@ -72,5 +72,11 @@ namespace BookWorm.Controllers
             return View( _repository.Get<Author>(id) );
         }
 
+        [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
+        public ViewResult Edit(int id)
+        {
+            return View(_repository.Get<Author>(id));
+        }
     }
 }

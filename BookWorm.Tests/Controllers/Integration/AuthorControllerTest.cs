@@ -108,6 +108,34 @@ namespace BookWorm.Tests.Controllers.Integration
                 });
         }
 
+        [TestMethod]
+        public void ShouldRetrieveTheAuthorToEdit()
+        {
+            var author1 = new Author()
+            {
+                Name = "Author1",
+                Biography = "Biography1",
+                PictureUrl = "myPicture1.jpg",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            UsingSession((session) =>
+            {
+                var controller = new AuthorController(new Repository(session));
+                controller.Create(author1);
+            });
+
+            UsingSession((session) =>
+            {
+                var author = WaitForTheLastWrite<Author>(session);
+                var controller = new AuthorController(new Repository(session));
+                var viewResult = controller.Edit(author.Id);
+                var authorInView = (Author)(viewResult.Model);
+                
+                AssertEqual(author1,authorInView);
+            });
+        }
+
         private void AssertEqual(Author expected, Author actual)
         {
             Assert.AreEqual(expected.Name, actual.Name);

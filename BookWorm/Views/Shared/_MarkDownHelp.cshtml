@@ -1,0 +1,202 @@
+﻿<div id="mdhelp" class="" style="right: -8px; width: 668px; top: 25px;">
+    <ul class="nav nav-tabs" id="myTab">
+        <li><a data-toggle="tab" href="#closed" class="link-no-underline"><i class="icon-question-sign"></i> Help</a></li>
+        <li ><a data-toggle="tab" href="#mdhelp-links" class="">Links</a></li>
+        <li ><a data-toggle="tab" href="#mdhelp-images" class="">Images</a></li>
+        <li ><a data-toggle="tab" href="#mdhelp-styles" class="">Styling/Headers</a></li>
+        <li ><a data-toggle="tab" href="#mdhelp-lists" class="">Lists</a></li>
+        <li ><a data-toggle="tab" href="#mdhelp-blockquotes" class="">Blockquotes</a></li>
+        <li ><a data-toggle="tab" href="#mdhelp-code" data-buttons="code" class="">Code</a></li>
+        <li ><a data-toggle="tab" href="#mdhelp-html" class="">HTML</a></li>
+                
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="closed"></div>
+        <div class="tab-pane fade" id="mdhelp-links">
+            <div class="pull-right"><a href="#closed" onclick=" $('#myTab a:first').tab('show'); " class=""><i class="icon-remove-circle"></i></a></div>
+            <p>
+                In most cases, a plain URL will be recognized as such and automatically linked:
+            </p>
+            <pre>Visit http://area51.stackexchange.com/ regularly!
+                    Use angle brackets to force linking: Have you seen &lt;http://superuser.com&gt;?
+                    </pre>
+            <p>
+                To create fancier links, use Markdown:
+                To create fancier links, use Markdown:
+            </p>
+            <pre>Here's [a link](http://www.example.com/)! And a reference-style link to [a panda][1].
+                    References don't have to be [numbers][question].
+
+                        [1]: http://notfound.stackexchange.com/
+                        [question]: http://english.stackexchange.com/questions/11481
+                    </pre>
+            <p>You can add tooltips to links:</p>
+            <pre>Click [here](http://diy.stackexchange.com<span class="spaces">&nbsp;</span>"this text appears when you mouse over")!
+                    This works with [reference links][blog] as well.
+
+                        [blog]: http://blog.stackoverflow.com/<span class="spaces">&nbsp;</span>"click here for updates"
+                    </pre>
+        </div>
+
+        <div class="tab-pane fade" id="mdhelp-images">
+            <div class="pull-right"><a href="#closed" onclick=" $('#myTab a:first').tab('show'); " class=""><i class="icon-remove-circle"></i></a></div>                    
+            <p>Images are exactly like links, but they have an exclamation point in front of them:</p>
+            <pre>![a busy cat](http://sstatic.net/stackoverflow/img/error-lolcat-problemz.jpg)
+                    ![two muppets][1]
+
+                        [1]: http://i.imgur.com/I5DFV.jpg "tooltip"
+                    </pre>
+            <p>
+                The word in square brackets is the alt text, which gets displayed if the browser
+                can't show the image. Be sure to include meaningful alt text for screen-reading
+                software.
+            </p>
+   
+        </div>
+        <div class="tab-pane fade"  id="mdhelp-styles">
+            <div class="pull-right"><a href="#closed" onclick=" $('#myTab a:first').tab('show'); " class=""><i class="icon-remove-circle"></i></a></div>
+            <div class="col1">
+                <p>Be sure to use text styling sparingly; only where it helps readability.</p>
+                <pre>*This is italicized*, and so
+                    is _this_.
+
+                    **This is bold**, just like __this__.
+
+                    You can ***combine*** them
+                    if you ___really have to___.
+                    </pre>
+        
+            </div>
+            <div class="col2">
+                <p>
+                    To break your text into sections, you can use headers:
+                </p>
+                <pre>A Large Header
+                    ==============
+
+                    Smaller Subheader
+                    -----------------
+                    </pre>
+                <p>
+                    Use hash marks if you need several levels of headers:</p>
+                <pre># Header 1 #
+                    ## Header 2 ##
+                    ### Header 3 ###
+                    </pre>
+
+            
+            </div>
+
+        </div>
+        <div class="tab-pane fade" id="mdhelp-lists">
+            <div class="pull-right"><a href="#closed" onclick=" $('#myTab a:first').tab('show'); " class=""><i class="icon-remove-circle"></i></a></div>
+            <p>Both bulleted and numbered lists are possible:</p>
+            <div class="col1">
+                <pre>-<span class="spaces">&nbsp;</span>Use a minus sign for a bullet
+                    +<span class="spaces">&nbsp;</span>Or plus sign
+                    *<span class="spaces">&nbsp;</span>Or an asterisk
+
+                    1.<span class="spaces">&nbsp;</span>Numbered lists are easy
+                    2.<span class="spaces">&nbsp;</span>Markdown keeps track of
+                        the numbers for you
+                    7.<span class="spaces">&nbsp;</span>So this will be item 3.
+                    </pre>
+            </div>
+            <div class="col2">
+                <pre>1.<span class="spaces">&nbsp;</span>Lists in a list item:
+                    <span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</span>-<span class="spaces">&nbsp;</span>Indented four spaces.
+                    <span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>*<span class="spaces">&nbsp;</span>indented eight spaces.
+                    <span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</span>-<span class="spaces">&nbsp;</span>Four spaces again.
+                    2.<span class="spaces">&nbsp;&nbsp;</span>You can have multiple
+                    <span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</span>paragraphs in a list items.
+                    <span class="spaces">&nbsp;</span>
+                    <span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</span>Just be sure to indent.
+                    </pre>        
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="mdhelp-blockquotes">
+            <div class="pull-right"><a href="#closed" onclick=" $('#myTab a:first').tab('show'); " class=""><i class="icon-remove-circle"></i></a></div>
+            Block Quotes
+            <div class="col1">
+                <pre>&gt; Create a blockquote by
+                    &gt; prepending “&gt;” to each line.
+                    &gt;
+                    &gt; Other formatting also works here, e.g.
+                    &gt;
+                    &gt; 1. Lists or
+                    &gt; 2. Headings:
+                    &gt;
+                    &gt; ## Quoted Heading ##
+                                </pre>
+            </div>
+            <div class="col2">
+                <p>
+                    You can even put blockquotes in blockquotes:
+                </p>
+                <pre>&gt; A standard blockquote is indented
+                    &gt; &gt; A nested blockquote is indented more
+                    &gt; &gt; &gt; &gt; You can nest to any depth.
+                    </pre>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="mdhelp-code">
+            <div class="pull-right"><a href="#closed" onclick=" $('#myTab a:first').tab('show'); " class=""><i class="icon-remove-circle"></i></a></div>
+            <p>
+                To create code blocks or other preformatted text, indent by four spaces:
+            </p>
+            <pre><span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</span>This will be displayed in a monospaced font. The first four spaces
+                    <span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</span>will be stripped off, but all other whitespace will be preserved.
+                    <span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</span>Markdown and HTML are turned off in code blocks:
+                    <span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</span>&lt;i&gt;This is not italic&lt;/i&gt;, and [this is not a link](http://example.com)
+                    </pre>
+            <p>
+                To create not a block, but an inline code span, use backticks:
+            </p>
+            <pre>The `$` character is just a shortcut for `window.jQuery`.
+                    </pre>
+            <p>
+                If you want to have a preformatted block within a list, indent by eight spaces:
+            </p>
+            <pre>1. This is normal text.
+                    2. So is this, but now follows a code block:
+                    <span class="spaces">&nbsp;</span>
+                    <span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Skip a line and indent eight spaces.
+                    <span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>That's four spaces for the list
+                    <span class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>and four to trigger the code block.
+                    </pre>
+        </div>
+
+        <div class="tab-pane fade" id="mdhelp-html">
+            <div class="pull-right"><a href="#closed" onclick=" $('#myTab a:first').tab('show'); " class=""><i class="icon-remove-circle"></i></a></div>
+            <p>
+                If you need to do something that Markdown can't handle, use HTML. Note that
+                <a href="http://meta.stackoverflow.com/questions/1777/what-html-tags-are-allowed" target="_blank">we only support a very strict subset of HTML!</a>
+            </p>
+            <pre>Strikethrough humor is &lt;strike&gt;funny&lt;/strike&gt;.
+                    </pre>
+            <p>
+                Markdown is smart enough not to mangle your span-level HTML:
+            </p>
+            <pre>&lt;b&gt;Markdown works *fine* in here.&lt;/b&gt;
+                    </pre>
+            <p>
+                Block-level HTML elements have a few restrictions:
+            </p>
+            <ol>
+                <li>They must be separated from surrounding text by blank lines.</li>
+                <li>The begin and end tags of the outermost block element must not be indented.</li>
+                <li>Markdown can't be used within HTML blocks.</li>
+            </ol>
+            <br>
+            <pre>&lt;pre&gt;
+                        You can &lt;em&gt;not&lt;/em&gt; use Markdown in here.
+                    &lt;/pre&gt;
+                    </pre>
+        </div>
+
+        <div class="cbt"></div>
+    </div>
+</div>

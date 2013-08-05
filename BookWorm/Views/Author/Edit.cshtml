@@ -1,6 +1,5 @@
-﻿@using BookWorm.Helpers
-@using BookWorm.Models
-@model BookWorm.ViewModels.PostInformation
+﻿@model BookWorm.Models.Author
+@using BookWorm.Helpers
 
 @{
     ViewBag.Title = "Edit";
@@ -8,47 +7,40 @@
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
-            <p class="lead">Update Post</p>
+            <p class="lead">Update Author</p>
             <div>Fill in the required fields and click save changes</div>
             <div class="some-small-space"></div>
             @using (Html.BeginForm())
             {
                 @Html.HttpMethodOverride(HttpVerbs.Put)
                 @Html.ValidationSummary(true)
-                @Html.HiddenFor(model => model.Model.Id)
+                @Html.HiddenFor(model => model.Id)
 
                 <fieldset>
                         
                     <div class="editor-label">
-                        Title*
+                        Name*
                     </div>
                     <div class="editor-field">
-                        @Html.EditorFor(model => model.Model.Title)
-                        @Html.ValidationMessageFor(model => model.Model.Title)
+                        @Html.EditorFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name)
                     </div>
                       <div class="editor-label">
-                        Featured Image*
+                        Picture Url*
                     </div>
                     <div class="editor-field">
-                        @Html.EditorFor(model => model.Model.FeaturedImage)
-                        @Html.ValidationMessageFor(model => model.Model.FeaturedImage)
+                        @Html.EditorFor(model => model.PictureUrl)
+                        @Html.ValidationMessageFor(model => model.PictureUrl)
                     </div>
                     <div class="editor-label">
-                        Post Type*
-                    </div>
-                    <div class="editor-field">
-                        @Html.DropDownListFor(model => model.Model.Type, EnumHelper.ValidEnumOptions<Post.PostType>(), "Select type")
-                        @Html.ValidationMessageFor(model => model.Model.Type)
-                    </div>
-                    <div class="editor-label">
-                        Content*
+                        Biography*
                     </div>
                     @Html.Partial("_MarkDownHelp")
                     <div class="wmd-panel">
                         <div id="wmd-button-bar"></div>
                         <div class="editor-field">
-                            @Html.TextAreaFor(model => model.Model.Content, new Dictionary<string, object>() {{"id", "wmd-input"}, {"class", "wmd-input"}})
-                            @Html.ValidationMessageFor(model => model.Model.Content)
+                            @Html.TextAreaFor(model => model.Biography, new Dictionary<string, object>() {{"id", "wmd-input"}, {"class", "wmd-input"}})
+                            @Html.ValidationMessageFor(model => model.Biography)
                         </div>
         
                         <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
@@ -60,7 +52,7 @@
                 </fieldset>
 
                 <script type="text/javascript">
-                    (function() {
+                    (function () {
                         var converter = Markdown.getSanitizingConverter();
                         var editor = new Markdown.Editor(converter);
                         editor.run();
@@ -69,7 +61,7 @@
             }
 
             <div>
-                @Html.ActionLink("Back to List", "News")
+                @Html.ActionLink("Back to List", "List")
             </div>
 
         </div>
