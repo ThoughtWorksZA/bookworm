@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -48,6 +49,14 @@ namespace BookWorm.Controllers
         {
             if (ModelState.IsValid)
             {
+                var existingAuthor = _session.Query<Author>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).FirstOrDefault(a=> a.Name == author.Name);
+
+                if (existingAuthor != null)
+                {
+                    TempData["flashError"] = "An author with this name already exists";
+                    return View(author);
+                }
+
                 _repository.Create(author);
                 return RedirectToAction("List", "Author");
             }
