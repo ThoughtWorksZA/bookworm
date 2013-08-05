@@ -32,7 +32,8 @@ namespace BookWorm.Controllers
         [HttpGet]
         public ViewResult List()
         {
-            var authors = _session.Query<Author>().ToList();
+            var authors = _repository.List<Author>();
+            ViewBag.Title = "Authors";
             return View(authors);
         }
 
@@ -49,11 +50,12 @@ namespace BookWorm.Controllers
         {
             if (ModelState.IsValid)
             {
-                var existingAuthor = _session.Query<Author>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).FirstOrDefault(a=> a.Name == author.Name);
+                var existingAuthor = _repository.Search<Author>(a => a.Name == author.Name).FirstOrDefault();
 
                 if (existingAuthor != null)
                 {
                     TempData["flashError"] = "An author with this name already exists";
+                    ViewBag.Title = "Create Author";
                     return View(author);
                 }
 

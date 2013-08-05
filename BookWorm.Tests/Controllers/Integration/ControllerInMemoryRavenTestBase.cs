@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raven.Abstractions.Extensions;
@@ -28,6 +29,11 @@ namespace BookWorm.Tests.Controllers.Integration
                 action(session);
                 session.SaveChanges();
             }
+        }
+
+        protected static T WaitForTheLastWrite<T>(IDocumentSession session)
+        {
+            return session.Query<T>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).First();
         }
     }
 }

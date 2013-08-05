@@ -8,7 +8,7 @@ namespace BookWorm.Controllers
 {
     public abstract class BaseController : Controller
     {
-        public IDocumentSession _session;
+        protected IDocumentSession _session;
         protected Repository _repository;
 
         public BaseController()
