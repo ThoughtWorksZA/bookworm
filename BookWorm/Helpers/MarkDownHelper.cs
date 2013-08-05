@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using MarkdownSharp;
 
 namespace BookWorm.Helpers
 {
@@ -62,6 +63,11 @@ namespace BookWorm.Helpers
         public static string SummaryForMetaDescription(string content, int num)
         {
             return new Regex(@"[\*,_,\n,>]").Replace(GetUnTransformedSummary(content,num), "");
+        }
+
+        public static string Transform(string markdownString)
+        {
+            return new MarkdownSharp.Markdown().Transform(markdownString);
         }
     }
 }

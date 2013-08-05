@@ -65,6 +65,12 @@ namespace BookWorm.Controllers
             return View(author);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ViewResult Details(int id)
+        {
+            return View( _repository.Get<Author>(id) );
+        }
 
     }
 }

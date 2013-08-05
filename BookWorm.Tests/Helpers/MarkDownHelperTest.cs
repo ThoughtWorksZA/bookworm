@@ -88,5 +88,12 @@ namespace BookWorm.Tests.Helpers
             const string content = "![enter image description here][2]Michael Knight's\n> car is amazing.";
             Assert.AreEqual("Michael Knight's", MarkDownHelper.SummaryForMetaDescription(content, 10));
         }
+
+        [TestMethod]
+        public void ShouldTransformMarkdownString()
+        {
+            const string content = "__The quick brown fox__ jumps over the lazy dog.";
+            Assert.AreEqual("<p><strong>The quick brown fox</strong> jumps over the lazy dog.</p>\n", MarkDownHelper.Transform(content));
+        }
     }
 }
