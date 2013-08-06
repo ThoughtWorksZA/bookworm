@@ -24,7 +24,7 @@ namespace BookWorm.Controllers
             return base.Create();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize(Roles = Roles.Admin)]
         public override ActionResult Create(StaticPageInformation viewModel)
         {
@@ -38,7 +38,7 @@ namespace BookWorm.Controllers
             return base.Edit(id);
         }
 
-        [HttpGet]
+        [HttpPut]
         [Authorize(Roles = Roles.Admin)]
         public override RedirectToRouteResult Edit(StaticPageInformation viewModel)
         {
