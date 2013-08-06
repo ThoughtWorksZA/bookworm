@@ -176,7 +176,7 @@
     <Compile Include="Controllers\BookPostsControllerTest.cs" />
     <Compile Include="Controllers\BooksControllerTest.cs" />
     <Compile Include="Controllers\Integration\AccountControllerTest.cs" />
-    <Compile Include="Controllers\Integration\AuthorControllerTest.cs" />
+    <Compile Include="Controllers\Integration\AuthorsControllerTest.cs" />
     <Compile Include="Controllers\Integration\BooksControllerTest.cs" />
     <Compile Include="Controllers\Integration\ControllerInMemoryRavenTestBase.cs" />
     <Compile Include="Controllers\Integration\HomeControllerTest.cs" />

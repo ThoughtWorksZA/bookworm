@@ -74,13 +74,13 @@ namespace BookWorm
             routes.MapRoute(
                 "Authored",
                 "Authors",
-                new { controller = "Author", action = "List" }
+                new { controller = "Authors", action = "List" }
             );
 
             routes.MapRoute(
                 "Author Detail",
-                "authors/{id}/{name}",
-                new { controller = "Author", action = "Details", name = UrlParameter.Optional },
+                "Authors/{id}/{name}",
+                new { controller = "Authors", action = "Details", name = UrlParameter.Optional },
                 new { id = @"\d+" }
                 );
 

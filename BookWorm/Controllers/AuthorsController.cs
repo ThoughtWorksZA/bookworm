@@ -12,20 +12,20 @@ using Raven.Client;
 
 namespace BookWorm.Controllers
 {
-    public class AuthorController : BaseController
+    public class AuthorsController : BaseController
     {
 
-        public AuthorController()
+        public AuthorsController()
         {
 
         }
 
-        public AuthorController(Repository repository) : base(repository)
+        public AuthorsController(Repository repository) : base(repository)
         {
             
         }
 
-        public AuthorController(IDocumentSession session)
+        public AuthorsController(IDocumentSession session)
         {
             _session = session;
         }
@@ -62,7 +62,7 @@ namespace BookWorm.Controllers
                 }
 
                 var createdAuthor = _repository.Create(author);
-                return RedirectToAction("Details", "Author", new { id = createdAuthor.Id }); ;
+                return RedirectToAction("Details", "Authors", new { id = createdAuthor.Id }); ;
             }
             return View(author);
         }
@@ -88,7 +88,7 @@ namespace BookWorm.Controllers
             if (ModelState.IsValid)
             {
                 _repository.Edit(author);
-                return RedirectToAction("Details", "Author", new { id = author.Id });
+                return RedirectToAction("Details", "Authors", new { id = author.Id });
             }
             return View(author);
         }

@@ -229,7 +229,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AuthorController.cs" />
+    <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BookPostsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
@@ -432,10 +432,10 @@
     <Content Include="Views\Account\List.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Account\RegisterConfirmation.cshtml" />
-    <Content Include="Views\Author\Create.cshtml" />
-    <Content Include="Views\Author\List.cshtml" />
-    <Content Include="Views\Author\Details.cshtml" />
-    <Content Include="Views\Author\Edit.cshtml" />
+    <Content Include="Views\Authors\Create.cshtml" />
+    <Content Include="Views\Authors\List.cshtml" />
+    <Content Include="Views\Authors\Details.cshtml" />
+    <Content Include="Views\Authors\Edit.cshtml" />
     <Content Include="Views\Shared\_MarkDownHelp.cshtml" />
   </ItemGroup>
   <ItemGroup>

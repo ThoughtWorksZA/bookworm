@@ -9,7 +9,7 @@ using PagedList;
 namespace BookWorm.Tests.Controllers.Integration
 {
     [TestClass]
-    public class AuthorControllerTest : ControllerInMemoryRavenTestBase
+    public class AuthorsControllerTest : ControllerInMemoryRavenTestBase
     {
         [TestMethod]
         public void ShouldCreateNewAuthor()
@@ -23,10 +23,10 @@ namespace BookWorm.Tests.Controllers.Integration
             RedirectToRouteResult actionResult = null;
             UsingSession((session) =>
                 {
-                    var controller = new AuthorController(new Repository(session));
+                    var controller = new AuthorsController(new Repository(session));
 
                     actionResult = (RedirectToRouteResult) (controller.Create(model));
-                    Assert.AreEqual("Author", actionResult.RouteValues["controller"]);
+                    Assert.AreEqual("Authors", actionResult.RouteValues["controller"]);
                     Assert.AreEqual("Details", actionResult.RouteValues["action"]);
                 });
 
@@ -50,14 +50,14 @@ namespace BookWorm.Tests.Controllers.Integration
 
             UsingSession((session) =>
                 {
-                    var controller = new AuthorController(new Repository(session));
+                    var controller = new AuthorsController(new Repository(session));
                     controller.Create(model);
                 });
 
             UsingSession((session) =>
                 {
                     WaitForTheLastWrite<Author>(session);
-                    var controller = new AuthorController(new Repository(session));
+                    var controller = new AuthorsController(new Repository(session));
                     var viewResult = (System.Web.Mvc.ViewResult) (controller.Create(model));
 
                     Assert.AreEqual("An author with this name already exists", controller.TempData["flashError"]);
@@ -88,7 +88,7 @@ namespace BookWorm.Tests.Controllers.Integration
 
             UsingSession((session) =>
                 {
-                    var controller = new AuthorController(new Repository(session));
+                    var controller = new AuthorsController(new Repository(session));
                     controller.Create(author1);
                     controller.Create(author2);
                 });
@@ -96,7 +96,7 @@ namespace BookWorm.Tests.Controllers.Integration
             UsingSession((session) =>
                 {
                     WaitForTheLastWrite<Author>(session);
-                    var controller = new AuthorController(new Repository(session));
+                    var controller = new AuthorsController(new Repository(session));
                     var viewResult = controller.List();
                     var authors = (IPagedList<Author>)(viewResult.Model);
 
@@ -122,14 +122,14 @@ namespace BookWorm.Tests.Controllers.Integration
 
             UsingSession((session) =>
             {
-                var controller = new AuthorController(new Repository(session));
+                var controller = new AuthorsController(new Repository(session));
                 controller.Create(author1);
             });
 
             UsingSession((session) =>
             {
                 var author = WaitForTheLastWrite<Author>(session);
-                var controller = new AuthorController(new Repository(session));
+                var controller = new AuthorsController(new Repository(session));
                 var viewResult = controller.Edit(author.Id);
                 var authorInView = (Author)(viewResult.Model);
                 
@@ -150,7 +150,7 @@ namespace BookWorm.Tests.Controllers.Integration
 
             UsingSession((session) =>
             {
-                var controller = new AuthorController(new Repository(session));
+                var controller = new AuthorsController(new Repository(session));
                 controller.Create(author1);
             });
 
@@ -166,9 +166,9 @@ namespace BookWorm.Tests.Controllers.Integration
                     Biography = "Biography updated",
                     PictureUrl = "myPictureupdated.jpg",
                 };
-                var controller = new AuthorController(new Repository(session));
+                var controller = new AuthorsController(new Repository(session));
                 var actionResult = (RedirectToRouteResult)(controller.Edit(updatedAuthorInfo));
-                Assert.AreEqual("Author", actionResult.RouteValues["controller"]);
+                Assert.AreEqual("Authors", actionResult.RouteValues["controller"]);
                 Assert.AreEqual("Details", actionResult.RouteValues["action"]);
                 Assert.AreEqual(author.Id, actionResult.RouteValues["id"]);
             });
@@ -185,7 +185,7 @@ namespace BookWorm.Tests.Controllers.Integration
         {
             UsingSession((session) =>
                 {
-                    var controller = new AuthorController(new Repository(session));
+                    var controller = new AuthorsController(new Repository(session));
                     Enumerable.Range(1, 9)
                               .ToList()
                               .ForEach(i => controller.Create(new Author {Name = "Author " + i, Biography = "Biography " + i}));
@@ -194,7 +194,7 @@ namespace BookWorm.Tests.Controllers.Integration
             UsingSession((session) =>
             {
                 WaitForTheLastWrite<Author>(session);
-                var controller = new AuthorController(new Repository(session));
+                var controller = new AuthorsController(new Repository(session));
                 var viewResult = controller.List(1, 4);
                 var authors = (IPagedList<Author>)(viewResult.Model);
                 Assert.AreEqual(4, authors.Count);
