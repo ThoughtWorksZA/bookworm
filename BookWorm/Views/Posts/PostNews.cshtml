@@ -1,6 +1,8 @@
 ﻿@model BookWorm.ViewModels.IBasePostInformation
 <div class="span5">
-    <img class="featured-post-image" src="@Model.FeaturedImage" />
+    <a href="@Model.DetailsUrl">
+        <img class="featured-post-image" src="@Model.FeaturedImage" />
+    </a>
 </div>
 <div class="span7">
     <p class="lead">@Model.Model.Title</p>
