@@ -266,6 +266,7 @@
     <Compile Include="Services\Email\IEmail.cs" />
     <Compile Include="Services\FullTextSearch\FullTextSearchService.cs" />
     <Compile Include="Services\FullTextSearch\IFullTextSearch.cs" />
+    <Compile Include="ViewModels\AuthorViewModel.cs" />
     <Compile Include="ViewModels\BookInformation.cs" />
     <Compile Include="ViewModels\BookPostInformation.cs" />
     <Compile Include="ViewModels\FilterInformation.cs" />

@@ -71,7 +71,10 @@ namespace BookWorm.Controllers
         [AllowAnonymous]
         public ViewResult Details(int id)
         {
-            return View(_repository.Get<Author>(id));
+            Author author = _repository.Get<Author>(id);
+            var books = _repository.Search<Book>(b => b.Author == author.Name);
+            var authorViewModel = new AuthorViewModel(author, books);
+            return View(authorViewModel);
         }
 
         [HttpGet]
