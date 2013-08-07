@@ -63,7 +63,6 @@ namespace BookWorm.Tests.Controllers.Integration
                     Assert.AreEqual("An author with this name already exists", controller.TempData["flashError"]);
 
                     Assert.AreEqual("", viewResult.MasterName);
-                    Assert.AreEqual("Create Author", viewResult.ViewBag.Title);
                 });
         }
 
@@ -138,7 +137,7 @@ namespace BookWorm.Tests.Controllers.Integration
         }
 
         [TestMethod]
-        public void ShouldUpdateAuthor()
+        public void ShouldEditAuthor()
         {
             var author1 = new Author()
             {
@@ -177,6 +176,48 @@ namespace BookWorm.Tests.Controllers.Integration
             {
                 var updatedAuthor = WaitForTheLastWrite<Author>(session);
                 AssertEqual(updatedAuthorInfo, updatedAuthor);
+            });
+        }
+
+        [TestMethod]
+        public void ShouldNotEditAuthorNameToAnExsitingOne()
+        {
+            var author1 = new Author()
+            {
+                Name = "Author1",
+                Biography = "Biography1",
+                PictureUrl = "myPicture1.jpg",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            var author2 = new Author()
+            {
+                Name = "Author2",
+                Biography = "Biography2",
+                PictureUrl = "myPicture2.jpg",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            UsingSession((session) =>
+            {
+                var controller = new AuthorsController(new Repository(session));
+                controller.Create(author1);
+                controller.Create(author2);
+            });
+
+            UsingSession((session) =>
+            {
+                WaitForTheLastWrite<Author>(session);
+
+                var author = session.Query<Author>().First(a => a.Name == author2.Name);
+                author.Name = author1.Name;
+
+                var controller = new AuthorsController(new Repository(session)); 
+                var viewResult = (System.Web.Mvc.ViewResult)(controller.Edit(author));
+
+                Assert.AreEqual("An author with this name already exists", controller.TempData["flashError"]);
+
+                Assert.AreEqual("", viewResult.MasterName);
             });
         }
 
