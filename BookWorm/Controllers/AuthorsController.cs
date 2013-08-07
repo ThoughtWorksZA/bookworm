@@ -14,6 +14,8 @@ namespace BookWorm.Controllers
 {
     public class AuthorsController : BaseController
     {
+        private const int MaxNumberOfBooksInDetail = 4;
+
         public AuthorsController()
         {
         }
@@ -71,9 +73,10 @@ namespace BookWorm.Controllers
         [AllowAnonymous]
         public ViewResult Details(int id)
         {
-            Author author = _repository.Get<Author>(id);
-            var books = _repository.Search<Book>(b => b.Author == author.Name);
-            var authorViewModel = new AuthorViewModel(author, books);
+            var author = _repository.Get<Author>(id);
+            var allBooks = _repository.Search<Book>(b => b.Author == author.Name);
+            var books = allBooks.Take(MaxNumberOfBooksInDetail).ToList();
+            var authorViewModel = new AuthorViewModel(author, books, allBooks.Count > MaxNumberOfBooksInDetail);
             return View(authorViewModel);
         }
 

@@ -31,7 +31,7 @@
         </div>
     </div>
 </div>
-<div class="row-fluid gray-body-row">
+<div class="row-fluid">
     <div class="row-content">
         <div class="span12">
             <fieldset>
@@ -39,6 +39,76 @@
                     @Html.Raw(MarkDownHelper.Transform(Model.Author.Biography))
                 </div>
             </fieldset>
+        </div>
+    </div>
+</div>
+@if (Model.Books.Any())
+    {
+        <div class="row-fluid gray-body-row">
+            <div class="row-content">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span10">
+                            <p class="lead">@Model.Author.Name's Books</p>
+                        </div>
+                        <div class="span2">
+                            @*                        <i class="icon-th"></i> @Html.ActionLink("All Author Books", "#", "Books", null, new { id = "BooksMenuLink" })*@
+                        </div>
+                    </div>
+                    <div id="lastest-books">
+                        <ol>
+                            @foreach (var book in Model.Books)
+                            {
+                                string defaultBookCoverDisplay = "block";
+                                <li>
+                                    <a class="book-detail-link" href="~/Books/@book.Id/@UrlUtils.ConvertTitleForUrl(book.Title)">
+                                        <div class="book-cover">
+                                            @if (@Html.DisplayFor(model => book.CoverImageUrl) != null && !@Html.DisplayFor(model => book.CoverImageUrl).ToString().IsEmpty())
+                                            {
+                                                defaultBookCoverDisplay = "none";
+                                                <div class="book-image book-image-wrapper"><img alt="@book.Title" class="book-image" src="@book.CoverImageUrl" onerror=" $('#default-image-@book.Id').show();$(this).parent().remove(); "/></div>
+
+                                            }
+                                       
+                                            <div id="default-image-@book.Id" class="book-image default-cover-image" style="display: @defaultBookCoverDisplay">
+                                        
+                                                <div class="default-cover-info">
+                                                    <h4>@book.Title</h4>
+                                                    @Html.DisplayFor(model => book.Author)
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="book-cover-hover-info">
+                                                <div class="book-cover-info-wrapper">
+                                                    <strong>@book.Title</strong><br />
+                                                    @Html.DisplayFor(model => book.Author)
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid book-cover-info">
+                                                <div class="span4 label-age-range">
+                                                    @Html.DisplayFor(model => book.AgeRange) years
+                                                </div>
+                                                <div class="span4 label-language">
+                                                    @Html.DisplayFor(model => book.Language)
+                                                </div>
+                                                <div class="span4 label-genre">
+                                                    @Html.DisplayFor(model => book.Genre)
+                                                </div>
+                           
+                                            </div>
+                                        </div>
+                                    </a>  
+                                </li>
+                            }
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+<div class="row-fluid">
+    <div class="row-content">
+        <div class="span12">
             <p>
                 @if (Html.ViewContext.HttpContext.User.IsInRoles(Roles.Admin))
                 {
@@ -50,5 +120,4 @@
         </div>
     </div>
 </div>
-
-<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>

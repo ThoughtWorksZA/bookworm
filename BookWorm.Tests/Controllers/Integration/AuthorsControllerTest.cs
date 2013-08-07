@@ -292,10 +292,43 @@ namespace BookWorm.Tests.Controllers.Integration
                 AuthorsContollerTestHelper.AssertEqual(authorViewModel.Author, author1);
                 var books = authorViewModel.Books;
                 Assert.AreEqual(2, books.Count());
+                Assert.IsFalse(authorViewModel.HasMoreBooks);
 
                 Assert.AreEqual(book1.Title, books.First().Title);
                 Assert.AreEqual(book2.Title, books.Last().Title);
             }
+        }
+
+        [TestMethod]
+        public void ShouldOnlyListAuthorFirst4BooksInAuthorDetailPage()
+        {
+            var author1 = new Author()
+            {
+                Name = "Author1",
+                Biography = "Biography1",
+                PictureUrl = "myPicture1.jpg",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            UsingSession((session) =>
+            {
+                var repository = new Repository(session);
+                var controller = new AuthorsController(repository);
+                controller.Create(author1);
+                Enumerable.Range(1, 9)
+                          .ToList()
+                          .ForEach(i => repository.Create(new Book() { Title = "Book " + i, Author = author1.Name, CreatedAt = DateTime.UtcNow.AddDays(-i)}));
+            });
+
+            UsingSession((session) =>
+            {
+                var author = WaitForTheLastWrite<Author>(session);
+                var controller = new AuthorsController(new Repository(session));
+                var viewResult = controller.Details(author.Id);
+                var authorViewModel = (AuthorViewModel) (viewResult.Model);
+                Assert.AreEqual(4, authorViewModel.Books.Count);
+                Assert.IsTrue(authorViewModel.HasMoreBooks);
+            });
         }
     }
 }
