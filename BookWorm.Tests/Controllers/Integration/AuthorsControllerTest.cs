@@ -11,6 +11,7 @@ namespace BookWorm.Tests.Controllers.Integration
     [TestClass]
     public class AuthorsControllerTest : ControllerInMemoryRavenTestBase
     {
+
         [TestMethod]
         public void ShouldCreateNewAuthor()
         {
@@ -34,7 +35,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 {
                     var author = WaitForTheLastWrite<Author>(session);
                     Assert.AreEqual(author.Id, actionResult.RouteValues["id"]);
-                    AssertEqual(model, author);
+                    AuthorsContollerTestHelper.AssertEqual(model, author);
                 });
         }
 
@@ -103,8 +104,8 @@ namespace BookWorm.Tests.Controllers.Integration
                     Assert.AreEqual("Authors", viewResult.ViewBag.Title);
 
                     Assert.AreEqual(2, authors.Count);
-                    AssertEqual(author1, authors.ElementAt(0));
-                    AssertEqual(author2, authors.ElementAt(1));
+                    AuthorsContollerTestHelper.AssertEqual(author1, authors.ElementAt(0));
+                    AuthorsContollerTestHelper.AssertEqual(author2, authors.ElementAt(1));
                 });
         }
 
@@ -131,8 +132,8 @@ namespace BookWorm.Tests.Controllers.Integration
                 var controller = new AuthorsController(new Repository(session));
                 var viewResult = controller.Edit(author.Id);
                 var authorInView = (Author)(viewResult.Model);
-                
-                AssertEqual(author1,authorInView);
+
+                AuthorsContollerTestHelper.AssertEqual(author1, authorInView);
             });
         }
 
@@ -175,7 +176,7 @@ namespace BookWorm.Tests.Controllers.Integration
             UsingSession((session) =>
             {
                 var updatedAuthor = WaitForTheLastWrite<Author>(session);
-                AssertEqual(updatedAuthorInfo, updatedAuthor);
+                AuthorsContollerTestHelper.AssertEqual(updatedAuthorInfo, updatedAuthor);
             });
         }
 
@@ -241,13 +242,6 @@ namespace BookWorm.Tests.Controllers.Integration
                 Assert.AreEqual(4, authors.Count);
                 Assert.AreEqual(3, authors.PageCount);
             });
-        }
-
-        private void AssertEqual(Author expected, Author actual)
-        {
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.PictureUrl, actual.PictureUrl);
-            Assert.AreEqual(expected.Biography, actual.Biography);
         }
     }
 }

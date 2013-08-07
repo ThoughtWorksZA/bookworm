@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
+using BookWorm.Tests.Controllers.Integration;
 using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -33,15 +34,9 @@ namespace BookWorm.Tests.Controllers
 
             var result = controller.Details(3);
             var model = (AuthorViewModel)result.Model;
-            AssertEqual(author, model.Author);
+            AuthorsContollerTestHelper.AssertEqual(author, model.Author);
             Assert.AreEqual(4, model.Books.Count());
         }
 
-        private void AssertEqual(Author expected, Author actual)
-        {
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.PictureUrl, actual.PictureUrl);
-            Assert.AreEqual(expected.Biography, actual.Biography);
-        }
     }
 }
