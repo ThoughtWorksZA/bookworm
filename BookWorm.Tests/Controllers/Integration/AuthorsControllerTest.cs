@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
+using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using PagedList;
@@ -242,6 +243,59 @@ namespace BookWorm.Tests.Controllers.Integration
                 Assert.AreEqual(4, authors.Count);
                 Assert.AreEqual(3, authors.PageCount);
             });
+        }
+
+        [TestMethod]
+        public void DetailsShouldAuthorsBooks()
+        {
+            var author1 = new Author()
+            {
+                Name = "Author1",
+                Biography = "Biography1",
+                PictureUrl = "myPicture1.jpg",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            var book1 = new Book
+            {
+                Title = "Oliver Orphan",
+                Author = author1.Name,
+                AgeRange = "0~2",
+                CreatedAt = DateTime.UtcNow
+            };
+            
+            var book2 = new Book
+            {
+                Title = "Oliver Orphan2",
+                Author = author1.Name,
+                AgeRange = "0~2",
+                CreatedAt = DateTime.UtcNow.AddDays(-1)
+            };
+
+            UsingSession((session) =>
+            {
+                var repository = new Repository(session);
+                var controller = new AuthorsController(repository);
+                controller.Create(author1);
+                
+                repository.Create(book1);
+                repository.Create(book2);
+            });
+
+            using (var session = _documentStore.OpenSession())
+            {
+                var author = WaitForTheLastWrite<Author>(session);
+                var controller = new AuthorsController(new Repository(session));
+                var result = (ViewResult) controller.Details(author.Id);
+                var authorViewModel = (AuthorViewModel) result.Model;
+
+                AuthorsContollerTestHelper.AssertEqual(authorViewModel.Author, author1);
+                var books = authorViewModel.Books;
+                Assert.AreEqual(2, books.Count());
+
+                Assert.AreEqual(book1.Title, books.First().Title);
+                Assert.AreEqual(book2.Title, books.Last().Title);
+            }
         }
     }
 }
