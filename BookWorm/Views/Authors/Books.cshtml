@@ -10,6 +10,18 @@
 
 <div class="row-fluid">
     <div class="row-content">
+        <div class="span7">
+            <ul class="breadcrumb">
+                <li><a href="~/Authors">Authors</a><span class="divider">/</span></li>
+                <li><a href="~/Authors/@ViewBag.Author.Id/@ViewBag.Author.Name">@ViewBag.Author.Name</a><span class="divider">/</span></li>
+                <li class="active">Books</li>
+            </ul> 
+        </div>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="row-content">
         <div class="span12">
             <p class="lead">@ViewBag.Title</p>
         </div>
