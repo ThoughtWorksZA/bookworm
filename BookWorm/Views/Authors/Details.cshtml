@@ -43,7 +43,7 @@
     </div>
 </div>
 @if (Model.Books.Any())
-    {
+{
         <div class="row-fluid gray-body-row">
             <div class="row-content">
                 <div class="span12">
@@ -104,8 +104,13 @@
                     </div>
                 </div>
             </div>
+            <div class="row-content">
+                <div class="span2 pull-right">
+                    <a href="~/Authors/@Model.Author.Id/@UrlUtils.ConvertTitleForUrl(@Model.Author.Name)/Books">More Books</a>
+                </div>
+            </div>
         </div>
-    }
+}
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
@@ -114,7 +119,7 @@
                 {
                     @Html.ActionLink("Back to Authors", "List")
                     @Html.Raw(" | ")<i class="icon-edit"></i>
-                    @Html.ActionLink("Edit", "Edit", new {id = Model.Author.Id})
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Author.Id })
                 }
             </p>
         </div>

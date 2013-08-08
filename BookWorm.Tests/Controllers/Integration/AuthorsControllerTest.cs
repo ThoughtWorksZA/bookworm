@@ -330,5 +330,44 @@ namespace BookWorm.Tests.Controllers.Integration
                 Assert.IsTrue(authorViewModel.HasMoreBooks);
             });
         }
+
+        [TestMethod]
+        public void ShouldListAuthorBooksWithPagination()
+        {
+            var author1 = new Author()
+            {
+                Name = "Author1",
+                Biography = "Biography1",
+                PictureUrl = "myPicture1.jpg",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            UsingSession((session) =>
+            {
+                var repository = new Repository(session);
+                var controller = new AuthorsController(repository);
+                controller.Create(author1);
+                Enumerable.Range(1, 22)
+                          .ToList()
+                          .ForEach(i => repository.Create(new Book() { Title = "Book " + i, Author = author1.Name, CreatedAt = DateTime.UtcNow.AddDays(-i) }));
+            });
+
+            UsingSession((session) =>
+            {
+                var author = WaitForTheLastWrite<Author>(session);
+                var controller = new AuthorsController(new Repository(session));
+                var viewResult = controller.Books(author.Id);
+                var books = (IPagedList<Book>)(viewResult.Model);
+                Assert.AreEqual(9, books.Count);
+                Assert.AreEqual(3, books.PageCount);
+
+                viewResult = controller.Books(author.Id, 3, 9);
+                books = (IPagedList<Book>)(viewResult.Model);
+                Assert.AreEqual(4, books.Count);
+                Assert.AreEqual(3, books.PageCount);
+
+                Assert.AreEqual(author.Name, ((Author)(viewResult.ViewBag.Author)).Name);
+            });
+        }
     }
 }

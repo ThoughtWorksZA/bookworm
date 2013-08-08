@@ -104,6 +104,16 @@ namespace BookWorm.Controllers
             return RedirectToAction("Details", "Authors", new {id = author.Id});
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ViewResult Books(int id, int page = 1, int perPage = 9)
+        {
+            var author = _repository.Get<Author>(id);
+            var books = _repository.Search<Book>(b => b.Author == author.Name);
+            ViewBag.Author = author;
+            return View(new StaticPagedList<Book>(books.Skip((page-1)*perPage).Take(perPage), page, perPage, books.Count));
+        }
+
         private bool IsAuthorNameUsedByAnotherAuthor(Author author)
         {
             return _repository.Search<Author>(a => a.Id != author.Id && a.Name == author.Name).Any();

@@ -85,6 +85,13 @@ namespace BookWorm
                 );
 
             routes.MapRoute(
+                "Author Books",
+                "Authors/{id}/{name}/Books",
+                new { controller = "Authors", action = "Books", name = UrlParameter.Optional },
+                new { id = @"\d+" }
+                );
+
+            routes.MapRoute(
                 "UsersConfirmation",
                 "Users/{userId}/RegisterConfirmation/{secureToken}",
                 new { controller = "Account", action = "RegisterConfirmation" }

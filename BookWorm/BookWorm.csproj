@@ -438,6 +438,7 @@
     <Content Include="Views\Authors\Details.cshtml" />
     <Content Include="Views\Authors\Edit.cshtml" />
     <Content Include="Views\Shared\_MarkDownHelp.cshtml" />
+    <Content Include="Views\Authors\Books.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

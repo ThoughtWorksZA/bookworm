@@ -1,0 +1,81 @@
+﻿@Scripts.Render("~/Scripts/puku/iosPatch.js")
+
+@using BookWorm.Helpers
+@using PagedList.Mvc
+@model PagedList.StaticPagedList<BookWorm.Models.Book>
+@{
+    ViewBag.NoIndex = true;
+    ViewBag.Title = ViewBag.Author.Name + "'s Books";
+}
+
+<div class="row-fluid">
+    <div class="row-content">
+        <div class="span12">
+            <p class="lead">@ViewBag.Title</p>
+        </div>
+    </div>
+</div>
+<div class="row gray-body-row">
+    <div class="row-content">
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="span9">
+                    @if (Model!= null && Model.Any()){
+                        <ol>
+                            @foreach (var item in Model)
+                            {
+                                string defaultBookCoverDisplay = "block";
+                                <li><a class="book-detail-link" href="~/Books/@item.Id/@UrlUtils.ConvertTitleForUrl(item.Title)">
+                                        <div class="book-cover">
+                                            @if (@Html.DisplayFor(model => item.CoverImageUrl) != null && !@Html.DisplayFor(model => item.CoverImageUrl).ToString().IsEmpty())
+                                            {
+                                                defaultBookCoverDisplay = "none";
+                                                <div class="book-image book-image-wrapper"><img alt="@item.Title" class="book-image" src="@item.CoverImageUrl" onerror="$('#default-image-@item.Id').show();$(this).parent().remove();"/></div>
+                                            }
+
+                                            <div id="default-image-@item.Id" class="book-image default-cover-image" style="display: @defaultBookCoverDisplay">
+                                                <div class="default-cover-info">
+                                                    <h4>@item.Title</h4>
+                                                    @Html.DisplayFor(model => item.Author)
+                                                </div>
+                                            </div>
+                                            <div class="book-cover-hover-info">
+                                                <div class="book-cover-info-wrapper">
+                                                    <strong>@item.Title</strong><br />
+                                                    @Html.DisplayFor(model => item.Author)
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid book-cover-info">
+                                                <div class="span4 label-age-range">
+                                                    @Html.DisplayFor(model => item.AgeRange) years
+                                            
+                                                </div>
+                                                <div class="span4 label-language">
+                                                    @Html.DisplayFor(model => item.Language)
+                                                </div>
+                                                <div class="span4 label-genre">
+                                                    @Html.DisplayFor(model => item.Genre)
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                        </ol>
+                    }
+                </div>
+            </div>
+             @if (Model != null && Model.Any())
+             {
+                 <div class="row-fluid">
+                     <div class="span12">
+                         <center>@Html.PagedListPager(Model,
+                         page => string.Format("/Authors/{0}/{1}/Books?page={2}",ViewBag.Author.Id, UrlUtils.ConvertTitleForUrl(ViewBag.Author.Name),page), 
+                         PagedListRenderOptions.ClassicPlusFirstAndLast)</center>
+                     </div>
+                 </div>
+             }
+        </div>
+    </div>
+</div>
