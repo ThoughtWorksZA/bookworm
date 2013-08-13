@@ -11,5 +11,6 @@ namespace BookWorm.Models
         [Required]
         [AllowHtml]
         public string Content { get; set; }
+        public bool IsDraft { get; set; }
     }
 }
