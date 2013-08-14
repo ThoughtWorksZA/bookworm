@@ -21,7 +21,7 @@
                 {
                 @Html.ActionLink("Create New", "Create", null, new { Id = "createNewStaticPageLink" })
                     <i>|</i>
-                @Html.ActionLink("Draft Pages", "List", null, new { Id = "ViewDraftStaticPageLink" })
+                @Html.ActionLink("Draft Pages", "List", "Pages", new {excludeDraft=false}, new { Id = "ViewDraftStaticPageLink" })
                 }
             </p>
         </div>
