@@ -35,9 +35,11 @@
                        
                         @foreach (StaticPage page in ViewBag.StaticPages)
                         {
-                            <li>
-                                @Html.ActionLink(page.Title, "Details", "Pages", new { id = page.Id, title = UrlUtils.ConvertTitleForUrl(page.Title)}, null)
-                            </li>
+                            if(!page.IsDraft){
+                                 <li>
+                                     @Html.ActionLink(page.Title, "Details", "Pages", new { id = page.Id, title = UrlUtils.ConvertTitleForUrl(page.Title)}, null)
+                                 </li>
+                            }
                         }
                     </ul>
                 </li>
