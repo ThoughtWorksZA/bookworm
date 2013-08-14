@@ -15,11 +15,13 @@
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
-            <p class="lead">Pages</p>
+            <p class="lead">Published Pages</p>
             <p>
                 @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
                 {
- @Html.ActionLink("Create New", "Create", null, new { Id = "createNewStaticPageLink" })
+                @Html.ActionLink("Create New", "Create", null, new { Id = "createNewStaticPageLink" })
+                    <i>|</i>
+                @Html.ActionLink("Draft Pages", "List", null, new { Id = "ViewDraftStaticPageLink" })
                 }
             </p>
         </div>
