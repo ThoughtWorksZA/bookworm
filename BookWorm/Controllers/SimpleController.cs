@@ -50,7 +50,7 @@ namespace BookWorm.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ViewResult List(int page = 1, int perPage = 9)
+        public virtual ViewResult List(int page = 1, int perPage = 9)
         {
             var viewModels = new List<U>();
             var models = _repository.List<T>(page, perPage);

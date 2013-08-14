@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
@@ -115,10 +117,11 @@ namespace BookWorm.Tests.Controllers
                 new StaticPageInformation {Model = savedPages[0]}, 
                 new StaticPageInformation {Model = savedPages[1]}
             };
-            repository.Setup(repo => repo.List<StaticPage>(It.IsAny<int>(), It.IsAny<int>())).Returns(savedPages);
+            repository.Setup(repo => repo.Search<StaticPage>(It.IsAny<Expression<Func<StaticPage, bool>>>(), It.IsAny<int>(), It.IsAny<int>())).Returns(savedPages);
+            repository.Setup(repo => repo.Search<StaticPage>(It.IsAny<Expression<Func<StaticPage, bool>>>())).Returns(savedPages);
             var controller = new PagesController(repository.Object);
             var result = controller.List();
-            repository.Verify(it => it.List<StaticPage>(It.IsAny<int>(), It.IsAny<int>()), Times.Once());
+            repository.Verify(it => it.Search<StaticPage>(It.IsAny<Expression<Func<StaticPage, bool>>>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once());
             Assert.AreEqual(savedPageInformations[0].Model, ((PagedList.IPagedList<StaticPageInformation>)result.Model)[0].Model);
             Assert.AreEqual(savedPageInformations[1].Model, ((PagedList.IPagedList<StaticPageInformation>)result.Model)[1].Model);
         }
@@ -173,7 +176,7 @@ namespace BookWorm.Tests.Controllers
         {
             var pagesControllerClass = typeof(PagesController);
             Assert.AreEqual(1, pagesControllerClass.GetMethods()
-                                                   .First(method => method.Name == "List")
+                                                   .First(method => method.Name == "List" && method.GetParameters().Count()==3)
                                                    .GetCustomAttributes(typeof (AllowAnonymousAttribute), false)
                                                    .Count());
         }
