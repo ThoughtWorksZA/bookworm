@@ -15,15 +15,28 @@
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
-            <p class="lead">Published Pages</p>
-            <p>
-                @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
+            @{
+                var viewingPublishedPages = Request.Params["excludeDraft"] == null || Convert.ToBoolean(Request.Params["excludeDraft"]);
+                var leadTitle = "Published Pages";
+                var linkTitle = "Draft Pages";
+                var linkParameter = new {excludeDraft = false};
+                if (!viewingPublishedPages)
                 {
-                @Html.ActionLink("Create New", "Create", null, new { Id = "createNewStaticPageLink" })
-                @Html.Raw(" | ")
-                @Html.ActionLink("Draft Pages", "List", "Pages", new {excludeDraft=false}, new { Id = "ViewDraftStaticPageLink" })
+                    leadTitle = "Draft Pages";
+                    linkTitle = "Published Pages";
+                    linkParameter = null;
                 }
-            </p>
+                
+                <p class="lead">@leadTitle</p>
+                <p>
+                    @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
+                    {
+                        @Html.ActionLink("Create New", "Create", null, new { Id = "createNewStaticPageLink" })
+                        @Html.Raw(" | ")
+                        @Html.ActionLink(linkTitle, "List", "Pages", linkParameter, new { Id = "ViewOtherCategoryStaticPageLink" })
+                    }
+                </p>
+            }
         </div>
     </div>
 </div>

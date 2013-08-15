@@ -39,6 +39,7 @@
                         <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
                     </div>
                     <div>
+                        @Html.CheckBoxFor(model => model.Model.IsDraft, new Dictionary<string, object>() {{"id", "IsDraft"}})
                         @Html.HiddenFor(model => model.Model.Creator)
                     </div>
                     <p>
