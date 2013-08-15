@@ -38,7 +38,9 @@
         
                         <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
                     </div>
-
+                    <div>
+                        @Html.HiddenFor(model => model.Model.Creator)
+                    </div>
                     <p>
                         <input type="submit" class="btn" value="Save Changes" />
                     </p>

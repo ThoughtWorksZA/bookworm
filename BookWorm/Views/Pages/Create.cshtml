@@ -37,6 +37,7 @@
                     </div>
                     <div>
                         @Html.CheckBoxFor(model => model.Model.IsDraft, new Dictionary<string, object>() {{"id", "IsDraft"}})
+                        @Html.HiddenFor(model => model.Model.Creator, new Dictionary<string, object>() {{"id", "creator"}})
                     </div>
 
                     <p>
@@ -56,12 +57,14 @@
                         $('#SaveAsDraftButton').click(function () {
                             $('#IsDraft').show();
                             $('#IsDraft').attr('checked', true);
+                            $('#creator').val('@Html.ViewContext.HttpContext.User.Identity.Name');
                             $('#IsDraft').hide();
                         });
                         
                         $('#SaveButton').click(function () {
                             $('#IsDraft').show();
                             $('#IsDraft').attr('checked', false);
+                            $('#creator').val('@Html.ViewContext.HttpContext.User.Identity.Name');
                             $('#IsDraft').hide();
                         });
                     })

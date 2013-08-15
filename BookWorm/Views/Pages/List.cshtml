@@ -20,7 +20,7 @@
                 @if (Html.ViewContext.HttpContext.User.IsInRole(BookWorm.Models.Roles.Admin))
                 {
                 @Html.ActionLink("Create New", "Create", null, new { Id = "createNewStaticPageLink" })
-                    <i>|</i>
+                @Html.Raw(" | ")
                 @Html.ActionLink("Draft Pages", "List", "Pages", new {excludeDraft=false}, new { Id = "ViewDraftStaticPageLink" })
                 }
             </p>
