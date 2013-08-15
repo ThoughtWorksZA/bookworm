@@ -47,6 +47,23 @@ namespace BookWorm.Controllers
             return base.Edit(viewModel);
         }
 
+        [ActionName("BaseDelete")]
+        public override RedirectToRouteResult Delete(int id)
+        {
+            return null;
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = Roles.Admin)]
+        public RedirectToRouteResult Delete(int id, bool excludeDraft = true)
+        {
+            var viewModel = new StaticPageInformation();
+            _repository.Delete<StaticPage>(id);
+            TempData["flashSuccess"] = viewModel.DeleteSucceededMessage;
+            var currentExcludeDraft = excludeDraft;
+            return RedirectToAction("List", new{excludeDraft=currentExcludeDraft});
+        }
+
         [ActionName("OldList")]
         public override ViewResult List(int page = 1, int perPage = 9)
         {

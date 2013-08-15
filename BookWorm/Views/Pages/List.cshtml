@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="span1">
-                            @using (Html.BeginForm("Delete", "Pages", new { @id = item.Model.Id }))
+                            @using (Html.BeginForm("Delete", "Pages", new { @id = item.Model.Id, @excludeDraft = !item.Model.IsDraft }))
                             {
                                 @Html.HttpMethodOverride(HttpVerbs.Delete)
 

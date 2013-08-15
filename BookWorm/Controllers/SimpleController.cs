@@ -63,7 +63,7 @@ namespace BookWorm.Controllers
 
         [HttpDelete]
         [Authorize(Roles = Roles.Admin)]
-        public RedirectToRouteResult Delete(int id)
+        public virtual RedirectToRouteResult Delete(int id)
         {
             var viewModel = new U();
             _repository.Delete<T>(id);
