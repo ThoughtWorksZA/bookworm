@@ -58,15 +58,30 @@ namespace BookWorm.Controllers
         public ViewResult List(int page = 1, int perPage = 9, bool excludeDraft = true)
         {
             var isDraft = !excludeDraft;
-            var viewModels = new List<StaticPageInformation>();
-            var models = _repository.Search<StaticPage>((p => p.IsDraft == isDraft), page, perPage);
+            var viewModels = BuildModel(page, perPage, isDraft);
             var allPages = _repository.Search<StaticPage>((p => p.IsDraft == isDraft));
 
-            foreach (var model in models)
-            {
-                viewModels.Add(new StaticPageInformation { Model = model });
-            }
             return View(new StaticPagedList<StaticPageInformation>(viewModels, page, perPage, allPages.Count));
+        }
+
+        private List<StaticPageInformation> BuildModel(int page, int perPage, bool isDraft)
+        {
+            var viewModels = new List<StaticPageInformation>();
+            var pagesToDisplay = GetPagesToDisplay(page, perPage, isDraft);
+            foreach (var staticPage in pagesToDisplay)
+            {
+                viewModels.Add(new StaticPageInformation {Model = staticPage});
+            }
+            return viewModels;
+        }
+
+        private IEnumerable<StaticPage> GetPagesToDisplay(int page, int perPage, bool isDraft)
+        {
+            if (isDraft)
+               return _repository.Search<StaticPage>((p => p.IsDraft == isDraft && p.Creator.Equals(User.Identity.Name)),
+                                                        page, perPage);
+            
+            return _repository.Search<StaticPage>((p => p.IsDraft == isDraft), page, perPage);
         }
     }
 }
