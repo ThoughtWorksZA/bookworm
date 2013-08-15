@@ -43,16 +43,26 @@
                         @Html.HiddenFor(model => model.Model.Creator)
                     </div>
                     <p>
-                        <input type="submit" class="btn" value="Save Changes" />
+                        <input type="submit" class="btn" value="Save Changes" id="SaveButton"/>
+                        @if (Model.Model.IsDraft)
+                        {
+                            <input type="submit" class="btn" value="Publish" id="PublishButton"/>
+                        }
                     </p>
                 </fieldset>
 
                 <script type="text/javascript">
-                    (function() {
+                    $(document).ready(function() {
                         var converter = Markdown.getSanitizingConverter();
                         var editor = new Markdown.Editor(converter);
                         editor.run();
-                    })();
+
+                        $('#PublishButton').click(function() {
+                            $('#IsDraft').show();
+                            $('#IsDraft').attr('checked', false);
+                            $('#IsDraft').hide();
+                        });
+                    })
                 </script>
             }
 
