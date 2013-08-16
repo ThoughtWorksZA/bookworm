@@ -19,9 +19,10 @@ namespace BookWorm.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult News(int page = 1, int perPage = 9)
+        public ActionResult News(int page = 1, int perPage = 9, bool excludeDraft = true)
         {
-            var posts = _repository.List<Post>().Select(post => new PostInformation(post));
+            var isDraft = !excludeDraft;
+            var posts = _repository.List<Post>().Where(p => p.IsDraft == isDraft).Select(post => new PostInformation(post));
             var books = _repository.List<Book>();
             var bookPosts = books.SelectMany(x => x.Posts.Where(bp => bp.Type == BookPost.BookPostType.News || bp.Type == BookPost.BookPostType.Events).Select(y => new BookPostInformation(x.Id, y, x))).ToList();
             var allPosts = new List<IBasePostInformation>();

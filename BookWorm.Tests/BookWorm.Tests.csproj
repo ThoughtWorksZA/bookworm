@@ -183,6 +183,7 @@
     <Compile Include="Controllers\Integration\ControllerInMemoryRavenTestBase.cs" />
     <Compile Include="Controllers\Integration\HomeControllerTest.cs" />
     <Compile Include="Controllers\Integration\PagesControllerTest.cs" />
+    <Compile Include="Controllers\Integration\PostsControllerTest.cs" />
     <Compile Include="Controllers\PagesControllerTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
     <Compile Include="Controllers\AccountControllerTest.cs" />

@@ -15,16 +15,31 @@
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
-            <p class="lead">Latest News and Events</p>
-            <p>
-                @if (Html.ViewContext.HttpContext.User.IsInRoles(Roles.Admin, Roles.Author))
+            @{
+                var viewingPublishedPosts = Request.Params["excludeDraft"] == null || Convert.ToBoolean(Request.Params["excludeDraft"]);
+                var leadTitle = "Latest News and Events";
+                var linkTitle = "Draft News and Events";
+                var linkParameter = new {excludeDraft = false};
+                if (!viewingPublishedPosts)
                 {
-                    @Html.ActionLink("Create New", "Create", null, new { Id = "createNewPostLink" })
+                    leadTitle = "Draft News and Events";
+                    linkTitle = "Latest News and Events";
+                    linkParameter = null;
                 }
-            </p>
+                
+                <p class="lead">@leadTitle</p>
+                <p>
+                    @if (Html.ViewContext.HttpContext.User.IsInRoles(Roles.Admin, Roles.Author))
+                    {
+                        @Html.ActionLink("Create New", "Create", null, new { Id = "createNewPostLink" })
+                        @Html.Raw(" | ")
+                        @Html.ActionLink(linkTitle, "News", "Posts", linkParameter, new { Id = "ViewOtherPostTypeLink" })
+                    }
+                </p>
+            }
         </div>
     </div>
-</div>
+</div
 <div class="row-fluid">
     <div class="row-content">
         <div class="span12">
