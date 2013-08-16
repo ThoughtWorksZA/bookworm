@@ -50,18 +50,38 @@
         
                         <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
                     </div>
-
+                    <div>
+                        @Html.CheckBoxFor(model => model.Model.IsDraft, new Dictionary<string, object>() {{"id", "IsDraft"}})
+                        @Html.HiddenFor(model => model.Model.Creator, new Dictionary<string, object>() {{"id", "creator"}})
+                    </div>
                     <p>
                         <input type="submit" value="Save and Publish" class="btn" id="SaveButton"/>
+                        <input type="submit" value="Save as Draft" class="btn" id="SaveAsDraftButton"/>
                     </p>
                 </fieldset>
 
                 <script type="text/javascript">
-                    (function() {
+                    $(document).ready(function() {
                         var converter = Markdown.getSanitizingConverter();
                         var editor = new Markdown.Editor(converter);
                         editor.run();
-                    })();
+                        
+                        $('#IsDraft').hide();
+
+                        $('#SaveAsDraftButton').click(function () {
+                            $('#IsDraft').show();
+                            $('#IsDraft').attr('checked', true);
+                            $('#creator').val('@Html.ViewContext.HttpContext.User.Identity.Name');
+                            $('#IsDraft').hide();
+                        });
+
+                        $('#SaveButton').click(function () {
+                            $('#IsDraft').show();
+                            $('#IsDraft').attr('checked', false);
+                            $('#creator').val('@Html.ViewContext.HttpContext.User.Identity.Name');
+                            $('#IsDraft').hide();
+                        });
+                    })
                 </script>
             }
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace BookWorm.Models
@@ -19,6 +20,9 @@ namespace BookWorm.Models
         public string FeaturedImage { get; set; }
         [Required]
         public PostType? Type { get; set; }
+        [DefaultValue(false)]
+        public bool IsDraft { get; set; }
+        public string Creator { get; set; }
 
         public enum PostType
         {
