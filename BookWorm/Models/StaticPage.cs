@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -11,6 +12,7 @@ namespace BookWorm.Models
         [Required]
         [AllowHtml]
         public string Content { get; set; }
+        [DefaultValue(false)]
         public bool IsDraft { get; set; }
 
         public string Creator { get; set; }
