@@ -42,7 +42,7 @@
             <p>
                 @if (Html.ViewContext.HttpContext.User.IsInRoles(Roles.Admin, Roles.Author))
                 {
-                    @Html.ActionLink("Back to News", "News")
+                    @Html.ActionLink("Back to List", "News")
                     @Html.Raw(" | ")<i class="icon-edit"></i>
                     @Html.ActionLink("Edit", "Edit", new {id = Model.Model.Id})
                 }
