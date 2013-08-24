@@ -237,5 +237,10 @@ namespace BookWorm.Controllers
             var bookInformations = DiscoverBooks(genres, page, perPage, searchPredicate);
             return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string>() { genres }, bookInformations));
         }
+
+        public ActionResult PostType(string posttypes)
+        {
+            return null;
+        }
     }
 }
