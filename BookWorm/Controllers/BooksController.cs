@@ -238,9 +238,14 @@ namespace BookWorm.Controllers
             return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string>() { genres }, bookInformations));
         }
 
-        public ActionResult PostType(string posttypes)
+        public ActionResult PostType(string postTypes, int page = 1, int perPage = 9)
         {
-            return null;
+            BookPost.BookPostType enumPostType;
+            Enum.TryParse(postTypes, true, out enumPostType);
+
+            Expression<Func<Book, bool>> searchPredicate = book => book.Posts.Any(p => p.Type == enumPostType);
+            var bookInformations = DiscoverBooks(postTypes, page, perPage, searchPredicate);
+            return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string>() {postTypes}, bookInformations));
         }
     }
 }

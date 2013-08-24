@@ -164,5 +164,61 @@ namespace BookWorm.Tests.Controllers.Integration
                 Assert.AreEqual("Book 1", actualBooks.Last().Title);
             }
         }
+
+        [TestMethod]
+        public void ShouldFilterByPostType()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                var repository = new Repository(session);
+                var titleBookWithReview = "Book with Review";
+                repository.Create(new Book
+                {
+                    Title = titleBookWithReview,
+                    Language = "Venda",
+                    Genre = "Fiction",
+                    AgeRange = "0-2",
+                    Posts = {new BookPost()
+                        {
+                            Title = "a Review",
+                            Content = "A review",
+                            Type = BookPost.BookPostType.Reviews
+                        }
+                    }
+                });
+                repository.Create(new Book
+                {
+                    Title = "Book without post",
+                    Language = "Venda",
+                    Genre = "Fiction",
+                    AgeRange = "0-2"
+                });
+
+                repository.Create(new Book
+                {
+                    Title = "Book with Events",
+                    Language = "Venda",
+                    Genre = "Fiction",
+                    AgeRange = "0-2",
+                    Posts = {new BookPost()
+                        {
+                            Title = "an Event",
+                            Content = "An Events",
+                            Type = BookPost.BookPostType.Events
+                        }
+                    }
+                });
+
+                session.SaveChanges();
+
+                var bookController = new BooksController(repository);
+                var result = bookController.PostType(postTypes: "Reviews");
+                var viewResult = (ViewResult)result;
+                var filterInformation = (FilterInformation)viewResult.Model;
+                var books = filterInformation.BookInformations.Select(b => b.Model).ToList();
+                Assert.AreEqual(1, books.Count);
+                Assert.AreEqual(titleBookWithReview, books[0].Title);
+            }
+        }
     }
 }
