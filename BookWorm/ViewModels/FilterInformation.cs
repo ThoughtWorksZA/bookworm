@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using PagedList;
 
 namespace BookWorm.ViewModels
@@ -11,37 +12,46 @@ namespace BookWorm.ViewModels
         public List<string> Languages { get; set; }
         public List<string> AgeRanges { get; set; }
         public List<string> Genres { get; set; }
+        public List<string> PostTypes { get; set; }
         public IPagedList<BookInformation> BookInformations { get; set; }
+
 
         public FilterInformation(IPagedList<BookInformation> bookInformations)
         {
             Languages = new List<string>();
             AgeRanges = new List<string>();
             Genres = new List<string>();
+            PostTypes = new List<string>();
             BookInformations = bookInformations;
         }
 
-        public FilterInformation(List<string> languages, List<string> ageRanges, List<string> genres, IPagedList<BookInformation> bookInformations)
+        public FilterInformation(List<string> languages, List<string> ageRanges, List<string> genres, List<string> postTypes, IPagedList<BookInformation> bookInformations)
         {
             Languages = languages;
             AgeRanges = ageRanges;
             Genres = genres;
+            PostTypes = postTypes;
             BookInformations = bookInformations;
         }
 
         public string LanguageFilterUrl(string language)
         {
-            return FilterUrl("languages", language, Languages, new { Type = "ageRanges", Value = AgeRanges }, new { Type = "genres", Value = Genres });
+            return FilterUrl("languages", language, Languages, new { Type = "ageRanges", Value = AgeRanges }, new { Type = "genres", Value = Genres }, new { Type = "postTypes", Value = PostTypes });
         }
 
         public string AgeRangeFilterUrl(string ageRange)
         {
-            return FilterUrl("ageRanges", ageRange, AgeRanges, new { Type = "languages", Value = Languages }, new { Type = "genres", Value = Genres });
+            return FilterUrl("ageRanges", ageRange, AgeRanges, new { Type = "languages", Value = Languages }, new { Type = "genres", Value = Genres }, new { Type = "postTypes", Value = PostTypes });
         }
 
         public string GenreFilterUrl(string genre)
         {
-            return FilterUrl("genres", genre, Genres, new { Type = "languages", Value = Languages }, new { Type = "ageRanges", Value = AgeRanges });
+            return FilterUrl("genres", genre, Genres, new { Type = "languages", Value = Languages }, new { Type = "ageRanges", Value = AgeRanges }, new { Type = "postTypes", Value = PostTypes });
+        }
+
+        public string PostTypeFilterUrl(string postType)
+        {
+            return FilterUrl("postTypes", postType, PostTypes, new { Type = "languages", Value = Languages }, new { Type = "ageRanges", Value = AgeRanges }, new {Type = "genres", Value = Genres});
         }
 
         private string FilterUrl(string type, string value, List<string> primary, params dynamic[] secondaries)
@@ -84,7 +94,7 @@ namespace BookWorm.ViewModels
 
         public string PaginationUrl(string action, int page, string searchQuery = null)
         {
-            var paginationUrl = string.Format("/Books/{0}?page={1}{2}", action, page, BuildSecondaryFilter(new {Type = "genres", Value = Genres}, new {Type = "languages", Value = Languages}, new {Type = "ageRanges", Value = AgeRanges}));
+            var paginationUrl = string.Format("/Books/{0}?page={1}{2}", action, page, BuildSecondaryFilter(new { Type = "genres", Value = Genres }, new { Type = "languages", Value = Languages }, new { Type = "ageRanges", Value = AgeRanges }, new { Type = "postTypes", Value = PostTypes }));
             if (!string.IsNullOrEmpty(searchQuery))
             {
                 paginationUrl = string.Format("{0}&searchQuery={1}", paginationUrl, searchQuery);

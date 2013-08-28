@@ -30,7 +30,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 var expectedBooks = new List<Book> { book1, book2 };
                 var booksController = new BooksController(repository);
 
-                var view = (ViewResult)booksController.Filter(new List<string>() { "Zulu", "Xhosa" }, new List<string>(), new List<string>());
+                var view = (ViewResult)booksController.Filter(new List<string>() { "Zulu", "Xhosa" }, new List<string>(), new List<string>(), new List<string>());
 
                 var filterInformation = (FilterInformation)view.Model;
                 var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
@@ -61,7 +61,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 var expectedBooks = new List<Book> { book1 };
                 var booksController = new BooksController(repository);
 
-                var view = (ViewResult)booksController.Filter(new List<string>() { "Zulu" }, new List<string>() { "0-2" }, new List<string>() { "Fiction" });
+                var view = (ViewResult)booksController.Filter(new List<string>() { "Zulu" }, new List<string>() { "0-2" }, new List<string>() { "Fiction" }, new List<string>());
 
                 var filterInformation = (FilterInformation)view.Model;
                 var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
@@ -91,7 +91,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 var expectedBooks = new List<Book> { book1 };
                 var booksController = new BooksController(repository);
 
-                var view = (ViewResult)booksController.Filter(new List<string>(), new List<string>(), new List<string> {"Picture Books"});
+                var view = (ViewResult)booksController.Filter(new List<string>(), new List<string>(), new List<string> { "Picture Books" }, new List<string>());
 
                 var filterInformation = (FilterInformation)view.Model;
                 var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
@@ -120,7 +120,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 books.Add(book2);
                 var booksController = new BooksController(repository);
 
-                var view = (ViewResult) booksController.Filter(null, null, null);
+                var view = (ViewResult) booksController.Filter(null, null, null, null);
 
                 var filterInformation = (FilterInformation) view.Model;
                 Assert.IsFalse(filterInformation.BookInformations.Any());
@@ -147,7 +147,7 @@ namespace BookWorm.Tests.Controllers.Integration
 
                 var booksController = new BooksController(repository);
 
-                var view = (ViewResult)booksController.Filter(new List<string>() { "Venda" }, new List<string>{"0-2"}, new List<string>{"Fiction"}, 1, 9);
+                var view = (ViewResult)booksController.Filter(new List<string>() { "Venda" }, new List<string> { "0-2" }, new List<string> { "Fiction" }, new List<string>(), 1, 9);
 
                 var filterInformation = (FilterInformation)view.Model;
                 var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
@@ -155,7 +155,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 Assert.AreEqual("Book 2000", actualBooks.First().Title);
                 Assert.AreEqual("Book 1992", actualBooks.Last().Title);
 
-                view = (ViewResult)booksController.Filter(new List<string>() { "Venda" }, new List<string> { "0-2" }, new List<string> { "Fiction" }, 223, 9);
+                view = (ViewResult)booksController.Filter(new List<string>() { "Venda" }, new List<string> { "0-2" }, new List<string> { "Fiction" }, new List<string>(), 223, 9);
 
                 filterInformation = (FilterInformation)view.Model;
                 actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
@@ -186,6 +186,7 @@ namespace BookWorm.Tests.Controllers.Integration
                         }
                     }
                 });
+
                 repository.Create(new Book
                 {
                     Title = "Book without post",
@@ -218,6 +219,118 @@ namespace BookWorm.Tests.Controllers.Integration
                 var books = filterInformation.BookInformations.Select(b => b.Model).ToList();
                 Assert.AreEqual(1, books.Count);
                 Assert.AreEqual(titleBookWithReview, books[0].Title);
+            }
+        }
+
+        [TestMethod]
+        public void ShouldFilterByPostTypeUsingFilterAction()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                var repository = new Repository(session);
+                repository.Create(new Book
+                {
+                    Title = "Book with Review",
+                    Language = "Venda",
+                    Genre = "Fiction",
+                    AgeRange = "0-2",
+                    Posts = {new BookPost()
+                        {
+                            Title = "a Review",
+                            Content = "A review",
+                            Type = BookPost.BookPostType.Reviews
+                        }
+                    }
+                });
+
+                repository.Create(new Book
+                {
+                    Title = "Book without post",
+                    Language = "Venda",
+                    Genre = "Fiction",
+                    AgeRange = "0-2"
+                });
+
+                repository.Create(new Book
+                {
+                    Title = "Book with Events",
+                    Language = "Venda",
+                    Genre = "Fiction",
+                    AgeRange = "0-2",
+                    Posts = {new BookPost()
+                        {
+                            Title = "an Event",
+                            Content = "An Event",
+                            Type = BookPost.BookPostType.Events
+                        }
+                    }
+                });
+                session.SaveChanges();
+
+                var booksController = new BooksController(repository);
+
+                var view = (ViewResult)booksController.Filter(new List<string>(), new List<string>(), new List<string>(), new List<string>() { "Reviews" });
+
+                var filterInformation = (FilterInformation)view.Model;
+                var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
+                Assert.AreEqual(1, actualBooks.Count());
+                Assert.AreEqual("Book with Review", actualBooks.First().Title);
+            }
+        }
+
+        [TestMethod]
+        public void ShouldFilterByLanguageAndPostTypeUsingFilterAction()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                var repository = new Repository(session);
+                repository.Create(new Book
+                {
+                    Title = "Book with Review",
+                    Language = "Venda",
+                    Genre = "Fiction",
+                    AgeRange = "0-2",
+                    Posts = {new BookPost()
+                        {
+                            Title = "a Review",
+                            Content = "A review",
+                            Type = BookPost.BookPostType.Reviews
+                        }
+                    }
+                });
+
+                repository.Create(new Book
+                {
+                    Title = "Book without post",
+                    Language = "Venda",
+                    Genre = "Fiction",
+                    AgeRange = "0-2"
+                });
+
+                repository.Create(new Book
+                {
+                    Title = "Book with Events",
+                    Language = "Zulu",
+                    Genre = "Fiction",
+                    AgeRange = "0-2",
+                    Posts = {new BookPost()
+                        {
+                            Title = "an Event",
+                            Content = "An Event",
+                            Type = BookPost.BookPostType.Events
+                        }
+                    }
+                });
+                session.SaveChanges();
+
+                var booksController = new BooksController(repository);
+
+                var view = (ViewResult)booksController.Filter(new List<string>() { "Venda" }, new List<string>(), new List<string>(), new List<string>() { "Reviews" });
+
+                var filterInformation = (FilterInformation)view.Model;
+                var actualBooks = filterInformation.BookInformations.Select(bookInformation => bookInformation.Model).ToList();
+                Assert.AreEqual(1, actualBooks.Count());
+                Assert.AreEqual("Book with Review", actualBooks.First().Title);
             }
         }
     }

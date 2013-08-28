@@ -1,4 +1,6 @@
-﻿@using BookWorm.Models.Validations
+﻿@using BookWorm.Helpers
+@using BookWorm.Models
+@using BookWorm.Models.Validations
 @model BookWorm.ViewModels.FilterInformation
  @Scripts.Render("~/Scripts/puku/clickableDiv.js")
 
@@ -35,6 +37,19 @@
         <div data-clickable-url=@Model.GenreFilterUrl(genre)>
             <input type="checkbox" @Html.Raw(Model.Genres.Contains(genre) ? "checked=\"checked\"" : "")/>
             <span>@genre</span>
+        </div>
+    }
+    
+    <hr/>
+    <div class="filter-header">
+        <strong>Extra Features</strong>
+    </div>
+    @foreach (var postType in EnumHelper.ValidEnumOptions<BookPost.BookPostType>())
+    {
+        
+        <div data-clickable-url=@Model.PostTypeFilterUrl(postType.Text)>
+            <input type="checkbox" @Html.Raw(Model.PostTypes.Contains(postType.Text) ? "checked=\"checked\"" : "")/>
+            <span>@postType.Text</span>
         </div>
     }
 </div>

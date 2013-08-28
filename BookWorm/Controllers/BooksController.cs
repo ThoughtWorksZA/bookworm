@@ -171,7 +171,7 @@ namespace BookWorm.Controllers
         {
             Expression<Func<Book, bool>> searchPredicate = book => book.Language == languages;
             var bookInformations = DiscoverBooks(languages, page, perPage, searchPredicate);
-            return View("List", new FilterInformation(new List<string>() {languages}, new List<string>(), new List<string>(), bookInformations));
+            return View("List", new FilterInformation(new List<string>() {languages}, new List<string>(), new List<string>(), new List<string>(), bookInformations));
         }
 
         private StaticPagedList<BookInformation> DiscoverBooks(string filterType, int page, int perPage, Expression<Func<Book, bool>> searchPredicate)
@@ -185,11 +185,12 @@ namespace BookWorm.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Filter(List<string> languages, List<string> ageRanges, List<string> genres, int page = 1, int perPage = 9)
+        public ActionResult Filter(List<string> languages, List<string> ageRanges, List<string> genres, List<string> postTypes, int page = 1, int perPage = 9)
         {
             languages = languages ?? new List<string>();
             ageRanges = ageRanges ?? new List<string>();
             genres = genres ?? new List<string>();
+            postTypes = postTypes ?? new List<string>();
             var books = _repository.Query<Book>();
 
             if (ageRanges.Any())
@@ -203,6 +204,18 @@ namespace BookWorm.Controllers
             if (genres.Any())
             {
                 books = books.Where(book => book.Genre.In(genres));
+            }
+            if (postTypes.Any())
+            {
+                var postTypeEnum = new List<BookPost.BookPostType?>();
+                BookPost.BookPostType enumPostType;
+                foreach (var postType in postTypes)
+                {
+                    Enum.TryParse(postType, true, out enumPostType);
+                    postTypeEnum.Add(enumPostType);
+                }
+
+                books = books.Where(book => book.Posts.Any(p => p.Type.In(postTypeEnum)));
             }
 
             ViewBag.Title = "Books";
@@ -219,7 +232,7 @@ namespace BookWorm.Controllers
                 TempData["flashNotice"] = NoBooksFoundTxtFilter;
             }
 
-            return View("List", new FilterInformation(languages, ageRanges, genres, bookInformations)); 
+            return View("List", new FilterInformation(languages, ageRanges, genres, postTypes, bookInformations)); 
         }
 
         [AllowAnonymous]
@@ -227,7 +240,7 @@ namespace BookWorm.Controllers
         {
             Expression<Func<Book, bool>> searchPredicate = book => book.AgeRange == ageRanges;
             var bookInformations = DiscoverBooks(ageRanges, page, perPage, searchPredicate);
-            return View("List", new FilterInformation(new List<string>(), new List<string>() { ageRanges }, new List<string>(), bookInformations));
+            return View("List", new FilterInformation(new List<string>(), new List<string>() { ageRanges }, new List<string>(), new List<string>(), bookInformations));
         }
 
         [AllowAnonymous]
@@ -235,7 +248,7 @@ namespace BookWorm.Controllers
         {
             Expression<Func<Book, bool>> searchPredicate = book => book.Genre == genres;
             var bookInformations = DiscoverBooks(genres, page, perPage, searchPredicate);
-            return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string>() { genres }, bookInformations));
+            return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string>() { genres }, new List<string>(), bookInformations));
         }
 
         public ActionResult PostType(string postTypes, int page = 1, int perPage = 9)
@@ -245,7 +258,7 @@ namespace BookWorm.Controllers
 
             Expression<Func<Book, bool>> searchPredicate = book => book.Posts.Any(p => p.Type == enumPostType);
             var bookInformations = DiscoverBooks(postTypes, page, perPage, searchPredicate);
-            return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string>() {postTypes}, bookInformations));
+            return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string>(), new List<string>() { postTypes }, bookInformations));
         }
     }
 }
