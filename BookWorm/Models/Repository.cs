@@ -82,8 +82,8 @@ namespace BookWorm.Models
         public virtual List<T> List<T>(int page, int perPage) where T : Model
         {
             //TODO: If the POCOs filtered by Query exceeds 1024, then this does not work.
-            var _ravenQueryable = Query<T>().OrderByDescending(d => d.UpdatedAt).Skip((page - 1) * perPage).Take(perPage);
-            return _ravenQueryable.ToList();
+            var ravenQueryable = Query<T>().OrderByDescending(d => d.UpdatedAt).Skip((page - 1) * perPage).Take(perPage);
+            return ravenQueryable.ToList();
         }
 
         public virtual List<T> Search<T>(Expression<Func<T, bool>> predicate) where T : Model
@@ -98,7 +98,7 @@ namespace BookWorm.Models
 
         public virtual List<T> Search<T>(Expression<Func<T, bool>> predicate, int perPage) where T : Model
         {
-            return Search<T>(predicate, 1, perPage);
+            return Search(predicate, 1, perPage);
         }
 
         public virtual int Count<T>() where T : Model
@@ -115,12 +115,5 @@ namespace BookWorm.Models
         {
             return _documentSession.Query<T>();
         } 
-    }
-
-    public class Model
-    {
-        public int Id { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
     }
 }

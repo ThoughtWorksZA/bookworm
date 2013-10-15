@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 
 namespace BookWorm.Models.Validations
 {
     public class ValidRole : ValidationAttribute
     {
-        public static List<string> ValidRoles = new List<string>()
+        public static List<string> ValidRoles = new List<string>
             {
                 Roles.Admin, Roles.Author
             };
@@ -24,6 +22,4 @@ namespace BookWorm.Models.Validations
         }
 
     }
-
-
 }

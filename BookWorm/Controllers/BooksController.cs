@@ -37,16 +37,16 @@ namespace BookWorm.Controllers
         [HttpGet]
         public ViewResult List(int page = 1, int perPage = 9)
         {
-            var books = _repository.List<Book>(page, perPage);
+            var books = Repository.List<Book>(page, perPage);
             ViewBag.Title = "Books";
-            var bookInformations = new StaticPagedList<BookInformation>(books.Select(book => new BookInformation(book)).ToList(), page, perPage, _repository.Count<Book>());
+            var bookInformations = new StaticPagedList<BookInformation>(books.Select(book => new BookInformation(book)).ToList(), page, perPage, Repository.Count<Book>());
             return View(new FilterInformation(bookInformations));
         }
 
         [AllowAnonymous]
         public ViewResult Details(int id)
         {
-            var book = _repository.Get<Book>(id);
+            var book = Repository.Get<Book>(id);
             var bookInformation = new BookInformation(book, book.Posts.Select(post => new BookPostInformation(book.Id, post)).ToList());
             ViewBag.Title = bookInformation.Model.Title;
             ViewBag.MetaDescription = bookInformation.Summary(155);
@@ -81,7 +81,7 @@ namespace BookWorm.Controllers
                     TempData["flashError"] = "The ISBN number already exists";
                     return View(bookInformation);
                 }
-                createdBook = _repository.Create(bookInformation.Model);
+                createdBook = Repository.Create(bookInformation.Model);
             }
           
             TempData["flashSuccess"] = string.Format("Added {0} successfully", createdBook.Title);
@@ -93,7 +93,7 @@ namespace BookWorm.Controllers
         {
             ViewBag.Title = "Edit a Book";
             ViewBag.Method = "PUT";
-            return View(new BookInformation(_repository.Get<Book>(id)));
+            return View(new BookInformation(Repository.Get<Book>(id)));
         }
 
         [HttpPut]
@@ -114,7 +114,7 @@ namespace BookWorm.Controllers
                     return View(editedBookInformation);
                 }
 
-                _repository.Edit(editedBookInformation.Model);
+                Repository.Edit(editedBookInformation.Model);
                 
             }
             
@@ -125,7 +125,7 @@ namespace BookWorm.Controllers
 
         private IEnumerable<Book> SearchByIsbn(BookInformation editedBookInformation)
         {
-            return _repository.Search<Book>(b => (b.Isbn == editedBookInformation.Model.Isbn && b.Id != editedBookInformation.Model.Id))
+            return Repository.Search<Book>(b => (b.Isbn == editedBookInformation.Model.Isbn && b.Id != editedBookInformation.Model.Id))
                               
                               .ToList();
         }
@@ -134,7 +134,7 @@ namespace BookWorm.Controllers
         [Authorize(Roles = Roles.Admin + "," + Roles.Author)]
         public RedirectToRouteResult Delete(int id)
         {
-            _repository.Delete<Book>(id);
+            Repository.Delete<Book>(id);
             TempData["flashSuccess"] = string.Format("Book successfully deleted");
             return RedirectToAction("List");
         }
@@ -145,7 +145,7 @@ namespace BookWorm.Controllers
         {
             if (_fullTextSearch == null)
             {
-                _fullTextSearch = new FullTextSearchService(_session);
+                _fullTextSearch = new FullTextSearchService(DocumentSession);
             }
             var books = _fullTextSearch.Search(searchQuery);
             ViewBag.Title = string.Format("Search Results for \"{0}\"", searchQuery);
@@ -171,14 +171,14 @@ namespace BookWorm.Controllers
         {
             Expression<Func<Book, bool>> searchPredicate = book => book.Language == languages;
             var bookInformations = DiscoverBooks(languages, page, perPage, searchPredicate);
-            return View("List", new FilterInformation(new List<string>() {languages}, new List<string>(), new List<string>(), bookInformations));
+            return View("List", new FilterInformation(new List<string> {languages}, new List<string>(), new List<string>(), bookInformations));
         }
 
         private StaticPagedList<BookInformation> DiscoverBooks(string filterType, int page, int perPage, Expression<Func<Book, bool>> searchPredicate)
         {
             ViewBag.Title = string.Format("{0} Books", filterType);
-            var books = _repository.Search(searchPredicate, page, perPage);
-            var totalItemCount = _repository.Count(searchPredicate);
+            var books = Repository.Search(searchPredicate, page, perPage);
+            var totalItemCount = Repository.Count(searchPredicate);
             var bookInformations = new StaticPagedList<BookInformation>(
                 books.Select(book => new BookInformation(book)), page, perPage, totalItemCount);
             return bookInformations;
@@ -190,7 +190,7 @@ namespace BookWorm.Controllers
             languages = languages ?? new List<string>();
             ageRanges = ageRanges ?? new List<string>();
             genres = genres ?? new List<string>();
-            var books = _repository.Query<Book>();
+            var books = Repository.Query<Book>();
 
             if (ageRanges.Any())
             {
@@ -227,7 +227,7 @@ namespace BookWorm.Controllers
         {
             Expression<Func<Book, bool>> searchPredicate = book => book.AgeRange == ageRanges;
             var bookInformations = DiscoverBooks(ageRanges, page, perPage, searchPredicate);
-            return View("List", new FilterInformation(new List<string>(), new List<string>() { ageRanges }, new List<string>(), bookInformations));
+            return View("List", new FilterInformation(new List<string>(), new List<string> { ageRanges }, new List<string>(), bookInformations));
         }
 
         [AllowAnonymous]
@@ -235,7 +235,7 @@ namespace BookWorm.Controllers
         {
             Expression<Func<Book, bool>> searchPredicate = book => book.Genre == genres;
             var bookInformations = DiscoverBooks(genres, page, perPage, searchPredicate);
-            return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string>() { genres }, bookInformations));
+            return View("List", new FilterInformation(new List<string>(), new List<string>(), new List<string> { genres }, bookInformations));
         }
     }
 }

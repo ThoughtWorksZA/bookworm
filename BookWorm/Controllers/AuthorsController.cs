@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using BirdBrain;
 using BookWorm.Models;
 using BookWorm.ViewModels;
 using PagedList;
@@ -24,18 +19,18 @@ namespace BookWorm.Controllers
         {
         }
 
-        public AuthorsController(IDocumentSession session)
+        public AuthorsController(IDocumentSession documentSession)
         {
-            _session = session;
+            DocumentSession = documentSession;
         }
 
         [HttpGet]
         [AllowAnonymous]
         public ViewResult List(int page = 1, int perPage = 9)
         {
-            var authors = _repository.List<Author>(page, perPage);
+            var authors = Repository.List<Author>(page, perPage);
             ViewBag.Title = "Authors";
-            return View(new StaticPagedList<Author>(authors, page, perPage, _repository.Count<Author>()));
+            return View(new StaticPagedList<Author>(authors, page, perPage, Repository.Count<Author>()));
         }
 
         [HttpGet]
@@ -60,21 +55,21 @@ namespace BookWorm.Controllers
                 return View(author);
             }
 
-            var createdAuthor = _repository.Create(author);
+            var createdAuthor = Repository.Create(author);
             return RedirectToAction("Details", "Authors", new {id = createdAuthor.Id});
         }
 
         private bool IsAuthorExist(string authorName)
         {
-            return _repository.Search<Author>(a => a.Name == authorName).Any();
+            return Repository.Search<Author>(a => a.Name == authorName).Any();
         }
 
         [HttpGet]
         [AllowAnonymous]
         public ViewResult Details(int id)
         {
-            var author = _repository.Get<Author>(id);
-            var allBooks = _repository.Search<Book>(b => b.Author == author.Name);
+            var author = Repository.Get<Author>(id);
+            var allBooks = Repository.Search<Book>(b => b.Author == author.Name);
             var books = allBooks.Take(MaxNumberOfBooksInDetail).ToList();
             var authorViewModel = new AuthorViewModel(author, books, allBooks.Count > MaxNumberOfBooksInDetail);
             return View(authorViewModel);
@@ -84,7 +79,7 @@ namespace BookWorm.Controllers
         [Authorize(Roles = Roles.Admin)]
         public ViewResult Edit(int id)
         {
-            return View(_repository.Get<Author>(id));
+            return View(Repository.Get<Author>(id));
         }
 
         [HttpPut]
@@ -100,7 +95,7 @@ namespace BookWorm.Controllers
                 TempData["flashError"] = "An author with this name already exists";
                 return View(author);
             }
-            _repository.Edit(author);
+            Repository.Edit(author);
             return RedirectToAction("Details", "Authors", new {id = author.Id});
         }
 
@@ -108,15 +103,15 @@ namespace BookWorm.Controllers
         [AllowAnonymous]
         public ViewResult Books(int id, int page = 1, int perPage = 9)
         {
-            var author = _repository.Get<Author>(id);
-            var books = _repository.Search<Book>(b => b.Author == author.Name);
+            var author = Repository.Get<Author>(id);
+            var books = Repository.Search<Book>(b => b.Author == author.Name);
             ViewBag.Author = author;
             return View(new StaticPagedList<Book>(books.Skip((page-1)*perPage).Take(perPage), page, perPage, books.Count));
         }
 
         private bool IsAuthorNameUsedByAnotherAuthor(Author author)
         {
-            return _repository.Search<Author>(a => a.Id != author.Id && a.Name == author.Name).Any();
+            return Repository.Search<Author>(a => a.Id != author.Id && a.Name == author.Name).Any();
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using BookWorm.Models;
 
-namespace BookWorm.ViewModels
+namespace BookWorm.Models
 {
     public class UserInformation
     {

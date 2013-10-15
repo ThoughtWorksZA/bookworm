@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using BookWorm.Models;
 using Raven.Client;
 
@@ -8,8 +6,8 @@ namespace BookWorm.Controllers
 {
     public abstract class BaseController : Controller
     {
-        protected IDocumentSession _session;
-        protected Repository _repository;
+        protected IDocumentSession DocumentSession;
+        protected Repository Repository;
 
         public BaseController()
         {
@@ -17,26 +15,26 @@ namespace BookWorm.Controllers
 
         public BaseController(Repository repository)
         {
-            _repository = repository;
+            Repository = repository;
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _repository = GetRepository();
-            var staticPages = _repository.List<StaticPage>();
+            Repository = GetRepository();
+            var staticPages = Repository.List<StaticPage>();
             staticPages.Sort((x, y) => x.CreatedAt.CompareTo(y.CreatedAt));
             ViewBag.StaticPages = staticPages;
             foreach (StaticPage page in ViewBag.StaticPages)
             {
-                _repository.Detach(page);
+                Repository.Detach(page);
             }
             base.OnActionExecuting(filterContext);
         }
 
         protected virtual Repository GetRepository()
         {
-            _session = GetDocumentStore().OpenSession();
-            return new Repository(_session);
+            DocumentSession = GetDocumentStore().OpenSession();
+            return new Repository(DocumentSession);
         }
 
         protected virtual IDocumentStore GetDocumentStore()
@@ -49,13 +47,13 @@ namespace BookWorm.Controllers
             if (filterContext.IsChildAction)
                 return;
 
-            using (_session)
+            using (DocumentSession)
             {
                 if (filterContext.Exception != null)
                     return;
 
-                if (_session != null)
-                    _session.SaveChanges();
+                if (DocumentSession != null)
+                    DocumentSession.SaveChanges();
             }
         }
     }

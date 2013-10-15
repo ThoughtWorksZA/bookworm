@@ -240,7 +240,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\IPrincipalExtension.cs" />
+    <Compile Include="Helpers\PrincipalExtension.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\MarkDownHelper.cs" />
     <Compile Include="Helpers\UrlUtils.cs" />
@@ -249,6 +249,7 @@
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookPost.cs" />
     <Compile Include="Models\indices\Book_AllProperties.cs" />
+    <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Repository.cs" />
     <Compile Include="Models\Roles.cs" />

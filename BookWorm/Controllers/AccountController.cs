@@ -5,8 +5,6 @@ using System.Web.Security;
 using BirdBrain;
 using BookWorm.Services.Account;
 using BookWorm.Services.Email;
-using BookWorm.ViewModels;
-using Lucene.Net.Search;
 using Microsoft.Web.WebPages.OAuth;
 using Raven.Client;
 using WebMatrix.WebData;
@@ -29,9 +27,9 @@ namespace BookWorm.Controllers
         {
         }
 
-        public AccountController(IDocumentSession session)
+        public AccountController(IDocumentSession documentSession)
         {
-            _session = session;
+            DocumentSession = documentSession;
         }
 
         //
@@ -257,7 +255,7 @@ namespace BookWorm.Controllers
         [HttpGet]
         public ViewResult List()
         {
-            var users = _session.Query<User>().OrderByDescending(u=>u.Created).ToList();
+            var users = DocumentSession.Query<User>().OrderByDescending(u=>u.Created).ToList();
             return View(users);
         }
 
@@ -328,7 +326,7 @@ namespace BookWorm.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _session.Load<User>(localPasswordModel.UserId);
+                var user = DocumentSession.Load<User>(localPasswordModel.UserId);
                 WebSecurity.ConfirmAccount(user.Username, localPasswordModel.SecurityToken);
                 WebSecurity.ChangePassword(user.Username, RegisterModel.DefaultPassword,
                                            localPasswordModel.NewPassword);
@@ -346,7 +344,7 @@ namespace BookWorm.Controllers
 
         private void WaitForTheEndOfWritingPassword(string username)
         {
-            _session.Query<User>()
+            DocumentSession.Query<User>()
                     .Customize(u => u.WaitForNonStaleResultsAsOfLastWrite())
                     .First(u => u.Username == username);
         }

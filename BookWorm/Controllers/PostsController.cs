@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using BookWorm.Helpers;
 using BookWorm.Models;
 using BookWorm.ViewModels;
 using System.Linq;
@@ -23,7 +22,7 @@ namespace BookWorm.Controllers
         {
             var isDraft = !excludeDraft;
             var eventsAndNews = GetEventsAndNews(isDraft);
-            var books = _repository.List<Book>();
+            var books = Repository.List<Book>();
             var bookPosts = books.SelectMany(x => x.Posts.Where(bp => bp.Type == BookPost.BookPostType.News || bp.Type == BookPost.BookPostType.Events).Select(y => new BookPostInformation(x.Id, y, x))).ToList();
             var allPosts = new List<IBasePostInformation>();
             allPosts.AddRange(eventsAndNews);
@@ -35,9 +34,9 @@ namespace BookWorm.Controllers
         private IEnumerable<PostInformation> GetEventsAndNews(bool isDraft)
         {
             if (!isDraft)
-                    return _repository.List<Post>().Where(p => p.IsDraft == isDraft).Select(post => new PostInformation(post));
+                    return Repository.List<Post>().Where(p => p.IsDraft == isDraft).Select(post => new PostInformation(post));
             
-            return _repository.List<Post>()
+            return Repository.List<Post>()
                               .Where(p => p.IsDraft == isDraft && p.Creator.Equals(User.Identity.Name))
                               .Select(post => new PostInformation(post));
         }

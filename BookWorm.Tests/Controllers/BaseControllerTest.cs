@@ -51,12 +51,12 @@ namespace BookWorm.Tests.Controllers
 
         protected override Repository GetRepository()
         {
-            if (_repository == null)
+            if (Repository == null)
             {
-                _session = GetDocumentStore().OpenSession();
-                _repository = new TestRepository(_session);
+                DocumentSession = GetDocumentStore().OpenSession();
+                Repository = new TestRepository(DocumentSession);
             }
-            return _repository;
+            return Repository;
         }
 
         public new void OnActionExecuting(ActionExecutingContext filterContext)

@@ -30,7 +30,7 @@ namespace BookWorm.Controllers
         {
             try
             {
-                T savedModel = _repository.Create(viewModel.Model);
+                T savedModel = Repository.Create(viewModel.Model);
                 TempData["flashSuccess"] = viewModel.CreateSucceededMessage;
                 return RedirectToAction("Details", new {id = savedModel.Id});
             }
@@ -45,7 +45,7 @@ namespace BookWorm.Controllers
         [AllowAnonymous]
         public ViewResult Details(int id)
         {
-            return View(new U {Model = _repository.Get<T>(id)});
+            return View(new U {Model = Repository.Get<T>(id)});
         }
 
         [HttpGet]
@@ -53,12 +53,12 @@ namespace BookWorm.Controllers
         public virtual ViewResult List(int page = 1, int perPage = 9)
         {
             var viewModels = new List<U>();
-            var models = _repository.List<T>(page, perPage);
+            var models = Repository.List<T>(page, perPage);
             foreach (var model in models)
             {
                 viewModels.Add(new U {Model = model});
             }
-            return View(new StaticPagedList<U>(viewModels, page, perPage, _repository.Count<T>()));
+            return View(new StaticPagedList<U>(viewModels, page, perPage, Repository.Count<T>()));
         }
 
         [HttpDelete]
@@ -66,7 +66,7 @@ namespace BookWorm.Controllers
         public virtual RedirectToRouteResult Delete(int id)
         {
             var viewModel = new U();
-            _repository.Delete<T>(id);
+            Repository.Delete<T>(id);
             TempData["flashSuccess"] = viewModel.DeleteSucceededMessage;
             return RedirectToAction("List");
         }
@@ -75,14 +75,14 @@ namespace BookWorm.Controllers
         [Authorize(Roles = Roles.Admin + "," + Roles.Author)]
         public virtual ViewResult Edit(int id)
         {
-            return View(new U {Model = _repository.Get<T>(id)});
+            return View(new U {Model = Repository.Get<T>(id)});
         }
 
         [HttpPut]
         [Authorize(Roles = Roles.Admin + "," + Roles.Author)]
         public virtual RedirectToRouteResult Edit(U viewModel)
         {
-            _repository.Edit(viewModel.Model);
+            Repository.Edit(viewModel.Model);
             TempData["flashSuccess"] = viewModel.UpdateSucceededMessage;
             return RedirectToAction("Details", new { id = viewModel.Model.Id });
         }

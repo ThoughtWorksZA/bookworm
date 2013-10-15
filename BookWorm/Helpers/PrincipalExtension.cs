@@ -3,7 +3,7 @@ using System.Security.Principal;
 
 namespace BookWorm.Helpers
 {
-    public static class IPrincipalExtension
+    public static class PrincipalExtension
     {
         public static bool IsInRoles(this IPrincipal user, params string[] roles)
         {
@@ -11,6 +11,4 @@ namespace BookWorm.Helpers
         }
 
     }
-
-    
 }

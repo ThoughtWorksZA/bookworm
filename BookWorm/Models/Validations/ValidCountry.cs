@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BookWorm.Models.Validations
 {
-    public class ValidCountry : ValidationAttribute //, IClientValidatable
+    public class ValidCountry : ValidationAttribute
     {
         public List<string> ValidCountries = new List<string>
             {

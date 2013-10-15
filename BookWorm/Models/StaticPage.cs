@@ -14,7 +14,6 @@ namespace BookWorm.Models
         public string Content { get; set; }
         [DefaultValue(false)]
         public bool IsDraft { get; set; }
-
         public string Creator { get; set; }
     }
 }

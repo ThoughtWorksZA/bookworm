@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace BookWorm.Helpers
 {
@@ -28,6 +27,4 @@ namespace BookWorm.Helpers
             return string.Format("<em>{0}</em>",buyBookContactDetails);
         }
     }
-
-    
 }

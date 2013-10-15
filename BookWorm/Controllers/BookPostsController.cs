@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using BookWorm.Helpers;
 using BookWorm.Models;
@@ -24,7 +22,7 @@ namespace BookWorm.Controllers
         [AllowAnonymous]
         public ViewResult Details(int id, int bookId)
         {
-            var book = _repository.Get<Book>(bookId);
+            var book = Repository.Get<Book>(bookId);
             var bookPost = book.Posts.First(post => post.Id == id);
             ViewBag.transformedContent = new Markdown().Transform(bookPost.Content);
             var bookPostInformation = new BookPostInformation(bookId, bookPost, book);
@@ -48,7 +46,7 @@ namespace BookWorm.Controllers
                 TempData["flashError"] = "There were problems saving this book post";
                 return View(submittedBookPostInformation);
             }
-            var book = _repository.Get<Book>(submittedBookPostInformation.BookId);
+            var book = Repository.Get<Book>(submittedBookPostInformation.BookId);
             var bookPost = submittedBookPostInformation.Model;
             bookPost.CreatedAt = bookPost.UpdatedAt = DateTime.Now;
             if (book.Posts.Any())
@@ -60,7 +58,7 @@ namespace BookWorm.Controllers
                 bookPost.Id = 1;
             }
             book.Posts.Add(bookPost);
-            _repository.Edit(book);
+            Repository.Edit(book);
             TempData["flashSuccess"] = string.Format("Added {0} successfully", bookPost.Title);
             return RedirectToAction("Details", "Books", new { id = book.Id });
         }
@@ -69,7 +67,7 @@ namespace BookWorm.Controllers
         public ViewResult Edit(int id, int bookId)
         {
             ViewBag.Method = "PUT";
-            var bookPost = _repository.Get<Book>(bookId).Posts.First(post => post.Id == id);
+            var bookPost = Repository.Get<Book>(bookId).Posts.First(post => post.Id == id);
             return View(new BookPostInformation(bookId, bookPost));
         }
 
@@ -82,14 +80,14 @@ namespace BookWorm.Controllers
                 TempData["flashError"] = "There were problems saving this book post";
                 return View(editedBookPostInformation);
             }
-            var book = _repository.Get<Book>(editedBookPostInformation.BookId);
+            var book = Repository.Get<Book>(editedBookPostInformation.BookId);
             var editedBookPost = editedBookPostInformation.Model;
             editedBookPost.UpdatedAt = DateTime.Now;
             var oldBookPost = book.Posts.First(post => post.Id == editedBookPost.Id);
             editedBookPost.CreatedAt = oldBookPost.CreatedAt;
             book.Posts.Remove(oldBookPost);
             book.Posts.Add(editedBookPost);
-            _repository.Edit(book);
+            Repository.Edit(book);
             TempData["flashSuccess"] = string.Format("Updated {0} successfully", editedBookPost.Title);
             return RedirectToAction("Details", new { id = editedBookPost.Id, bookId = book.Id });
         }
@@ -98,10 +96,10 @@ namespace BookWorm.Controllers
         [Authorize(Roles = Roles.Admin + "," + Roles.Author)]
         public RedirectToRouteResult Delete(int id, int bookId)
         {
-            var book = _repository.Get<Book>(bookId);
+            var book = Repository.Get<Book>(bookId);
             var bookPost = book.Posts.First(post => post.Id == id);
             book.Posts.Remove(bookPost);
-            _repository.Edit(book);
+            Repository.Edit(book);
             TempData["flashSuccess"] = string.Format("Book Post successfully deleted");
             return RedirectToAction("Details", "Books", new {id = book.Id});
         }

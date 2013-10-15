@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BookWorm.Models.Validations
 {
-    public class ValidAgeRange : ValidationAttribute //, IClientValidatable
+    public class ValidAgeRange : ValidationAttribute
     {
         public static List<string> ValidAgeRanges = new List<string>
             {

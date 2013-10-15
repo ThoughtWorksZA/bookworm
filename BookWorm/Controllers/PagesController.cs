@@ -2,9 +2,7 @@
 using System.Web.Mvc;
 using BookWorm.Models;
 using BookWorm.ViewModels;
-using MarkdownSharp;
 using PagedList;
-using Raven.Client.Exceptions;
 
 namespace BookWorm.Controllers
 {
@@ -58,7 +56,7 @@ namespace BookWorm.Controllers
         public RedirectToRouteResult Delete(int id, bool excludeDraft = true)
         {
             var viewModel = new StaticPageInformation();
-            _repository.Delete<StaticPage>(id);
+            Repository.Delete<StaticPage>(id);
             TempData["flashSuccess"] = viewModel.DeleteSucceededMessage;
             var currentExcludeDraft = excludeDraft;
             return RedirectToAction("List", new{excludeDraft=currentExcludeDraft});
@@ -76,7 +74,7 @@ namespace BookWorm.Controllers
         {
             var isDraft = !excludeDraft;
             var viewModels = BuildModel(page, perPage, isDraft);
-            var allPages = _repository.Search<StaticPage>((p => p.IsDraft == isDraft));
+            var allPages = Repository.Search<StaticPage>((p => p.IsDraft == isDraft));
 
             return View(new StaticPagedList<StaticPageInformation>(viewModels, page, perPage, allPages.Count));
         }
@@ -95,10 +93,10 @@ namespace BookWorm.Controllers
         private IEnumerable<StaticPage> GetPagesToDisplay(int page, int perPage, bool isDraft)
         {
             if (isDraft)
-               return _repository.Search<StaticPage>((p => p.IsDraft == isDraft && p.Creator.Equals(User.Identity.Name)),
+               return Repository.Search<StaticPage>((p => p.IsDraft == isDraft && p.Creator.Equals(User.Identity.Name)),
                                                         page, perPage);
             
-            return _repository.Search<StaticPage>((p => p.IsDraft == isDraft), page, perPage);
+            return Repository.Search<StaticPage>((p => p.IsDraft == isDraft), page, perPage);
         }
     }
 }
