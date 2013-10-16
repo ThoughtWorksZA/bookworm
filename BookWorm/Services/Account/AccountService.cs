@@ -8,5 +8,10 @@ namespace BookWorm.Services.Account
         {
             return WebSecurity.Login(userName, password, persistCookie);
         }
+
+        public virtual void Logout()
+        {
+            WebSecurity.Logout();
+        }
     }
 }

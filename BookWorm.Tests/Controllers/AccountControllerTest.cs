@@ -12,7 +12,7 @@ namespace BookWorm.Tests.Controllers
     public class AccountControllerTest
     {
         private Mock<AccountService> _accountService;
-        private TestAccountController _accountController = new TestAccountController();
+        private TestAccountController _accountController;
 
         private class TestAccountController : AccountController
         {
@@ -37,7 +37,10 @@ namespace BookWorm.Tests.Controllers
         [TestInitialize]
         public void Setup()
         {
+            _accountController = new TestAccountController();
             _accountService = new Mock<AccountService>();
+            _accountController.AccountService = _accountService.Object;
+
         }
 
         [TestMethod]
@@ -73,7 +76,6 @@ namespace BookWorm.Tests.Controllers
         [TestMethod]
         public void ShouldLogInUserWhenModelStateIsValid()
         {
-            _accountController.AccountService = _accountService.Object;
             var loginModel = new LoginModel{ Email = "email", Password = "password", RememberMe = true};
             _accountService.Setup(it => it.Login("email", "password", true)).Returns(true);
 
@@ -85,7 +87,6 @@ namespace BookWorm.Tests.Controllers
         [TestMethod]
         public void ShouldAddErrorAndRedirectWhenLoginFails()
         {
-            _accountController.AccountService = _accountService.Object;
             var loginModel = new LoginModel { Email = "email", Password = "password", RememberMe = true };
             _accountService.Setup(it => it.Login("email", "password", true)).Returns(false);
 
@@ -107,6 +108,16 @@ namespace BookWorm.Tests.Controllers
             _accountController.ModelState.IsValid.Should().BeFalse("there should be an error added to the ModelState");
             result.Should().BeOfType<ViewResult>();
             ((ViewResult)result).Model.Should().Be(loginModel);
+        }
+
+        [TestMethod]
+        public void ShouldDelegateLogoutToAccountServiceAndRedirectToIndex()
+        {
+            var result = (RedirectToRouteResult)_accountController.LogOff();
+
+            _accountService.Verify(it => it.Logout());
+            result.RouteValues["controller"].Should().Be("Home");
+            result.RouteValues["action"].Should().Be("Index");
         }
     }
 }

@@ -16,11 +16,24 @@ namespace BookWorm.Controllers
     [Authorize]
     public class AccountController : BaseController
     {
+        private IAccountService _accountService;
         public IEmail Email { get; set; }
-        public IAccountService AccountService { get; set; }
+
+        public IAccountService AccountService
+        {
+            get
+            {
+                return _accountService ?? (_accountService = new AccountService());
+            }
+            set
+            {
+                _accountService = value;
+            }
+        }
 
         public AccountController()
         {
+
         }
 
         public AccountController(Repository repository) : base(repository)
@@ -50,7 +63,6 @@ namespace BookWorm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            AccountService = AccountService ?? new AccountService();
             if (ModelState.IsValid && AccountService.Login(model.Email, model.Password, model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
@@ -67,7 +79,7 @@ namespace BookWorm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            WebSecurity.Logout();
+            AccountService.Logout();
             return RedirectToAction("Index", "Home");
         }
 
