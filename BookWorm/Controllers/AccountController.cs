@@ -109,11 +109,10 @@ namespace BookWorm.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.Email, model.Password);
-                    WebSecurity.Login(model.Email, model.Password);
+                    AccountService.CreateUserAndAccount(model.Email, model.Password);
+                    AccountService.Login(model.Email, model.Password, false);
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -122,7 +121,6 @@ namespace BookWorm.Controllers
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 

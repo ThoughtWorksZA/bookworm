@@ -13,5 +13,10 @@ namespace BookWorm.Services.Account
         {
             WebSecurity.Logout();
         }
+
+        public virtual void CreateUserAndAccount(string userName, string password)
+        {
+            WebSecurity.CreateUserAndAccount(userName, password);
+        }
     }
 }

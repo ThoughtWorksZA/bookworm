@@ -59,6 +59,15 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
+        public void ShouldNotCreateAnAccountOnRegisterWhenModelIsInvalid()
+        {
+            _accountController.ModelState.AddModelError("error", "error");
+            _accountController.Register(new RegisterModel{ Email = "Email", Password = "Password" });
+
+            _accountService.Verify(it => it.CreateUserAndAccount(It.IsAny<string>(), It.IsAny<string>()), Times.Never());
+        }
+
+        [TestMethod]
         public void ShouldSetReturnUrlOnLogin()
         {
             _accountController.Login("someUrl");
