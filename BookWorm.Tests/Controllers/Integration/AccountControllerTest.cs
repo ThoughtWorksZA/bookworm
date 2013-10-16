@@ -8,7 +8,6 @@ using BookWorm.Models;
 using BookWorm.Services.Account;
 using BookWorm.Services.Email;
 using BookWorm.Tests.Builders;
-using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Raven.Abstractions.Extensions;
@@ -27,15 +26,15 @@ namespace BookWorm.Tests.Controllers.Integration
         {
             if (ConfigurationManager.AppSettings["Environment"] == "Test")
                 Assert.Inconclusive("Skipping test on AppHarbor");
-            _documentStore = new DocumentStore()
+            _documentStore = new DocumentStore
                 {
                     ConnectionStringName = "RavenDB"
                 };
             _documentStore.Initialize();
-            Clean();
+            DeleteUsers();
         }
 
-        private void Clean()
+        private void DeleteUsers()
         {
             using (var session = _documentStore.OpenSession())
             {
@@ -113,7 +112,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 .WithRole(Roles.Admin)
                 .Build();
 
-            UsingSession((session) =>
+            UsingSession(session =>
                 {
                     var controller = new AccountController(session)
                         {
@@ -125,7 +124,7 @@ namespace BookWorm.Tests.Controllers.Integration
                     Assert.AreEqual("List", actionResult.RouteValues["action"]);
                 });
 
-            UsingSession((session) =>
+            UsingSession(session =>
                 {
                     var users = session.Query<User>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).ToList();
                     Assert.AreEqual(1, users.Count());
@@ -143,7 +142,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 .WithRole(Roles.Admin)
                 .Build();
 
-            UsingSession((session) =>
+            UsingSession(session =>
             {
                 var controller = new AccountController(session)
                 {
@@ -153,7 +152,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 controller.Create(model);
             });
 
-            UsingSession((session) =>
+            UsingSession(session =>
             {
                 var controller = new AccountController(session)
                 {
@@ -176,13 +175,13 @@ namespace BookWorm.Tests.Controllers.Integration
 
             var mock = GetEmailMock();
 
-            UsingSession((session) =>
+            UsingSession(session =>
             {
                 var controller = new AccountController(session) {Email = mock.Object};
                 controller.Create(model);
             });
 
-            UsingSession((session) =>
+            UsingSession(session =>
             {
                 var user = session.Query<User>().Customize(a => a.WaitForNonStaleResultsAsOfLastWrite()).First();
                 Assert.IsFalse(user.IsApproved);
@@ -196,7 +195,7 @@ namespace BookWorm.Tests.Controllers.Integration
             var mock = GetEmailMock();
             var secureToken = Guid.NewGuid().ToString();
             const int userId = 1;
-            UsingSession((session) =>
+            UsingSession(session =>
             {
                 var controller = new AccountController(session) { Email = mock.Object };
                 var registerConfirmationView = controller.RegisterConfirmation(secureToken, userId);
@@ -222,14 +221,14 @@ namespace BookWorm.Tests.Controllers.Integration
                     secureToken = token;
                 });
             string oldPassword = "";
-            UsingSession((session) =>
+            UsingSession(session =>
             {
                 var controller = new AccountController(session) { Email = mock.Object };
                 controller.Create(model);
                 oldPassword = session.Query<User>().First(u => u.Username == model.Email).Password;
             });
 
-            UsingSession((session) =>
+            UsingSession(session =>
             {
                 var user = session.Query<User>().First();
                 var controller = new AccountController(session) { Email = mock.Object };
@@ -245,7 +244,7 @@ namespace BookWorm.Tests.Controllers.Integration
                 Assert.AreEqual("Index", actionResult.RouteValues["action"]);
             });
 
-            UsingSession((session) =>
+            UsingSession(session =>
             {
                 Assert.IsTrue(session.Query<User>().First(u=>u.Username==model.Email).IsApproved);
                 Assert.AreNotEqual(oldPassword,
