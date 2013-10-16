@@ -196,7 +196,7 @@ namespace BookWorm.Controllers
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
+            if (IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
@@ -204,6 +204,11 @@ namespace BookWorm.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        protected virtual bool IsLocalUrl(string returnUrl)
+        {
+            return Url.IsLocalUrl(returnUrl);
         }
 
         public enum ManageMessageId
