@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using BookWorm.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 
 namespace BookWorm.Tests.Controllers
 {
@@ -36,6 +38,23 @@ namespace BookWorm.Tests.Controllers
             var controller = new TestAccountController(1);
             var result = (HttpStatusCodeResult) controller.Register();
             Assert.AreEqual(403, result.StatusCode);
+        }
+
+        [TestMethod]
+        public void ShouldSetReturnUrlOnLogin()
+        {
+            var accountController = new AccountController();
+            accountController.Login("someUrl");
+            string returnUrl = accountController.ViewBag.ReturnUrl;
+            returnUrl.Should().Be("someUrl");
+        }
+
+        [TestMethod]
+        public void ShouldReturnAViewOnLogin()
+        {
+            var accountController = new AccountController();
+            var result = accountController.Login("someUrl");
+            result.Should().BeOfType<ViewResult>();
         }
     }
 }
