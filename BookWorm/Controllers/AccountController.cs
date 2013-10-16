@@ -107,18 +107,20 @@ namespace BookWorm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    AccountService.CreateUserAndAccount(model.Email, model.Password);
-                    AccountService.Login(model.Email, model.Password, false);
-                    return RedirectToAction("Index", "Home");
-                }
-                catch (MembershipCreateUserException e)
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
-                }
+                return View(model);
+            }
+
+            try
+            {
+                AccountService.CreateUserAndAccount(model.Email, model.Password);
+                AccountService.Login(model.Email, model.Password, false);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (MembershipCreateUserException e)
+            {
+                ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
             }
 
             return View(model);

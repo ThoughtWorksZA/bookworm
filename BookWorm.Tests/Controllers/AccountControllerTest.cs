@@ -63,7 +63,7 @@ namespace BookWorm.Tests.Controllers
         public void ShouldNotCreateAnAccountOnRegisterWhenModelIsInvalid()
         {
             _accountController.ModelState.AddModelError("error", "error");
-            _accountController.Register(new RegisterModel{ Email = "Email", Password = "Password" });
+            _accountController.Register(new RegisterModel());
 
             _accountService.Verify(it => it.CreateUserAndAccount(It.IsAny<string>(), It.IsAny<string>()), Times.Never());
         }
@@ -73,10 +73,28 @@ namespace BookWorm.Tests.Controllers
         {
             _accountService.Setup(it => it.CreateUserAndAccount(It.IsAny<string>(), It.IsAny<string>())).Throws<MembershipCreateUserException>();
 
-            _accountController.Register(new RegisterModel { Email = "Email", Password = "Password" });
+            _accountController.Register(new RegisterModel());
 
             _accountController.ModelState.IsValid.Should()
                 .BeFalse("a model error should be added when an exception is thrown");
+        }
+
+        [TestMethod]
+        public void ShouldRegisterAUserUsingTheAccountService()
+        {
+            _accountController.Register(new RegisterModel { Email = "Email", Password = "Password" });
+
+            _accountService.Verify(it => it.CreateUserAndAccount("Email", "Password"));
+            _accountService.Verify(it => it.Login("Email", "Password", false));
+        }
+
+        [TestMethod]
+        public void ShouldRedirectToHomeAfterRegistration()
+        {
+           var result = (RedirectToRouteResult)_accountController.Register(new RegisterModel { Email = "Email", Password = "Password" });
+
+            result.RouteValues["controller"].Should().Be("Home");
+            result.RouteValues["action"].Should().Be("Index");
         }
 
         [TestMethod]
