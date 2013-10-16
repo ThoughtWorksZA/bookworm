@@ -73,7 +73,7 @@ namespace BookWorm.Tests.Controllers
         }
 
         [TestMethod]
-        public void ShouldLogUserInIfValid()
+        public void ShouldLogInUserWhenModelStateIsValid()
         {
             var accountController = new TestAccountController();
             var accountService = new Mock<AccountService>();
@@ -84,6 +84,21 @@ namespace BookWorm.Tests.Controllers
             accountController.Login(loginModel, "someUrl");
 
             accountService.Verify(it => it.Login("email", "password", true));
+        }
+
+        [TestMethod]
+        public void ShouldAddErrorAndRedirectWhenLoginFails()
+        {
+            var accountController = new AccountController();
+            var accountService = new Mock<AccountService>();
+            accountController.AccountService = accountService.Object;
+            var loginModel = new LoginModel { Email = "email", Password = "password", RememberMe = true };
+            accountService.Setup(it => it.Login("email", "password", true)).Returns(false);
+
+            var result = (ViewResult) accountController.Login(loginModel, "someUrl");
+
+            accountController.ModelState.IsValid.Should().BeFalse("there should be an error added to the ModelState");
+            result.Model.Should().Be(loginModel);
         }
     }
 }
