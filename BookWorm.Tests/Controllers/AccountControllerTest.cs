@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Web.Security;
 using BookWorm.Controllers;
 using BookWorm.Models;
 using BookWorm.Services.Account;
@@ -65,6 +66,17 @@ namespace BookWorm.Tests.Controllers
             _accountController.Register(new RegisterModel{ Email = "Email", Password = "Password" });
 
             _accountService.Verify(it => it.CreateUserAndAccount(It.IsAny<string>(), It.IsAny<string>()), Times.Never());
+        }
+
+        [TestMethod]
+        public void ShouldInvalidateModelIfRegistrationThrowsAnException()
+        {
+            _accountService.Setup(it => it.CreateUserAndAccount(It.IsAny<string>(), It.IsAny<string>())).Throws<MembershipCreateUserException>();
+
+            _accountController.Register(new RegisterModel { Email = "Email", Password = "Password" });
+
+            _accountController.ModelState.IsValid.Should()
+                .BeFalse("a model error should be added when an exception is thrown");
         }
 
         [TestMethod]
