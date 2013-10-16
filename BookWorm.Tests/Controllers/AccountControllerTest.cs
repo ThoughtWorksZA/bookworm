@@ -1,24 +1,19 @@
-﻿using System.IO;
-using System.Security.Policy;
-using System.Web;
-using System.Web.Hosting;
-using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
 using BookWorm.Services.Account;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
 using Moq;
-using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace BookWorm.Tests.Controllers
 {
     [TestClass]
     public class AccountControllerTest
     {
+        private Mock<AccountService> _accountService;
+        private TestAccountController _accountController = new TestAccountController();
+
         private class TestAccountController : AccountController
         {
             private readonly int _userCount;
@@ -39,66 +34,79 @@ namespace BookWorm.Tests.Controllers
             }
         }
 
+        [TestInitialize]
+        public void Setup()
+        {
+            _accountService = new Mock<AccountService>();
+        }
+
         [TestMethod]
         public void ShouldRenderRegisterPageWhenThereIsNoUser()
         {
-            var controller = new TestAccountController(0);
-            var result = (ViewResult)controller.Register();
-            Assert.AreEqual("Register", result.ViewName);
+            var result = (ViewResult)_accountController.Register();
+            result.ViewName.Should().Be("Register");
         }
 
         [TestMethod]
         public void ShouldRedirectToErrorPageWhenThereAreExistingUsers()
         {
-            var controller = new TestAccountController(1);
-            var result = (HttpStatusCodeResult) controller.Register();
-            Assert.AreEqual(403, result.StatusCode);
+            _accountController = new TestAccountController(1);
+            var result = (HttpStatusCodeResult) _accountController.Register();
+            result.StatusCode.Should().Be(403);
         }
 
         [TestMethod]
         public void ShouldSetReturnUrlOnLogin()
         {
-            var accountController = new AccountController();
-            accountController.Login("someUrl");
-            string returnUrl = accountController.ViewBag.ReturnUrl;
+            _accountController.Login("someUrl");
+            string returnUrl = _accountController.ViewBag.ReturnUrl;
             returnUrl.Should().Be("someUrl");
         }
 
         [TestMethod]
         public void ShouldReturnAViewOnLogin()
         {
-            var accountController = new AccountController();
-            var result = accountController.Login("someUrl");
+            var result = _accountController.Login("someUrl");
             result.Should().BeOfType<ViewResult>();
         }
 
         [TestMethod]
         public void ShouldLogInUserWhenModelStateIsValid()
         {
-            var accountController = new TestAccountController();
-            var accountService = new Mock<AccountService>();
-            accountController.AccountService = accountService.Object;
+            _accountController.AccountService = _accountService.Object;
             var loginModel = new LoginModel{ Email = "email", Password = "password", RememberMe = true};
-            accountService.Setup(it => it.Login("email", "password", true)).Returns(true);
+            _accountService.Setup(it => it.Login("email", "password", true)).Returns(true);
 
-            accountController.Login(loginModel, "someUrl");
+            _accountController.Login(loginModel, "someUrl");
 
-            accountService.Verify(it => it.Login("email", "password", true));
+            _accountService.Verify(it => it.Login("email", "password", true));
         }
 
         [TestMethod]
         public void ShouldAddErrorAndRedirectWhenLoginFails()
         {
-            var accountController = new AccountController();
-            var accountService = new Mock<AccountService>();
-            accountController.AccountService = accountService.Object;
+            _accountController.AccountService = _accountService.Object;
             var loginModel = new LoginModel { Email = "email", Password = "password", RememberMe = true };
-            accountService.Setup(it => it.Login("email", "password", true)).Returns(false);
+            _accountService.Setup(it => it.Login("email", "password", true)).Returns(false);
 
-            var result = (ViewResult) accountController.Login(loginModel, "someUrl");
+            var result = (ViewResult) _accountController.Login(loginModel, "someUrl");
 
-            accountController.ModelState.IsValid.Should().BeFalse("there should be an error added to the ModelState");
+            _accountController.ModelState.IsValid.Should().BeFalse("there should be an error added to the ModelState");
             result.Model.Should().Be(loginModel);
+        }
+
+        [TestMethod]
+        public void ShouldAddErrorAndRedirectWhenModelIsInvalid()
+        {
+            var loginModel = new LoginModel { Email = "email", Password = "password", RememberMe = true };
+            _accountService.Setup(it => it.Login("email", "password", true)).Returns(true);
+            _accountController.ModelState.AddModelError("something", "Error");
+
+            var result = _accountController.Login(loginModel, "someUrl");
+
+            _accountController.ModelState.IsValid.Should().BeFalse("there should be an error added to the ModelState");
+            result.Should().BeOfType<ViewResult>();
+            ((ViewResult)result).Model.Should().Be(loginModel);
         }
     }
 }
