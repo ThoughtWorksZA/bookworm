@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Mail;
 using System.Text;
+using BookWorm.Services;
 using BookWorm.Services.Email;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,31 +12,37 @@ namespace BookWorm.Tests.Services
     [TestClass]
     public class EmailServiceTests
     {
+        private Mock<SmtpClientWrapper> _smtpClientWrapper;
+        private EmailService _emailService;
+        private Mock<ConfigurationService> _configService;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            _smtpClientWrapper = new Mock<SmtpClientWrapper>();
+            _smtpClientWrapper.Setup(it => it.Send(It.IsAny<MailMessage>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(),
+                        It.IsAny<NetworkCredential>()));
+            _configService = new Mock<ConfigurationService>();
+            _configService.Setup(it => it.GetEmailSenderAddress()).Returns(string.Empty);
+            _configService.Setup(it => it.GetEmailSenderPassword()).Returns(string.Empty);
+            _emailService = new EmailService(_smtpClientWrapper.Object, _configService.Object);
+        }
+
         [TestMethod]
         public void ShouldSendAnEmailUsingSmtpClientWrapper()
         {
-            var smtpClientWrapper = new Mock<SmtpClientWrapper>();
-            smtpClientWrapper.Setup(it => it.Send(It.IsAny<MailMessage>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(),
-                        It.IsAny<NetworkCredential>()));
-            var emailService = new EmailService(smtpClientWrapper.Object);
+            _emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
 
-            emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
-
-            smtpClientWrapper.Verify(it => it.Send(It.IsAny<MailMessage>(), "smtp.gmail.com", 587, true,
-                It.Is<NetworkCredential>(credential => credential.UserName == "pukusite@gmail.com" && credential.Password == "b00ksRc00l")));
+            _smtpClientWrapper.Verify(it => it.Send(It.IsAny<MailMessage>(), "smtp.gmail.com", 587, true,
+                It.IsAny<NetworkCredential>()));
         }
 
         [TestMethod]
         public void ShouldConfigureMailMessageCorrectly()
         {
-            var smtpClientWrapper = new Mock<SmtpClientWrapper>();
-            smtpClientWrapper.Setup(it => it.Send(It.IsAny<MailMessage>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(),
-                        It.IsAny<NetworkCredential>()));
-            var emailService = new EmailService(smtpClientWrapper.Object);
+            _emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
 
-            emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
-
-            smtpClientWrapper.Verify(it => it.Send(It.Is<MailMessage>(mail => AssertMailIsCorrectlyConfigured(mail)), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(),
+            _smtpClientWrapper.Verify(it => it.Send(It.Is<MailMessage>(mail => AssertMailIsCorrectlyConfigured(mail)), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(),
                         It.IsAny<NetworkCredential>()));
         }
 
@@ -52,14 +59,9 @@ namespace BookWorm.Tests.Services
         [TestMethod]
         public void ShouldSetContentOfMailMessageCorrectly()
         {
-            var smtpClientWrapper = new Mock<SmtpClientWrapper>();
-            smtpClientWrapper.Setup(it => it.Send(It.IsAny<MailMessage>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(),
-                        It.IsAny<NetworkCredential>()));
-            var emailService = new EmailService(smtpClientWrapper.Object);
+            _emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
 
-            emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
-
-            smtpClientWrapper.Verify(it => it.Send(It.Is<MailMessage>(mail => AssertMailContentIsCorrect(mail)), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(),
+            _smtpClientWrapper.Verify(it => it.Send(It.Is<MailMessage>(mail => AssertMailContentIsCorrect(mail)), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(),
                         It.IsAny<NetworkCredential>()));
         }
 
@@ -69,6 +71,18 @@ namespace BookWorm.Tests.Services
             mail.Subject.Should().Be("The administror of PUKU created a user for you");
             mail.Body.Should().Be(expectedBody);
             return true;
+        }
+
+        [TestMethod]
+        public void ShouldGetNetworkCredentialsFromConfigurationService()
+        {
+            _configService.Setup(it => it.GetEmailSenderAddress()).Returns("email");
+            _configService.Setup(it => it.GetEmailSenderPassword()).Returns("password");
+
+            _emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
+
+            _smtpClientWrapper.Verify(it => it.Send(It.IsAny<MailMessage>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(),
+                        It.Is<NetworkCredential>(credential => credential.UserName == "email" && credential.Password == "password")));
         }
     }
 }

@@ -1,16 +1,15 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace BookWorm.Services
 {
     public class ConfigurationService
     {
-        public string GetEmailSenderAddress()
+        public virtual string GetEmailSenderAddress()
         {
             return ConfigurationManager.AppSettings.Get("EmailSenderAddress");
         }
 
-        public string GetEmailSenderPassword()
+        public virtual string GetEmailSenderPassword()
         {
             return ConfigurationManager.AppSettings.Get("EmailSenderPassword");
         }
