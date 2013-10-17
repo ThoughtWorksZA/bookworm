@@ -67,7 +67,9 @@ namespace BookWorm.Tests.Services
 
         private bool AssertMailContentIsCorrect(MailMessage mail)
         {
-            const string expectedBody = "Dear User,\r\nThe administrator of PUKU has created an account for you. To complete the registration process click on this link\r\nhttp://puku.co.za/Users/1/RegisterConfirmation/security";
+            const string expectedBody = @"Dear User,
+The administrator of PUKU has created an account for you. To complete the registration process click on this link
+http://puku.co.za/Users/1/RegisterConfirmation/security";
             mail.Subject.Should().Be("The administror of PUKU created a user for you");
             mail.Body.Should().Be(expectedBody);
             return true;
