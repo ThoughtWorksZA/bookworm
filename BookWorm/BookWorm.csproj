@@ -263,6 +263,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Account\AccountService.cs" />
     <Compile Include="Services\Account\IAccountService.cs" />
+    <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\Email\Email.cs" />
     <Compile Include="Services\Email\IEmail.cs" />
     <Compile Include="Services\FullTextSearch\FullTextSearchService.cs" />

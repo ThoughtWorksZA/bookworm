@@ -194,6 +194,7 @@
     <Compile Include="Integration\Controllers\HomeControllerTest.cs" />
     <Compile Include="Integration\Controllers\PagesControllerTest.cs" />
     <Compile Include="Integration\Controllers\PostsControllerTest.cs" />
+    <Compile Include="Integration\Services\ConfigurationServiceTests.cs" />
     <Compile Include="Models\Validations\ValidRoleTest.cs" />
     <Compile Include="Specs\CreateAStaticPage.feature.cs">
       <AutoGen>True</AutoGen>
