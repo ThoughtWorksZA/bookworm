@@ -264,8 +264,9 @@
     <Compile Include="Services\Account\AccountService.cs" />
     <Compile Include="Services\Account\IAccountService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
-    <Compile Include="Services\Email\Email.cs" />
-    <Compile Include="Services\Email\IEmail.cs" />
+    <Compile Include="Services\Email\EmailService.cs" />
+    <Compile Include="Services\Email\IEmailService.cs" />
+    <Compile Include="Services\Email\SmtpClientWrapper.cs" />
     <Compile Include="Services\FullTextSearch\FullTextSearchService.cs" />
     <Compile Include="Services\FullTextSearch\IFullTextSearch.cs" />
     <Compile Include="ViewModels\AuthorViewModel.cs" />

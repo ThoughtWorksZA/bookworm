@@ -71,7 +71,7 @@ namespace BookWorm.Tests.Integration.Controllers
                 {
                     var accountController = new AccountController(session)
                         {
-                            Email = GetEmailMock().Object
+                            EmailService = GetEmailMock().Object
                         };
                     accountController.Create(ruimin);
                     accountController.Create(akani);
@@ -116,7 +116,7 @@ namespace BookWorm.Tests.Integration.Controllers
                 {
                     var controller = new AccountController(session)
                         {
-                            Email = GetEmailMock().Object
+                            EmailService = GetEmailMock().Object
                         };
 
                     var actionResult = (System.Web.Mvc.RedirectToRouteResult) (controller.Create(model));
@@ -146,7 +146,7 @@ namespace BookWorm.Tests.Integration.Controllers
             {
                 var controller = new AccountController(session)
                 {
-                    Email = GetEmailMock().Object
+                    EmailService = GetEmailMock().Object
                 };
 
                 controller.Create(model);
@@ -156,7 +156,7 @@ namespace BookWorm.Tests.Integration.Controllers
             {
                 var controller = new AccountController(session)
                 {
-                    Email = GetEmailMock().Object
+                    EmailService = GetEmailMock().Object
                 };
 
                 var viewResult = (System.Web.Mvc.ViewResult)(controller.Create(model));
@@ -177,7 +177,7 @@ namespace BookWorm.Tests.Integration.Controllers
 
             UsingSession(session =>
             {
-                var controller = new AccountController(session) {Email = mock.Object};
+                var controller = new AccountController(session) {EmailService = mock.Object};
                 controller.Create(model);
             });
 
@@ -197,7 +197,7 @@ namespace BookWorm.Tests.Integration.Controllers
             const int userId = 1;
             UsingSession(session =>
             {
-                var controller = new AccountController(session) { Email = mock.Object };
+                var controller = new AccountController(session) { EmailService = mock.Object };
                 var registerConfirmationView = controller.RegisterConfirmation(secureToken, userId);
                 Assert.AreEqual("Confirm user account", registerConfirmationView.ViewBag.Title);
                 Assert.AreEqual(secureToken, ((LocalPasswordModel)(registerConfirmationView.Model)).SecurityToken);
@@ -223,7 +223,7 @@ namespace BookWorm.Tests.Integration.Controllers
             string oldPassword = "";
             UsingSession(session =>
             {
-                var controller = new AccountController(session) { Email = mock.Object };
+                var controller = new AccountController(session) { EmailService = mock.Object };
                 controller.Create(model);
                 oldPassword = session.Query<User>().First(u => u.Username == model.Email).Password;
             });
@@ -231,7 +231,7 @@ namespace BookWorm.Tests.Integration.Controllers
             UsingSession(session =>
             {
                 var user = session.Query<User>().First();
-                var controller = new AccountController(session) { Email = mock.Object };
+                var controller = new AccountController(session) { EmailService = mock.Object };
                 var localPasswordModel = new LocalPasswordModelBuilder()
                     .WithSecurityToken(secureToken)
                     .WithUserId(user.Id)
@@ -252,9 +252,9 @@ namespace BookWorm.Tests.Integration.Controllers
             });
         }
 
-        private static Mock<IEmail> GetEmailMock()
+        private static Mock<IEmailService> GetEmailMock()
         {
-            var mock = new Mock<IEmail>();
+            var mock = new Mock<IEmailService>();
             mock.Setup(e => e.SendConfirmation(It.IsAny<string>(), It.IsAny<string>(),  It.IsAny<string>(), It.IsAny<int>()));
             return mock;
         }

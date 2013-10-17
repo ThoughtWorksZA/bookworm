@@ -1,6 +1,6 @@
 namespace BookWorm.Services.Email
 {
-    public interface IEmail
+    public interface IEmailService
     {
         void SendConfirmation(string from, string to, string securityToken, int userId);
     }

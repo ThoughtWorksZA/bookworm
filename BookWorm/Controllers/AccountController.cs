@@ -17,7 +17,7 @@ namespace BookWorm.Controllers
     public class AccountController : BaseController
     {
         private IAccountService _accountService;
-        public IEmail Email { get; set; }
+        public IEmailService EmailService { get; set; }
 
         public IAccountService AccountService
         {
@@ -305,11 +305,11 @@ namespace BookWorm.Controllers
                 {
                     var securityToken = WebSecurity.CreateUserAndAccount(model.Email, model.Password, new {Email = model.Email}, true);
 
-                    if (Email == null)
+                    if (EmailService == null)
                     {
-                        Email = new Email();
+                        EmailService = new EmailService();
                     }
-                    Email.SendConfirmation("donotreply@puku.co.za", model.Email, securityToken, WebSecurity.GetUserId(model.Email));
+                    EmailService.SendConfirmation("donotreply@puku.co.za", model.Email, securityToken, WebSecurity.GetUserId(model.Email));
                     System.Web.Security.Roles.AddUsersToRole(new string[] { model.Email }, model.Role);
                     return RedirectToAction("List", "Account");
                 }
