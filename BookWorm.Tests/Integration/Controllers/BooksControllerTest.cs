@@ -7,7 +7,7 @@ using BookWorm.Models;
 using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BookWorm.Tests.Controllers.Integration
+namespace BookWorm.Tests.Integration.Controllers
 {
     [TestClass]
     public class BooksControllerTest:ControllerInMemoryRavenTestBase

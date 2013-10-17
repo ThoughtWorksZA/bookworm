@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
-using BookWorm.Tests.Controllers.Integration;
 using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

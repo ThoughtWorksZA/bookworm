@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
+using BookWorm.Tests.Controllers;
 using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 using PagedList;
 
-namespace BookWorm.Tests.Controllers.Integration
+namespace BookWorm.Tests.Integration.Controllers
 {
     [TestClass]
     public class AuthorsControllerTest : ControllerInMemoryRavenTestBase

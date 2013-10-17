@@ -14,7 +14,7 @@ using Raven.Abstractions.Extensions;
 using Raven.Client;
 using Raven.Client.Document;
 
-namespace BookWorm.Tests.Controllers.Integration
+namespace BookWorm.Tests.Integration.Controllers
 {
     [TestClass]
     public class AccountControllerTest
@@ -39,7 +39,7 @@ namespace BookWorm.Tests.Controllers.Integration
             using (var session = _documentStore.OpenSession())
             {
                 var users = session.Query<User>();
-                users.ForEach(u => session.Delete(u));
+                users.ForEach(u => session.Delete<User>(u));
                 session.SaveChanges();
             }
         }

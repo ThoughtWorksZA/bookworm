@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using BookWorm.Controllers;
@@ -8,7 +7,7 @@ using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace BookWorm.Tests.Controllers.Integration
+namespace BookWorm.Tests.Integration.Controllers
 {
     [TestClass]
     public class PagesControllerTest : ControllerInMemoryRavenTestBase

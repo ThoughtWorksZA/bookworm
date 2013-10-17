@@ -8,7 +8,7 @@ using BookWorm.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace BookWorm.Tests.Controllers.Integration
+namespace BookWorm.Tests.Integration.Controllers
 {
     [TestClass]
     public class PostsControllerTest : ControllerInMemoryRavenTestBase

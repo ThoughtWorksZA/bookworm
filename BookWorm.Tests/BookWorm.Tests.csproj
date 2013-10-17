@@ -180,13 +180,6 @@
     <Compile Include="Controllers\AuthorsControllerTest.cs" />
     <Compile Include="Controllers\BookPostsControllerTest.cs" />
     <Compile Include="Controllers\BooksControllerTest.cs" />
-    <Compile Include="Controllers\Integration\AccountControllerTest.cs" />
-    <Compile Include="Controllers\Integration\AuthorsControllerTest.cs" />
-    <Compile Include="Controllers\Integration\BooksControllerTest.cs" />
-    <Compile Include="Controllers\Integration\ControllerInMemoryRavenTestBase.cs" />
-    <Compile Include="Controllers\Integration\HomeControllerTest.cs" />
-    <Compile Include="Controllers\Integration\PagesControllerTest.cs" />
-    <Compile Include="Controllers\Integration\PostsControllerTest.cs" />
     <Compile Include="Controllers\PagesControllerTest.cs" />
     <Compile Include="Controllers\BaseControllerTest.cs" />
     <Compile Include="Controllers\AccountControllerTest.cs" />
@@ -194,6 +187,13 @@
     <Compile Include="Helpers\IPrincipalExtensionTest.cs" />
     <Compile Include="Helpers\UrlUtilsTest.cs" />
     <Compile Include="Helpers\MarkDownHelperTest.cs" />
+    <Compile Include="Integration\Controllers\AccountControllerTest.cs" />
+    <Compile Include="Integration\Controllers\AuthorsControllerTest.cs" />
+    <Compile Include="Integration\Controllers\BooksControllerTest.cs" />
+    <Compile Include="Integration\Controllers\ControllerInMemoryRavenTestBase.cs" />
+    <Compile Include="Integration\Controllers\HomeControllerTest.cs" />
+    <Compile Include="Integration\Controllers\PagesControllerTest.cs" />
+    <Compile Include="Integration\Controllers\PostsControllerTest.cs" />
     <Compile Include="Models\Validations\ValidRoleTest.cs" />
     <Compile Include="Specs\CreateAStaticPage.feature.cs">
       <AutoGen>True</AutoGen>

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Linq;
-using BookWorm.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Raven.Abstractions.Extensions;
 using Raven.Client;
 using Raven.Client.Embedded;
 
-namespace BookWorm.Tests.Controllers.Integration
+namespace BookWorm.Tests.Integration.Controllers
 {
     public class ControllerInMemoryRavenTestBase
     {
