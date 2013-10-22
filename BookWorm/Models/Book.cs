@@ -19,7 +19,6 @@ namespace BookWorm.Models
 
         public string Editor { get; set; }
 
-        [Required]
         [StringLength(13, MinimumLength = 9, ErrorMessage = "ISBN can only be 9 to 13 characters long.")]
         [RegularExpression("^([a-zA-Z0-9]+)$", ErrorMessage = "ISBN can only have letters and digits")]
         public string Isbn { get; set; }
