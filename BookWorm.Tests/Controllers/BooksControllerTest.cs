@@ -98,26 +98,6 @@ namespace BookWorm.Tests.Controllers
 
             mockedRepo.Verify(repo => repo.Create(bookToCreate), Times.Once());
         }
-
-        [TestMethod]
-        public void createBookShouldNotSaveWhenIsbnAlreadyExistsWithFakeRepo()
-        {
-            //Given
-            const string alreadyExistingIsbn = "12345";
-            var bookAlreadyInDB = new Book() { Id = 1, Isbn = alreadyExistingIsbn };
-            var bookToCreate = new Book() { Isbn = alreadyExistingIsbn };
-            var fakeRepo = new FakeRepository();
-            fakeRepo.Create(bookAlreadyInDB);
-            var booksController = new BooksController(fakeRepo);
-
-            //When
-            var result = booksController.Create(new BookInformation(bookToCreate));
-
-            //Then
-            Assert.AreEqual(fakeRepo.Count<Book>(), 1);
-            Assert.AreEqual("The ISBN number already exists", booksController.TempData["flashError"]);
-        }
-
        
         [TestMethod]
         public void CreateBookShouldNotSaveWhenBookIsInvalid()
@@ -200,8 +180,7 @@ namespace BookWorm.Tests.Controllers
 
             mockedRepo.Verify(repo => repo.Edit<Book>(editedBook), Times.Once());
             Assert.AreEqual("Updated A book successfully", booksController.TempData["flashSuccess"]);
-            Assert.AreEqual(1, viewResult.RouteValues["id"]);
-            
+            Assert.AreEqual(1, viewResult.RouteValues["id"]);   
         }  
         
         [TestMethod]
@@ -243,11 +222,8 @@ namespace BookWorm.Tests.Controllers
             ActionResult viewResult = booksController.Edit(new BookInformation(bookforEditing));
 
             //Then
-            mockedRepo.Verify(repo => repo.Edit<Book>(bookforEditing), Times.Once(), "Book Should be Edited");
-            
+            mockedRepo.Verify(repo => repo.Edit<Book>(bookforEditing), Times.Once(), "Book Should be Edited");            
         }
-
-      
 
         [TestMethod]
         public void EditBookShouldNotSaveWhenBookIsInvalid()
@@ -368,8 +344,6 @@ namespace BookWorm.Tests.Controllers
 
             var viewResult = (RedirectToRouteResult)booksController.Search("Book 1");
             Assert.AreEqual(1, viewResult.RouteValues["id"]);
-
-
         }
 
         [TestMethod]
@@ -479,77 +453,5 @@ namespace BookWorm.Tests.Controllers
                                                    .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
                                                    .Count());
         }
-
-
-        class FakeRepository : Repository
-        {
-            List<Model> objects = new List<Model>();
-
-            public override void Detach<T>(T model) 
-            {
-                objects.Remove(model);
-            }
-
-            public override T Create<T>(T model)
-            {
-                objects.Add(model);
-                return model;
-            }
-
-            public override void Delete<T>(int id)
-            {
-                objects.Remove(Get<T>(id));
-            }
-
-            public override T Get<T>(int id)
-            {
-                return (T)objects.First<Model>(o => o.Id == id);
-            }
-
-            public override List<T> List<T>()
-            {
-                return objects.ConvertAll(a => (T)a);
-
-            }
-
-            public override List<T> List<T>(int perPage)
-            {
-                return List<T>(0, perPage);
-            }
-
-            public override List<T> Search<T>(Expression<Func<T, bool>> predicate)
-            {
-                return new List<T>(List<T>().Where(predicate.Compile()));
-            }
-
-            public override List<T> List<T>(int page, int perPage)
-            {
-                return objects.GetRange(page * perPage, perPage).ConvertAll(a => (T)a);
-            }
-
-            public override List<T> Search<T>(Expression<Func<T, bool>> predicate, int page, int perPage)
-            {
-                return new List<T>(List<T>(page, perPage).Where(predicate.Compile()));
-            }
-
-
-            public override List<T> Search<T>(Expression<Func<T, bool>> predicate, int perPage)
-            {
-                return Search(predicate, 0, perPage);
-            }
-
-            public override int Count<T>()
-            {
-                return objects.Count;
-            }
-
-            public override int Count<T>(Expression<Func<T, bool>> predicate)
-            {
-                return Search(predicate).Count();
-            }
-        }
     }
-
-
-
 }
