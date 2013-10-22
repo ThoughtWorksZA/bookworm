@@ -64,19 +64,18 @@ namespace BookWorm.Controllers
         [Authorize(Roles = Roles.Admin + "," + Roles.Author)]
         public ActionResult Create(BookInformation bookInformation)
         {
-
-            if (! ModelState.IsValid )
+            if (!ModelState.IsValid)
             {
                 TempData["flashError"] = "There were problems saving this book";
                 return View(bookInformation);
             }
-              Book createdBook;
+            Book createdBook;
 
             //Warning: this wouldn't work in a cluster - need to use concurrency on the DB for atomicity
             lock (Synclock) //Provide some atomicity for checking the ISBN exists and then create it
             {
-                IEnumerable<Book> search = SearchByIsbn(bookInformation);
-                if ( search.Any())
+                IEnumerable<Book> booksWithMatchingIsbn = SearchByIsbn(bookInformation);
+                if (bookInformation.Model.Isbn != null && booksWithMatchingIsbn.Any())
                 {
                     TempData["flashError"] = "The ISBN number already exists";
                     return View(bookInformation);

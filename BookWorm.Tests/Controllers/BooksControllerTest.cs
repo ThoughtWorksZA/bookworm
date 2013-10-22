@@ -57,37 +57,47 @@ namespace BookWorm.Tests.Controllers
         {
             var book = new Book();
             var bookInformation = new BookInformation(book);
-
             var mockedRepo = GetMockedRepo();
             mockedRepo.Setup(repo => repo.Create(book)).Returns(new Book());
-
             var booksController = new BooksController(mockedRepo.Object);
 
             booksController.Create(bookInformation);
+
             mockedRepo.Verify(repo => repo.Create(book));
         }
 
         [TestMethod]
-        public void createBookShouldNotSaveWhenIsbnAlreadyExists()
+        public void ShouldNotCreateBookWhenIsbnAlreadyExists()
         {
-            //Given
             const string alreadyExistingIsbn = "12345";
-            var bookAlreadyInDB = new Book() { Id = 1, Isbn = alreadyExistingIsbn };
-            var bookToCreate = new Book() { Isbn = alreadyExistingIsbn };
+            var bookAlreadyInDb = new Book { Id = 1, Isbn = alreadyExistingIsbn };
+            var bookToCreate = new Book { Isbn = alreadyExistingIsbn };
             var mockedRepo = new Mock<Repository>();
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()))
-                .Returns(new List<Book> { bookAlreadyInDB });
+            mockedRepo.Setup(repo => repo.Search(It.IsAny<Expression<Func<Book, bool>>>()))
+                .Returns(new List<Book> { bookAlreadyInDb });
             var booksController = new BooksController(mockedRepo.Object);
 
-            //When
-            var result = (ViewResult)booksController.Create(new BookInformation(bookToCreate));
+            booksController.Create(new BookInformation(bookToCreate));
 
-            //Then
             mockedRepo.Verify(repo => repo.Create(bookToCreate), Times.Never(), "duplicate ISBN should prevent creating book");
             Assert.AreEqual("The ISBN number already exists", booksController.TempData["flashError"]);
         }
 
+        [TestMethod]
+        public void ShouldCreateBookWhenIsbnIsNull()
+        {
+            var bookAlreadyInDb = new Book { Id = 1, Isbn = null };
+            var bookToCreate = new Book { Isbn = null };
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(repo => repo.Search(It.IsAny<Expression<Func<Book, bool>>>()))
+                .Returns(new List<Book> { bookAlreadyInDb });
+            mockedRepo.Setup(repo => repo.Create(bookToCreate)).Returns(bookToCreate);
+            var booksController = new BooksController(mockedRepo.Object);
 
+            booksController.Create(new BookInformation(bookToCreate));
+
+            mockedRepo.Verify(repo => repo.Create(bookToCreate), Times.Once());
+        }
 
         [TestMethod]
         public void createBookShouldNotSaveWhenIsbnAlreadyExistsWithFakeRepo()
