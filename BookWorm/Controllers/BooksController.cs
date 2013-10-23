@@ -18,15 +18,11 @@ namespace BookWorm.Controllers
         private const string NoBooksFoundTxtFilter = "No books found that match your search. Change the filter options on the left to widen your search.";
         private const string ProblemsSavingBookMessage = "There were problems saving this book";
 
-        private IFullTextSearch _fullTextSearch;
+        private readonly IFullTextSearch _fullTextSearch;
         
-        public BooksController()
+        public BooksController(IFullTextSearch fullTextSearch = null)
         {
-        }
-
-        public BooksController(IFullTextSearch fullTextSearch)
-        {
-            _fullTextSearch = fullTextSearch;
+            _fullTextSearch = fullTextSearch ?? new FullTextSearchService(DocumentSession);
         }
 
         public BooksController(Repository repository) : base (repository)
@@ -136,10 +132,6 @@ namespace BookWorm.Controllers
         [HttpGet]
         public ActionResult Search(string searchQuery, int page = 1, int perPage = 9)
         {
-            if (_fullTextSearch == null)
-            {
-                _fullTextSearch = new FullTextSearchService(DocumentSession);
-            }
             var books = _fullTextSearch.Search(searchQuery);
             ViewBag.Title = string.Format("Search Results for \"{0}\"", searchQuery);
             var bookInformations = new StaticPagedList<BookInformation>(books.Skip((page-1)*perPage).Take(perPage)
