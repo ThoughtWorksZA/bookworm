@@ -14,7 +14,6 @@ namespace BookWorm.Controllers
     [Authorize]
     public class BooksController : BaseController
     {
-        private static readonly object Synclock = new object();
         private const string NoBooksFoundTxtSearch = "No books found that match your search. Change the search text to widen your search.";
         private const string NoBooksFoundTxtFilter = "No books found that match your search. Change the filter options on the left to widen your search.";
         
@@ -69,19 +68,15 @@ namespace BookWorm.Controllers
                 TempData["flashError"] = "There were problems saving this book";
                 return View(bookInformation);
             }
-            Book createdBook;
 
-            //Warning: this wouldn't work in a cluster - need to use concurrency on the DB for atomicity
-            lock (Synclock) //Provide some atomicity for checking the ISBN exists and then create it
+            var booksWithMatchingIsbn = SearchByIsbn(bookInformation);
+            if (bookInformation.Model.Isbn != null && booksWithMatchingIsbn.Any())
             {
-                IEnumerable<Book> booksWithMatchingIsbn = SearchByIsbn(bookInformation);
-                if (bookInformation.Model.Isbn != null && booksWithMatchingIsbn.Any())
-                {
-                    TempData["flashError"] = "The ISBN number already exists";
-                    return View(bookInformation);
-                }
-                createdBook = Repository.Create(bookInformation.Model);
+                TempData["flashError"] = "The ISBN number already exists";
+                return View(bookInformation);
             }
+            var createdBook = Repository.Create(bookInformation.Model);
+            
           
             TempData["flashSuccess"] = string.Format("Added {0} successfully", createdBook.Title);
             return RedirectToAction("Details", new { id = createdBook.Id });
@@ -104,17 +99,15 @@ namespace BookWorm.Controllers
                 TempData["flashError"] = "There were problems saving this book";
                 return View(editedBookInformation);
             }
-            lock (Synclock)
-            {
-                var booksWithMatchingIsbn = SearchByIsbn(editedBookInformation);
-                if (editedBookInformation.Model.Isbn != null && booksWithMatchingIsbn.Any())
-                {
-                    TempData["flashError"] = "The Book Edit was not saved because the provided ISBN number already exists";
-                    return View(editedBookInformation);
-                }
 
-                Repository.Edit(editedBookInformation.Model);
+            var booksWithMatchingIsbn = SearchByIsbn(editedBookInformation);
+            if (editedBookInformation.Model.Isbn != null && booksWithMatchingIsbn.Any())
+            {
+                TempData["flashError"] = "The Book Edit was not saved because the provided ISBN number already exists";
+                return View(editedBookInformation);
             }
+
+            Repository.Edit(editedBookInformation.Model);
             
             TempData["flashSuccess"] = string.Format("Updated {0} successfully", editedBookInformation.Model.Title);
             return RedirectToAction("Details", new { id = editedBookInformation.Model.Id });

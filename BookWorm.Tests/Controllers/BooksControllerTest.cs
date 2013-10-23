@@ -109,7 +109,7 @@ namespace BookWorm.Tests.Controllers
             mockedRepo.Setup(repo => repo.Create(book)).Returns(book);
             booksController.ModelState.AddModelError("test error","test exception");
 
-            var result = (ViewResult)booksController.Create(bookInformation);
+            booksController.Create(bookInformation);
 
             mockedRepo.Verify(repo => repo.Create(book), Times.Never(), "failing model validation should prevent creating book");
             Assert.AreEqual("There were problems saving this book", booksController.TempData["flashError"]);
