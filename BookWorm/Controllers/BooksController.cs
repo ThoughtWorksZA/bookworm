@@ -19,7 +19,12 @@ namespace BookWorm.Controllers
         private const string ProblemsSavingBookMessage = "There were problems saving this book";
 
         private readonly IFullTextSearch _fullTextSearch;
-        
+
+        public BooksController()
+        {
+            
+        }
+
         public BooksController(IFullTextSearch fullTextSearch = null)
         {
             _fullTextSearch = fullTextSearch ?? new FullTextSearchService(DocumentSession);
