@@ -186,43 +186,50 @@ namespace BookWorm.Tests.Controllers
         [TestMethod]
         public void ShouldNotUpdateBookOnEditPostIfIsbnIsChangedAndIsDuplicate()
         {
-            //Given
-            string isbnForAlreadyExistingBook = "12345";
+            const string isbnForAlreadyExistingBook = "12345";
             var bookforEditing = new Book { Id = 1, Title = "A book", Isbn = "11111" };
             var bookAlreadyExistingInDb = new Book { Id = 2, Title = "Another book", Isbn = isbnForAlreadyExistingBook};
             var mockedRepo = new Mock<Repository>();
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()))
+            mockedRepo.Setup(repo => repo.Search(It.IsAny<Expression<Func<Book, bool>>>()))
                 .Returns(new List<Book> { bookAlreadyExistingInDb, bookforEditing });
-
-            //When   
             bookforEditing.Isbn = isbnForAlreadyExistingBook;
             var booksController = new BooksController(mockedRepo.Object);
-            ActionResult viewResult = booksController.Edit(new BookInformation(bookforEditing));
-
-            //Then
-            mockedRepo.Verify(repo => repo.Edit<Book>(bookforEditing), Times.Never(), "A book whose ISBN number is edited and duplicates an already existing ISBN number should not be saved to the database");
-            Assert.AreEqual("The Book Edit was not saved because the provided ISBN number already exists", booksController.TempData["flashError"], "should return the error message in the model");
-         //   Assert.AreEqual("/views/Books/Edit.cshtml", ((ViewResult)viewResult).MasterName, "Should return the book edit view");
             
+            booksController.Edit(new BookInformation(bookforEditing));
+
+            mockedRepo.Verify(repo => repo.Edit(bookforEditing), Times.Never(), "A book whose ISBN number is edited and duplicates an already existing ISBN number should not be saved to the database");
+            Assert.AreEqual("The Book Edit was not saved because the provided ISBN number already exists", booksController.TempData["flashError"], "should return the error message in the model");
         }
         
         [TestMethod]
-        public void ShouldUpdateBookOnEditPostWithIsbnUnChanged()
+        public void ShouldUpdateBookOnEditPostWithIsbnUnchanged()
         {
-            //Given
             var bookforEditing = new Book { Id = 1, Title = "A book", Isbn = "11111" };
             var mockedRepo = new Mock<Repository>();
             var existingBooks = new List<Book> {bookforEditing};
-            mockedRepo.Setup(repo => repo.Search<Book>(It.IsAny<Expression<Func<Book, bool>>>()))
+            mockedRepo.Setup(repo => repo.Search(It.IsAny<Expression<Func<Book, bool>>>()))
                 .Returns((Expression<Func<Book, bool>> predicate) => existingBooks.Where(predicate.Compile()).ToList());
-
-            //When   
             bookforEditing.Title = "Changed Book Name";
             var booksController = new BooksController(mockedRepo.Object);
-            ActionResult viewResult = booksController.Edit(new BookInformation(bookforEditing));
+            
+            booksController.Edit(new BookInformation(bookforEditing));
 
-            //Then
-            mockedRepo.Verify(repo => repo.Edit<Book>(bookforEditing), Times.Once(), "Book Should be Edited");            
+            mockedRepo.Verify(repo => repo.Edit(bookforEditing), Times.Once(), "Book Should be Edited");            
+        }
+
+        [TestMethod]
+        public void ShouldEditBookWhenIsbnIsNull()
+        {
+            var book = new Book { Id = 1, Isbn = null };
+            var mockedRepo = new Mock<Repository>();
+            mockedRepo.Setup(repo => repo.Search(It.IsAny<Expression<Func<Book, bool>>>()))
+                .Returns(new List<Book> { book });
+            mockedRepo.Setup(repo => repo.Edit(book));
+            var booksController = new BooksController(mockedRepo.Object);
+
+            booksController.Edit(new BookInformation(book));
+
+            mockedRepo.Verify(repo => repo.Edit(book), Times.Once());
         }
 
         [TestMethod]

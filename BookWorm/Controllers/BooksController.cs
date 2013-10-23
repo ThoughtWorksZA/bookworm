@@ -106,20 +106,18 @@ namespace BookWorm.Controllers
             }
             lock (Synclock)
             {
-                IEnumerable<Book> search = SearchByIsbn(editedBookInformation);
-                if (search.Any())
+                var booksWithMatchingIsbn = SearchByIsbn(editedBookInformation);
+                if (editedBookInformation.Model.Isbn != null && booksWithMatchingIsbn.Any())
                 {
                     TempData["flashError"] = "The Book Edit was not saved because the provided ISBN number already exists";
                     return View(editedBookInformation);
                 }
 
                 Repository.Edit(editedBookInformation.Model);
-                
             }
             
             TempData["flashSuccess"] = string.Format("Updated {0} successfully", editedBookInformation.Model.Title);
             return RedirectToAction("Details", new { id = editedBookInformation.Model.Id });
-
         }
 
         private IEnumerable<Book> SearchByIsbn(BookInformation editedBookInformation)
