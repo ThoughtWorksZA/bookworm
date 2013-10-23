@@ -16,7 +16,8 @@ namespace BookWorm.Controllers
     {
         private const string NoBooksFoundTxtSearch = "No books found that match your search. Change the search text to widen your search.";
         private const string NoBooksFoundTxtFilter = "No books found that match your search. Change the filter options on the left to widen your search.";
-        
+        private const string ProblemsSavingBookMessage = "There were problems saving this book";
+
         private IFullTextSearch _fullTextSearch;
         
         public BooksController()
@@ -65,18 +66,16 @@ namespace BookWorm.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["flashError"] = "There were problems saving this book";
+                TempData["flashError"] = ProblemsSavingBookMessage;
                 return View(bookInformation);
             }
 
-            var booksWithMatchingIsbn = SearchByIsbn(bookInformation);
-            if (bookInformation.Model.Isbn != null && booksWithMatchingIsbn.Any())
+            if (!IsIsbnUnique(bookInformation))
             {
                 TempData["flashError"] = "The ISBN number already exists";
                 return View(bookInformation);
             }
             var createdBook = Repository.Create(bookInformation.Model);
-            
           
             TempData["flashSuccess"] = string.Format("Added {0} successfully", createdBook.Title);
             return RedirectToAction("Details", new { id = createdBook.Id });
@@ -96,12 +95,11 @@ namespace BookWorm.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["flashError"] = "There were problems saving this book";
+                TempData["flashError"] = ProblemsSavingBookMessage;
                 return View(editedBookInformation);
             }
 
-            var booksWithMatchingIsbn = SearchByIsbn(editedBookInformation);
-            if (editedBookInformation.Model.Isbn != null && booksWithMatchingIsbn.Any())
+            if (!IsIsbnUnique(editedBookInformation))
             {
                 TempData["flashError"] = "The Book Edit was not saved because the provided ISBN number already exists";
                 return View(editedBookInformation);
@@ -111,6 +109,11 @@ namespace BookWorm.Controllers
             
             TempData["flashSuccess"] = string.Format("Updated {0} successfully", editedBookInformation.Model.Title);
             return RedirectToAction("Details", new { id = editedBookInformation.Model.Id });
+        }
+
+        private bool IsIsbnUnique(BookInformation bookInformation)
+        {
+            return bookInformation.Model.Isbn == null || !SearchByIsbn(bookInformation).Any();
         }
 
         private IEnumerable<Book> SearchByIsbn(BookInformation editedBookInformation)
