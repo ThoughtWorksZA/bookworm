@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web;
 using System.Web.Mvc;
 using BookWorm.Controllers;
 using BookWorm.Models;
 using BookWorm.Services.FullTextSearch;
 using BookWorm.ViewModels;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -130,6 +132,18 @@ namespace BookWorm.Tests.Controllers
             mockedRepo.Verify(repo => repo.Get<Book>(book.Id), Times.Once());
             Assert.AreEqual(book, bookInView.Model);
             Assert.AreEqual("A book", booksController.ViewBag.Title);
+        }
+
+        [TestMethod]
+        public void DetailsShouldThrowA404ExceptionWhenBookIsNotFound()
+        {
+            var repo = new Mock<Repository>();
+            repo.Setup(it => it.Get<Book>(1)).Returns((Book)null);
+            var booksController = new BooksController(repo.Object);
+            
+            Action getDetails = () => booksController.Details(1);
+
+            getDetails.ShouldThrow<HttpException>().WithMessage("The requested book could not be found").Where(it => it.GetHttpCode() == 404);
         }
 
         [TestMethod]

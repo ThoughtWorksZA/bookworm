@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web;
 using System.Web.Mvc;
 using BookWorm.Models;
 using BookWorm.Services.FullTextSearch;
@@ -47,7 +48,14 @@ namespace BookWorm.Controllers
         public ViewResult Details(int id)
         {
             var book = Repository.Get<Book>(id);
-            var bookInformation = new BookInformation(book, book.Posts.Select(post => new BookPostInformation(book.Id, post)).ToList());
+
+            if (book == null)
+            {
+                throw new HttpException(404, "The requested book could not be found");
+            }
+
+            var bookPosts = book.Posts.Select(post => new BookPostInformation(book.Id, post)).ToList();
+            var bookInformation = new BookInformation(book, bookPosts);
             ViewBag.Title = bookInformation.Model.Title;
             ViewBag.MetaDescription = bookInformation.Summary(155);
             return View(bookInformation);
