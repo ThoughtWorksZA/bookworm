@@ -93,11 +93,15 @@ namespace BookWorm.ViewModels
                                     .ToList();
         }
 
-        public string Summary(int characters)
+        public string Summary(int characterLimit)
         {
-            if (Model.Description == null || Model.Description.Length < characters)
+            if (Model.Description == null || Model.Description.Length < characterLimit)
                 return Model.Description;
-            return Model.Description.Substring(0, Model.Description.IndexOf(" ", characters));
+           
+            var endPosition = Model.Description.IndexOf(" ", startIndex:characterLimit);
+            return endPosition > 0 
+                ? Model.Description.Substring(0, endPosition) 
+                : Model.Description.Substring(0, characterLimit);
         }
     }
 }

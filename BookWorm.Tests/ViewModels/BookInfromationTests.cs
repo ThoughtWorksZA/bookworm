@@ -46,5 +46,18 @@ namespace BookWorm.Tests.ViewModels
             };
             bookInformation.Summary(2).Should().Be("word");
         }
+
+        [TestMethod]
+        public void SummaryShouldReturnTheBookDescriptionTruncatedToTheCharacterLimitIfThereAreNoSpacesAfterTheLimit()
+        {
+            var bookInformation = new BookInformation
+            {
+                Model = new Book
+                {
+                    Description = "wordword"
+                }
+            };
+            bookInformation.Summary(4).Should().Be("word");
+        }
     }
 }
