@@ -22,7 +22,7 @@ namespace BookWorm.Tests.ViewModels
         }
 
         [TestMethod]
-        public void SummaryShouldReturnBookDescriptionIfItsShorterThanTheSummaryLengthRequested()
+        public void SummaryShouldReturnBookDescriptionWhenItsShorterThanTheSummaryLengthRequested()
         {
             var bookInformation = new BookInformation
             {
@@ -32,6 +32,19 @@ namespace BookWorm.Tests.ViewModels
                 }
             };
             bookInformation.Summary(5).Should().Be("four");
+        }
+
+        [TestMethod]
+        public void SummaryShouldReturnTheBookDescriptionUpToTheFirstSpaceAfterTheCharacterLimitRequested()
+        {
+            var bookInformation = new BookInformation
+            {
+                Model = new Book
+                {
+                    Description = "word word"
+                }
+            };
+            bookInformation.Summary(2).Should().Be("word");
         }
     }
 }
