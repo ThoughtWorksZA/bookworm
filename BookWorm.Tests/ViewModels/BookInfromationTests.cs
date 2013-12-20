@@ -20,5 +20,18 @@ namespace BookWorm.Tests.ViewModels
             };
             bookInformation.Summary(150).Should().Be(null);
         }
+
+        [TestMethod]
+        public void SummaryShouldReturnBookDescriptionIfItsShorterThanTheSummaryLengthRequested()
+        {
+            var bookInformation = new BookInformation
+            {
+                Model = new Book
+                {
+                    Description = "four"
+                }
+            };
+            bookInformation.Summary(5).Should().Be("four");
+        }
     }
 }
