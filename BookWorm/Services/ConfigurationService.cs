@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 
 namespace BookWorm.Services
 {
@@ -12,6 +13,16 @@ namespace BookWorm.Services
         public virtual string GetEmailSenderPassword()
         {
             return ConfigurationManager.AppSettings.Get("EmailSenderPassword");
+        }
+
+        public virtual string GetEmailServerAddress()
+        {
+            return ConfigurationManager.AppSettings.Get("EmailServerAddress");
+        }
+
+        public virtual bool IsSslEnabledForEmail()
+        {
+            return Boolean.Parse(ConfigurationManager.AppSettings.Get("EmailEnableSsl"));
         }
     }
 }

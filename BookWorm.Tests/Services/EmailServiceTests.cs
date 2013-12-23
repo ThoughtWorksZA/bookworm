@@ -25,6 +25,7 @@ namespace BookWorm.Tests.Services
             _configService = new Mock<ConfigurationService>();
             _configService.Setup(it => it.GetEmailSenderAddress()).Returns(string.Empty);
             _configService.Setup(it => it.GetEmailSenderPassword()).Returns(string.Empty);
+            _configService.Setup(it => it.GetEmailServerAddress()).Returns(string.Empty);
             _emailService = new EmailService(_smtpClientWrapper.Object, _configService.Object);
         }
 
@@ -33,7 +34,27 @@ namespace BookWorm.Tests.Services
         {
             _emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
 
-            _smtpClientWrapper.Verify(it => it.Send(It.IsAny<MailMessage>(), "smtp.gmail.com", 587, true,
+            _smtpClientWrapper.Verify(it => it.Send(It.IsAny<MailMessage>(), It.IsAny<string>(), 587, It.IsAny<bool>(),
+                It.IsAny<NetworkCredential>()));
+        }
+
+        [TestMethod]
+        public void ShouldPullSmtpServerAddressFromConfig()
+        {
+            _configService.Setup(it => it.GetEmailServerAddress()).Returns("myserver");
+            _emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
+
+            _smtpClientWrapper.Verify(it => it.Send(It.IsAny<MailMessage>(), "myserver", It.IsAny<int>(), It.IsAny<bool>(),
+                It.IsAny<NetworkCredential>()));
+        }
+
+        [TestMethod]
+        public void ShouldPullSmtpSslSettingFromConfig()
+        {
+            _configService.Setup(it => it.IsSslEnabledForEmail()).Returns(false);
+            _emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
+
+            _smtpClientWrapper.Verify(it => it.Send(It.IsAny<MailMessage>(), It.IsAny<string>(), It.IsAny<int>(), false,
                 It.IsAny<NetworkCredential>()));
         }
 

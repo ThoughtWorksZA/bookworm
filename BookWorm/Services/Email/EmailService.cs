@@ -9,6 +9,7 @@ namespace BookWorm.Services.Email
         private readonly SmtpClientWrapper _smtpClient;
         private ConfigurationService _configurationService;
 
+        private const int Port = 587;
         public const string ConfirmationEmailSubject = "The administror of PUKU created a user for you";
         private const string Template = @"Dear User,
 The administrator of PUKU has created an account for you. To complete the registration process click on this link
@@ -29,7 +30,12 @@ http://puku.co.za/Users/{0}/RegisterConfirmation/{1}";
                 };
             var networkCredential = new NetworkCredential(_configurationService.GetEmailSenderAddress(),
                 _configurationService.GetEmailSenderPassword());
-            _smtpClient.Send(mailMessage, "smtp.gmail.com", 587, true, networkCredential);
+
+            _smtpClient.Send(mailMessage,
+                _configurationService.GetEmailServerAddress(),
+                Port,
+                _configurationService.IsSslEnabledForEmail(),
+                networkCredential);
         }
     }
 }
