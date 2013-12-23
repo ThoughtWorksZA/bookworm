@@ -17,7 +17,19 @@ namespace BookWorm.Controllers
     public class AccountController : BaseController
     {
         private IAccountService _accountService;
-        public IEmailService EmailService { get; set; }
+        private IEmailService _emailService;
+
+        public IEmailService EmailService
+        {
+            get
+            {
+                return _emailService ?? (_emailService = new EmailService());
+            }
+            set
+            {
+                _emailService = value;
+            }
+        }
 
         public IAccountService AccountService
         {
@@ -305,11 +317,6 @@ namespace BookWorm.Controllers
                 try
                 {
                     var securityToken = WebSecurity.CreateUserAndAccount(model.Email, model.Password, new {Email = model.Email}, true);
-
-                    if (EmailService == null)
-                    {
-                        EmailService = new EmailService();
-                    }
                     EmailService.SendConfirmation("donotreply@puku.co.za", model.Email, securityToken, WebSecurity.GetUserId(model.Email));
                     System.Web.Security.Roles.AddUsersToRole(new string[] { model.Email }, model.Role);
                     return RedirectToAction("List", "Account");
@@ -320,7 +327,6 @@ namespace BookWorm.Controllers
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return View(new UserInformation(model));
         }
 
