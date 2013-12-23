@@ -197,6 +197,7 @@
     <Compile Include="Integration\Services\ConfigurationServiceTests.cs" />
     <Compile Include="Models\Validations\ValidRoleTest.cs" />
     <Compile Include="Services\EmailServiceTests.cs" />
+    <Compile Include="Services\UrlFormattingHelperTests.cs" />
     <Compile Include="Specs\CreateAStaticPage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
