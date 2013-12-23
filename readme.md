@@ -1,6 +1,8 @@
 PUKU Readme
 ===========
 
+To receive emails locally while developing / testing, download and run [Papercut](http://papercut.codeplex.com/) and set it to receive emails on port 587.
+
 To do: write a proper Readme.
 
 Notes on adding support for HTTP DELETE and PUT to your Visual Studio 2012 IIS Express environment:
