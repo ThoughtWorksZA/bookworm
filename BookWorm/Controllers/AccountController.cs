@@ -115,6 +115,7 @@ namespace BookWorm.Controllers
             try
             {
                 AccountService.CreateUserAndAccount(model.Email, model.Password);
+                AccountService.AddUserToRole(model.Email, model.Role);
                 AccountService.Login(model.Email, model.Password, false);
                 return RedirectToAction("Index", "Home");
             }

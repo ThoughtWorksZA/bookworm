@@ -6,6 +6,7 @@ using BookWorm.Services.Account;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
 using Moq;
+using Roles = BookWorm.Models.Roles;
 
 namespace BookWorm.Tests.Controllers
 {
@@ -95,6 +96,14 @@ namespace BookWorm.Tests.Controllers
 
             result.RouteValues["controller"].Should().Be("Home");
             result.RouteValues["action"].Should().Be("Index");
+        }
+
+        [TestMethod]
+        public void ShouldAddUserToRoleOnRegisterUsingAccountService()
+        {
+            _accountController.Register(new RegisterModel { Email = "Email", Password = "Password", Role = Roles.Admin});
+
+            _accountService.Verify(it => it.AddUserToRole("Email", Roles.Admin));
         }
 
         [TestMethod]

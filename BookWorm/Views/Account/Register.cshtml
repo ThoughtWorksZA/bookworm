@@ -1,4 +1,5 @@
-﻿@model BookWorm.Models.RegisterModel
+﻿@using Roles = BookWorm.Models.Roles
+@model BookWorm.Models.RegisterModel
 @{
     ViewBag.Title = "Register";
 }
@@ -27,6 +28,7 @@
                 @Html.LabelFor(m => m.ConfirmPassword)
                 @Html.PasswordFor(m => m.ConfirmPassword)
             </li>
+            @Html.Hidden("Role", Roles.Admin)
         </ol>
         <input type="submit" value="Register" id="RegisterButton" />
     </fieldset>

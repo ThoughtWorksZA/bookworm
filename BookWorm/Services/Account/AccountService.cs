@@ -18,5 +18,10 @@ namespace BookWorm.Services.Account
         {
             WebSecurity.CreateUserAndAccount(userName, password);
         }
+
+        public virtual void AddUserToRole(string userName, string role)
+        {
+            System.Web.Security.Roles.AddUsersToRole(new string[] {userName },role);
+        }
     }
 }
