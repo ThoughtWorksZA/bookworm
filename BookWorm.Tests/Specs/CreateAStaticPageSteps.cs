@@ -8,13 +8,6 @@ namespace BookWorm.Tests.Specs
     [Binding]
     public class CreateAStaticPageSteps : BaseSteps
     {
-        [BeforeFeature]
-        public static void BeforeFeature()
-        {
-            if (ConfigurationManager.AppSettings["Environment"] == "Test")
-                Assert.Inconclusive("Skipping test on AppHarbor");
-        }
-
         [When(@"I go to Create New Static Page view")]
         public void WhenIGoToCreateNewStaticPageView()
         {
