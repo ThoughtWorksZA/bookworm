@@ -65,7 +65,8 @@ namespace BookWorm.Tests.Services
         {
             _emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
 
-            _smtpClientWrapper.Verify(it => it.Send(It.Is<MailMessage>(mail => AssertMailIsCorrectlyConfigured(mail)), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(),
+            _smtpClientWrapper.Verify(it => it.Send(It.Is<MailMessage>(mail => AssertMailIsCorrectlyConfigured(mail)),
+                It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(),
                         It.IsAny<NetworkCredential>()));
         }
 
@@ -84,14 +85,8 @@ namespace BookWorm.Tests.Services
         {
             _currentHttpContextWrapper.Setup(it => it.GetBaseUrl()).Returns("someUrl");
             _emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
-            _smtpClientWrapper.Verify(it => it.Send(It.Is<MailMessage>(mail => AssertMailContainsBaseUrl(mail, "someUrl/Users/1/RegisterConfirmation/security")), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(),
-                        It.IsAny<NetworkCredential>()));
-        }
-
-        private bool AssertMailContainsBaseUrl(MailMessage mail, string expectedUrl)
-        {
-            mail.Body.Should().Contain(expectedUrl);
-            return true;
+            _smtpClientWrapper.Verify(it => it.Send(It.Is<MailMessage>(mail => mail.Body.Contains("someUrl/Users/1/RegisterConfirmation/security")),
+                It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(), It.IsAny<NetworkCredential>()));
         }
 
         [TestMethod]
