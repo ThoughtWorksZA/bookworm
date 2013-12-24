@@ -236,7 +236,7 @@
     <Compile Include="Specs\BaseSteps.cs" />
     <Compile Include="Specs\Pages\StaticPageDetailsPage.cs" />
     <Compile Include="Specs\Pages\StaticPagesListPage.cs" />
-    <Compile Include="ViewModels\BookInfromationTests.cs" />
+    <Compile Include="ViewModels\BookInformationTests.cs" />
     <Compile Include="ViewModels\BookPostInformationTest.cs" />
     <Compile Include="ViewModels\PostInformationTest.cs" />
     <Compile Include="ViewModels\FilterInformationTest.cs" />

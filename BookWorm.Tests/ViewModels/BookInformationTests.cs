@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace BookWorm.Tests.ViewModels
 {
     [TestClass]
-    public class BookInfromationTests
+    public class BookInformationTests
     {
         [TestMethod]
         public void SummaryShouldReturnBookDescriptionIfItsNull()
