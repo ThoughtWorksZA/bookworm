@@ -1,7 +1,6 @@
 ﻿using BookWorm.Tests.Specs.Helpers;
 using BookWorm.Tests.Specs.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
 namespace BookWorm.Tests.Specs
@@ -9,27 +8,25 @@ namespace BookWorm.Tests.Specs
     [Binding]
     public class LoginSteps : Steps
     {
-        private HomePage homePage;
-        private LoginPage loginPage;
-        private IWebDriver driver;
+        private HomePage _homePage;
+        private LoginPage _loginPage;
 
         [Given(@"I am on home page")]
         public void GivenIAmOnHomePage()
         {
-            homePage = HomePage.NavigateTo(Browser.Driver);
+            _homePage = HomePage.NavigateTo(Browser.Driver);
         }
 
         [When(@"I click Login")]
         public void WhenIClickLogin()
         {
-            loginPage = homePage.ClickOnLogin();
-
+            _loginPage = _homePage.ClickOnLogin();
         }
 
         [Then(@"I see Login page")]
         public void ThenISeeLoginPage()
         {
-            Assert.IsTrue(loginPage.IsCurrentPage());
+            Assert.IsTrue(_loginPage.IsCurrentPage());
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+﻿using OpenQA.Selenium;
 
 namespace BookWorm.Tests.Specs.Pages
 {
@@ -10,15 +7,13 @@ namespace BookWorm.Tests.Specs.Pages
         public LoginPage(IWebDriver driver) : base(driver)
         {
         }
-    
         
         public HomePage LoginAdmin()
         {
             WaitForPageToLoad();
-            driver.FindElement(By.Id("UserName")).SendKeys("puku");
+            driver.FindElement(By.Id("Email")).SendKeys("puku@puku.co.za");
             driver.FindElement(By.Id("Password")).SendKeys("password");
             driver.FindElement(By.Id("LoginButton")).Click();
-             
             return new HomePage(driver);
         }
 
@@ -26,7 +21,5 @@ namespace BookWorm.Tests.Specs.Pages
         {
             return driver.Title == "Log in";
         }
-
     }
-
 }

@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+﻿using BookWorm.Tests.Specs.Helpers;
 using BookWorm.Tests.Specs.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
@@ -6,12 +6,12 @@ using TechTalk.SpecFlow;
 namespace BookWorm.Tests.Specs
 {
     [Binding]
-    internal class CreateBookSteps : BaseSteps
+    internal class CreateBookSteps
     {
         [Given(@"I am logged in as an admin")]
         public void IAmLoggedInAsAnAdmin()
         {
-            var homePage = HomePage.NavigateTo(Driver);
+            var homePage = HomePage.NavigateTo(Browser.Driver);
             homePage = homePage.ClickOnLogin().LoginAdmin();
             ScenarioContext.Current.Set(homePage);
         }
