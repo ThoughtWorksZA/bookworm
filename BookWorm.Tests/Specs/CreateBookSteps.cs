@@ -6,7 +6,7 @@ using TechTalk.SpecFlow;
 namespace BookWorm.Tests.Specs
 {
     [Binding]
-    internal class CreateBookSteps
+    internal class CreateBookSteps : Steps
     {
         [Given(@"I am logged in as an admin")]
         public void IAmLoggedInAsAnAdmin()

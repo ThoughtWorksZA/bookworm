@@ -1,12 +1,11 @@
-﻿using System.Configuration;
-using BookWorm.Tests.Specs.Pages;
+﻿using BookWorm.Tests.Specs.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
 namespace BookWorm.Tests.Specs
 {
     [Binding]
-    public class CreateAStaticPageSteps
+    public class CreateAStaticPageSteps : Steps
     {
         [When(@"I go to Create New Static Page view")]
         public void WhenIGoToCreateNewStaticPageView()
@@ -28,7 +27,7 @@ namespace BookWorm.Tests.Specs
         [Given(@"I am on Create Static Page view")]
         public void GivenIAmOnCreateStaticPageView()
         {
-//            Given("I am logged in as an admin");
+            Given("I am logged in as an admin");
             WhenIGoToCreateNewStaticPageView();
         }
 
@@ -48,6 +47,5 @@ namespace BookWorm.Tests.Specs
             Assert.IsTrue(pageDetailsPage.IsCurrentPage("My page title"));
             homePage.LogOut();
         }
-
     }
 }
