@@ -6,16 +6,16 @@ namespace BookWorm.Tests.Functional.Specs.Pages
     {
         public HomePage LoginAdmin()
         {
-            WaitForPageToLoad();
-            Driver.FindElement(By.Id("Email")).SendKeys("puku@puku.co.za");
-            Driver.FindElement(By.Id("Password")).SendKeys("password");
-            Driver.FindElement(By.Id("LoginButton")).Click();
+            Browser.WaitForPageToLoad();
+            Browser.FindElement(By.Id("Email")).SendKeys("puku@puku.co.za");
+            Browser.FindElement(By.Id("Password")).SendKeys("password");
+            Browser.FindElement(By.Id("LoginButton")).Click();
             return new HomePage();
         }
 
         public bool IsCurrentPage()
         {
-            return Driver.Title == "Log in";
+            return Browser.Title == "Log in";
         }
     }
 }

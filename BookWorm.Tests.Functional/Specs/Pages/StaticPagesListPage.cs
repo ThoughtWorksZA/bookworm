@@ -6,9 +6,9 @@ namespace BookWorm.Tests.Functional.Specs.Pages
     {
         public CreateStaticPage ClickOnCreateNewLink()
         {
-            WaitForPageToLoad();
-            Driver.FindElement(By.Id("createNewStaticPageLink")).Click();
-            WaitForPageToLoad();
+            Browser.WaitForPageToLoad();
+            Browser.FindElement(By.Id("createNewStaticPageLink")).Click();
+            Browser.WaitForPageToLoad();
             return new CreateStaticPage();
         }
     }

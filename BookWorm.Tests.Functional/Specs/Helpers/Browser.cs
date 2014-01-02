@@ -1,20 +1,47 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 
 namespace BookWorm.Tests.Functional.Specs.Helpers
 {
-    public static class Browser
+    public class Browser
     {
-        public static IWebDriver Driver
+        private readonly IWebDriver _driver;
+
+        public Browser()
+        {
+            _driver = ScenarioContext.Current.Get<IWebDriver>();
+        }
+
+        public string Title
         {
             get
             {
-                return ScenarioContext.Current.Get<IWebDriver>();
+                return _driver.Title;
             }
-            set
-            {
-                ScenarioContext.Current.Set(value);
-            }
+        }
+
+        public void WaitForPageToLoad()
+        {
+            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            wait.Until(d => d.FindElement(By.Id("body")));
+        }
+
+        public IWebElement FindElement(By @by)
+        {
+            return _driver.FindElement(@by);
+        }
+
+        public void GoToUrl(string url)
+        {
+            _driver.Navigate().GoToUrl(url);
+        }
+
+        public IWebElement WaitAndFindElement(By @by)
+        {
+            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            return wait.Until(it => it.FindElement(@by));
         }
     }
 }

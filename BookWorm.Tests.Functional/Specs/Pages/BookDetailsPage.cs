@@ -4,7 +4,7 @@
     {
         public bool IsCurrentPage(string title)
         {
-            return Driver.Title == title;
+            return Browser.Title == title;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using BookWorm.Tests.Functional.Specs.Helpers;
-using BookWorm.Tests.Functional.Specs.Pages;
+﻿using BookWorm.Tests.Functional.Specs.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
@@ -14,7 +13,8 @@ namespace BookWorm.Tests.Functional.Specs
         [Given(@"I am on home page")]
         public void GivenIAmOnHomePage()
         {
-            _homePage = HomePage.NavigateTo(Browser.Driver);
+            _homePage = new HomePage();
+            _homePage.NavigateTo();
         }
 
         [When(@"I click Login")]

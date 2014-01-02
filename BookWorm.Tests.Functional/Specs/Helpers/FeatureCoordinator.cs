@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using TechTalk.SpecFlow;
 
@@ -20,13 +21,13 @@ namespace BookWorm.Tests.Functional.Specs.Helpers
         public static void Setup()
         {
             Database.ClearDatabase();
-            Browser.Driver = new ChromeDriver();
+            ScenarioContext.Current.Set<IWebDriver>(new ChromeDriver());
         }
 
         [AfterScenario]
         public static void TearDown()
         {
-            Browser.Driver.Quit();
+            ScenarioContext.Current.Get<IWebDriver>().Quit();
         }
     }
 }

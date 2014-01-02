@@ -7,36 +7,36 @@ namespace BookWorm.Tests.Functional.Specs.Pages
     {
         public bool IsCurrentPage()
         {
-            return Driver.Title == "Add a Book";
+            return Browser.Title == "Add a Book";
         }
 
         public CreateBookPage FillForm(string title)
         {
-            WaitForPageToLoad();
+            Browser.WaitForPageToLoad();
             SelectElement select;
-            Driver.FindElement(By.Id("Model_Title")).SendKeys(title);
-            Driver.FindElement(By.Id("Model_Subtitle")).SendKeys("ss");
-            Driver.FindElement(By.Id("Model_Author")).SendKeys("ss");
-            Driver.FindElement(By.Id("Model_Illustrator")).SendKeys("ss");
-            Driver.FindElement(By.Id("Model_Editor")).SendKeys("ss");
-            Driver.FindElement(By.Id("Model_Isbn")).SendKeys("123456789");
-            Driver.FindElement(By.Id("Model_Publisher")).SendKeys("ss");
-            select = new SelectElement(Driver.FindElement(By.Id("Model_Language")));
+            Browser.FindElement(By.Id("Model_Title")).SendKeys(title);
+            Browser.FindElement(By.Id("Model_Subtitle")).SendKeys("ss");
+            Browser.FindElement(By.Id("Model_Author")).SendKeys("ss");
+            Browser.FindElement(By.Id("Model_Illustrator")).SendKeys("ss");
+            Browser.FindElement(By.Id("Model_Editor")).SendKeys("ss");
+            Browser.FindElement(By.Id("Model_Isbn")).SendKeys("123456789");
+            Browser.FindElement(By.Id("Model_Publisher")).SendKeys("ss");
+            select = new SelectElement(Browser.FindElement(By.Id("Model_Language")));
             select.SelectByText("Afrikaans");
-            Driver.FindElement(By.Id("Model_Genre")).SendKeys("Fiction");
-            select = new SelectElement(Driver.FindElement(By.Id("Model_AgeRange")));
+            Browser.FindElement(By.Id("Model_Genre")).SendKeys("Fiction");
+            select = new SelectElement(Browser.FindElement(By.Id("Model_AgeRange")));
             select.SelectByText("0-2 years");
-            select = new SelectElement(Driver.FindElement(By.Id("Model_Country")));
+            select = new SelectElement(Browser.FindElement(By.Id("Model_Country")));
             select.SelectByText("Tanzania");
-            Driver.FindElement(By.Id("Model_CoverImageUrl")).SendKeys("http://images.google.co.za/intl/en_ALL/images/logos/images_logo_lg.gif");
-            Driver.FindElement(By.Id("Model_Description")).SendKeys("ss");
+            Browser.FindElement(By.Id("Model_CoverImageUrl")).SendKeys("http://images.google.co.za/intl/en_ALL/images/logos/images_logo_lg.gif");
+            Browser.FindElement(By.Id("Model_Description")).SendKeys("ss");
             return  new CreateBookPage();
         }
 
         public BookDetailsPage ClickSaveButton()
         {
-            Driver.FindElement(By.Id("SaveButton")).Click();
-            WaitForPageToLoad();
+            Browser.FindElement(By.Id("SaveButton")).Click();
+            Browser.WaitForPageToLoad();
             return new BookDetailsPage();
         }
     }

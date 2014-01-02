@@ -6,13 +6,13 @@ namespace BookWorm.Tests.Functional.Specs.Pages
     {
         public bool IsCurrentPage()
         {
-            return Driver.Title == "List of Books";
+            return Browser.Title == "List of Books";
         }
 
         public CreateBookPage ClickOnCreateNewLink()
         {
-            Driver.FindElement(By.Id("createNewBookLink")).Click();
-            WaitForPageToLoad();
+            Browser.FindElement(By.Id("createNewBookLink")).Click();
+            Browser.WaitForPageToLoad();
             return new CreateBookPage();
         }
     }

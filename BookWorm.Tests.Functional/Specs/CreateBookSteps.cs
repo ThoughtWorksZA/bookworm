@@ -11,7 +11,8 @@ namespace BookWorm.Tests.Functional.Specs
         [Given(@"I am logged in as an admin")]
         public void IAmLoggedInAsAnAdmin()
         {
-            var homePage = HomePage.NavigateTo(Browser.Driver);
+            var homePage = new HomePage();
+            homePage.NavigateTo();
             homePage = homePage.ClickOnLogin().LoginAdmin();
             ScenarioContext.Current.Set(homePage);
         }
