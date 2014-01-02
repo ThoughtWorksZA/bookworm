@@ -2,14 +2,24 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
 using TechTalk.SpecFlow;
 
-namespace BookWorm.Tests.Specs
+namespace BookWorm.Tests.Specs.Helpers
 {
-    public class BaseSteps
+    [Binding]
+    public static class Browser
     {
-        protected IWebDriver Driver;
+        public static IWebDriver Driver
+        {
+            get
+            {
+                return ScenarioContext.Current.Get<IWebDriver>();
+            }
+            set
+            {
+                ScenarioContext.Current.Set(value);
+            }
+        }
 
         [BeforeFeature]
         public static void BeforeFeature()
@@ -19,13 +29,13 @@ namespace BookWorm.Tests.Specs
         }
 
         [BeforeScenario]
-        public void Setup()
+        public static void Setup()
         {
             Driver = new ChromeDriver();
         }
 
         [AfterScenario]
-        public void TearDown()
+        public static void TearDown()
         {
             Driver.Quit();
         }

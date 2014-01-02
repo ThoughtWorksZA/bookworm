@@ -214,6 +214,7 @@
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Specs\CreateAStaticPageSteps.cs" />
     <Compile Include="Specs\CreateBookSteps.cs" />
+    <Compile Include="Specs\Helpers\Browser.cs" />
     <Compile Include="Specs\Pages\BasePage.cs" />
     <Compile Include="Specs\Pages\BooksListPage.cs" />
     <Compile Include="Specs\Pages\BookDetailsPage.cs" />

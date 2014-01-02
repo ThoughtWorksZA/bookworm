@@ -1,4 +1,5 @@
-﻿using BookWorm.Tests.Specs.Pages;
+﻿using BookWorm.Tests.Specs.Helpers;
+using BookWorm.Tests.Specs.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
@@ -6,7 +7,7 @@ using TechTalk.SpecFlow;
 namespace BookWorm.Tests.Specs
 {
     [Binding]
-    public class LoginSteps : BaseSteps
+    public class LoginSteps : Steps
     {
         private HomePage homePage;
         private LoginPage loginPage;
@@ -15,7 +16,7 @@ namespace BookWorm.Tests.Specs
         [Given(@"I am on home page")]
         public void GivenIAmOnHomePage()
         {
-            homePage = HomePage.NavigateTo(Driver);
+            homePage = HomePage.NavigateTo(Browser.Driver);
         }
 
         [When(@"I click Login")]

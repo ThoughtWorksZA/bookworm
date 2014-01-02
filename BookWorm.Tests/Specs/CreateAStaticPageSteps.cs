@@ -6,7 +6,7 @@ using TechTalk.SpecFlow;
 namespace BookWorm.Tests.Specs
 {
     [Binding]
-    public class CreateAStaticPageSteps : BaseSteps
+    public class CreateAStaticPageSteps
     {
         [When(@"I go to Create New Static Page view")]
         public void WhenIGoToCreateNewStaticPageView()
@@ -28,7 +28,7 @@ namespace BookWorm.Tests.Specs
         [Given(@"I am on Create Static Page view")]
         public void GivenIAmOnCreateStaticPageView()
         {
-            Given("I am logged in as an admin");
+//            Given("I am logged in as an admin");
             WhenIGoToCreateNewStaticPageView();
         }
 
