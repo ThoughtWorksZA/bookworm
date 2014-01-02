@@ -21,6 +21,7 @@ namespace BookWorm.Tests.Functional.Specs.Helpers
         public static void Setup()
         {
             Database.ClearDatabase();
+            Database.CreateAdminUser();
             ScenarioContext.Current.Set<IWebDriver>(new ChromeDriver());
         }
 
