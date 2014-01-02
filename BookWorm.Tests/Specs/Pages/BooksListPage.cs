@@ -4,20 +4,16 @@ namespace BookWorm.Tests.Specs.Pages
 {
     public class BooksListPage : BasePage
     {
-        public BooksListPage(IWebDriver driver) : base(driver)
-        {
-        }
-
         public bool IsCurrentPage()
         {
-            return driver.Title == "List of Books";
+            return Driver.Title == "List of Books";
         }
 
         public CreateBookPage ClickOnCreateNewLink()
         {
-            driver.FindElement(By.Id("createNewBookLink")).Click();
+            Driver.FindElement(By.Id("createNewBookLink")).Click();
             WaitForPageToLoad();
-            return new CreateBookPage(driver);
+            return new CreateBookPage();
         }
     }
 }

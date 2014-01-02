@@ -25,7 +25,7 @@ namespace BookWorm.Tests.Specs.Helpers
             DeleteAll<StaticPage>(documentStore);
         }
 
-        private static void DeleteAll<T>(DocumentStore documentStore) where T : Model
+        private static void DeleteAll<T>(DocumentStore documentStore)
         {
             using (var session = documentStore.OpenSession())
             {
