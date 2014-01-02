@@ -5,7 +5,7 @@ using BookWorm.Models;
 using Raven.Client.Document;
 using TechTalk.SpecFlow;
 
-namespace BookWorm.Tests.Functional.Specs.Helpers
+namespace BookWorm.Tests.Functional.Helpers
 {
     public static class Database
     {

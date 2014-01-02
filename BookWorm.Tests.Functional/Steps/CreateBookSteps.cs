@@ -1,12 +1,11 @@
-﻿using BookWorm.Tests.Functional.Specs.Helpers;
-using BookWorm.Tests.Functional.Specs.Pages;
+﻿using BookWorm.Tests.Functional.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
-namespace BookWorm.Tests.Functional.Specs
+namespace BookWorm.Tests.Functional.Steps
 {
     [Binding]
-    internal class CreateBookSteps : Steps
+    internal class CreateBookSteps : TechTalk.SpecFlow.Steps
     {
         [Given(@"I am logged in as an admin")]
         public void IAmLoggedInAsAnAdmin()

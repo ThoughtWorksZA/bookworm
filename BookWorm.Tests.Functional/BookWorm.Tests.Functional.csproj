@@ -88,38 +88,38 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Helpers\Browser.cs" />
+    <Compile Include="Helpers\Database.cs" />
+    <Compile Include="Helpers\FeatureCoordinator.cs" />
+    <Compile Include="Pages\BasePage.cs" />
+    <Compile Include="Pages\BookDetailsPage.cs" />
+    <Compile Include="Pages\BooksListPage.cs" />
+    <Compile Include="Pages\CreateBookPage.cs" />
+    <Compile Include="Pages\CreateStaticPage.cs" />
+    <Compile Include="Pages\HomePage.cs" />
+    <Compile Include="Pages\LoginPage.cs" />
+    <Compile Include="Pages\RegisterPage.cs" />
+    <Compile Include="Pages\StaticPageDetailsPage.cs" />
+    <Compile Include="Pages\StaticPagesListPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Specs\CreateAStaticPage.feature.cs">
+    <Compile Include="Features\CreateAStaticPage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateAStaticPage.feature</DependentUpon>
     </Compile>
-    <Compile Include="Specs\CreateAStaticPageSteps.cs" />
-    <Compile Include="Specs\CreateBook.feature.cs">
+    <Compile Include="Features\CreateBook.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateBook.feature</DependentUpon>
     </Compile>
-    <Compile Include="Specs\CreateBookSteps.cs" />
-    <Compile Include="Specs\Helpers\Browser.cs" />
-    <Compile Include="Specs\Helpers\Database.cs" />
-    <Compile Include="Specs\Helpers\FeatureCoordinator.cs" />
-    <Compile Include="Specs\Login.feature.cs">
+    <Compile Include="Features\Login.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Login.feature</DependentUpon>
     </Compile>
-    <Compile Include="Specs\LoginSteps.cs" />
-    <Compile Include="Specs\Pages\BasePage.cs" />
-    <Compile Include="Specs\Pages\BookDetailsPage.cs" />
-    <Compile Include="Specs\Pages\BooksListPage.cs" />
-    <Compile Include="Specs\Pages\CreateBookPage.cs" />
-    <Compile Include="Specs\Pages\CreateStaticPage.cs" />
-    <Compile Include="Specs\Pages\HomePage.cs" />
-    <Compile Include="Specs\Pages\LoginPage.cs" />
-    <Compile Include="Specs\Pages\RegisterPage.cs" />
-    <Compile Include="Specs\Pages\StaticPageDetailsPage.cs" />
-    <Compile Include="Specs\Pages\StaticPagesListPage.cs" />
+    <Compile Include="Steps\CreateAStaticPageSteps.cs" />
+    <Compile Include="Steps\CreateBookSteps.cs" />
+    <Compile Include="Steps\LoginSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config">
@@ -130,15 +130,15 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Specs\CreateAStaticPage.feature">
+    <None Include="Features\CreateAStaticPage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>CreateAStaticPage.feature.cs</LastGenOutput>
     </None>
-    <None Include="Specs\CreateBook.feature">
+    <None Include="Features\CreateBook.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>CreateBook.feature.cs</LastGenOutput>
     </None>
-    <None Include="Specs\Login.feature">
+    <None Include="Features\Login.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Login.feature.cs</LastGenOutput>
     </None>

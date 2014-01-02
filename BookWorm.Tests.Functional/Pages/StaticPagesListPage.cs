@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace BookWorm.Tests.Functional.Specs.Pages
+namespace BookWorm.Tests.Functional.Pages
 {
     public class StaticPagesListPage : BasePage
     {

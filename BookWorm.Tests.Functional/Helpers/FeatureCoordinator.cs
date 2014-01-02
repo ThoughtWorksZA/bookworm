@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using TechTalk.SpecFlow;
 
-namespace BookWorm.Tests.Functional.Specs.Helpers
+namespace BookWorm.Tests.Functional.Helpers
 {
     [Binding]
     public static class FeatureCoordinator

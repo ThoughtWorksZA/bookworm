@@ -1,11 +1,11 @@
-﻿using BookWorm.Tests.Functional.Specs.Pages;
+﻿using BookWorm.Tests.Functional.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
-namespace BookWorm.Tests.Functional.Specs
+namespace BookWorm.Tests.Functional.Steps
 {
     [Binding]
-    public class LoginSteps : Steps
+    public class LoginSteps : TechTalk.SpecFlow.Steps
     {
         private HomePage _homePage;
         private LoginPage _loginPage;

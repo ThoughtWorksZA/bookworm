@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 
-namespace BookWorm.Tests.Functional.Specs.Helpers
+namespace BookWorm.Tests.Functional.Helpers
 {
     public class Browser
     {

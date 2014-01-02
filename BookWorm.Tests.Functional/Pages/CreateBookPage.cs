@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace BookWorm.Tests.Functional.Specs.Pages
+namespace BookWorm.Tests.Functional.Pages
 {
     public class CreateBookPage : BasePage
     {

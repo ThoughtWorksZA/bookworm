@@ -1,11 +1,11 @@
-﻿using BookWorm.Tests.Functional.Specs.Pages;
+﻿using BookWorm.Tests.Functional.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
-namespace BookWorm.Tests.Functional.Specs
+namespace BookWorm.Tests.Functional.Steps
 {
     [Binding]
-    public class CreateAStaticPageSteps : Steps
+    public class CreateAStaticPageSteps : TechTalk.SpecFlow.Steps
     {
         [When(@"I go to Create New Static Page view")]
         public void WhenIGoToCreateNewStaticPageView()
