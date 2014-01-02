@@ -4,18 +4,22 @@ using TechTalk.SpecFlow;
 
 namespace BookWorm.Tests.Specs.Helpers
 {
-    [Binding]
     public static class Database
     {
-        
-        [BeforeScenario]
-        public static void Setup()
+        public static void SetupDocumentStore()
         {
             var documentStore = new DocumentStore
             {
                 ConnectionStringName = "RavenDB"
             };
             documentStore.Initialize();
+            
+            FeatureContext.Current.Set(documentStore);
+        }
+
+        public static void ClearDatabase()
+        {
+            var documentStore = FeatureContext.Current.Get<DocumentStore>();
 
             DeleteAll<Book>(documentStore);
             DeleteAll<StaticPage>(documentStore);

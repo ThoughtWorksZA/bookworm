@@ -216,6 +216,7 @@
     <Compile Include="Specs\CreateBookSteps.cs" />
     <Compile Include="Specs\Helpers\Browser.cs" />
     <Compile Include="Specs\Helpers\Database.cs" />
+    <Compile Include="Specs\Helpers\FeatureCoordinator.cs" />
     <Compile Include="Specs\Pages\BasePage.cs" />
     <Compile Include="Specs\Pages\BooksListPage.cs" />
     <Compile Include="Specs\Pages\BookDetailsPage.cs" />
@@ -235,7 +236,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateBook.feature</DependentUpon>
     </Compile>
-    <Compile Include="Specs\BaseSteps.cs" />
     <Compile Include="Specs\Pages\StaticPageDetailsPage.cs" />
     <Compile Include="Specs\Pages\StaticPagesListPage.cs" />
     <Compile Include="ViewModels\BookInformationTests.cs" />

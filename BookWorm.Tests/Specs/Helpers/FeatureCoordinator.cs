@@ -1,33 +1,32 @@
 ﻿using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
 using TechTalk.SpecFlow;
 
-namespace BookWorm.Tests.Specs
+namespace BookWorm.Tests.Specs.Helpers
 {
-    public class BaseSteps
+    [Binding]
+    public static class FeatureCoordinator
     {
-        protected IWebDriver Driver;
-
         [BeforeFeature]
         public static void BeforeFeature()
         {
             if (ConfigurationManager.AppSettings["Environment"] == "Test")
                 Assert.Inconclusive("Skipping test on AppHarbor");
+            Database.SetupDocumentStore();
         }
 
         [BeforeScenario]
-        public void Setup()
+        public static void Setup()
         {
-            Driver = new ChromeDriver();
+            Database.ClearDatabase();
+            Browser.Driver = new ChromeDriver();
         }
 
         [AfterScenario]
-        public void TearDown()
+        public static void TearDown()
         {
-            Driver.Quit();
+            Browser.Driver.Quit();
         }
     }
 }
