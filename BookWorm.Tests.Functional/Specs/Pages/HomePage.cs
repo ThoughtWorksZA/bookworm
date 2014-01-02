@@ -3,7 +3,7 @@ using System.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace BookWorm.Tests.Specs.Pages
+namespace BookWorm.Tests.Functional.Specs.Pages
 {
     public class HomePage : BasePage
     {

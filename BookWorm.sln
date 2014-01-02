@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7122DF
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWorm.Tests.Functional", "BookWorm.Tests.Functional\BookWorm.Tests.Functional.csproj", "{48D62D38-425B-46C5-94AC-3FEBA129E06C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,12 @@ Global
 		{486B42F5-CC81-4F2F-B072-9E9048493758}.Embedded|Any CPU.Build.0 = Release|Any CPU
 		{486B42F5-CC81-4F2F-B072-9E9048493758}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{486B42F5-CC81-4F2F-B072-9E9048493758}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48D62D38-425B-46C5-94AC-3FEBA129E06C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48D62D38-425B-46C5-94AC-3FEBA129E06C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48D62D38-425B-46C5-94AC-3FEBA129E06C}.Embedded|Any CPU.ActiveCfg = Release|Any CPU
+		{48D62D38-425B-46C5-94AC-3FEBA129E06C}.Embedded|Any CPU.Build.0 = Release|Any CPU
+		{48D62D38-425B-46C5-94AC-3FEBA129E06C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48D62D38-425B-46C5-94AC-3FEBA129E06C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

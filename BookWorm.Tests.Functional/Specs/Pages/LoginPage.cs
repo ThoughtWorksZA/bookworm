@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace BookWorm.Tests.Specs.Pages
+namespace BookWorm.Tests.Functional.Specs.Pages
 {
     public class LoginPage : BasePage
     {

@@ -13,3 +13,4 @@ Scenario: Create a Static Page
 	Given I am on Create Static Page view
 	When I click create after filling the new page form
 	Then I see the details of the newly created page
+	

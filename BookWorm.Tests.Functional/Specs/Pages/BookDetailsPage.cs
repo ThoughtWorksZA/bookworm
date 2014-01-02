@@ -1,4 +1,4 @@
-﻿namespace BookWorm.Tests.Specs.Pages
+﻿namespace BookWorm.Tests.Functional.Specs.Pages
 {
     public class BookDetailsPage :BasePage
     {

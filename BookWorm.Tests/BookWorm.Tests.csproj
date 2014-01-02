@@ -41,9 +41,6 @@
     <Reference Include="BouncyCastle.Crypto">
       <HintPath>..\packages\RavenDB.Database.2.0.2170-Unstable\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Core">
-      <HintPath>..\packages\Castle.Core.3.0.0.4001\lib\net35\Castle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Esent.Interop">
       <HintPath>..\packages\RavenDB.Database.2.0.2170-Unstable\lib\net40\Esent.Interop.dll</HintPath>
     </Reference>
@@ -163,15 +160,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
-    </Reference>
-    <Reference Include="WebDriver">
-      <HintPath>..\packages\Selenium.WebDriver.2.27.0\lib\net40\WebDriver.dll</HintPath>
-    </Reference>
-    <Reference Include="WebDriver.Support">
-      <HintPath>..\packages\Selenium.Support.2.27.0\lib\net40\WebDriver.Support.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\LocalPasswordModelBuilder.cs" />
@@ -198,11 +186,6 @@
     <Compile Include="Models\Validations\ValidRoleTest.cs" />
     <Compile Include="Services\EmailServiceTests.cs" />
     <Compile Include="Services\UrlFormattingHelperTests.cs" />
-    <Compile Include="Specs\CreateAStaticPage.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CreateAStaticPage.feature</DependentUpon>
-    </Compile>
     <Compile Include="Models\BookTest.cs" />
     <Compile Include="Models\Integration\RavenDBTest.cs" />
     <Compile Include="Models\Integration\RepositoryTest.cs" />
@@ -212,32 +195,6 @@
     <Compile Include="Models\Validations\ValidLanguageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
-    <Compile Include="Specs\CreateAStaticPageSteps.cs" />
-    <Compile Include="Specs\CreateBookSteps.cs" />
-    <Compile Include="Specs\Helpers\Browser.cs" />
-    <Compile Include="Specs\Helpers\Database.cs" />
-    <Compile Include="Specs\Helpers\FeatureCoordinator.cs" />
-    <Compile Include="Specs\Pages\BasePage.cs" />
-    <Compile Include="Specs\Pages\BooksListPage.cs" />
-    <Compile Include="Specs\Pages\BookDetailsPage.cs" />
-    <Compile Include="Specs\Pages\CreateBookPage.cs" />
-    <Compile Include="Specs\Pages\CreateStaticPage.cs" />
-    <Compile Include="Specs\Pages\LoginPage.cs" />
-    <Compile Include="Specs\Pages\HomePage.cs" />
-    <Compile Include="Specs\Login.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Login.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Specs\LoginSteps.cs" />
-    <Compile Include="Specs\Pages\RegisterPage.cs" />
-    <Compile Include="Specs\CreateBook.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CreateBook.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Specs\Pages\StaticPageDetailsPage.cs" />
-    <Compile Include="Specs\Pages\StaticPagesListPage.cs" />
     <Compile Include="ViewModels\BookInformationTests.cs" />
     <Compile Include="ViewModels\BookPostInformationTest.cs" />
     <Compile Include="ViewModels\PostInformationTest.cs" />
@@ -252,20 +209,8 @@
     <Content Include="App.Staging.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Specs\CreateAStaticPage.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>CreateAStaticPage.feature.cs</LastGenOutput>
-    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Specs\Login.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Login.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Specs\CreateBook.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>CreateBook.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

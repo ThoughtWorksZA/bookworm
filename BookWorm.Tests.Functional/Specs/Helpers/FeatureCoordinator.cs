@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Chrome;
 using TechTalk.SpecFlow;
 
-namespace BookWorm.Tests.Specs.Helpers
+namespace BookWorm.Tests.Functional.Specs.Helpers
 {
     [Binding]
     public static class FeatureCoordinator

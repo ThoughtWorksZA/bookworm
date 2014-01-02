@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
-namespace BookWorm.Tests.Specs.Helpers
+namespace BookWorm.Tests.Functional.Specs.Helpers
 {
     public static class Browser
     {

@@ -1,9 +1,9 @@
 ﻿using System;
-using BookWorm.Tests.Specs.Helpers;
+using BookWorm.Tests.Functional.Specs.Helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace BookWorm.Tests.Specs.Pages
+namespace BookWorm.Tests.Functional.Specs.Pages
 {
     public class BasePage
     {

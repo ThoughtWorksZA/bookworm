@@ -8,3 +8,4 @@ Scenario: See Login page
 	Given I am on home page
 	When I click Login
 	Then I see Login page
+	

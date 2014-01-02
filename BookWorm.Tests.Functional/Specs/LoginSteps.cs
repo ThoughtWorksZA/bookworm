@@ -1,9 +1,9 @@
-﻿using BookWorm.Tests.Specs.Helpers;
-using BookWorm.Tests.Specs.Pages;
+﻿using BookWorm.Tests.Functional.Specs.Helpers;
+using BookWorm.Tests.Functional.Specs.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
-namespace BookWorm.Tests.Specs
+namespace BookWorm.Tests.Functional.Specs
 {
     [Binding]
     public class LoginSteps : Steps
