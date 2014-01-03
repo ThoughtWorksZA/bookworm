@@ -7,8 +7,7 @@ namespace BookWorm.Tests.Functional.Pages
     {
         public HomePage LoginAsAdmin()
         {
-            Browser.WaitForPageToLoad();
-            Browser.FindElement(By.Id("Email")).SendKeys(Users.AdminUserName);
+            Browser.WaitAndFindElement(By.Id("Email")).SendKeys(Users.AdminUserName);
             Browser.FindElement(By.Id("Password")).SendKeys("password");
             Browser.FindElement(By.Id("LoginButton")).Click();
             return new HomePage();

@@ -12,9 +12,8 @@ namespace BookWorm.Tests.Functional.Pages
 
         public CreateBookPage FillForm(string title)
         {
-            Browser.WaitForPageToLoad();
             SelectElement select;
-            Browser.FindElement(By.Id("Model_Title")).SendKeys(title);
+            Browser.WaitAndFindElement(By.Id("Model_Title")).SendKeys(title);
             Browser.FindElement(By.Id("Model_Subtitle")).SendKeys("ss");
             Browser.FindElement(By.Id("Model_Author")).SendKeys("ss");
             Browser.FindElement(By.Id("Model_Illustrator")).SendKeys("ss");
@@ -35,8 +34,7 @@ namespace BookWorm.Tests.Functional.Pages
 
         public BookDetailsPage ClickSaveButton()
         {
-            Browser.FindElement(By.Id("SaveButton")).Click();
-            Browser.WaitForPageToLoad();
+            Browser.WaitAndFindElement(By.Id("SaveButton")).Click();
             return new BookDetailsPage();
         }
     }

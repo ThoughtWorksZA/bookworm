@@ -22,12 +22,6 @@ namespace BookWorm.Tests.Functional.Helpers
             }
         }
 
-        public void WaitForPageToLoad()
-        {
-            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            wait.Until(d => d.FindElement(By.Id("body")));
-        }
-
         public IWebElement FindElement(By @by)
         {
             return _driver.FindElement(@by);

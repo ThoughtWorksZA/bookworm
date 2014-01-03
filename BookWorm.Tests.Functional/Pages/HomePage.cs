@@ -13,12 +13,9 @@ namespace BookWorm.Tests.Functional.Pages
 
         public LoginPage ClickOnLogin()
         {
-            Browser.WaitForPageToLoad();
-            Browser.FindElement(By.Id("loginLink")).Click();
-            Browser.WaitForPageToLoad();
+            Browser.WaitAndFindElement(By.Id("loginLink")).Click();
             return new LoginPage();
         }
-
 
         public RegisterPage ClickOnRegister()
         {
@@ -28,9 +25,7 @@ namespace BookWorm.Tests.Functional.Pages
 
         public CreateBookPage NavigateToCreateBookPage()
         {
-            Browser.WaitForPageToLoad();
-            Browser.FindElement(By.Id("BooksMenuLink")).Click();
-            Browser.WaitForPageToLoad();
+            Browser.WaitAndFindElement(By.Id("BooksMenuLink")).Click();
             return new BooksListPage().ClickOnCreateNewLink();
         }
 
@@ -49,6 +44,4 @@ namespace BookWorm.Tests.Functional.Pages
             return new HomePage();
         }
     }
-
-   
 }

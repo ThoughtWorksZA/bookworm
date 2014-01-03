@@ -12,7 +12,6 @@ namespace BookWorm.Tests.Functional.Pages
         public CreateBookPage ClickOnCreateNewLink()
         {
             Browser.FindElement(By.Id("createNewBookLink")).Click();
-            Browser.WaitForPageToLoad();
             return new CreateBookPage();
         }
     }
