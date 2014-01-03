@@ -1,36 +1,40 @@
-PUKU Readme
-===========
+#BookWorm
 
-To receive emails locally while developing / testing, download and run [Papercut](http://papercut.codeplex.com/) and set it to receive emails on port 587.
+BookWorm is an open source CMS specifically created to manage information about books. It powers [puku.co.za](http://puku.co.za).
 
-To do: write a proper Readme.
+##Getting Started
 
-Notes on adding support for HTTP DELETE and PUT to your Visual Studio 2012 IIS Express environment:
+###Setting up your database
 
-Hey guys, you need to do the following to make HTTP delete's work on your machines.
+BookWorm uses [RavenDB](http://ravendb.net/) as its database. To set RavenDB up locally, [download it](http://ravendb.net/download), put it somewhere sensible and run the `Start.cmd` batch file that comes bundled. That's it.
 
-Open %userprofile%\documents\IISExpress\config\applicationhost.config in a text editor, and make the changes suggested here:
+###Supporting HTTP DELETE and PUT keywords in IIS Express
 
+Open `%userprofile%\documents\IISExpress\config\applicationhost.config` in a text editor, and make the changes suggested on this [StackOverflow question](http://stackoverflow.com/a/10907343). In summary:
 
-http://stackoverflow.com/a/10907343
+**Change this**
+<code>
 
-So basically change the line that looks like this:
+	<add name="ExtensionlessUrl-Integrated-4.0" path="*." verb="GET,HEAD,POST,DEBUG" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+</code>
 
-# FIX ME
-<add name="ExtensionlessUrl-Integrated-4.0" path="*." verb="GET,HEAD,POST,DEBUG" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+**to this:**
+<code>
 
-to this:
+	<add name="ExtensionlessUrl-Integrated-4.0" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+</code>
 
-# THIS LINE IS GOOD
-<add name="ExtensionlessUrl-Integrated-4.0" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+**and make sure these three lines are commented out:**
+<code>
 
-and make sure if you have these three lines, that they should be commented out.
-
-# COMMENT ME OUT
-<add name="WebDAVModule" image="%IIS_BIN%\webdav.dll" />
-<add name="WebDAVModule" /> 
-<add name="WebDAV" path="*" verb="PROPFIND,PROPPATCH,MKCOL,PUT,COPY,DELETE,MOVE,LOCK,UNLOCK" modules="WebDAVModule" resourceType="Unspecified" requireAccess="None" />
-
+	<add name="WebDAVModule" image="%IIS_BIN%\webdav.dll" />
+	<add name="WebDAVModule" /> 
+	<add name="WebDAV" path="*" verb="PROPFIND,PROPPATCH,MKCOL,PUT,COPY,DELETE,MOVE,LOCK,UNLOCK" modules="WebDAVModule" resourceType="Unspecified" requireAccess="None" />
+</code>
 
 We checked app harbor and they're cool with HTTP DELETE, so no worries we hope.
 
+###Getting emails locally
+BookWorm sends some emails, notably on user creation. It pulls its configuration to send emails from its web.config file.
+
+To receive emails locally while developing / testing, download and run [Papercut](http://papercut.codeplex.com/) and set it to receive emails on port 587.
