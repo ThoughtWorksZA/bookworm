@@ -24,15 +24,6 @@ namespace BookWorm.Tests.Functional.Steps
             ScenarioContext.Current.Set(createBookPage);
         }
 
-        [Then(@"I see Create New Book page")]
-        public void ISeeCreateNewBookPage()
-        {
-            var createBookPage = ScenarioContext.Current.Get<CreateBookPage>();
-            var homePage = ScenarioContext.Current.Get<HomePage>();
-            Assert.IsTrue(createBookPage.IsCurrentPage());
-            homePage.LogOut();
-        }
-
         [When(@"I click create after filling the form")]
         public void IClickSaveAfterFillingTheForm()
         {
@@ -48,13 +39,6 @@ namespace BookWorm.Tests.Functional.Steps
             var homePage = ScenarioContext.Current.Get<HomePage>();
             Assert.IsTrue(bookDetailsPage.IsCurrentPage("My new title"));
             homePage.LogOut();
-        }
-
-        [Given(@"I am on Create New Book page")]
-        public void IAmOnCreateNewBookPage()
-        {
-            IAmLoggedInAsAnAdmin();
-            IGoToCreateNewBookPage();
         }
     }
 }
