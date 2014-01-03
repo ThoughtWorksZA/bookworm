@@ -2,12 +2,11 @@
 
 namespace BookWorm.Tests.Functional.Pages
 {
-    public class StaticPagesListPage : BasePage
+    public class StaticPagesListPage : Page
     {
-        public CreateStaticPagePage ClickOnCreateNewLink()
+        public void ClickOnCreateNewLink()
         {
             Browser.WaitAndFindElement(By.Id("createNewStaticPageLink")).Click();
-            return new CreateStaticPagePage();
         }
     }
 }

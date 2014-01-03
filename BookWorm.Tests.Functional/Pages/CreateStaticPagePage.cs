@@ -2,7 +2,7 @@
 
 namespace BookWorm.Tests.Functional.Pages
 {
-    public class CreateStaticPagePage : BasePage
+    public class CreateStaticPagePage : Page
     {
         public bool IsCurrentPage()
         {

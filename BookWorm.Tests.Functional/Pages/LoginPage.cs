@@ -3,14 +3,13 @@ using OpenQA.Selenium;
 
 namespace BookWorm.Tests.Functional.Pages
 {
-    public class LoginPage : BasePage
+    public class LoginPage : Page
     {
-        public HomePage LoginAsAdmin()
+        public void LoginAsAdmin()
         {
             Browser.WaitAndFindElement(By.Id("Email")).SendKeys(Users.AdminUserName);
             Browser.FindElement(By.Id("Password")).SendKeys("password");
             Browser.FindElement(By.Id("LoginButton")).Click();
-            return new HomePage();
         }
 
         public string WelcomeMessage

@@ -2,11 +2,11 @@
 
 namespace BookWorm.Tests.Functional.Pages
 {
-    public class BasePage
+    public class Page
     {
         protected Browser Browser;
 
-        public BasePage()
+        public Page()
         {
             Browser = new Browser();
         }

@@ -2,13 +2,8 @@
 
 namespace BookWorm.Tests.Functional.Pages
 {
-    public class BooksListPage : BasePage
+    public class BooksListPage : Page
     {
-        public bool IsCurrentPage()
-        {
-            return Browser.Title == "List of Books";
-        }
-
         public CreateBookPage ClickOnCreateNewLink()
         {
             Browser.FindElement(By.Id("createNewBookLink")).Click();

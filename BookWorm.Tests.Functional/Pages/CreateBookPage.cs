@@ -3,13 +3,8 @@ using OpenQA.Selenium.Support.UI;
 
 namespace BookWorm.Tests.Functional.Pages
 {
-    public class CreateBookPage : BasePage
+    public class CreateBookPage : Page
     {
-        public bool IsCurrentPage()
-        {
-            return Browser.Title == "Add a Book";
-        }
-
         public CreateBookPage FillForm(string title)
         {
             SelectElement select;
