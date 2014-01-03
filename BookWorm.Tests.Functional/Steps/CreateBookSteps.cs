@@ -36,9 +36,7 @@ namespace BookWorm.Tests.Functional.Steps
         public void ISeeTheDetailsOfTheNewlyCreatedBook()
         {
             var bookDetailsPage = ScenarioContext.Current.Get<BookDetailsPage>();
-            var homePage = ScenarioContext.Current.Get<HomePage>();
             Assert.IsTrue(bookDetailsPage.IsCurrentPage("My new title"));
-            homePage.LogOut();
         }
     }
 }
