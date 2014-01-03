@@ -11,22 +11,20 @@ namespace BookWorm.Tests.Functional.Steps
         public void WhenIGoToCreateNewStaticPageView()
         {
             var homePage = new HomePage();
-            var createStaticPage = homePage.NavigateToCreateStaticPageView();
-            ScenarioContext.Current.Set(createStaticPage);
+            homePage.NavigateToCreateStaticPageView();
         }
-        
+
         [When(@"I click create after filling the new page form")]
         public void WhenIClickCreateAfterFillingTheNewPageForm()
         {
-            var createStaticPage = ScenarioContext.Current.Get<CreateStaticPage>();
-            var createStaticPageDetailsPage = createStaticPage.FillForm("My page title").ClickSaveButton();
-            ScenarioContext.Current.Set(createStaticPageDetailsPage);
+            var createStaticPage = new CreateStaticPagePage();
+            createStaticPage.FillForm("My page title").ClickSaveButton();
         }
 
         [Then(@"I see the details of the newly created page")]
         public void ThenISeeTheDetailsOfTheNewlyCreatedPage()
         {
-            var pageDetailsPage = ScenarioContext.Current.Get<StaticPageDetailsPage>();
+            var pageDetailsPage = new StaticPageDetailsPage();
             pageDetailsPage.Title.Should().Be("My page title");
         }
     }

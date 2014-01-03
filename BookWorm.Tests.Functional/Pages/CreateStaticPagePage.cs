@@ -2,19 +2,19 @@
 
 namespace BookWorm.Tests.Functional.Pages
 {
-    public class CreateStaticPage : BasePage
+    public class CreateStaticPagePage : BasePage
     {
         public bool IsCurrentPage()
         {
             return Browser.Title == "PUKU | Add a Page";
         }
 
-        public CreateStaticPage FillForm(string myPageTitle)
+        public CreateStaticPagePage FillForm(string myPageTitle)
         {
             Browser.WaitForPageToLoad();
             Browser.FindElement(By.Name("Model.Title")).SendKeys(myPageTitle);
             Browser.FindElement(By.Name("Model.Content")).SendKeys("This is my content");
-            return new CreateStaticPage();
+            return new CreateStaticPagePage();
         }
 
         public StaticPageDetailsPage ClickSaveButton()

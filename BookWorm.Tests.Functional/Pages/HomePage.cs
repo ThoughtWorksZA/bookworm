@@ -34,7 +34,7 @@ namespace BookWorm.Tests.Functional.Pages
             return new BooksListPage().ClickOnCreateNewLink();
         }
 
-        public CreateStaticPage NavigateToCreateStaticPageView()
+        public CreateStaticPagePage NavigateToCreateStaticPageView()
         {
             var moreMenuLink = Browser.WaitAndFindElement(By.Id("moreMenuLink"));
             moreMenuLink.Click();
