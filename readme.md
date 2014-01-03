@@ -6,7 +6,7 @@ BookWorm is an open source CMS specifically created to manage information about 
 
 ###Setting up your database
 
-BookWorm uses [RavenDB](http://ravendb.net/) as its database. To set RavenDB up locally, [download it](http://ravendb.net/download), put it somewhere sensible and run the `Start.cmd` batch file that comes bundled. That's it.
+BookWorm uses [RavenDB](http://ravendb.net/) as its database. To set RavenDB up locally, [download it](http://ravendb.net/download), put it somewhere sensible and run the `Start.cmd` batch file that comes bundled. That's it. Be sure to check RavenDB's license terms.
 
 ###Supporting HTTP DELETE and PUT keywords in IIS Express
 
@@ -38,3 +38,39 @@ We checked app harbor and they're cool with HTTP DELETE, so no worries we hope.
 BookWorm sends some emails, notably on user creation. It pulls its configuration to send emails from its web.config file.
 
 To receive emails locally while developing / testing, download and run [Papercut](http://papercut.codeplex.com/) and set it to receive emails on port 587.
+
+##Deployment
+
+BookWorm has been deployed successfully to AppHarbor.
+
+###Setting up
+To deploy BookWorm to AppHarbor:
+
+* Create and new application on AppHarbor
+* Add the application's git repo as a remote to your fork of BookWorm
+* Push the code to AppHarbor: `git push my-app master`
+* AppHarbor will compile the code, run the tests and deploy the application
+
+###Configuration variables
+For BookWorm to be able to send emails, it requires certain configuration variables to be set. These are used to replace the development values in the `appsettings` section of the `web.config`:
+<code>
+
+    <add key="emailSenderAddress" value="dev-value"/>
+    <add key="emailSenderPassword" value="dev-value"/>
+    <add key="emailServerAddress" value="localhost"/>
+    <add key="emailEnableSsl" value="false"/>
+</code>
+
+To set these on AppHarbor, navigate to your application on appharbor.com, click on `Configuration variables` and then on the `New configuration variable` link. You can also use the [AppHarbor command line tool](http://blog.appharbor.com/2012/4/25/introducing-the-appharbor-command-line-utility).
+
+Here are some example values:
+
+* emailSenderAddress = "sender@example.com"
+* emailSenderPassword = "secretpassword"
+* emailServerAddress = "smtp.gmail.com"
+* emailEnableSsl = "true"
+
+###RavenDB
+
+You'll need to set up a database for your application to run against on AppHarbor. This can be done using an add on. BookWorm has been tested using the [CloudBird add-on](https://appharbor.com/applications/puku-staging/addons/cloudbird). CloudBird will automatically replace the `RavenDB` connection string in the `web.config`.
+ 
