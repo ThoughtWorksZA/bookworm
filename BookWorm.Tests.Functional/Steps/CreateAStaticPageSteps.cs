@@ -18,7 +18,8 @@ namespace BookWorm.Tests.Functional.Steps
         public void WhenIClickCreateAfterFillingTheNewPageForm()
         {
             var createStaticPage = new CreateStaticPagePage();
-            createStaticPage.FillForm("My page title").ClickSaveButton();
+            createStaticPage.FillForm("My page title");
+            createStaticPage.ClickSaveButton();
         }
 
         [Then(@"I see the details of the newly created page")]

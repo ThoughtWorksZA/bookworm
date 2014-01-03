@@ -5,7 +5,7 @@ namespace BookWorm.Tests.Functional.Pages
 {
     public class CreateBookPage : Page
     {
-        public CreateBookPage FillForm(string title)
+        public void FillInNewBookForm(string title)
         {
             SelectElement select;
             Browser.WaitAndFindElement(By.Id("Model_Title")).SendKeys(title);
@@ -24,13 +24,11 @@ namespace BookWorm.Tests.Functional.Pages
             select.SelectByText("Tanzania");
             Browser.FindElement(By.Id("Model_CoverImageUrl")).SendKeys("http://images.google.co.za/intl/en_ALL/images/logos/images_logo_lg.gif");
             Browser.FindElement(By.Id("Model_Description")).SendKeys("ss");
-            return  new CreateBookPage();
         }
 
-        public BookDetailsPage ClickSaveButton()
+        public void ClickSaveButton()
         {
             Browser.WaitAndFindElement(By.Id("SaveButton")).Click();
-            return new BookDetailsPage();
         }
     }
 }

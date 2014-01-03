@@ -20,10 +20,10 @@ namespace BookWorm.Tests.Functional.Pages
             Browser.FindElement(By.Id("registerLink")).Click();
         }
 
-        public CreateBookPage NavigateToCreateBookPage()
+        public void NavigateToCreateBookPage()
         {
             Browser.WaitAndFindElement(By.Id("BooksMenuLink")).Click();
-            return new BooksListPage().ClickOnCreateNewLink();
+            new BooksListPage().ClickOnCreateNewLink();
         }
 
         public void NavigateToCreateStaticPageView()

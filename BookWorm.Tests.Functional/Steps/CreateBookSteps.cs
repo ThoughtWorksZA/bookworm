@@ -25,7 +25,8 @@ namespace BookWorm.Tests.Functional.Steps
         public void IClickSaveAfterFillingTheForm()
         {
             var createBookPage = new CreateBookPage();
-            createBookPage.FillForm("My new title").ClickSaveButton();
+            createBookPage.FillInNewBookForm("My new title");
+            createBookPage.ClickSaveButton();
         }
 
         [Then(@"I see the details of the newly created book")]

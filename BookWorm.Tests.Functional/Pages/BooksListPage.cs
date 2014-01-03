@@ -4,10 +4,9 @@ namespace BookWorm.Tests.Functional.Pages
 {
     public class BooksListPage : Page
     {
-        public CreateBookPage ClickOnCreateNewLink()
+        public void ClickOnCreateNewLink()
         {
             Browser.FindElement(By.Id("createNewBookLink")).Click();
-            return new CreateBookPage();
         }
     }
 }
