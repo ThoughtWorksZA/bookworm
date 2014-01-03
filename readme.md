@@ -2,6 +2,13 @@
 
 BookWorm is an open source CMS specifically created to manage information about books. It powers [puku.co.za](http://puku.co.za).
 
+It helps you:
+
+* Create and manage a catalogue of books
+* Offer a book search and the ability to browse books by language, intended audience and genre
+* Post reviews and other information related to each book
+* Post articles
+
 ##Getting Started
 
 ###Setting up your database
@@ -41,7 +48,7 @@ To receive emails locally while developing / testing, download and run [Papercut
 
 ##Deployment
 
-BookWorm has been deployed successfully to AppHarbor.
+BookWorm has been successfully deployed to [AppHarbor](https://appharbor.com/).
 
 ###Setting up
 To deploy BookWorm to AppHarbor:
