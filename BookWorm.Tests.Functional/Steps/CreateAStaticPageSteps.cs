@@ -1,5 +1,5 @@
 ﻿using BookWorm.Tests.Functional.Pages;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 using TechTalk.SpecFlow;
 
 namespace BookWorm.Tests.Functional.Steps
@@ -15,22 +15,6 @@ namespace BookWorm.Tests.Functional.Steps
             ScenarioContext.Current.Set(createStaticPage);
         }
         
-        [Then(@"I see Create New Static Page view")]
-        public void ThenISeeCreateNewStaticPageView()
-        {
-            var homePage = ScenarioContext.Current.Get<HomePage>();
-            var createStaticPage = ScenarioContext.Current.Get<CreateStaticPage>();
-            Assert.IsTrue(createStaticPage.IsCurrentPage());
-            homePage.LogOut();
-        }
-
-        [Given(@"I am on Create Static Page view")]
-        public void GivenIAmOnCreateStaticPageView()
-        {
-            Given("I am logged in as an admin");
-            WhenIGoToCreateNewStaticPageView();
-        }
-
         [When(@"I click create after filling the new page form")]
         public void WhenIClickCreateAfterFillingTheNewPageForm()
         {
@@ -43,9 +27,7 @@ namespace BookWorm.Tests.Functional.Steps
         public void ThenISeeTheDetailsOfTheNewlyCreatedPage()
         {
             var pageDetailsPage = ScenarioContext.Current.Get<StaticPageDetailsPage>();
-            var homePage = ScenarioContext.Current.Get<HomePage>();
-            Assert.IsTrue(pageDetailsPage.IsCurrentPage("My page title"));
-            homePage.LogOut();
+            pageDetailsPage.Title.Should().Be("My page title");
         }
     }
 }

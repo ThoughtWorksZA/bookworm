@@ -71,12 +71,12 @@ namespace BookWorm.Tests.Functional.Features
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("See Create a Static Page page")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Create a Static Page")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create A Static Page")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("Specs")]
-        public virtual void SeeCreateAStaticPagePage()
+        public virtual void CreateAStaticPage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("See Create a Static Page page", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a Static Page", ((string[])(null)));
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
@@ -84,25 +84,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 9
  testRunner.When("I go to Create New Static Page view", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 10
- testRunner.Then("I see Create New Static Page view", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Create a Static Page")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create A Static Page")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("Specs")]
-        public virtual void CreateAStaticPage()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a Static Page", ((string[])(null)));
-#line 12
-this.ScenarioSetup(scenarioInfo);
-#line 13
- testRunner.Given("I am on Create Static Page view", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 14
  testRunner.When("I click create after filling the new page form", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 15
+#line 11
  testRunner.Then("I see the details of the newly created page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

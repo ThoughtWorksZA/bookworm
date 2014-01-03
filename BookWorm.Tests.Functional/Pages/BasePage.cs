@@ -10,5 +10,13 @@ namespace BookWorm.Tests.Functional.Pages
         {
             Browser = new Browser();
         }
+
+        public string Title
+        {
+            get
+            {
+                return Browser.Title;
+            }
+        }
     }
 }
