@@ -1,5 +1,5 @@
 ﻿using BookWorm.Tests.Functional.Pages;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 using TechTalk.SpecFlow;
 
 namespace BookWorm.Tests.Functional.Steps
@@ -18,23 +18,21 @@ namespace BookWorm.Tests.Functional.Steps
         public void IGoToCreateNewBookPage()
         {
             var homePage = new HomePage();
-            var createBookPage = homePage.NavigateToCreateBookPage();
-            ScenarioContext.Current.Set(createBookPage);
+            homePage.NavigateToCreateBookPage();
         }
 
         [When(@"I click create after filling the form")]
         public void IClickSaveAfterFillingTheForm()
         {
-            var createBookPage = ScenarioContext.Current.Get<CreateBookPage>();
-            var bookDetailsPage = createBookPage.FillForm("My new title").ClickSaveButton();
-            ScenarioContext.Current.Set(bookDetailsPage);
+            var createBookPage = new CreateBookPage();
+            createBookPage.FillForm("My new title").ClickSaveButton();
         }
 
         [Then(@"I see the details of the newly created book")]
         public void ISeeTheDetailsOfTheNewlyCreatedBook()
         {
-            var bookDetailsPage = ScenarioContext.Current.Get<BookDetailsPage>();
-            Assert.IsTrue(bookDetailsPage.IsCurrentPage("My new title"));
+            var bookDetailsPage = new BookDetailsPage();
+            bookDetailsPage.Title.Should().Be("My new title");
         }
     }
 }
