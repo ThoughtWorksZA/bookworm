@@ -1,21 +1,25 @@
-﻿using OpenQA.Selenium;
+﻿using BookWorm.Tests.Functional.Helpers;
+using OpenQA.Selenium;
 
 namespace BookWorm.Tests.Functional.Pages
 {
     public class LoginPage : BasePage
     {
-        public HomePage LoginAdmin()
+        public HomePage LoginAsAdmin()
         {
             Browser.WaitForPageToLoad();
-            Browser.FindElement(By.Id("Email")).SendKeys("puku@puku.co.za");
+            Browser.FindElement(By.Id("Email")).SendKeys(Users.AdminUserName);
             Browser.FindElement(By.Id("Password")).SendKeys("password");
             Browser.FindElement(By.Id("LoginButton")).Click();
             return new HomePage();
         }
 
-        public bool IsCurrentPage()
+        public string WelcomeMessage
         {
-            return Browser.Title == "Log in";
+            get
+            {
+                return Browser.FindElement(By.Id("welcomeInfo")).Text;
+            }
         }
     }
 }

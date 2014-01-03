@@ -56,7 +56,7 @@ namespace BookWorm.Tests.Functional.Helpers
             {
                 session.Store(new User
                 {
-                    Username = "puku@puku.co.za",
+                    Username = Users.AdminUserName,
                     Password = HashPassword("password"),
                     IsApproved = true,
                     Roles = new []{"admin"},

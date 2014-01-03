@@ -1,5 +1,6 @@
-﻿using BookWorm.Tests.Functional.Pages;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using BookWorm.Tests.Functional.Helpers;
+using BookWorm.Tests.Functional.Pages;
+using FluentAssertions;
 using TechTalk.SpecFlow;
 
 namespace BookWorm.Tests.Functional.Steps
@@ -7,26 +8,27 @@ namespace BookWorm.Tests.Functional.Steps
     [Binding]
     public class LoginSteps : TechTalk.SpecFlow.Steps
     {
-        private HomePage _homePage;
-        private LoginPage _loginPage;
-
-        [Given(@"I am on home page")]
-        public void GivenIAmOnHomePage()
+        [Given(@"I navigate to the login page")]
+        public void GivenINavigateToTheLoginPage()
         {
-            _homePage = new HomePage();
-            _homePage.NavigateTo();
+            var homePage = new HomePage();
+            homePage.NavigateTo();
+            homePage.ClickOnLogin();
         }
 
-        [When(@"I click Login")]
-        public void WhenIClickLogin()
+        [When(@"I enter my credentials")]
+        public void WhenIEnterMyCredentials()
         {
-            _loginPage = _homePage.ClickOnLogin();
+            var loginPage = new LoginPage();
+            loginPage.LoginAsAdmin();
         }
 
-        [Then(@"I see Login page")]
-        public void ThenISeeLoginPage()
+        [Then(@"I see a welcome message")]
+        public void ThenISeeAWelcomeMessage()
         {
-            Assert.IsTrue(_loginPage.IsCurrentPage());
+            var loginPage = new LoginPage();
+            loginPage.WelcomeMessage.Should().Be("Hello, " + Users.AdminUserName + "!");
         }
     }
 }
+

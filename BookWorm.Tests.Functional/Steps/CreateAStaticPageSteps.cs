@@ -10,7 +10,7 @@ namespace BookWorm.Tests.Functional.Steps
         [When(@"I go to Create New Static Page view")]
         public void WhenIGoToCreateNewStaticPageView()
         {
-            var homePage = ScenarioContext.Current.Get<HomePage>();
+            var homePage = new HomePage();
             var createStaticPage = homePage.NavigateToCreateStaticPageView();
             ScenarioContext.Current.Set(createStaticPage);
         }

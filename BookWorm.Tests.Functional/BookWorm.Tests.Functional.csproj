@@ -94,6 +94,7 @@
     <Compile Include="Helpers\Browser.cs" />
     <Compile Include="Helpers\Database.cs" />
     <Compile Include="Helpers\FeatureCoordinator.cs" />
+    <Compile Include="Helpers\Users.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BookDetailsPage.cs" />
     <Compile Include="Pages\BooksListPage.cs" />

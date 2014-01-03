@@ -1,11 +1,11 @@
 ﻿@Specs
 Feature: Login
-	In order to do Admin functionality
-	As a Puku Admin
+	As a Puku user
 	I want to login
+	So that I can access restricted functionality
 
-Scenario: See Login page
-	Given I am on home page
-	When I click Login
-	Then I see Login page
+Scenario: User is able to log in to the site
+	Given I navigate to the login page
+	When I enter my credentials
+	Then I see a welcome message
 	

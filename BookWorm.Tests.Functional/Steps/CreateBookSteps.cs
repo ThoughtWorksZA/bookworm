@@ -10,16 +10,14 @@ namespace BookWorm.Tests.Functional.Steps
         [Given(@"I am logged in as an admin")]
         public void IAmLoggedInAsAnAdmin()
         {
-            var homePage = new HomePage();
-            homePage.NavigateTo();
-            homePage = homePage.ClickOnLogin().LoginAdmin();
-            ScenarioContext.Current.Set(homePage);
+            Given("I navigate to the login page");
+            When("I enter my credentials");
         }
 
         [When(@"I go to Create New Book page")]
         public void IGoToCreateNewBookPage()
         {
-            var homePage = ScenarioContext.Current.Get<HomePage>();
+            var homePage = new HomePage();
             var createBookPage = homePage.NavigateToCreateBookPage();
             ScenarioContext.Current.Set(createBookPage);
         }
