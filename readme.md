@@ -13,7 +13,11 @@ It helps you:
 
 ###Setting up your database
 
-BookWorm uses [RavenDB](http://ravendb.net/) as its database. To set RavenDB up locally, [download it](http://ravendb.net/download), put it somewhere sensible and run the `Start.cmd` batch file that comes bundled. That's it. Be sure to check RavenDB's license terms.
+BookWorm uses [RavenDB](http://ravendb.net/) as its database. To set RavenDB up locally, [download it](http://ravendb.net/download), put it somewhere sensible and run the `Start.cmd` batch file that comes bundled. 
+
+Or you could navigate to the Server directory and double click the Raven.Server executable.
+
+That's it. Be sure to check RavenDB's license terms.
 
 ###Supporting HTTP DELETE and PUT keywords in IIS Express
 
