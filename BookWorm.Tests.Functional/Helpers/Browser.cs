@@ -34,7 +34,7 @@ namespace BookWorm.Tests.Functional.Helpers
 
         public IWebElement WaitAndFindElement(By @by)
         {
-            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(100));
             return wait.Until(it => it.FindElement(@by));
         }
     }
