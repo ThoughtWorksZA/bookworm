@@ -21,6 +21,14 @@ That's it. Be sure to check RavenDB's license terms.
 
 ###Supporting HTTP DELETE and PUT keywords in IIS Express
 
+Just a heads up, Visual Studio Professional version gives the error:
+
+<code>
+assembly manifest definition does not match assembly reference
+</code>
+
+but the error disappears when using Ultimate. (Not sure what the exact cause is.)
+
 Open `%userprofile%\documents\IISExpress\config\applicationhost.config` in a text editor, and make the changes suggested on this [StackOverflow question](http://stackoverflow.com/a/10907343). In summary:
 
 **Change this**
